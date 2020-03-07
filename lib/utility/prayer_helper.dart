@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:adhan_flutter/adhan_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:islamic_habits/components/prayer_time.dart';
 
 class PrayerHelper {
   final double latitude;
@@ -49,5 +50,23 @@ class PrayerHelper {
 
   Future<DateTime> getIsha() async {
     return await adhan.isha;
+  }
+
+  List<Widget> getAllPrayersTime() {
+    List<Widget> prayersTimeWidgets = [];
+    List<Future<DateTime>> prayersTimes = [
+      adhan.fajr,
+      adhan.dhuhr,
+      adhan.asr,
+      adhan.maghrib,
+      adhan.isha
+    ];
+
+    for (Future<DateTime> prayerTime in prayersTimes) {
+      prayersTimeWidgets.add(PrayerTime(
+        prayerTime: prayerTime,
+      ));
+    }
+    return prayersTimeWidgets;
   }
 }

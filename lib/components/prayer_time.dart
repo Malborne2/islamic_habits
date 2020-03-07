@@ -16,14 +16,19 @@ class PrayerTime extends StatelessWidget {
             final dateTime = snapshot.data.toLocal();
             return Text(
               DateFormat.jm().format(dateTime),
+              textAlign: TextAlign.end,
               style: TextStyle(
                 fontSize: 18,
               ),
             );
           } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
+            print(snapshot.error.toString());
+            return Text(
+              'error',
+              style: TextStyle(color: Theme.of(context).errorColor),
+            );
           } else {
-            return Text('Waiting...');
+            return Text('');
           }
         },
       ),
