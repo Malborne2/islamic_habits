@@ -7,7 +7,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   @override
   ThemeState get initialState =>
       // Everything is accessible from the appThemeData Map.
-      ThemeState(themeData: appThemeData['PurpleLight']);
+      ThemeState(themeData: appThemeData['PurpleDark']);
 
   @override
   Stream<ThemeState> mapEventToState(

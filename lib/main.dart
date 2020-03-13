@@ -1,5 +1,6 @@
-import 'package:islamic_habits/screens/main_screen.dart';
-import 'package:islamic_habits/screens/prayers_screen.dart';
+import 'package:islamic_habits/screens/habits_screen.dart';
+//import 'package:islamic_habits/screens/main_screen.dart';
+//import 'package:islamic_habits/screens/prayers_screen.dart';
 import 'package:islamic_habits/utility/Themes/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,7 @@ class IslamicHabits extends StatelessWidget {
     return MaterialApp(
       title: 'Material App',
       debugShowCheckedModeBanner: false,
-      home: PrayersScreen(),
+      home: HabitsScreen(),
       theme: state.themeData,
     );
   }
