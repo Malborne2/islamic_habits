@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:islamic_habits/components/round_button.dart';
+import 'package:islamic_habits/components/habit_button.dart';
 
 class Habit {
   String name;
@@ -21,10 +21,10 @@ class Habit {
     @required this.color,
     this.habitPeriod,
     this.successTarget = 40,
-    this.successValue = 1,
+    @required this.successValue,
     this.type = HabitType.YES_NO,
     this.habitDays = HabitDays.EVERYDAY,
-    this.criteria,
+    @required this.criteria,
     this.description = '',
     this.createdTime,
     this.habitData,
@@ -34,8 +34,20 @@ class Habit {
     if (!habitData.containsKey(DateFormat('yyyy-MM-DD').format(day)))
       return Status.NO_DATA;
     else {
-      if (habitData[DateFormat('yyyy-MM-DD').format(day)].values.first ==
-          successValue)
+      if (type == HabitType.YES_NO) {
+        if (habitData[DateFormat('yyyy-MM-DD').format(day)].values.first == 1)
+          return Status.SUCCESS;
+        else
+          return Status.FAIL;
+      } else if (criteria == Criteria.EXACTLY &&
+              habitData[DateFormat('yyyy-MM-DD').format(day)].values.first ==
+                  successValue ||
+          criteria == Criteria.AT_LEAST &&
+              habitData[DateFormat('yyyy-MM-DD').format(day)].values.first >=
+                  successValue ||
+          criteria == Criteria.NOT_MORE_THAN &&
+              habitData[DateFormat('yyyy-MM-DD').format(day)].values.first <=
+                  successValue)
         return Status.SUCCESS;
       else
         return Status.FAIL;
@@ -47,6 +59,17 @@ class Habit {
       return null;
     else {
       return habitData[DateFormat('yyyy-MM-DD').format(day)].values.first;
+    }
+  }
+
+  double getSuccessPercentage(DateTime day) {
+    if (!habitData.containsKey(DateFormat('yyyy-MM-DD').format(day)) ||
+        type == HabitType.YES_NO)
+      return null;
+    else {
+      return 100 *
+          habitData[DateFormat('yyyy-MM-DD').format(day)].values.first /
+          successValue;
     }
   }
 
@@ -64,7 +87,7 @@ class Habit {
         DateFormat('yyyy-MM-DD').format(day): {DateTime.now(): value}
       });
 
-    print('$day: $value');
+//    print('$day: $value');
   }
 
   bool isHabitDay(DateTime today) {

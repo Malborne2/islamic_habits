@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:adhan_flutter/adhan_flutter.dart';
-import 'package:islamic_habits/components/prayer_time.dart';
 import 'package:hijri/umm_alqura_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -26,7 +25,7 @@ class _PrayersScreenState extends State<PrayersScreen> {
       (index) => IconButton(
         icon: Icon(Icons.notifications_active),
         onPressed: () {},
-        color: Colors.black,
+        color: Theme.of(context).textTheme.body1.color,
       ),
     );
     List<Widget> prayersNames = List.generate(

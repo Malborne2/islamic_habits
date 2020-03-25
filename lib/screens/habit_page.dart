@@ -29,6 +29,7 @@ class _HabitPageState extends State<HabitPage> {
   Widget build(BuildContext context) {
 //    print(widget.currentDate.toIso8601String());
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Row(
           children: List.generate(

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/components/draw_horizontal_line.dart';
-import 'round_button.dart';
+import 'habit_button.dart';
+import 'package:islamic_habits/components/habit_input_dialog.dart';
+import 'package:vibration/vibration.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ButtonsList extends StatefulWidget {
   final int length;
   final DateTime startDate;
   final Habit habit;
+//  final double wrapHeight;
 //  final Function onPressed;
   final Color failColor;
   @override
@@ -21,19 +25,46 @@ class ButtonsList extends StatefulWidget {
 }
 
 class _ButtonsListState extends State<ButtonsList> {
-  onButtonPressed(DateTime day, double value) {
-    setState(() {
-      if (widget.habit.type == HabitType.YES_NO) {
+  Future<double> getValue(double initialValue) async {
+    var value = await showDialog<double>(
+        context: context,
+        builder: (BuildContext context) {
+          return HabitInputDialog(
+            initialValue: initialValue,
+          );
+        });
+    if (value != null && value != initialValue) {
+      if (await Vibration.hasVibrator()) {
+        Vibration.vibrate(duration: 100);
+      }
+      Fluttertoast.showToast(
+          msg: "New value added successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 14.0);
+    }
+    return value;
+  }
+
+  onButtonPressed(DateTime day, double value) async {
+    if (widget.habit.type == HabitType.YES_NO) {
+      setState(() {
         if (widget.habit.getHabitDataValue(day) == null)
           widget.habit.setHabitDataValue(day, 1);
         else if (widget.habit.getHabitDataValue(day) == 1)
           widget.habit.setHabitDataValue(day, 0);
         else
           widget.habit.setHabitDataValue(day, null);
-      }
-    });
-
-    //TODO implement the logic for NUMBER HabitType
+      });
+    } else if (widget.habit.type == HabitType.NUMBER) {
+      var value = await getValue(widget.habit.getHabitDataValue(day));
+      setState(() {
+        widget.habit.setHabitDataValue(day, value);
+      });
+    }
   }
 
   bool isStreak(DateTime date) {
@@ -58,7 +89,7 @@ class _ButtonsListState extends State<ButtonsList> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> habitDayButtons = List.generate(widget.length, (i) {
+    List<Widget> habitDayButtons = List.generate(35, (i) {
       DateTime date = widget.startDate.add(Duration(days: i));
       double width = MediaQuery.of(context).size.width;
       double diameter = width / 9;
@@ -67,6 +98,7 @@ class _ButtonsListState extends State<ButtonsList> {
       return Container(
         width: lineLength + diameter,
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             CustomPaint(
               painter: DrawHorizontalLine(
@@ -78,26 +110,39 @@ class _ButtonsListState extends State<ButtonsList> {
             ),
             Material(
               shape: CircleBorder(
+                //The today circle in the habit
                 side: BorderSide(
                     color:
                         isToday(date) ? Colors.yellow[600] : Colors.transparent,
                     width: 3),
               ),
-              child: RoundButton(
-                day: date,
-                diameter: diameter,
-                successColor: widget.habit.color,
-                failColor: widget.failColor,
-                onPressed: isAfterToday(date)
-                    ? () {
-                        setState(() {
-                          onButtonPressed(date, null);
-                          //TODO implement value selection by user
-                        });
-                      }
-                    : () {},
-                status: widget.habit.getStatus(date),
-              ),
+              color: i < widget.length ? null : Colors.grey.withAlpha(10),
+              child: i < widget.length
+                  ? HabitButton(
+                      day: date,
+                      diameter: diameter,
+                      successColor: widget.habit.color,
+                      failColor: widget.failColor,
+                      type: widget.habit.type,
+                      successPercentage:
+                          widget.habit.getSuccessPercentage(date),
+                      onPressed: isAfterToday(date)
+                          ? () {
+                              setState(() {
+                                onButtonPressed(date, null);
+                                //TODO implement value selection by user
+                              });
+                            }
+                          : () {},
+                      status: widget.habit.getStatus(date),
+                    )
+                  : RawMaterialButton(
+                      onPressed: null,
+                      constraints: BoxConstraints.tightFor(
+                        width: diameter,
+                        height: diameter,
+                      ),
+                    ),
             )
           ],
         ),
@@ -108,5 +153,14 @@ class _ButtonsListState extends State<ButtonsList> {
       runSpacing: 10,
       children: habitDayButtons,
     );
+//    return GridView.count(
+////      primary: false,
+////      padding: const EdgeInsets.all(10),
+////      crossAxisSpacing: 10,
+////      mainAxisSpacing: 10,
+//      crossAxisCount: 7,
+//      shrinkWrap: true,
+//      children: habitDayButtons,
+//    );
   }
 }
