@@ -4,6 +4,7 @@ import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:adhan_flutter/adhan_flutter.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/constants.dart';
+import 'package:islamic_habits/utility/functions.dart';
 
 class HabitPage extends StatefulWidget {
   final DateTime currentDate;
@@ -27,22 +28,24 @@ class _HabitPageState extends State<HabitPage> {
 
   @override
   Widget build(BuildContext context) {
-//    print(widget.currentDate.toIso8601String());
     return Column(
-      mainAxisSize: MainAxisSize.min,
+//      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Row(
-          children: List.generate(
-            7,
-            (i) => Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width / 27,
-                    vertical: 10),
-                child: Text(kDays[(kStartOfWeek + i) % 7])),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(
+              7,
+              (i) => Container(
+                  width: 17 * MediaQuery.of(context).size.width / 144,
+                  child: Center(child: Text(kDays[(kStartOfWeek + i) % 7]))),
+            ),
           ),
         ),
         ButtonsList(
           length: daysOfMonth(widget.currentDate),
+          startOfWeek: DateTime.friday,
           habit: widget.habit,
           failColor: Theme.of(context).brightness == Brightness.dark
               ? Colors.brown[800]

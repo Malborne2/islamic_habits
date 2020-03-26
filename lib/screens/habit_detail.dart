@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:islamic_habits/screens/habit_page.dart';
 import 'package:islamic_habits/screens/prayers_screen.dart';
 import 'package:islamic_habits/utility/constants.dart';
+import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:adhan_flutter/adhan_flutter.dart';
@@ -71,6 +73,19 @@ class _HabitDetailState extends State<HabitDetail> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> metrics = List.generate(
+        kMetricNames.length,
+        (i) => Padding(
+              padding: const EdgeInsets.all(5),
+              child: Text(kMetricNames[i]),
+            ));
+    List<Widget> values = List.generate(
+        metrics.length,
+        (i) => Padding(
+              padding: const EdgeInsets.all(5),
+              child: Text((i + 1).toString()),
+            ));
+
     return Scaffold(
       appBar: AppBar(
         title: Text(myHabit.name),
@@ -139,7 +154,7 @@ class _HabitDetailState extends State<HabitDetail> {
       body: ListView(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(bottom: 20),
+            margin: EdgeInsets.only(bottom: 10),
             child: Material(
               elevation: 5,
               child: ListTile(
@@ -186,8 +201,8 @@ class _HabitDetailState extends State<HabitDetail> {
             ),
           ),
           SizedBox(
-            height: 6 * (MediaQuery.of(context).size.width / 9) +
-                60, //Calculation for the total height of the buttons list
+            height: 8 * (MediaQuery.of(context).size.width / 9) +
+                20, //Calculation for the total height of the buttons list
             child: PageView(
               controller: controller,
               children: habitPages,
@@ -226,69 +241,30 @@ class _HabitDetailState extends State<HabitDetail> {
               },
             ),
           ),
-          Material(
-            elevation: 0,
-            color: myHabit.color.withAlpha(50),
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: myHabit.color.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Container(
-              child: ListTile(
-                title: Text('Hello'),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+            child: Material(
+              elevation: 0,
+              color: myHabit.color.withAlpha(50),
+              shape: RoundedRectangleBorder(
+                side:
+                    BorderSide(width: 1, color: myHabit.color.withOpacity(0.5)),
+                borderRadius: BorderRadius.circular(20),
               ),
-            ),
-          ),
-          Material(
-            elevation: 0,
-            color: myHabit.color.withAlpha(50),
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: myHabit.color.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Container(
-              child: ListTile(
-                title: Text('Hello'),
-              ),
-            ),
-          ),
-          Material(
-            elevation: 0,
-            color: myHabit.color.withAlpha(50),
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: myHabit.color.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Container(
-              child: ListTile(
-                title: Text('Hello'),
-              ),
-            ),
-          ),
-          Material(
-            elevation: 0,
-            color: myHabit.color.withAlpha(50),
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: myHabit.color.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Container(
-              child: ListTile(
-                title: Text('Hello'),
-              ),
-            ),
-          ),
-          Material(
-            elevation: 0,
-            color: myHabit.color.withAlpha(50),
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: myHabit.color.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Container(
-              child: ListTile(
-                title: Text('Hello'),
-              ),
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: metrics),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: values)
+                    ],
+                  )),
             ),
           ),
         ],

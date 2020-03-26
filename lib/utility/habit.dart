@@ -62,6 +62,14 @@ class Habit {
     }
   }
 
+  bool hasData(DateTime day) {
+    if (!habitData.containsKey(DateFormat('yyyy-MM-DD').format(day)))
+      return false;
+    else {
+      return true;
+    }
+  }
+
   double getSuccessPercentage(DateTime day) {
     if (!habitData.containsKey(DateFormat('yyyy-MM-DD').format(day)) ||
         type == HabitType.YES_NO)

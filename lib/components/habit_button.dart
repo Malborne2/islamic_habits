@@ -81,7 +81,7 @@ class HabitButton extends StatelessWidget {
                 fillColor: successColor.withOpacity(0.5),
                 lineColor: successColor.withOpacity(0.8),
                 completePercent: successPercentage,
-                width: 3,
+                width: 2.5,
               ),
             ),
           ),

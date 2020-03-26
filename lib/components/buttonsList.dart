@@ -5,11 +5,13 @@ import 'habit_button.dart';
 import 'package:islamic_habits/components/habit_input_dialog.dart';
 import 'package:vibration/vibration.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:islamic_habits/utility/functions.dart';
 
 class ButtonsList extends StatefulWidget {
   final int length;
   final DateTime startDate;
   final Habit habit;
+  final int startOfWeek;
 //  final double wrapHeight;
 //  final Function onPressed;
   final Color failColor;
@@ -18,6 +20,7 @@ class ButtonsList extends StatefulWidget {
   ButtonsList({
     @required this.length,
     @required this.startDate,
+    @required this.startOfWeek,
 //    @required this.onPressed,
     @required this.habit,
     @required this.failColor,
@@ -67,82 +70,115 @@ class _ButtonsListState extends State<ButtonsList> {
     }
   }
 
-  bool isStreak(DateTime date) {
+  int getWeekDaysDiff() {
+    int diff = (widget.startDate.weekday - widget.startOfWeek);
+    diff = diff < 0 ? diff += 7 : diff;
+    return diff; //TODO
+  }
+
+  bool isHabitButton(int i) {
+    return i < widget.length + getWeekDaysDiff() && i >= getWeekDaysDiff()
+        ? true
+        : false;
+  }
+
+  bool isStreakBefore(DateTime date) {
     if (widget.habit.getStatus(date) == Status.SUCCESS &&
         widget.habit.getStatus(date.subtract(Duration(days: 1))) ==
             Status.SUCCESS) return true;
     return false;
   }
 
-  bool isToday(DateTime date) {
-    DateTime now = DateTime.now();
-    if (date.year == now.year && date.month == now.month && date.day == now.day)
+  bool isStreakAfter(DateTime date) {
+    if (widget.habit.getStatus(date) == Status.SUCCESS &&
+        widget.habit.getStatus(date.add(Duration(days: 1))) == Status.SUCCESS)
       return true;
-    return false;
-  }
-
-  bool isAfterToday(DateTime date) {
-    DateTime now = DateTime.now();
-    if (now.isAfter(date)) return true;
     return false;
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> habitDayButtons = List.generate(35, (i) {
-      DateTime date = widget.startDate.add(Duration(days: i));
+    List<Widget> habitDayButtons = List.generate(42, (i) {
+      DateTime date =
+          widget.startDate.add(Duration(days: i - getWeekDaysDiff()));
       double width = MediaQuery.of(context).size.width;
+
       double diameter = width / 9;
-      double lineLength = 12;
+      double lineLength = diameter / 4;
 
       return Container(
-        width: lineLength + diameter,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
+        width: lineLength +
+            diameter, //the width of the today circle is 1 on both sides
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          overflow: Overflow.clip,
           children: <Widget>[
-            CustomPaint(
-              painter: DrawHorizontalLine(
-                  lineColor: isStreak(date)
-                      ? widget.habit.color.withOpacity(0.8)
-                      : Colors.transparent,
-                  width: 3,
-                  lineLength: lineLength),
-            ),
-            Material(
+            RawMaterialButton(
               shape: CircleBorder(
                 //The today circle in the habit
                 side: BorderSide(
                     color:
                         isToday(date) ? Colors.yellow[600] : Colors.transparent,
-                    width: 3),
+                    width: widget.habit.hasData(date) || !isHabitButton(i)
+                        ? 1
+                        : 3),
               ),
-              color: i < widget.length ? null : Colors.grey.withAlpha(10),
-              child: i < widget.length
-                  ? HabitButton(
-                      day: date,
-                      diameter: diameter,
-                      successColor: widget.habit.color,
-                      failColor: widget.failColor,
-                      type: widget.habit.type,
-                      successPercentage:
-                          widget.habit.getSuccessPercentage(date),
-                      onPressed: isAfterToday(date)
-                          ? () {
-                              setState(() {
-                                onButtonPressed(date, null);
-                                //TODO implement value selection by user
-                              });
-                            }
-                          : () {},
-                      status: widget.habit.getStatus(date),
-                    )
-                  : RawMaterialButton(
-                      onPressed: null,
-                      constraints: BoxConstraints.tightFor(
-                        width: diameter,
-                        height: diameter,
+              fillColor:
+                  isHabitButton(i) ? null : Colors.grey[800].withAlpha(10),
+              onPressed: null,
+              constraints: BoxConstraints.tightFor(
+                width: !isHabitButton(i) ? diameter : diameter + 5,
+                height: !isHabitButton(i) ? diameter : diameter + 5,
+              ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                CustomPaint(
+                  painter: DrawHorizontalLine(
+                      isBefore: true,
+                      lineColor: isStreakBefore(date) && isHabitButton(i)
+                          ? widget.habit.color.withOpacity(0.8)
+                          : Colors.transparent,
+                      width: 3,
+                      lineLength: lineLength / 2),
+                ),
+                isHabitButton(i)
+                    ? HabitButton(
+                        day: date,
+                        diameter: diameter,
+                        successColor: widget.habit.color,
+                        failColor: widget.failColor,
+                        type: widget.habit.type,
+                        successPercentage:
+                            widget.habit.getSuccessPercentage(date),
+                        onPressed: isTodayOrBefore(date)
+                            ? () {
+                                setState(() {
+                                  onButtonPressed(date, null);
+                                  //TODO implement value selection by user
+                                });
+                              }
+                            : () {},
+                        status: widget.habit.getStatus(date),
+                      )
+                    : RawMaterialButton(
+                        onPressed: null,
+                        constraints: BoxConstraints.tightFor(
+                          width: diameter,
+                          height: diameter,
+                        ),
                       ),
-                    ),
+                CustomPaint(
+                  painter: DrawHorizontalLine(
+                      isBefore: false,
+                      lineColor: isStreakAfter(date) && isHabitButton(i)
+                          ? widget.habit.color.withOpacity(0.8)
+                          : Colors.transparent,
+                      width: 3,
+                      lineLength: lineLength / 2),
+                ),
+              ],
             )
           ],
         ),
@@ -150,14 +186,14 @@ class _ButtonsListState extends State<ButtonsList> {
     });
 
     return Wrap(
-      runSpacing: 10,
+      runSpacing: 5,
       children: habitDayButtons,
     );
+
 //    return GridView.count(
-////      primary: false,
+//      cacheExtent: 10,
 ////      padding: const EdgeInsets.all(10),
-////      crossAxisSpacing: 10,
-////      mainAxisSpacing: 10,
+//      mainAxisSpacing: 10,
 //      crossAxisCount: 7,
 //      shrinkWrap: true,
 //      children: habitDayButtons,
