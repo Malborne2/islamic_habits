@@ -31,22 +31,22 @@ class Habit {
   });
 
   Status getStatus(DateTime day) {
-    if (!habitData.containsKey(DateFormat('yyyy-MM-DD').format(day)))
+    if (!habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)))
       return Status.NO_DATA;
     else {
       if (type == HabitType.YES_NO) {
-        if (habitData[DateFormat('yyyy-MM-DD').format(day)].values.first == 1)
+        if (habitData[DateFormat('yyyy-MM-dd').format(day)].values.first == 1)
           return Status.SUCCESS;
         else
           return Status.FAIL;
       } else if (criteria == Criteria.EXACTLY &&
-              habitData[DateFormat('yyyy-MM-DD').format(day)].values.first ==
+              habitData[DateFormat('yyyy-MM-dd').format(day)].values.first ==
                   successValue ||
           criteria == Criteria.AT_LEAST &&
-              habitData[DateFormat('yyyy-MM-DD').format(day)].values.first >=
+              habitData[DateFormat('yyyy-MM-dd').format(day)].values.first >=
                   successValue ||
           criteria == Criteria.NOT_MORE_THAN &&
-              habitData[DateFormat('yyyy-MM-DD').format(day)].values.first <=
+              habitData[DateFormat('yyyy-MM-dd').format(day)].values.first <=
                   successValue)
         return Status.SUCCESS;
       else
@@ -55,15 +55,15 @@ class Habit {
   }
 
   double getHabitDataValue(DateTime day) {
-    if (!habitData.containsKey(DateFormat('yyyy-MM-DD').format(day)))
+    if (!habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)))
       return null;
     else {
-      return habitData[DateFormat('yyyy-MM-DD').format(day)].values.first;
+      return habitData[DateFormat('yyyy-MM-dd').format(day)].values.first;
     }
   }
 
   bool hasData(DateTime day) {
-    if (!habitData.containsKey(DateFormat('yyyy-MM-DD').format(day)))
+    if (!habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)))
       return false;
     else {
       return true;
@@ -71,30 +71,42 @@ class Habit {
   }
 
   double getSuccessPercentage(DateTime day) {
-    if (!habitData.containsKey(DateFormat('yyyy-MM-DD').format(day)) ||
+    if (!habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)) ||
         type == HabitType.YES_NO)
       return null;
     else {
       return 100 *
-          habitData[DateFormat('yyyy-MM-DD').format(day)].values.first /
+          habitData[DateFormat('yyyy-MM-dd').format(day)].values.first /
           successValue;
     }
   }
 
+  int getCurrentStreak() {
+    if (habitData.isEmpty) return 0;
+
+    print(habitData.keys.last);
+    print(habitData[habitData.keys.last].keys.first.toIso8601String());
+    print(habitData[habitData.keys.last].values.first);
+    return 0;
+  }
+
   void setHabitDataValue(DateTime day, double value) {
     if (value == null) {
-      habitData.remove(DateFormat('yyyy-MM-DD').format(day));
-    } else if (habitData.containsKey(day)) {
-      habitData[DateFormat('yyyy-MM-DD').format(day)][
-          habitData[DateFormat('yyyy-MM-DD').format(day)]
+      habitData.remove(DateFormat('yyyy-MM-dd').format(day));
+    } else if (habitData.containsKey(DateFormat('yyyy-MM-dd').format(day))) {
+      habitData[DateFormat('yyyy-MM-dd').format(day)][
+          habitData[DateFormat('yyyy-MM-dd').format(day)]
               .keys
               .toList()
               .first] = value;
     } else
       habitData.addAll({
-        DateFormat('yyyy-MM-DD').format(day): {DateTime.now(): value}
+        DateFormat('yyyy-MM-dd').format(day): {day: value}
       });
 
+    print(habitData.keys.last);
+    print(habitData[habitData.keys.last].keys.first.toIso8601String());
+    print(habitData[habitData.keys.last].values.first);
 //    print('$day: $value');
   }
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 List<String> kPrayersNames = [
-  'Al-Fajir',
-  'Al-DHuhr',
-  'Al-Asr',
-  'Al-Magrib',
-  'Al-Isha',
+  'Al Fajir',
+  'Al DHuhr',
+  'Al Asr',
+  'Al Magrib',
+  'Al Isha',
 ];
 
 List<String> kDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -18,7 +18,20 @@ List<String> kMetricNames = [
   'Monthly Average'
 ];
 
-int kStartOfWeek = 5;
+int kStartOfWeek = DateTime.friday;
+
+const kHabitColors = [
+//  Colors.red,
+  Color(0xFFEB5757),
+  Color(0xFFF2994A),
+  Color(0xFF2D9CDB),
+  Color(0xFFB94680),
+  Color(0xFF651E3E),
+  Color(0xFF27AE60),
+  Color(0xFF854085),
+  Color(0xFFFF8566),
+  Color(0xFF36C9A2),
+];
 
 const kTextFieldDecoration = InputDecoration(
   hintStyle: TextStyle(color: Colors.grey),

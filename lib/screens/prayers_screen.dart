@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:islamic_habits/components/habit_drawer.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:adhan_flutter/adhan_flutter.dart';
 import 'package:hijri/umm_alqura_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:islamic_habits/utility/habit.dart';
 
 class PrayersScreen extends StatefulWidget {
+  final List<Habit> habits;
+  PrayersScreen({@required this.habits});
   @override
   _PrayersScreenState createState() => _PrayersScreenState();
 }
@@ -67,44 +71,8 @@ class _PrayersScreenState extends State<PrayersScreen> {
       appBar: AppBar(
         title: Text('Prayer times'),
       ),
-      drawer: Drawer(
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              padding: EdgeInsets.all(0),
-              child: ListTile(
-                contentPadding: EdgeInsets.all(0),
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  color: Theme.of(context).iconTheme.color,
-                  onPressed: Navigator.of(context).pop,
-                ),
-                title: Text('Drawer Header'),
-              ),
-//              margin: EdgeInsets.all(2),
-//              padding: EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-          ],
-        ),
+      drawer: HabitDrawer(
+        habits: widget.habits,
       ),
       body: Column(
         children: <Widget>[

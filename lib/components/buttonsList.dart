@@ -52,7 +52,7 @@ class _ButtonsListState extends State<ButtonsList> {
     return value;
   }
 
-  onButtonPressed(DateTime day, double value) async {
+  onButtonPressed(DateTime day) async {
     if (widget.habit.type == HabitType.YES_NO) {
       setState(() {
         if (widget.habit.getHabitDataValue(day) == null)
@@ -155,8 +155,12 @@ class _ButtonsListState extends State<ButtonsList> {
                         onPressed: isTodayOrBefore(date)
                             ? () {
                                 setState(() {
-                                  onButtonPressed(date, null);
-                                  //TODO implement value selection by user
+                                  DateTime now = DateTime.now();
+                                  onButtonPressed(date.add(Duration(
+                                      hours: now.hour,
+                                      minutes: now.minute,
+                                      seconds: now.second,
+                                      milliseconds: now.millisecond)));
                                 });
                               }
                             : () {},

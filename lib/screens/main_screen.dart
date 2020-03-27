@@ -1,7 +1,11 @@
 import 'package:adhan_flutter/adhan_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:islamic_habits/components/habit_drawer.dart';
+import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
+import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/constants.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -16,6 +20,64 @@ class _MainScreenState extends State<MainScreen> {
       calculationMethod: CalculationMethod.QATAR,
       dateTime: DateTime.now());
 
+  final List<Habit> islamicHabits = List.generate(
+      6,
+      (i) => Habit(
+          name: i < kPrayersNames.length
+              ? '${kPrayersNames[i]} Prayer'
+              : 'Reciting the Quran',
+          color: kHabitColors[i % kHabitColors.length],
+          habitData: {},
+          successValue: i < kPrayersNames.length ? 1 : 20,
+          criteria: Criteria.AT_LEAST,
+          type:
+              i < kPrayersNames.length ? HabitType.YES_NO : HabitType.NUMBER));
+
+//  [
+//    Habit(
+//        name: 'Al Fajir Prayer',
+//        color: Colors.redAccent,
+//        habitData: {},
+//        successValue: 1,
+//        criteria: Criteria.AT_LEAST,
+//        type: HabitType.YES_NO),
+//    Habit(
+//        name: 'Al Dhuhr Prayer',
+//        color: Colors.redAccent,
+//        habitData: {},
+//        successValue: 1,
+//        criteria: Criteria.AT_LEAST,
+//        type: HabitType.YES_NO),
+//    Habit(
+//        name: 'Al Asr Prayer',
+//        color: Colors.redAccent,
+//        habitData: {},
+//        successValue: 1,
+//        criteria: Criteria.AT_LEAST,
+//        type: HabitType.YES_NO),
+//    Habit(
+//        name: 'Al Magrib Prayer',
+//        color: Colors.redAccent,
+//        habitData: {},
+//        successValue: 1,
+//        criteria: Criteria.AT_LEAST,
+//        type: HabitType.YES_NO),
+//    Habit(
+//        name: 'Al Ishaa Prayer',
+//        color: Colors.redAccent,
+//        habitData: {},
+//        successValue: 1,
+//        criteria: Criteria.AT_LEAST,
+//        type: HabitType.YES_NO),
+//    Habit(
+//        name: 'Reciting the Quran',
+//        color: Colors.redAccent,
+//        habitData: {},
+//        successValue: 20,
+//        criteria: Criteria.AT_LEAST,
+//        type: HabitType.NUMBER),
+//  ];
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +88,9 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Islamic Habits'),
+      ),
+      drawer: HabitDrawer(
+        habits: islamicHabits,
       ),
       body: Container(
         padding: EdgeInsets.all(8),

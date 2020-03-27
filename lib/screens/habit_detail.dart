@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:islamic_habits/screens/habit_page.dart';
-import 'package:islamic_habits/screens/prayers_screen.dart';
+import 'package:islamic_habits/components/habit_drawer.dart';
+import 'package:islamic_habits/components/habit_page.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
@@ -12,6 +12,9 @@ import 'package:intl/intl.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class HabitDetail extends StatefulWidget {
+  final Habit habit;
+  final List<Habit> habits;
+  HabitDetail({@required this.habit, @required this.habits});
   @override
   _HabitDetailState createState() => _HabitDetailState();
 }
@@ -27,13 +30,13 @@ class _HabitDetailState extends State<HabitDetail> {
       calculationMethod: CalculationMethod.QATAR,
       dateTime: DateTime.now());
 
-  final Habit myHabit = Habit(
-      name: 'Al Fajir Prayer',
-      color: Colors.redAccent,
-      habitData: {},
-      successValue: 20,
-      criteria: Criteria.AT_LEAST,
-      type: HabitType.NUMBER);
+//  final Habit myHabit = Habit(
+//      name: 'Al Fajir Prayer',
+//      color: Colors.redAccent,
+//      habitData: {},
+//      successValue: 20,
+//      criteria: Criteria.AT_LEAST,
+//      type: HabitType.NUMBER);
   List<HabitPage> habitPages;
 
   ummAlquraCalendar hijriFirstDay;
@@ -53,7 +56,7 @@ class _HabitDetailState extends State<HabitDetail> {
 //      print(date);
 
       HabitPage myPage = HabitPage(
-        habit: myHabit,
+        habit: widget.habit,
         currentDate: date,
       );
       date = date.add(
@@ -73,6 +76,7 @@ class _HabitDetailState extends State<HabitDetail> {
 
   @override
   Widget build(BuildContext context) {
+    widget.habit.getCurrentStreak();
     List<Widget> metrics = List.generate(
         kMetricNames.length,
         (i) => Padding(
@@ -88,8 +92,8 @@ class _HabitDetailState extends State<HabitDetail> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(myHabit.name),
-        backgroundColor: myHabit.color,
+        title: Text(widget.habit.name),
+        backgroundColor: widget.habit.color,
         actions: <Widget>[
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -109,47 +113,8 @@ class _HabitDetailState extends State<HabitDetail> {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              padding: EdgeInsets.all(0),
-              child: ListTile(
-                contentPadding: EdgeInsets.all(0),
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  color: Theme.of(context).iconTheme.color,
-                  onPressed: Navigator.of(context).pop,
-                ),
-                title: Text('Islamic Habits'),
-              ),
-//              margin: EdgeInsets.all(2),
-//              padding: EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            ListTile(
-              title: Text('Prayers'),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PrayersScreen()));
-                // ...
-              },
-            ),
-            ListTile(
-              title: Text('Al Fajir'),
-              onTap: () {
-                // Update the state of the app.
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HabitDetail()));
-              },
-            ),
-          ],
-        ),
+      drawer: HabitDrawer(
+        habits: widget.habits,
       ),
       body: ListView(
         children: <Widget>[
@@ -220,7 +185,7 @@ class _HabitDetailState extends State<HabitDetail> {
                     if (index == habitPages.length - 1) {
 //                      print(currentDate.toIso8601String());
                       habitPages.add(HabitPage(
-                        habit: myHabit,
+                        habit: widget.habit,
                         currentDate: currentDate
                             .add(Duration(days: daysOfMonth(currentDate))),
                       ));
@@ -245,10 +210,10 @@ class _HabitDetailState extends State<HabitDetail> {
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
             child: Material(
               elevation: 0,
-              color: myHabit.color.withAlpha(50),
+              color: widget.habit.color.withAlpha(50),
               shape: RoundedRectangleBorder(
-                side:
-                    BorderSide(width: 1, color: myHabit.color.withOpacity(0.5)),
+                side: BorderSide(
+                    width: 1, color: widget.habit.color.withOpacity(0.5)),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Container(
