@@ -52,9 +52,6 @@ class _HabitDetailState extends State<HabitDetail> {
     DateTime date = DateTime(1971, 1);
     habitPages = List.generate(
         (12 * (currentDate.year - 1971) + currentDate.month + 1), (i) {
-//      print(i % 13);
-//      print(date);
-
       HabitPage myPage = HabitPage(
         habit: widget.habit,
         currentDate: date,
@@ -166,15 +163,13 @@ class _HabitDetailState extends State<HabitDetail> {
             ),
           ),
           SizedBox(
-            height: 8 * (MediaQuery.of(context).size.width / 9) +
-                20, //Calculation for the total height of the buttons list
+            height: 6 * (MediaQuery.of(context).size.width / 9 + 8) +
+                65, //Calculation for the total height of the buttons list
             child: PageView(
               controller: controller,
               children: habitPages,
               onPageChanged: (index) {
-//                print('controller: ${controller.page.floor()}');
                 setState(() {
-//                  print(currentDate.toIso8601String());
                   if (index > controller.page.floor()) {
                     currentDate = currentDate
                         .add(Duration(days: daysOfMonth(currentDate)));

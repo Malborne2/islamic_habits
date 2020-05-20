@@ -45,7 +45,7 @@ class _HabitPageState extends State<HabitPage> {
         ),
         ButtonsList(
           length: daysOfMonth(widget.currentDate),
-          startOfWeek: DateTime.friday,
+          startOfWeek: Habit.startOfWeek,
           habit: widget.habit,
           failColor: Theme.of(context).brightness == Brightness.dark
               ? Colors.brown[800]

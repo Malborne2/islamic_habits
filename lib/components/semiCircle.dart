@@ -16,7 +16,6 @@ class SemiCircle extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     double percentage = completePercent ?? 0;
     percentage = percentage > 100 ? 100 : percentage;
-//    print('Percentage: $percentage');
     double arcAngle = 2 * pi * (percentage / 100);
     Offset center = new Offset(size.width / 2, size.height / 2);
     double radius = min(size.width / 2, size.height / 2);

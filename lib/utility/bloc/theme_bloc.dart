@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import '../app_themes.dart';
-import './bloc.dart';
+import 'package:islamic_habits/utility/Themes/app_themes.dart';
+import 'bloc.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   @override

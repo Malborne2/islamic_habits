@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/screens/habit_detail.dart';
+import 'package:islamic_habits/screens/multi-habit_screen.dart';
 import 'package:islamic_habits/screens/prayers_screen.dart';
 import 'package:islamic_habits/utility/habit.dart';
 
@@ -31,33 +32,53 @@ class HabitDrawer extends StatelessWidget {
         onTap: () {
           // Update the state of the app.
           if (ModalRoute.of(context)?.settings?.name != '/PrayersScreen') {
+            Navigator.pop(context);
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => PrayersScreen(
-                          habits: habits,
+                          habits: habits ?? [],
                         ),
                     settings: RouteSettings(name: '/PrayersScreen')));
           } else
             Navigator.of(context).pop();
         },
       ),
+      ListTile(
+        title: Text('All habits'),
+        onTap: () {
+          // Update the state of the app.
+          if (ModalRoute.of(context)?.settings?.name !=
+              '/SeveralHabitsScreen') {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SeveralHabitsScreen(
+                          habits: habits ?? [],
+                        ),
+                    settings: RouteSettings(name: '/SeveralHabitsScreen')));
+          } else
+            Navigator.of(context).pop();
+        },
+      ),
     ];
-    for (Habit habit in habits) {
+    for (Habit habit in habits ?? []) {
       children.add(
         ListTile(
-          title: Text(habit.name),
+          title: Text(habit?.name),
           onTap: () {
             // Update the state of the app.
-            if (ModalRoute.of(context)?.settings?.name != '/${habit.name}') {
+            if (ModalRoute.of(context)?.settings?.name != '/${habit?.name}') {
+              Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => HabitDetail(
                       habit: habit,
-                      habits: habits,
+                      habits: habits ?? [],
                     ),
-                    settings: RouteSettings(name: '/${habit.name}'),
+                    settings: RouteSettings(name: '/${habit?.name}'),
                   ));
             } else
               Navigator.of(context).pop();

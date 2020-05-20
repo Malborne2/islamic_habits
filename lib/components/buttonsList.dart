@@ -12,6 +12,7 @@ class ButtonsList extends StatefulWidget {
   final DateTime startDate;
   final Habit habit;
   final int startOfWeek;
+  bool isHabitDetail;
 //  final double wrapHeight;
 //  final Function onPressed;
   final Color failColor;
@@ -24,6 +25,7 @@ class ButtonsList extends StatefulWidget {
 //    @required this.onPressed,
     @required this.habit,
     @required this.failColor,
+    this.isHabitDetail = true,
   });
 }
 
@@ -73,7 +75,7 @@ class _ButtonsListState extends State<ButtonsList> {
   int getWeekDaysDiff() {
     int diff = (widget.startDate.weekday - widget.startOfWeek);
     diff = diff < 0 ? diff += 7 : diff;
-    return diff; //TODO
+    return diff;
   }
 
   bool isHabitButton(int i) {
@@ -98,9 +100,12 @@ class _ButtonsListState extends State<ButtonsList> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> habitDayButtons = List.generate(42, (i) {
+//    print(widget.startDate.toIso8601String());
+    List<Widget> habitDayButtons =
+        List.generate(widget.isHabitDetail ? 42 : 7, (i) {
       DateTime date =
           widget.startDate.add(Duration(days: i - getWeekDaysDiff()));
+
       double width = MediaQuery.of(context).size.width;
 
       double diameter = width / 9;
@@ -154,13 +159,9 @@ class _ButtonsListState extends State<ButtonsList> {
                             widget.habit.getSuccessPercentage(date),
                         onPressed: isTodayOrBefore(date)
                             ? () {
+//                                print('button ${date.day}');
                                 setState(() {
-                                  DateTime now = DateTime.now();
-                                  onButtonPressed(date.add(Duration(
-                                      hours: now.hour,
-                                      minutes: now.minute,
-                                      seconds: now.second,
-                                      milliseconds: now.millisecond)));
+                                  onButtonPressed(date);
                                 });
                               }
                             : () {},

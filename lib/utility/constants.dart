@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 List<String> kPrayersNames = [
   'Al Fajir',
-  'Al DHuhr',
+  'Al Dhuhr',
   'Al Asr',
   'Al Magrib',
   'Al Isha',

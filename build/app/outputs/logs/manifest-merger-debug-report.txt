@@ -5,6 +5,8 @@ INJECTED from E:\GitHub\islamic_habits\android\app\src\main\AndroidManifest.xml:
 INJECTED from E:\GitHub\islamic_habits\android\app\src\main\AndroidManifest.xml:1:1-30:12
 INJECTED from E:\GitHub\islamic_habits\android\app\src\main\AndroidManifest.xml:1:1-30:12
 MERGED from E:\GitHub\islamic_habits\android\app\src\main\AndroidManifest.xml:1:1-30:12
+MERGED from [:path_provider] E:\GitHub\islamic_habits\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:path_provider_macos] E:\GitHub\islamic_habits\build\path_provider_macos\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:fluttertoast] E:\GitHub\islamic_habits\build\fluttertoast\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:shared_preferences] E:\GitHub\islamic_habits\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:shared_preferences_web] E:\GitHub\islamic_habits\build\shared_preferences_web\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
@@ -99,6 +101,10 @@ uses-sdk
 INJECTED from E:\GitHub\islamic_habits\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from E:\GitHub\islamic_habits\android\app\src\main\AndroidManifest.xml
 INJECTED from E:\GitHub\islamic_habits\android\app\src\main\AndroidManifest.xml
+MERGED from [:path_provider] E:\GitHub\islamic_habits\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider] E:\GitHub\islamic_habits\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_macos] E:\GitHub\islamic_habits\build\path_provider_macos\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_macos] E:\GitHub\islamic_habits\build\path_provider_macos\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:fluttertoast] E:\GitHub\islamic_habits\build\fluttertoast\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:fluttertoast] E:\GitHub\islamic_habits\build\fluttertoast\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences] E:\GitHub\islamic_habits\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44

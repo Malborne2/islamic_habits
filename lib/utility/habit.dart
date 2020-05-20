@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:islamic_habits/components/habit_button.dart';
+import 'package:islamic_habits/utility/data_access_object.dart';
 
 class Habit {
+  int id;
   String name;
   String description;
   Color color;
   HabitType type;
   DateTime createdTime = DateTime.now();
-  Map<String, Map<DateTime, double>> habitData;
+  Map<String, Map<String, double>> habitData;
   Criteria criteria;
   double successValue; //The success of a habit
   int successTarget; //Number of days until the habit is achieved
-  int startOfWeek = DateTime.friday;
-  HabitDays habitDays;
-  List<int> habitPeriod;
+  static int startOfWeek = DateTime.friday;
+  HabitDays habitDays; //Everyday, some days of the week or repeating
+  List<int> habitPeriod; //The list of days in the week the habit is active
 
   Habit({
     @required this.name,
@@ -27,11 +29,62 @@ class Habit {
     @required this.criteria,
     this.description = '',
     this.createdTime,
+//    this.startOfWeek = DateTime.friday,
     this.habitData,
   });
 
+  Map<String, dynamic> toMap() {
+    if (habitData == null) habitData = {};
+    return {
+      'name': name,
+      'description': description,
+      'color': color.value,
+      'type': type.toString(),
+      'createdTime': createdTime?.millisecondsSinceEpoch ??
+          DateTime.now().millisecondsSinceEpoch,
+      'dataKeys': habitData.keys.toList(),
+      'habitTimeStamp': habitData.values.map((f) => f.keys.first).toList(),
+      'habitData': habitData.values.map((f) => f.values.first).toList(),
+      'criteria': criteria.toString(),
+      'successValue': successValue,
+      'successTarget': successTarget,
+      'startOfWeek': startOfWeek,
+      'habitDays': habitDays.toString(),
+      'habitPeriod': habitPeriod,
+    };
+  }
+
+  static Habit fromMap(Map<String, dynamic> map) {
+    Map<String, Map<String, double>> habitData = {};
+    if (map['dataKeys'] != null && map['habitData'].length > 0) {
+      for (int i = 0; i < map['dataKeys'].length; i++) {
+        habitData.addAll({
+          map['dataKeys'][i]: {map['habitTimeStamp'][i]: map['habitData'][i]}
+        });
+      }
+    }
+    startOfWeek = map['startOfWeek'];
+
+    return Habit(
+      name: map['name'],
+      description: map['description'],
+      color: Color(map['color']),
+      type: HabitType.values.firstWhere((e) => e.toString() == map['type']),
+      createdTime: DateTime.fromMillisecondsSinceEpoch(map['createdTime']),
+      habitData: habitData,
+      criteria:
+          Criteria.values.firstWhere((e) => e.toString() == map['criteria']),
+      successValue: map['successValue'],
+      successTarget: map['successTarget'],
+      habitDays:
+          HabitDays.values.firstWhere((e) => e.toString() == map['habitDays']),
+      habitPeriod: map['habitPeriod'],
+    );
+  }
+
   Status getStatus(DateTime day) {
-    if (!habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)))
+    if (habitData == null ||
+        !habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)))
       return Status.NO_DATA;
     else {
       if (type == HabitType.YES_NO) {
@@ -55,7 +108,8 @@ class Habit {
   }
 
   double getHabitDataValue(DateTime day) {
-    if (!habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)))
+    if (habitData == null ||
+        !habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)))
       return null;
     else {
       return habitData[DateFormat('yyyy-MM-dd').format(day)].values.first;
@@ -63,7 +117,8 @@ class Habit {
   }
 
   bool hasData(DateTime day) {
-    if (!habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)))
+    if (habitData == null ||
+        !habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)))
       return false;
     else {
       return true;
@@ -71,7 +126,8 @@ class Habit {
   }
 
   double getSuccessPercentage(DateTime day) {
-    if (!habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)) ||
+    if (habitData == null ||
+        !habitData.containsKey(DateFormat('yyyy-MM-dd').format(day)) ||
         type == HabitType.YES_NO)
       return null;
     else {
@@ -82,18 +138,17 @@ class Habit {
   }
 
   int getCurrentStreak() {
-    if (habitData.isEmpty) return 0;
+    if (habitData == null || habitData.isEmpty) return 0;
 
-    print(habitData.keys.last);
-    print(habitData[habitData.keys.last].keys.first.toIso8601String());
-    print(habitData[habitData.keys.last].values.first);
     return 0;
   }
 
   void setHabitDataValue(DateTime day, double value) {
+    if (habitData == null) habitData = {};
     if (value == null) {
       habitData.remove(DateFormat('yyyy-MM-dd').format(day));
-    } else if (habitData.containsKey(DateFormat('yyyy-MM-dd').format(day))) {
+    } else if (habitData != null &&
+        habitData.containsKey(DateFormat('yyyy-MM-dd').format(day))) {
       habitData[DateFormat('yyyy-MM-dd').format(day)][
           habitData[DateFormat('yyyy-MM-dd').format(day)]
               .keys
@@ -101,13 +156,12 @@ class Habit {
               .first] = value;
     } else
       habitData.addAll({
-        DateFormat('yyyy-MM-dd').format(day): {day: value}
+        DateFormat('yyyy-MM-dd').format(day): {
+          DateTime.now().millisecondsSinceEpoch.toString(): value
+        } //set to now because this is the value added date as opposed to the registered date string used for the first map
       });
 
-    print(habitData.keys.last);
-    print(habitData[habitData.keys.last].keys.first.toIso8601String());
-    print(habitData[habitData.keys.last].values.first);
-//    print('$day: $value');
+    HabitDao().updateHabit(this); // Update the data in the local database
   }
 
   bool isHabitDay(DateTime today) {

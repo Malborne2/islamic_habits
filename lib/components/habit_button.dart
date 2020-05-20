@@ -23,7 +23,6 @@ class HabitButton extends StatelessWidget {
   });
 
   bool isSuccess() {
-    print(status.toString());
     if (status == Status.SUCCESS)
       return true;
     else
@@ -52,7 +51,7 @@ class HabitButton extends StatelessWidget {
               color: isSuccess()
                   ? successColor.withOpacity(0.8)
                   : Colors.transparent,
-              width: 3),
+              width: 2.5),
         ),
         elevation: 0,
         child: Text(
@@ -69,7 +68,6 @@ class HabitButton extends StatelessWidget {
       );
     } else {
       //Number
-//      print('Success percentage: $successPercentage');
       return Stack(
         alignment: AlignmentDirectional.center,
         children: <Widget>[
