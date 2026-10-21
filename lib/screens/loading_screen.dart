@@ -60,6 +60,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             builder: (context) => MainScreen(
               islamicHabits: islamicHabits,
             ),
+            settings: const RouteSettings(name: '/MainScreen'),
           ));
     }
     setState(() {

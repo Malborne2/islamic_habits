@@ -11,7 +11,18 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 class SeveralHabitsScreen extends StatefulWidget {
   final List<Habit> habits;
-  const SeveralHabitsScreen({super.key, required this.habits});
+  final List<Habit>? allHabits;
+  final String title;
+  final Color color;
+  final bool showAddButton;
+  const SeveralHabitsScreen({
+    super.key,
+    required this.habits,
+    this.allHabits,
+    this.title = 'All habits',
+    this.color = Colors.teal,
+    this.showAddButton = true,
+  });
   @override
   _SeveralHabitsScreenState createState() => _SeveralHabitsScreenState();
 }
@@ -78,8 +89,8 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All habits'),
-        backgroundColor: Colors.teal,
+        title: Text(widget.title),
+        backgroundColor: widget.color,
         actions: <Widget>[
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -100,12 +111,14 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
         ],
       ),
       drawer: HabitDrawer(
-        habits: widget.habits,
+        habits: widget.allHabits ?? widget.habits,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addHabit,
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: widget.showAddButton
+          ? FloatingActionButton(
+              onPressed: _addHabit,
+              child: const Icon(Icons.add),
+            )
+          : null,
       body: Column(
         children: [
           Container(
