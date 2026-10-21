@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/screens/add_habit_screen.dart';
 import 'package:islamic_habits/screens/habit_detail.dart';
 import 'package:islamic_habits/screens/multi-habit_screen.dart';
@@ -6,6 +7,7 @@ import 'package:islamic_habits/screens/prayers_screen.dart';
 import 'package:islamic_habits/screens/settings_screen.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/habit_name_localizer.dart';
 
 class HabitDrawer extends StatelessWidget {
   final List<Habit> habits;
@@ -48,6 +50,7 @@ class HabitDrawer extends StatelessWidget {
   }
 
   List<Widget> generateChildren(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     List<Widget> children = [
       DrawerHeader(
         padding: EdgeInsets.zero,
@@ -64,7 +67,7 @@ class HabitDrawer extends StatelessWidget {
                 color: Theme.of(context).iconTheme.color,
                 onPressed: Navigator.of(context).pop,
               ),
-              title: const Text('Islamic Habits'),
+              title: Text(l10n.appTitle),
               trailing: IconButton(
                 icon: const Icon(Icons.settings),
                 color: Theme.of(context).iconTheme.color,
@@ -88,7 +91,7 @@ class HabitDrawer extends StatelessWidget {
                     Icon(Icons.add_circle_outline,
                         color: Theme.of(context).iconTheme.color),
                     const SizedBox(width: 12),
-                    Text('Add new habit',
+                    Text(l10n.navAddHabit,
                         style: TextStyle(
                             color: Theme.of(context).iconTheme.color,
                             fontWeight: FontWeight.bold)),
@@ -101,16 +104,16 @@ class HabitDrawer extends StatelessWidget {
       ),
       ListTile(
         leading: const Icon(Icons.home_outlined),
-        title: const Text('Home'),
+        title: Text(l10n.navHome),
         onTap: () => _goHome(context),
       ),
       ListTile(
-        title: const Text('Prayer times'),
+        title: Text(l10n.navPrayerTimes),
         onTap: () => _navigateTo(context, '/PrayersScreen',
             (context) => PrayersScreen(habits: habits)),
       ),
       ListTile(
-        title: const Text('All habits'),
+        title: Text(l10n.navAllHabits),
         onTap: () => _navigateTo(context, '/SeveralHabitsScreen',
             (context) => SeveralHabitsScreen(habits: habits)),
       ),
@@ -124,14 +127,14 @@ class HabitDrawer extends StatelessWidget {
 
     if (prayerHabits.isNotEmpty) {
       children.add(ListTile(
-        title: const Text('The five prayers'),
+        title: Text(l10n.navFivePrayers),
         onTap: () => _navigateTo(
             context,
             '/FivePrayersScreen',
             (context) => SeveralHabitsScreen(
                   habits: prayerHabits,
                   allHabits: habits,
-                  title: 'The five prayers',
+                  title: l10n.navFivePrayers,
                   color: Colors.blueGrey,
                   showAddButton: false,
                 )),
@@ -141,7 +144,7 @@ class HabitDrawer extends StatelessWidget {
     for (Habit habit in otherHabits) {
       children.add(
         ListTile(
-          title: Text(habit.name),
+          title: Text(localizedHabitName(context, habit.name)),
           onTap: () => _navigateTo(context, '/${habit.name}',
               (context) => HabitDetail(habit: habit, habits: habits)),
         ),

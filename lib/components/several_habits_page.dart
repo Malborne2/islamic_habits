@@ -3,7 +3,9 @@ import 'package:islamic_habits/components/buttonsList.dart';
 import 'package:islamic_habits/screens/habit_detail.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/constants.dart';
+import 'package:islamic_habits/utility/habit_name_localizer.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
+import 'package:islamic_habits/utility/weekday_localizer.dart';
 
 class SeveralHabitsPage extends StatefulWidget {
   final DateTime currentDate;
@@ -30,7 +32,9 @@ class _SeveralHabitsPageState extends State<SeveralHabitsPage> {
             7,
             (i) => SizedBox(
                 width: itemWidth,
-                child: Center(child: Text(kDays[(kStartOfWeek + i) % 7]))),
+                child: Center(
+                    child: Text(localizedWeekdayShort(
+                        context, weekdayForColumn(kStartOfWeek, i))))),
           ),
         ),
       )
@@ -53,7 +57,7 @@ class _SeveralHabitsPageState extends State<SeveralHabitsPage> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Text(
-                habit.name,
+                localizedHabitName(context, habit.name),
                 style: TextStyle(color: habit.color),
               )),
         ))

@@ -1,36 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:islamic_habits/utility/numeral_settings.dart';
 
 class PrayerTime extends StatelessWidget {
-  final Future<DateTime> prayerTime;
+  final DateTime prayerTime;
 
-  PrayerTime({@required this.prayerTime});
+  const PrayerTime({super.key, required this.prayerTime});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15),
-      child: FutureBuilder(
-        future: prayerTime,
-        builder: (context, AsyncSnapshot<DateTime> snapshot) {
-          if (snapshot.hasData) {
-            final dateTime = snapshot.data.toLocal();
-            return Text(
-              DateFormat.jm().format(dateTime),
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            );
-          } else if (snapshot.hasError) {
-            print(snapshot.error.toString());
-            return Text(
-              'error',
-              style: TextStyle(color: Theme.of(context).errorColor),
-            );
-          } else {
-            return Text('');
-          }
-        },
+      padding: const EdgeInsets.all(15),
+      child: Text(
+        localizeDigits(
+            context,
+            DateFormat.jm(Localizations.localeOf(context).toString())
+                .format(prayerTime)),
+        textAlign: TextAlign.end,
+        style: const TextStyle(fontSize: 18),
       ),
     );
   }

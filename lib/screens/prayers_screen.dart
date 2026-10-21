@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/components/habit_drawer.dart';
-import 'package:islamic_habits/utility/constants.dart';
+import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
+import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
 import 'package:hijri/hijri_calendar.dart';
@@ -69,24 +70,33 @@ class _PrayersScreenState extends State<PrayersScreen> {
     }
   }
 
-  String _labelForMode(PrayerNotifyMode mode) {
+  String _labelForMode(BuildContext context, PrayerNotifyMode mode) {
+    final l10n = AppLocalizations.of(context);
     switch (mode) {
       case PrayerNotifyMode.notify:
-        return 'Notify';
+        return l10n.notifyMode;
       case PrayerNotifyMode.silent:
-        return 'Silent';
+        return l10n.silentMode;
       case PrayerNotifyMode.adhan:
-        return 'Adhan';
+        return l10n.adhanMode;
     }
   }
 
   Widget createPrayersTable(PrayerHelper prayerHelper) {
+    final l10n = AppLocalizations.of(context);
+    final localizedPrayerNames = [
+      l10n.prayerFajr,
+      l10n.prayerDhuhr,
+      l10n.prayerAsr,
+      l10n.prayerMaghrib,
+      l10n.prayerIsha,
+    ];
     List<Widget> prayersTimes = prayerHelper.getAllPrayersTime();
     List<Widget> notificationIcons = List.generate(
       5,
       (index) => IconButton(
         icon: Icon(_iconForMode(PrayerSettings.prayerModes[index])),
-        tooltip: _labelForMode(PrayerSettings.prayerModes[index]),
+        tooltip: _labelForMode(context, PrayerSettings.prayerModes[index]),
         onPressed: () => _cyclePrayerMode(index),
         color: Theme.of(context).textTheme.bodyLarge?.color,
       ),
@@ -94,7 +104,7 @@ class _PrayersScreenState extends State<PrayersScreen> {
     List<Widget> prayersNames = List.generate(
       5,
       (index) => Text(
-        kPrayersNames[index],
+        localizedPrayerNames[index],
         style: const TextStyle(fontSize: 16),
       ),
     );
@@ -119,12 +129,15 @@ class _PrayersScreenState extends State<PrayersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    HijriCalendar.setLocal(locale == 'ar' ? 'ar' : 'en');
     final prayerHelper = PrayerHelper.fromSettings(dateTime: _selectedDate);
     final hijriDate = HijriCalendar.fromDate(_selectedDate);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Prayer times'),
+        title: Text(l10n.navPrayerTimes),
       ),
       drawer: HabitDrawer(
         habits: widget.habits,
@@ -143,12 +156,16 @@ class _PrayersScreenState extends State<PrayersScreen> {
                 onTap: _goToToday,
                 child: ListTile(
                   title: Center(
-                      child: Text(hijriDate.toFormat("MMMM dd yyyy"))),
+                      child: Text(localizeDigits(context,
+                          hijriDate.toFormat("MMMM dd yyyy")))),
                   subtitle: Center(
                     child: Text(
-                      _isToday
-                          ? 'Today, ${DateFormat('MMM d yyyy').format(_selectedDate)}'
-                          : DateFormat('EEE, MMM d yyyy').format(_selectedDate),
+                      localizeDigits(
+                          context,
+                          _isToday
+                              ? '${l10n.todayLabel} ${DateFormat('MMM d yyyy', locale).format(_selectedDate)}'
+                              : DateFormat('EEE, MMM d yyyy', locale)
+                                  .format(_selectedDate)),
                     ),
                   ),
                 ),

@@ -5,7 +5,10 @@ This app can play a custom sound when a prayer's reminder is set to the
 plays this sound as part of the notification itself, so the app doesn't
 need to be open or even running.
 
-To enable it, add your own licensed audio files here, named exactly:
+To enable it, add your own licensed audio files to
+`android/app/src/main/res/raw/`, named exactly (lowercase, no spaces —
+Android resource file names only allow lowercase letters, digits and
+underscores):
 
 - `takbeer.mp3` — a short clip for the "Takbeer only" voice setting
 - `adhan_full.mp3` — the full call to prayer for the "Full Adhan" voice setting

@@ -1,14 +1,64 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
+import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
 
-String _calculationMethodLabel(CalculationMethod method) {
-  return method.name
-      .split('_')
-      .map((w) => w.isEmpty ? w : w[0].toUpperCase() + w.substring(1))
-      .join(' ');
+String _calculationMethodLabel(AppLocalizations l10n, CalculationMethod method) {
+  switch (method) {
+    case CalculationMethod.muslim_world_league:
+      return l10n.methodMuslimWorldLeague;
+    case CalculationMethod.egyptian:
+      return l10n.methodEgyptian;
+    case CalculationMethod.karachi:
+      return l10n.methodKarachi;
+    case CalculationMethod.umm_al_qura:
+      return l10n.methodUmmAlQura;
+    case CalculationMethod.dubai:
+      return l10n.methodDubai;
+    case CalculationMethod.moon_sighting_committee:
+      return l10n.methodMoonSightingCommittee;
+    case CalculationMethod.north_america:
+      return l10n.methodNorthAmerica;
+    case CalculationMethod.kuwait:
+      return l10n.methodKuwait;
+    case CalculationMethod.qatar:
+      return l10n.methodQatar;
+    case CalculationMethod.singapore:
+      return l10n.methodSingapore;
+    case CalculationMethod.turkey:
+      return l10n.methodTurkey;
+    case CalculationMethod.tehran:
+      return l10n.methodTehran;
+    case CalculationMethod.other:
+      return l10n.methodOther;
+  }
+}
+
+String _localizedCityName(AppLocalizations l10n, String name) {
+  switch (name) {
+    case 'Doha':
+      return l10n.cityDoha;
+    case 'Mecca':
+      return l10n.cityMecca;
+    case 'Medina':
+      return l10n.cityMedina;
+    case 'Cairo':
+      return l10n.cityCairo;
+    case 'Istanbul':
+      return l10n.cityIstanbul;
+    case 'Jakarta':
+      return l10n.cityJakarta;
+    case 'Karachi':
+      return l10n.cityKarachi;
+    case 'London':
+      return l10n.cityLondon;
+    case 'New York':
+      return l10n.cityNewYork;
+    default:
+      return l10n.cityCustom;
+  }
 }
 
 class PrayerSettingsScreen extends StatefulWidget {
@@ -90,8 +140,9 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
     if (value) {
       final granted = await NotificationService.requestPermission();
       if (!granted && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Notification permission was not granted')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text(AppLocalizations.of(context).notificationPermissionDenied)));
       }
     }
     setState(() => _remindersEnabled = value);
@@ -101,39 +152,39 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Prayer time settings')),
+      appBar: AppBar(title: Text(l10n.settingsPrayerTimeSettings)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: <Widget>[
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Prayer reminders'),
-            subtitle: const Text(
-                '30 minutes after each prayer, ask whether you prayed'),
+            title: Text(l10n.prayerRemindersLabel),
+            subtitle: Text(l10n.prayerRemindersSubtitle),
             value: _remindersEnabled,
             onChanged: _onRemindersChanged,
           ),
           TextButton(
             onPressed: NotificationService.sendTestNotification,
-            child: const Text('Send a test reminder now'),
+            child: Text(l10n.sendTestReminder),
           ),
           const SizedBox(height: 8),
-          const Text('Adhan voice', style: TextStyle(fontWeight: FontWeight.bold)),
-          const Text(
-            'Used for prayers set to the microphone (adhan) bell icon on '
-            'the Prayer times screen.',
-            style: TextStyle(fontSize: 12),
+          Text(l10n.adhanVoiceLabel,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(
+            l10n.adhanVoiceHint,
+            style: const TextStyle(fontSize: 12),
           ),
           const SizedBox(height: 8),
           DropdownButtonFormField<AdhanVoice>(
             initialValue: _adhanVoice,
             decoration: kTextFieldDecoration,
-            items: const [
+            items: [
               DropdownMenuItem(
-                  value: AdhanVoice.takbeer, child: Text('Takbeer only')),
+                  value: AdhanVoice.takbeer, child: Text(l10n.takbeerOnly)),
               DropdownMenuItem(
-                  value: AdhanVoice.full, child: Text('Full Adhan')),
+                  value: AdhanVoice.full, child: Text(l10n.fullAdhan)),
             ],
             onChanged: (value) async {
               if (value == null) return;
@@ -143,14 +194,15 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
             },
           ),
           const Divider(),
-          const Text('Location', style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(l10n.locationLabel,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
             initialValue: _isCustomCity ? 'Custom' : _cityName,
-            decoration: kTextFieldDecoration.copyWith(labelText: 'City'),
+            decoration: kTextFieldDecoration.copyWith(labelText: l10n.cityLabel),
             items: kPrayerCities
-                .map((c) =>
-                    DropdownMenuItem(value: c.name, child: Text(c.name)))
+                .map((c) => DropdownMenuItem(
+                    value: c.name, child: Text(_localizedCityName(l10n, c.name))))
                 .toList(),
             onChanged: _onCityChanged,
           ),
@@ -163,8 +215,8 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                     controller: _latController,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true, signed: true),
-                    decoration:
-                        kTextFieldDecoration.copyWith(labelText: 'Latitude'),
+                    decoration: kTextFieldDecoration.copyWith(
+                        labelText: l10n.latitudeLabel),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -173,46 +225,47 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                     controller: _lonController,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true, signed: true),
-                    decoration:
-                        kTextFieldDecoration.copyWith(labelText: 'Longitude'),
+                    decoration: kTextFieldDecoration.copyWith(
+                        labelText: l10n.longitudeLabel),
                   ),
                 ),
               ],
             ),
           ],
           const SizedBox(height: 24),
-          const Text('Calculation method',
-              style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(l10n.calculationMethodLabel,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           DropdownButtonFormField<CalculationMethod>(
             initialValue: _method,
             decoration: kTextFieldDecoration,
             items: CalculationMethod.values
                 .map((m) => DropdownMenuItem(
-                    value: m, child: Text(_calculationMethodLabel(m))))
+                    value: m, child: Text(_calculationMethodLabel(l10n, m))))
                 .toList(),
             onChanged: (value) {
               if (value != null) setState(() => _method = value);
             },
           ),
           const SizedBox(height: 24),
-          const Text('Madhab (Asr calculation)',
-              style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(l10n.madhabLabel,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           DropdownButtonFormField<Madhab>(
             initialValue: _madhab,
             decoration: kTextFieldDecoration,
-            items: const [
-              DropdownMenuItem(value: Madhab.shafi, child: Text('Shafi')),
-              DropdownMenuItem(value: Madhab.hanafi, child: Text('Hanafi')),
+            items: [
+              DropdownMenuItem(value: Madhab.shafi, child: Text(l10n.shafiLabel)),
+              DropdownMenuItem(
+                  value: Madhab.hanafi, child: Text(l10n.hanafiLabel)),
             ],
             onChanged: (value) {
               if (value != null) setState(() => _madhab = value);
             },
           ),
           const SizedBox(height: 24),
-          const Text('Manual correction (minutes)',
-              style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(l10n.manualCorrectionLabel,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           Row(
             children: <Widget>[
@@ -221,7 +274,8 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                   controller: _fajrAdj,
                   keyboardType:
                       const TextInputType.numberWithOptions(signed: true),
-                  decoration: kTextFieldDecoration.copyWith(labelText: 'Fajr'),
+                  decoration:
+                      kTextFieldDecoration.copyWith(labelText: l10n.adjFajr),
                 ),
               ),
               const SizedBox(width: 10),
@@ -231,7 +285,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                   keyboardType:
                       const TextInputType.numberWithOptions(signed: true),
                   decoration:
-                      kTextFieldDecoration.copyWith(labelText: 'Dhuhr'),
+                      kTextFieldDecoration.copyWith(labelText: l10n.adjDhuhr),
                 ),
               ),
             ],
@@ -244,7 +298,8 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                   controller: _asrAdj,
                   keyboardType:
                       const TextInputType.numberWithOptions(signed: true),
-                  decoration: kTextFieldDecoration.copyWith(labelText: 'Asr'),
+                  decoration:
+                      kTextFieldDecoration.copyWith(labelText: l10n.adjAsr),
                 ),
               ),
               const SizedBox(width: 10),
@@ -253,8 +308,8 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                   controller: _maghribAdj,
                   keyboardType:
                       const TextInputType.numberWithOptions(signed: true),
-                  decoration:
-                      kTextFieldDecoration.copyWith(labelText: 'Maghrib'),
+                  decoration: kTextFieldDecoration.copyWith(
+                      labelText: l10n.adjMaghrib),
                 ),
               ),
             ],
@@ -263,14 +318,14 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
           TextFormField(
             controller: _ishaAdj,
             keyboardType: const TextInputType.numberWithOptions(signed: true),
-            decoration: kTextFieldDecoration.copyWith(labelText: 'Isha'),
+            decoration: kTextFieldDecoration.copyWith(labelText: l10n.adjIsha),
           ),
           const SizedBox(height: 32),
           ElevatedButton(
             onPressed: _save,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              child: Text('Save'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Text(l10n.save),
             ),
           ),
         ],

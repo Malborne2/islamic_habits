@@ -5,6 +5,7 @@ import 'habit_button.dart';
 import 'package:islamic_habits/components/habit_input_dialog.dart';
 import 'package:vibration/vibration.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/functions.dart';
 
 class ButtonsList extends StatefulWidget {
@@ -44,7 +45,7 @@ class _ButtonsListState extends State<ButtonsList> {
         Vibration.vibrate(duration: 100);
       }
       Fluttertoast.showToast(
-          msg: "New value added successfully",
+          msg: AppLocalizations.of(context).valueAddedSuccess,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.grey,

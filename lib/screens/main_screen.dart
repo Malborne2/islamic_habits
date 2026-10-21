@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:islamic_habits/components/habit_drawer.dart';
 import 'package:islamic_habits/components/today_overview.dart';
+import 'package:islamic_habits/l10n/generated/app_localizations.dart';
+import 'package:islamic_habits/utility/habit_name_localizer.dart';
+import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:hijri/hijri_calendar.dart';
@@ -27,9 +30,12 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    HijriCalendar.setLocal(locale == 'ar' ? 'ar' : 'en');
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Islamic Habits'),
+        title: Text(l10n.appTitle),
       ),
       drawer: HabitDrawer(
         habits: widget.islamicHabits,
@@ -58,7 +64,8 @@ class _MainScreenState extends State<MainScreen> {
                                     const EdgeInsets.symmetric(vertical: 8),
                                 child: Center(
                                   child: AutoSizeText(
-                                    hijriToday.toFormat("DDDD, d MMMM yyyy"),
+                                    localizeDigits(context,
+                                        hijriToday.toFormat("DDDD, d MMMM yyyy")),
                                     maxLines: 1,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
@@ -67,7 +74,10 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                               Center(
                                 child: AutoSizeText(
-                                  DateFormat('MMMM d yyyy').format(today),
+                                  localizeDigits(
+                                      context,
+                                      DateFormat('MMMM d yyyy', locale)
+                                          .format(today)),
                                   maxLines: 1,
                                   style: const TextStyle(
                                       fontSize: 14,
@@ -98,7 +108,8 @@ class _MainScreenState extends State<MainScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: AutoSizeText(
-                                  prayerHelper.getNextPrayerName(),
+                                  localizedPrayerDisplayName(
+                                      context, prayerHelper.getNextPrayerName()),
                                   maxLines: 1,
                                   style: const TextStyle(
                                       fontSize: 16,
@@ -106,8 +117,10 @@ class _MainScreenState extends State<MainScreen> {
                                 ),
                               ),
                               AutoSizeText(
-                                DateFormat.jm().format(
-                                    prayerHelper.getNextPrayerTime()),
+                                localizeDigits(
+                                    context,
+                                    DateFormat.jm(locale).format(
+                                        prayerHelper.getNextPrayerTime())),
                                 maxLines: 1,
                                 style: const TextStyle(
                                     fontSize: 18,
@@ -137,7 +150,8 @@ class _MainScreenState extends State<MainScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: AutoSizeText(
-                                  prayerHelper.getLaterPrayerName(),
+                                  localizedPrayerDisplayName(
+                                      context, prayerHelper.getLaterPrayerName()),
                                   maxLines: 1,
                                   style: const TextStyle(
                                       fontSize: 16,
@@ -145,8 +159,10 @@ class _MainScreenState extends State<MainScreen> {
                                 ),
                               ),
                               AutoSizeText(
-                                DateFormat.jm().format(
-                                    prayerHelper.getLaterPrayerTime()),
+                                localizeDigits(
+                                    context,
+                                    DateFormat.jm(locale).format(
+                                        prayerHelper.getLaterPrayerTime())),
                                 maxLines: 1,
                                 style: const TextStyle(
                                     fontSize: 16,

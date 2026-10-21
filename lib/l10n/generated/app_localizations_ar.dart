@@ -1,0 +1,464 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Arabic (`ar`).
+class AppLocalizationsAr extends AppLocalizations {
+  AppLocalizationsAr([String locale = 'ar']) : super(locale);
+
+  @override
+  String get appTitle => 'العادات الإسلامية';
+
+  @override
+  String get navHome => 'الرئيسية';
+
+  @override
+  String get navPrayerTimes => 'مواقيت الصلاة';
+
+  @override
+  String get navAllHabits => 'جميع العادات';
+
+  @override
+  String get navFivePrayers => 'الصلوات الخمس';
+
+  @override
+  String get navAddHabit => 'إضافة عادة جديدة';
+
+  @override
+  String get settingsTitle => 'الإعدادات';
+
+  @override
+  String get settingsDarkMode => 'الوضع الداكن';
+
+  @override
+  String get settingsStartOfWeek => 'بداية الأسبوع';
+
+  @override
+  String get settingsPrayerTimeSettings => 'إعدادات مواقيت الصلاة';
+
+  @override
+  String get settingsPrayerTimeSettingsSubtitle =>
+      'الموقع وطريقة الحساب وتذكيرات الصلاة';
+
+  @override
+  String get settingsBackupRestore => 'النسخ الاحتياطي والاستعادة';
+
+  @override
+  String get settingsBackupRestoreSubtitle => 'تصدير أو استعادة بيانات عاداتك';
+
+  @override
+  String get settingsLanguage => 'اللغة';
+
+  @override
+  String get settingsLanguageSystem => 'لغة الهاتف';
+
+  @override
+  String get todayHabits => 'عادات اليوم';
+
+  @override
+  String todayProgress(int completed, int total) {
+    return 'اليوم: $completed / $total عادات مكتملة';
+  }
+
+  @override
+  String longestStreak(String daysText, String habitName) {
+    return 'أطول سلسلة: $daysText · $habitName';
+  }
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get setValue => 'تعيين';
+
+  @override
+  String get exportBackup => 'تصدير نسخة احتياطية';
+
+  @override
+  String get restoreFromBackup => 'استعادة من نسخة احتياطية';
+
+  @override
+  String get habitName => 'اسم العادة';
+
+  @override
+  String get successMetric => 'مقياس النجاح';
+
+  @override
+  String get yesNo => 'نعم / لا';
+
+  @override
+  String get number => 'رقم';
+
+  @override
+  String get streakTarget => 'هدف التسلسل';
+
+  @override
+  String get targetStreakDays => 'هدف التسلسل (أيام)';
+
+  @override
+  String get schedule => 'الجدول الزمني';
+
+  @override
+  String get everyDay => 'كل يوم';
+
+  @override
+  String get certainDaysOfWeek => 'أيام معينة من الأسبوع';
+
+  @override
+  String get timesPerWeek => 'عدد مرات في الأسبوع';
+
+  @override
+  String get color => 'اللون';
+
+  @override
+  String get saveHabit => 'حفظ العادة';
+
+  @override
+  String get habitFajrPrayer => 'صلاة الفجر';
+
+  @override
+  String get habitDhuhrPrayer => 'صلاة الظهر';
+
+  @override
+  String get habitAsrPrayer => 'صلاة العصر';
+
+  @override
+  String get habitMaghribPrayer => 'صلاة المغرب';
+
+  @override
+  String get habitIshaPrayer => 'صلاة العشاء';
+
+  @override
+  String get habitRecitingQuran => 'قراءة القرآن';
+
+  @override
+  String get todayLabel => 'اليوم';
+
+  @override
+  String get prayerFajr => 'الفجر';
+
+  @override
+  String get prayerDhuhr => 'الظهر';
+
+  @override
+  String get prayerAsr => 'العصر';
+
+  @override
+  String get prayerMaghrib => 'المغرب';
+
+  @override
+  String get prayerIsha => 'العشاء';
+
+  @override
+  String get notifyMode => 'تنبيه';
+
+  @override
+  String get silentMode => 'صامت';
+
+  @override
+  String get adhanMode => 'أذان';
+
+  @override
+  String get weekdayMonday => 'الإثنين';
+
+  @override
+  String get weekdayTuesday => 'الثلاثاء';
+
+  @override
+  String get weekdayWednesday => 'الأربعاء';
+
+  @override
+  String get weekdayThursday => 'الخميس';
+
+  @override
+  String get weekdayFriday => 'الجمعة';
+
+  @override
+  String get weekdaySaturday => 'السبت';
+
+  @override
+  String get weekdaySunday => 'الأحد';
+
+  @override
+  String get settingsNumerals => 'الأرقام';
+
+  @override
+  String get numeralsWestern => 'أرقام غربية (0, 1, 2…)';
+
+  @override
+  String get numeralsEastern => 'أرقام هندية (٠, ١, ٢…)';
+
+  @override
+  String get unitPages => 'صفحات';
+
+  @override
+  String get deleteEntryTitle => 'حذف الإدخال';
+
+  @override
+  String get deleteEntryConfirm =>
+      'هل أنت متأكد أنك تريد حذف هذا الإدخال نهائيًا؟';
+
+  @override
+  String get targetAmountLabel => 'القيمة المستهدفة';
+
+  @override
+  String get unitLabel => 'الوحدة';
+
+  @override
+  String get timesPerWeekLabel => 'عدد المرات في الأسبوع';
+
+  @override
+  String get restoreBackupTitle => 'استعادة النسخة الاحتياطية';
+
+  @override
+  String get restoreBackupConfirm =>
+      'سيؤدي هذا إلى استبدال جميع العادات المخزنة حاليًا على هذا الجهاز بتلك الموجودة في النسخة الاحتياطية المحددة. هل تريد المتابعة؟';
+
+  @override
+  String get restoreAction => 'استعادة';
+
+  @override
+  String get notificationPermissionDenied => 'لم يتم منح إذن الإشعارات';
+
+  @override
+  String get prayerRemindersLabel => 'تذكيرات الصلاة';
+
+  @override
+  String get prayerRemindersSubtitle =>
+      'بعد 30 دقيقة من كل صلاة، اسأل عما إذا كنت قد صليت';
+
+  @override
+  String get sendTestReminder => 'إرسال تذكير تجريبي الآن';
+
+  @override
+  String get adhanVoiceLabel => 'صوت الأذان';
+
+  @override
+  String get adhanVoiceHint =>
+      'يُستخدم للصلوات المضبوطة على أيقونة الميكروفون (الأذان) في شاشة مواقيت الصلاة.';
+
+  @override
+  String get takbeerOnly => 'التكبير فقط';
+
+  @override
+  String get fullAdhan => 'الأذان كاملاً';
+
+  @override
+  String get locationLabel => 'الموقع';
+
+  @override
+  String get cityLabel => 'المدينة';
+
+  @override
+  String get latitudeLabel => 'خط العرض';
+
+  @override
+  String get longitudeLabel => 'خط الطول';
+
+  @override
+  String get calculationMethodLabel => 'طريقة الحساب';
+
+  @override
+  String get madhabLabel => 'المذهب (حساب العصر)';
+
+  @override
+  String get shafiLabel => 'شافعي';
+
+  @override
+  String get hanafiLabel => 'حنفي';
+
+  @override
+  String get manualCorrectionLabel => 'التصحيح اليدوي (بالدقائق)';
+
+  @override
+  String get adjFajr => 'الفجر';
+
+  @override
+  String get adjDhuhr => 'الظهر';
+
+  @override
+  String get adjAsr => 'العصر';
+
+  @override
+  String get adjMaghrib => 'المغرب';
+
+  @override
+  String get adjIsha => 'العشاء';
+
+  @override
+  String get cityDoha => 'الدوحة';
+
+  @override
+  String get cityMecca => 'مكة المكرمة';
+
+  @override
+  String get cityMedina => 'المدينة المنورة';
+
+  @override
+  String get cityCairo => 'القاهرة';
+
+  @override
+  String get cityIstanbul => 'إسطنبول';
+
+  @override
+  String get cityJakarta => 'جاكرتا';
+
+  @override
+  String get cityKarachi => 'كراتشي';
+
+  @override
+  String get cityLondon => 'لندن';
+
+  @override
+  String get cityNewYork => 'نيويورك';
+
+  @override
+  String get cityCustom => 'مخصص';
+
+  @override
+  String get notificationPrayerTimeTitle => 'وقت الصلاة';
+
+  @override
+  String notificationPrayerTimeBody(String prayerName) {
+    return 'حان وقت $prayerName';
+  }
+
+  @override
+  String get notificationReminderTitle => 'تذكير بالصلاة';
+
+  @override
+  String notificationReminderBody(String prayerName) {
+    return 'هل صليت $prayerName؟';
+  }
+
+  @override
+  String get notificationYes => 'نعم';
+
+  @override
+  String get notificationNo => 'لا';
+
+  @override
+  String get weekdayMonShort => 'إث';
+
+  @override
+  String get weekdayTueShort => 'ثل';
+
+  @override
+  String get weekdayWedShort => 'أر';
+
+  @override
+  String get weekdayThuShort => 'خم';
+
+  @override
+  String get weekdayFriShort => 'جم';
+
+  @override
+  String get weekdaySatShort => 'سب';
+
+  @override
+  String get weekdaySunShort => 'أح';
+
+  @override
+  String get pickAtLeastOneDay => 'اختر يومًا واحدًا على الأقل من أيام الأسبوع';
+
+  @override
+  String get setValueTitle => 'تعيين القيمة';
+
+  @override
+  String setUnitTitle(String unit) {
+    return 'تعيين $unit';
+  }
+
+  @override
+  String get metricCurrentStreak => 'السلسلة الحالية';
+
+  @override
+  String get metricStreakTarget => 'هدف السلسلة';
+
+  @override
+  String get metricMaximumStreak => 'أطول سلسلة';
+
+  @override
+  String get metricSuccessPercentage => 'نسبة النجاح';
+
+  @override
+  String get metricWeeklyAverage => 'المعدل الأسبوعي';
+
+  @override
+  String get metricMonthlyAverage => 'المعدل الشهري';
+
+  @override
+  String get backupDescription =>
+      'يتم تخزين جميع بيانات العادات محليًا على هذا الجهاز. قم بتصدير ملف نسخة احتياطية للاحتفاظ بنسخة أو نقلها إلى جهاز آخر، على سبيل المثال عن طريق مشاركتها عبر محرك أقراص سحابي أو البريد الإلكتروني.';
+
+  @override
+  String exportFailed(String error) {
+    return 'فشل التصدير: $error';
+  }
+
+  @override
+  String importFailed(String error) {
+    return 'فشل الاستيراد: $error';
+  }
+
+  @override
+  String restoredCount(int count) {
+    return 'تمت استعادة $count عادة';
+  }
+
+  @override
+  String get shareBackupText => 'نسخة احتياطية من العادات الإسلامية';
+
+  @override
+  String get valueAddedSuccess => 'تمت إضافة القيمة الجديدة بنجاح';
+
+  @override
+  String get prayerSunrise => 'الشروق';
+
+  @override
+  String get methodMuslimWorldLeague => 'رابطة العالم الإسلامي';
+
+  @override
+  String get methodEgyptian => 'الهيئة المصرية العامة للمساحة';
+
+  @override
+  String get methodKarachi => 'جامعة كراتشي';
+
+  @override
+  String get methodUmmAlQura => 'أم القرى';
+
+  @override
+  String get methodDubai => 'دبي';
+
+  @override
+  String get methodMoonSightingCommittee => 'لجنة رؤية الهلال';
+
+  @override
+  String get methodNorthAmerica => 'أمريكا الشمالية';
+
+  @override
+  String get methodKuwait => 'الكويت';
+
+  @override
+  String get methodQatar => 'قطر';
+
+  @override
+  String get methodSingapore => 'سنغافورة';
+
+  @override
+  String get methodTurkey => 'تركيا';
+
+  @override
+  String get methodTehran => 'طهران';
+
+  @override
+  String get methodOther => 'أخرى';
+}

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/components/habit_drawer.dart';
 import 'package:islamic_habits/components/habit_page.dart';
-import 'package:islamic_habits/utility/constants.dart';
+import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/habit_name_localizer.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -56,6 +57,15 @@ class _HabitDetailState extends State<HabitDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final metricNames = [
+      l10n.metricCurrentStreak,
+      l10n.metricStreakTarget,
+      l10n.metricMaximumStreak,
+      l10n.metricSuccessPercentage,
+      l10n.metricWeeklyAverage,
+      l10n.metricMonthlyAverage,
+    ];
     final currentStreak = widget.habit.getCurrentStreak();
     final overallSuccessRate = widget.habit.getOverallSuccessRate();
     final weeklyAverage = widget.habit.getAverageOverPeriod(7);
@@ -68,19 +78,19 @@ class _HabitDetailState extends State<HabitDetail> {
       widget.habit.getMaximumStreak().toString(),
       '${overallSuccessRate.toStringAsFixed(0)}%',
       isNumberHabit
-          ? '${weeklyAverage.toStringAsFixed(1)} ${widget.habit.numberUnit}'
+          ? '${weeklyAverage.toStringAsFixed(1)} ${localizedUnit(context, widget.habit.numberUnit)}'
           : '${weeklyAverage.toStringAsFixed(0)}%',
       isNumberHabit
-          ? '${monthlyAverage.toStringAsFixed(1)} ${widget.habit.numberUnit}'
+          ? '${monthlyAverage.toStringAsFixed(1)} ${localizedUnit(context, widget.habit.numberUnit)}'
           : '${monthlyAverage.toStringAsFixed(0)}%',
     ];
 
     const metricTextStyle = TextStyle(fontSize: 13);
     List<Widget> metrics = List.generate(
-        kMetricNames.length,
+        metricNames.length,
         (i) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Text(kMetricNames[i], style: metricTextStyle),
+              child: Text(metricNames[i], style: metricTextStyle),
             ));
     List<Widget> values = List.generate(
         metrics.length,
@@ -93,7 +103,7 @@ class _HabitDetailState extends State<HabitDetail> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.habit.name),
+        title: Text(localizedHabitName(context, widget.habit.name)),
         backgroundColor: widget.habit.color,
         actions: <Widget>[
           Row(

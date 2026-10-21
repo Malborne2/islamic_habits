@@ -4,6 +4,7 @@ import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
+import 'package:islamic_habits/utility/weekday_localizer.dart';
 
 class HabitPage extends StatefulWidget {
   final DateTime currentDate;
@@ -37,7 +38,9 @@ class _HabitPageState extends State<HabitPage> {
                   (i) => SizedBox(
                       width: itemWidth,
                       child:
-                          Center(child: Text(kDays[(kStartOfWeek + i) % 7]))),
+                          Center(
+                              child: Text(localizedWeekdayShort(context,
+                                  weekdayForColumn(kStartOfWeek, i))))),
                 ),
               ),
             ),

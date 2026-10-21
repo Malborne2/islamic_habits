@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:islamic_habits/components/habit_button.dart';
 import 'package:islamic_habits/components/habit_input_dialog.dart';
 import 'package:islamic_habits/components/semiCircle.dart';
+import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/habit_name_localizer.dart';
 
 // Home-screen summary: today's completion ring, the longest active
 // streak across all habits, and a quick-tap checklist for today.
@@ -60,6 +62,7 @@ class _TodayOverviewState extends State<TodayOverview> {
       }
     }
 
+    final l10n = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -94,13 +97,16 @@ class _TodayOverviewState extends State<TodayOverview> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('Today: $completed / $total habits done',
+                      Text(
+                          l10n.todayProgress(completed, total),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15)),
                       if (topHabit != null) ...[
                         const SizedBox(height: 4),
                         Text(
-                          'Longest streak: $topStreak day${topStreak == 1 ? '' : 's'} · ${topHabit.name}',
+                          l10n.longestStreak(
+                              '$topStreak day${topStreak == 1 ? '' : 's'}',
+                              localizedHabitName(context, topHabit.name)),
                           style: const TextStyle(fontSize: 13),
                         ),
                       ],
@@ -112,10 +118,10 @@ class _TodayOverviewState extends State<TodayOverview> {
           ),
         ),
         if (todayHabits.isNotEmpty) ...[
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-            child: Text("Today's habits",
-                style: TextStyle(fontWeight: FontWeight.bold)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+            child: Text(l10n.todayHabits,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
           Card(
             margin: EdgeInsets.zero,
@@ -126,10 +132,10 @@ class _TodayOverviewState extends State<TodayOverview> {
                           backgroundColor: habit.color,
                           radius: 6,
                         ),
-                        title: Text(habit.name),
+                        title: Text(localizedHabitName(context, habit.name)),
                         subtitle: habit.type == HabitType.NUMBER
                             ? Text(
-                                '${habit.getHabitDataValue(today)?.toStringAsFixed(1) ?? '-'} / ${habit.successValue.toStringAsFixed(0)} ${habit.numberUnit}')
+                                '${habit.getHabitDataValue(today)?.toStringAsFixed(1) ?? '-'} / ${habit.successValue.toStringAsFixed(0)} ${localizedUnit(context, habit.numberUnit)}')
                             : null,
                         trailing: IconButton(
                           icon: Icon(

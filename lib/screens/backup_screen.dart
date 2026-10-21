@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/screens/loading_screen.dart';
 import 'package:islamic_habits/utility/backup_service.dart';
 
@@ -23,6 +24,7 @@ class _BackupScreenState extends State<BackupScreen> {
   }
 
   Future<void> _exportBackup() async {
+    final l10n = AppLocalizations.of(context);
     setState(() => _busy = true);
     try {
       final file = await _backupService.exportToFile();
@@ -30,17 +32,18 @@ class _BackupScreenState extends State<BackupScreen> {
       await SharePlus.instance.share(
         ShareParams(
           files: [XFile(file.path)],
-          text: 'Islamic Habits backup',
+          text: l10n.shareBackupText,
         ),
       );
     } catch (e) {
-      _showMessage('Export failed: $e');
+      _showMessage(l10n.exportFailed(e.toString()));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
   }
 
   Future<void> _importBackup() async {
+    final l10n = AppLocalizations.of(context);
     final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['json'],
@@ -50,17 +53,16 @@ class _BackupScreenState extends State<BackupScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Restore backup'),
-        content: const Text(
-            'This will replace all habits currently stored on this device with the ones from the selected backup. Continue?'),
+        title: Text(l10n.restoreBackupTitle),
+        content: Text(l10n.restoreBackupConfirm),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Restore'),
+            child: Text(l10n.restoreAction),
           ),
         ],
       ),
@@ -76,9 +78,9 @@ class _BackupScreenState extends State<BackupScreen> {
         MaterialPageRoute(builder: (context) => LoadingScreen()),
         (route) => false,
       );
-      _showMessage('Restored $count habit(s)');
+      _showMessage(l10n.restoredCount(count));
     } catch (e) {
-      _showMessage('Import failed: $e');
+      _showMessage(l10n.importFailed(e.toString()));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -86,29 +88,26 @@ class _BackupScreenState extends State<BackupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Backup & Restore')),
+      appBar: AppBar(title: Text(l10n.settingsBackupRestore)),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Text(
-              'All habit data is stored locally on this device. '
-              'Export a backup file to keep a copy or move it to another '
-              'device, for example by sharing it to a cloud drive or email.',
-            ),
+            Text(l10n.backupDescription),
             const SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed: _busy ? null : _exportBackup,
               icon: const Icon(Icons.upload_file),
-              label: const Text('Export backup'),
+              label: Text(l10n.exportBackup),
             ),
             const SizedBox(height: 12),
             ElevatedButton.icon(
               onPressed: _busy ? null : _importBackup,
               icon: const Icon(Icons.download_outlined),
-              label: const Text('Restore from backup'),
+              label: Text(l10n.restoreFromBackup),
             ),
             if (_busy) const Padding(
               padding: EdgeInsets.only(top: 20),
