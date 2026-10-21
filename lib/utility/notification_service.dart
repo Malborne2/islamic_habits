@@ -10,6 +10,17 @@ import 'package:islamic_habits/utility/prayer_settings.dart';
 const String _kChannelId = 'prayer_reminders';
 const String _kChannelName = 'Prayer reminders';
 
+// Separate channels per voice: once created, a notification channel's
+// sound can't be changed, so switching voices needs a different channel.
+const String _kTakbeerChannelId = 'prayer_adhan_takbeer';
+const String _kFullAdhanChannelId = 'prayer_adhan_full';
+
+// Place your own licensed audio at android/app/src/main/res/raw/takbeer.mp3
+// and android/app/src/main/res/raw/adhan_full.mp3 for these to actually
+// play; without them Android silently falls back to the default sound.
+const String _kTakbeerSoundResource = 'takbeer';
+const String _kFullAdhanSoundResource = 'adhan_full';
+
 final FlutterLocalNotificationsPlugin _notificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
@@ -40,12 +51,15 @@ class NotificationService {
   static Future<void> cancelAllPrayerReminders() async {
     for (int i = 0; i < kPrayersNames.length; i++) {
       await _notificationsPlugin.cancel(id: i);
+      await _notificationsPlugin.cancel(id: 10 + i);
     }
   }
 
-  // Schedules reminders for today's prayers that haven't happened yet.
-  // Called whenever the app starts/resumes and reminders are enabled;
-  // there is no background job to reschedule the next day on its own.
+  // Schedules today's remaining prayers according to each prayer's mode:
+  // silent (nothing), notify (a Yes/No reminder 30 minutes later), or
+  // adhan (a sound-only notification right at the prayer time). Called
+  // whenever the app starts/resumes and reminders are enabled; there is
+  // no background job to reschedule the next day on its own.
   static Future<void> scheduleTodayReminders() async {
     await cancelAllPrayerReminders();
     if (!PrayerSettings.remindersEnabled) return;
@@ -61,9 +75,37 @@ class NotificationService {
     final now = DateTime.now();
 
     for (int i = 0; i < prayerTimes.length; i++) {
+      final mode = PrayerSettings.prayerModes[i];
+      if (mode == PrayerNotifyMode.silent) continue;
+      final prayerName = kPrayersNames[i];
+
+      if (mode == PrayerNotifyMode.adhan) {
+        if (prayerTimes[i].isBefore(now)) continue;
+        final isTakbeer = PrayerSettings.adhanVoice == AdhanVoice.takbeer;
+        await _notificationsPlugin.zonedSchedule(
+          id: 10 + i,
+          title: 'Prayer time',
+          body: 'It is time for $prayerName',
+          scheduledDate: tz.TZDateTime.from(prayerTimes[i], tz.local),
+          notificationDetails: NotificationDetails(
+            android: AndroidNotificationDetails(
+              isTakbeer ? _kTakbeerChannelId : _kFullAdhanChannelId,
+              isTakbeer ? 'Adhan (Takbeer)' : 'Adhan (Full)',
+              channelDescription: 'Plays the adhan at prayer time',
+              importance: Importance.high,
+              priority: Priority.high,
+              sound: RawResourceAndroidNotificationSound(isTakbeer
+                  ? _kTakbeerSoundResource
+                  : _kFullAdhanSoundResource),
+            ),
+          ),
+          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        );
+        continue;
+      }
+
       final reminderTime = prayerTimes[i].add(const Duration(minutes: 30));
       if (reminderTime.isBefore(now)) continue;
-      final prayerName = kPrayersNames[i];
       await _notificationsPlugin.zonedSchedule(
         id: i,
         title: 'Prayer reminder',

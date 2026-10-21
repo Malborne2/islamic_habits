@@ -8,6 +8,13 @@ class PrayerCity {
   const PrayerCity(this.name, this.latitude, this.longitude);
 }
 
+// Per-prayer notification behavior, selected via the bell icon on the
+// prayer times screen.
+enum PrayerNotifyMode { notify, silent, adhan }
+
+// Which audio plays for prayers set to PrayerNotifyMode.adhan.
+enum AdhanVoice { takbeer, full }
+
 const List<PrayerCity> kPrayerCities = [
   PrayerCity('Doha', 25.3157001, 51.8788493),
   PrayerCity('Mecca', 21.3891, 39.8579),
@@ -32,6 +39,9 @@ class PrayerSettings {
   static Madhab madhab = Madhab.shafi;
   static PrayerAdjustments adjustments = PrayerAdjustments();
   static bool remindersEnabled = false;
+  static List<PrayerNotifyMode> prayerModes =
+      List.filled(5, PrayerNotifyMode.notify);
+  static AdhanVoice adhanVoice = AdhanVoice.takbeer;
 
   static const _kLat = 'PrayerLatitude';
   static const _kLon = 'PrayerLongitude';
@@ -44,6 +54,8 @@ class PrayerSettings {
   static const _kAdjMaghrib = 'PrayerAdjMaghrib';
   static const _kAdjIsha = 'PrayerAdjIsha';
   static const _kRemindersEnabled = 'PrayerRemindersEnabled';
+  static const _kPrayerModes = 'PrayerNotifyModes';
+  static const _kAdhanVoice = 'AdhanVoice';
 
   static Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
@@ -73,6 +85,33 @@ class PrayerSettings {
     );
 
     remindersEnabled = prefs.getBool(_kRemindersEnabled) ?? false;
+
+    final modeIndexes = prefs.getStringList(_kPrayerModes);
+    if (modeIndexes != null && modeIndexes.length == 5) {
+      prayerModes = modeIndexes
+          .map((i) => PrayerNotifyMode.values[int.parse(i)])
+          .toList();
+    }
+
+    final adhanVoiceName = prefs.getString(_kAdhanVoice);
+    if (adhanVoiceName != null) {
+      adhanVoice = AdhanVoice.values.firstWhere(
+          (v) => v.name == adhanVoiceName,
+          orElse: () => adhanVoice);
+    }
+  }
+
+  static Future<void> setPrayerMode(int prayerIndex, PrayerNotifyMode mode) async {
+    prayerModes[prayerIndex] = mode;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_kPrayerModes,
+        prayerModes.map((m) => m.index.toString()).toList());
+  }
+
+  static Future<void> setAdhanVoice(AdhanVoice voice) async {
+    adhanVoice = voice;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kAdhanVoice, voice.name);
   }
 
   static Future<void> save() async {

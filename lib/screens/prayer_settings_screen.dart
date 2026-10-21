@@ -36,6 +36,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
   late final _ishaAdj =
       TextEditingController(text: PrayerSettings.adjustments.isha.toString());
   late bool _remindersEnabled = PrayerSettings.remindersEnabled;
+  late AdhanVoice _adhanVoice = PrayerSettings.adhanVoice;
 
   bool get _isCustomCity =>
       !kPrayerCities.any((c) => c.name == _cityName && c.name != 'Custom');
@@ -116,6 +117,30 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
           TextButton(
             onPressed: NotificationService.sendTestNotification,
             child: const Text('Send a test reminder now'),
+          ),
+          const SizedBox(height: 8),
+          const Text('Adhan voice', style: TextStyle(fontWeight: FontWeight.bold)),
+          const Text(
+            'Used for prayers set to the microphone (adhan) bell icon on '
+            'the Prayer times screen.',
+            style: TextStyle(fontSize: 12),
+          ),
+          const SizedBox(height: 8),
+          DropdownButtonFormField<AdhanVoice>(
+            initialValue: _adhanVoice,
+            decoration: kTextFieldDecoration,
+            items: const [
+              DropdownMenuItem(
+                  value: AdhanVoice.takbeer, child: Text('Takbeer only')),
+              DropdownMenuItem(
+                  value: AdhanVoice.full, child: Text('Full Adhan')),
+            ],
+            onChanged: (value) async {
+              if (value == null) return;
+              setState(() => _adhanVoice = value);
+              await PrayerSettings.setAdhanVoice(value);
+              await NotificationService.scheduleTodayReminders();
+            },
           ),
           const Divider(),
           const Text('Location', style: TextStyle(fontWeight: FontWeight.bold)),

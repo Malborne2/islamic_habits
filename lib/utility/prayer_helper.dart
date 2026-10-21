@@ -15,8 +15,9 @@ class PrayerHelper {
     required this.longitude,
     required this.parameters,
     required this.dateTime,
-  }) : adhan = PrayerTimes.today(
+  }) : adhan = PrayerTimes(
           Coordinates(latitude, longitude),
+          DateComponents.from(dateTime),
           parameters,
         );
 
