@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'round_icon_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:islamic_habits/utility/decimalTextInputFormatter.dart';
 import 'dart:async';
 
 class HabitInputDialog extends StatefulWidget {
-  final double initialValue;
-  HabitInputDialog({@required this.initialValue});
+  final double? initialValue;
+  final String unit;
+  const HabitInputDialog({super.key, required this.initialValue, this.unit = ''});
   @override
   _HabitInputDialogState createState() => _HabitInputDialogState();
 }
 
 class _HabitInputDialogState extends State<HabitInputDialog> {
-  TextEditingController _controller = TextEditingController();
-  double value;
-  Timer timer;
+  final TextEditingController _controller = TextEditingController();
+  late double value;
+  late Timer timer;
 
   @override
   void initState() {
@@ -27,164 +27,147 @@ class _HabitInputDialogState extends State<HabitInputDialog> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
+  }
+
+  void _confirmDelete() {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: const Text('Delete entry'),
+          content: const Text(
+              'Are you sure you want to permanently delete this entry?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pop(context, value);
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pop(context, null);
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      title: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: Text('Set Number'),
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 28, 24, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              widget.unit.isEmpty ? 'Set value' : 'Set ${widget.unit}',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 24),
+            TextFormField(
+              style: const TextStyle(fontSize: 22),
+              controller: _controller,
+              textAlign: TextAlign.center,
+              cursorColor: Colors.deepPurple,
+              decoration: kTextFieldDecoration,
+              onChanged: (v) {
+                setState(() {
+                  value = double.tryParse(v) ?? value;
+                });
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                RoundIconButton(
+                  onTapDown: (TapDownDetails details) {
+                    timer = Timer.periodic(const Duration(milliseconds: 100),
+                        (t) {
+                      setState(() {
+                        value++;
+                        _controller.text = value.toStringAsFixed(1);
+                      });
+                    });
+                  },
+                  onTapUp: (TapUpDetails details) => timer.cancel(),
+                  onTapCancel: () => timer.cancel(),
+                  icon: FontAwesomeIcons.plus,
+                ),
+                RoundIconButton(
+                  onTapDown: (TapDownDetails details) {
+                    timer = Timer.periodic(const Duration(milliseconds: 100),
+                        (t) {
+                      setState(() {
+                        if (value > 0) {
+                          value--;
+                          _controller.text = value.toStringAsFixed(1);
+                        }
+                      });
+                    });
+                  },
+                  onTapUp: (TapUpDetails details) => timer.cancel(),
+                  onTapCancel: () => timer.cancel(),
+                  icon: FontAwesomeIcons.minus,
+                ),
+              ],
+            ),
+            const SizedBox(height: 28),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => Navigator.pop(context, value),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14)),
+                ),
+                child: const Text('Set'),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: _confirmDelete,
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14)),
+                    ),
+                    child: const Text('Delete'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context, widget.initialValue),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child: const Text('Cancel'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 50),
-          child: TextFormField(
-            style: TextStyle(
-              fontSize: 20,
-            ),
-            controller: _controller,
-//            initialValue: value.toStringAsFixed(1),
-            textAlign: TextAlign.center,
-            cursorColor: Colors.deepPurple,
-            decoration: kTextFieldDecoration,
-            onChanged: (v) {
-              setState(() {
-                value = double.parse(v);
-              });
-            },
-            keyboardType: TextInputType.number,
-            inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
-          ),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            RoundIconButton(
-              onTapDown: (TapDownDetails details) {
-                timer = Timer.periodic(Duration(milliseconds: 100), (t) {
-                  setState(() {
-                    value++;
-                    _controller.text = value.toStringAsFixed(1);
-                  });
-//                  print('value $value');
-                });
-              },
-              onTapUp: (TapUpDetails details) {
-                timer.cancel();
-              },
-              onTapCancel: () {
-                timer.cancel();
-              },
-              icon: FontAwesomeIcons.plus,
-            ),
-            RoundIconButton(
-              onTapDown: (TapDownDetails details) {
-                timer = Timer.periodic(Duration(milliseconds: 100), (t) {
-                  setState(() {
-                    if (value > 0) {
-                      value--;
-                      _controller.text = value.toStringAsFixed(1);
-                    }
-                  });
-//                  print('value $value');
-                });
-              },
-              onTapUp: (TapUpDetails details) {
-                timer.cancel();
-              },
-              onTapCancel: () {
-                timer.cancel();
-              },
-              icon: FontAwesomeIcons.minus,
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, value);
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    'Set',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: SimpleDialogOption(
-                onPressed: () {
-                  showDialog<void>(
-                    context: context,
-                    barrierDismissible: false, // user must tap button!
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Delete Session'),
-                        content: Text(
-                            'Are you sure you want to permenantly delete this session?.'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Yes'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-
-                              Navigator.pop(context, null);
-                            },
-                          ),
-                          FlatButton(
-                            child: Text('No'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              Navigator.pop(context, value);
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    'Delete',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, widget.initialValue);
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    'Cancel',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

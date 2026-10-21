@@ -2,7 +2,10 @@ import 'package:islamic_habits/screens/main_screen.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/utility/data_access_object.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:islamic_habits/utility/notification_service.dart';
+import 'package:islamic_habits/utility/prayer_settings.dart';
+import 'package:islamic_habits/utility/shared_prefrences_helper.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:islamic_habits/utility/habit.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -11,14 +14,13 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  List<Habit> islamicHabits;
+  List<Habit> islamicHabits = [];
   bool loading = true;
 
   void initializeHabits() async {
     HabitDao dao = HabitDao();
     bool isEmpty = await dao.isEmpty();
     if (isEmpty) {
-      print('isEmpty is true');
       islamicHabits = List.generate(
           6,
           (i) => Habit(
@@ -33,15 +35,25 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   ? HabitType.YES_NO
                   : HabitType.NUMBER));
       for (Habit habit in islamicHabits) {
-        dao.addHabit(habit);
+        await dao.addHabit(habit);
       }
-      loading = false;
     } else {
-      print('isEmpty is false');
       islamicHabits = await dao.getAll();
-      loading = false;
     }
-    if (!loading)
+
+    await PrayerSettings.load();
+
+    await NotificationService.initialize();
+    await NotificationService.requestPermission();
+    await NotificationService.scheduleTodayReminders();
+
+    final savedStartOfWeek = await SharedPreferencesHelper.getStartOfWeek();
+    if (savedStartOfWeek != null) {
+      kStartOfWeek = savedStartOfWeek;
+      Habit.startOfWeek = savedStartOfWeek;
+    }
+
+    if (mounted) {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -49,6 +61,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
               islamicHabits: islamicHabits,
             ),
           ));
+    }
+    setState(() {
+      loading = false;
+    });
   }
 
   @override

@@ -17,7 +17,7 @@ class HabitDao {
   Future<Database> get _db async => await AppDatabase.instance.database;
 
   Future addHabit(Habit habit) async {
-    await _habitStore.add(await _db, habit.toMap());
+    habit.id = await _habitStore.add(await _db, habit.toMap());
   }
 
   Future updateHabit(Habit habit) async {
@@ -37,6 +37,10 @@ class HabitDao {
       await _db,
       finder: finder,
     );
+  }
+
+  Future clear() async {
+    await _habitStore.delete(await _db);
   }
 
   Future<List<Habit>> getAll() async {

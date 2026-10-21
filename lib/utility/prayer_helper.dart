@@ -1,54 +1,64 @@
-import 'dart:async';
-import 'package:adhan_flutter/adhan_flutter.dart';
+import 'package:adhan/adhan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:islamic_habits/components/prayer_time.dart';
+import 'package:islamic_habits/utility/prayer_settings.dart';
 
 class PrayerHelper {
   final double latitude;
   final double longitude;
-  final CalculationMethod calculationMethod;
+  final CalculationParameters parameters;
   final DateTime dateTime;
-  final Adhan adhan;
+  final PrayerTimes adhan;
 
-  PrayerHelper(
-      {@required this.latitude,
-      @required this.longitude,
-      @required this.calculationMethod,
-      @required this.dateTime})
-      : adhan = AdhanFlutter.create(
-            Coordinates(latitude, longitude), dateTime, calculationMethod);
+  PrayerHelper({
+    required this.latitude,
+    required this.longitude,
+    required this.parameters,
+    required this.dateTime,
+  }) : adhan = PrayerTimes.today(
+          Coordinates(latitude, longitude),
+          parameters,
+        );
 
-  Future<Prayer> getCurrentPrayer() async {
-    return await adhan.currentPrayer();
+  factory PrayerHelper.fromSettings({DateTime? dateTime}) {
+    return PrayerHelper(
+      latitude: PrayerSettings.latitude,
+      longitude: PrayerSettings.longitude,
+      parameters: PrayerSettings.getParameters(),
+      dateTime: dateTime ?? DateTime.now(),
+    );
   }
 
-  Future<DateTime> getNextPrayerTime() async {
-    var nextPrayer = await adhan.nextPrayer();
-    var nextPrayerTime = nextPrayer != Prayer.NONE
-        ? await adhan.timeForPrayer(nextPrayer)
-        : await AdhanFlutter.create(
-                Coordinates(latitude, longitude),
-                dateTime.add(Duration(hours: 24 - dateTime.hour)),
-                calculationMethod)
-            .fajr;
-
-    return nextPrayerTime;
+  Prayer currentPrayer() {
+    return adhan.currentPrayer();
   }
 
-  Future<DateTime> getLaterPrayerTime() async {
-    var laterPrayerName = await getLaterPrayerName();
+  DateTime getNextPrayerTime() {
+    final nextPrayer = adhan.nextPrayer();
+    if (nextPrayer != Prayer.none) {
+      return adhan.timeForPrayer(nextPrayer)!;
+    }
+    return PrayerTimes(
+      Coordinates(latitude, longitude),
+      DateComponents.from(DateTime.now().add(const Duration(days: 1))),
+      parameters,
+    ).fajr;
+  }
+
+  DateTime getLaterPrayerTime() {
+    final laterPrayerName = getLaterPrayerName();
     switch (laterPrayerName) {
       case 'Fajr':
-        return await AdhanFlutter.create(
-                Coordinates(latitude, longitude),
-                dateTime.add(Duration(hours: 24 - dateTime.hour)),
-                calculationMethod)
-            .fajr; //get the prayer the next day
+        return PrayerTimes(
+          Coordinates(latitude, longitude),
+          DateComponents.from(DateTime.now().add(const Duration(days: 1))),
+          parameters,
+        ).fajr;
       case 'Dhuhr':
         return getDhuhr();
       case 'Asr':
         return getAsr();
-      case 'Magrib':
+      case 'Maghrib':
         return getMaghrib();
       case 'Isha':
         return getIsha();
@@ -59,22 +69,16 @@ class PrayerHelper {
     }
   }
 
-  Future<String> getNextPrayerName() async {
-    var nextPrayer = await adhan.nextPrayer();
-    if (nextPrayer == Prayer.NONE)
-      return 'Fajr';
-    else
-      return adhan.nextPrayer().then((prayer) =>
-          prayer.toString().substring(7)[0] +
-          prayer.toString().substring(8).toLowerCase());
+  String getNextPrayerName() {
+    final nextPrayer = adhan.nextPrayer();
+    if (nextPrayer == Prayer.none) return 'Fajr';
+    return _prayerDisplayName(nextPrayer);
   }
 
-  Future<String> getLaterPrayerName() async {
-    var nextPrayer = await adhan.nextPrayer().then((prayer) =>
-        prayer.toString().substring(7)[0] +
-        prayer.toString().substring(8).toLowerCase());
-
-    switch (nextPrayer) {
+  String getLaterPrayerName() {
+    final nextPrayer = adhan.nextPrayer();
+    final name = nextPrayer == Prayer.none ? 'None' : _prayerDisplayName(nextPrayer);
+    switch (name) {
       case 'Fajr':
         return 'Sunrise';
       case 'Sunrise':
@@ -82,57 +86,36 @@ class PrayerHelper {
       case 'Dhuhr':
         return 'Asr';
       case 'Asr':
-        return 'Magrib';
+        return 'Maghrib';
       case 'Maghrib':
         return 'Isha';
       case 'Isha':
-        return 'Fajr';
       case 'None':
-        return 'Sunrise';
+        return 'Fajr';
       default:
         return 'Fajr';
     }
   }
 
-  Future<DateTime> getFajr() async {
-    return await adhan.timeForPrayer(Prayer.FAJR);
+  String _prayerDisplayName(Prayer prayer) {
+    final n = prayer.name;
+    return n[0].toUpperCase() + n.substring(1).toLowerCase();
   }
 
-  Future<DateTime> getSunrise() async {
-    return await adhan.timeForPrayer(Prayer.SUNRISE);
-  }
-
-  Future<DateTime> getDhuhr() async {
-    return await adhan.timeForPrayer(Prayer.DHUHR);
-  }
-
-  Future<DateTime> getAsr() async {
-    return await adhan.timeForPrayer(Prayer.ASR);
-  }
-
-  Future<DateTime> getMaghrib() async {
-    return await adhan.timeForPrayer(Prayer.MAGHRIB);
-  }
-
-  Future<DateTime> getIsha() async {
-    return await adhan.timeForPrayer(Prayer.ISHA);
-  }
+  DateTime getFajr() => adhan.fajr;
+  DateTime getSunrise() => adhan.sunrise;
+  DateTime getDhuhr() => adhan.dhuhr;
+  DateTime getAsr() => adhan.asr;
+  DateTime getMaghrib() => adhan.maghrib;
+  DateTime getIsha() => adhan.isha;
 
   List<Widget> getAllPrayersTime() {
-    List<Widget> prayersTimeWidgets = [];
-    List<Future<DateTime>> prayersTimes = [
-      adhan.timeForPrayer(Prayer.FAJR),
-      adhan.timeForPrayer(Prayer.DHUHR),
-      adhan.timeForPrayer(Prayer.ASR),
-      adhan.timeForPrayer(Prayer.MAGHRIB),
-      adhan.timeForPrayer(Prayer.ISHA),
-    ];
-
-    for (Future<DateTime> prayerTime in prayersTimes) {
-      prayersTimeWidgets.add(PrayerTime(
-        prayerTime: prayerTime,
-      ));
-    }
-    return prayersTimeWidgets;
+    return [
+      adhan.fajr,
+      adhan.dhuhr,
+      adhan.asr,
+      adhan.maghrib,
+      adhan.isha,
+    ].map((t) => PrayerTime(prayerTime: t)).toList();
   }
 }

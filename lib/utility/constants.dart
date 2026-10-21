@@ -13,7 +13,7 @@ List<String> kMetricNames = [
   'Current Streak',
   'Streak Target',
   'Maximum Streak',
-  'Sucess Percentage',
+  'Success Percentage',
   'Weekly Average',
   'Monthly Average'
 ];

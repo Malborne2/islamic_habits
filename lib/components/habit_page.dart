@@ -1,58 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/components/buttonsList.dart';
-import 'package:islamic_habits/utility/prayer_helper.dart';
-import 'package:adhan_flutter/adhan_flutter.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/functions.dart';
+import 'package:islamic_habits/utility/prayer_helper.dart';
 
 class HabitPage extends StatefulWidget {
   final DateTime currentDate;
   final Habit habit;
-  HabitPage({@required this.currentDate, @required this.habit});
+  final VoidCallback? onChanged;
+  const HabitPage(
+      {super.key,
+      required this.currentDate,
+      required this.habit,
+      this.onChanged});
   @override
   _HabitPageState createState() => _HabitPageState();
 }
 
 class _HabitPageState extends State<HabitPage> {
-  final prayerHelper = PrayerHelper(
-      latitude: 25.3157001,
-      longitude: 51.8788493,
-      calculationMethod: CalculationMethod.QATAR,
-      dateTime: DateTime.now());
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final prayerHelper = PrayerHelper.fromSettings();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-//      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(
-              7,
-              (i) => Container(
-                  width: 17 * MediaQuery.of(context).size.width / 144,
-                  child: Center(child: Text(kDays[(kStartOfWeek + i) % 7]))),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double itemWidth = constraints.maxWidth / 7;
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Row(
+                children: List.generate(
+                  7,
+                  (i) => SizedBox(
+                      width: itemWidth,
+                      child:
+                          Center(child: Text(kDays[(kStartOfWeek + i) % 7]))),
+                ),
+              ),
             ),
-          ),
-        ),
-        ButtonsList(
-          length: daysOfMonth(widget.currentDate),
-          startOfWeek: Habit.startOfWeek,
-          habit: widget.habit,
-          failColor: Theme.of(context).brightness == Brightness.dark
-              ? Colors.brown[800]
-              : Colors.brown[300],
-          startDate: widget.currentDate,
-        )
-      ],
+            ButtonsList(
+              length: daysOfMonth(widget.currentDate),
+              startOfWeek: Habit.startOfWeek,
+              habit: widget.habit,
+              failColor: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.brown.shade800
+                  : Colors.brown.shade300,
+              startDate: widget.currentDate,
+              onChanged: widget.onChanged,
+            )
+          ],
+        );
+      },
     );
   }
 }
