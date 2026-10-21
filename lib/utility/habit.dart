@@ -156,7 +156,7 @@ class Habit {
     final earliestDay = _earliestTrackedDay();
     while (!day.isBefore(earliestDay)) {
       if (!isHabitDay(day)) {
-        day = day.subtract(const Duration(days: 1));
+        day = addDays(day, -1);
         continue;
       }
       if (getStatus(day) == Status.SUCCESS) {
@@ -164,7 +164,7 @@ class Habit {
       } else if (!_isPendingToday(day)) {
         break;
       }
-      day = day.subtract(const Duration(days: 1));
+      day = addDays(day, -1);
     }
     return streak;
   }
@@ -183,7 +183,7 @@ class Habit {
           current = 0;
         }
       }
-      day = day.add(const Duration(days: 1));
+      day = addDays(day, 1);
     }
     return maxStreak;
   }
@@ -200,7 +200,7 @@ class Habit {
         total++;
         if (getStatus(day) == Status.SUCCESS) success++;
       }
-      day = day.add(const Duration(days: 1));
+      day = addDays(day, 1);
     }
     return total == 0 ? 0 : 100 * success / total;
   }
@@ -210,7 +210,7 @@ class Habit {
   // period, both restricted to days on/after the habit's creation.
   double getAverageOverPeriod(int days) {
     final today = _dateOnly(DateTime.now());
-    DateTime start = today.subtract(Duration(days: days - 1));
+    DateTime start = addDays(today, -(days - 1));
     final earliestDay = _earliestTrackedDay();
     if (start.isBefore(earliestDay)) start = earliestDay;
 
@@ -226,7 +226,7 @@ class Habit {
             count++;
           }
         }
-        day = day.add(const Duration(days: 1));
+        day = addDays(day, 1);
       }
       return count == 0 ? 0 : sum / count;
     } else {
@@ -238,7 +238,7 @@ class Habit {
           total++;
           if (getStatus(day) == Status.SUCCESS) success++;
         }
-        day = day.add(const Duration(days: 1));
+        day = addDays(day, 1);
       }
       return total == 0 ? 0 : 100 * success / total;
     }

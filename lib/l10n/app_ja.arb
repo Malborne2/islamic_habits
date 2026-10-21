@@ -1,0 +1,197 @@
+{
+  "@@locale": "ja",
+  "appTitle": "イスラム習慣",
+  "navHome": "ホーム",
+  "navPrayerTimes": "礼拝時間",
+  "navAllHabits": "すべての習慣",
+  "navFivePrayers": "五行の礼拝",
+  "navAddHabit": "新しい習慣を追加",
+  "settingsTitle": "設定",
+  "settingsDarkMode": "ダークモード",
+  "settingsStartOfWeek": "週の開始日",
+  "settingsPrayerTimeSettings": "礼拝時間の設定",
+  "settingsPrayerTimeSettingsSubtitle": "場所、計算方法、礼拝のリマインダー",
+  "settingsBackupRestore": "バックアップと復元",
+  "settingsBackupRestoreSubtitle": "習慣データをエクスポートまたは復元",
+  "settingsLanguage": "言語",
+  "settingsLanguageSystem": "端末の言語",
+  "todayHabits": "今日の習慣",
+  "todayProgress": "今日: {completed} / {total} 件完了",
+  "@todayProgress": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "longestStreak": "最長連続記録: {daysText} ・ {habitName}",
+  "@longestStreak": {
+    "placeholders": {
+      "daysText": {"type": "String"},
+      "habitName": {"type": "String"}
+    }
+  },
+  "save": "保存",
+  "cancel": "キャンセル",
+  "delete": "削除",
+  "setValue": "設定",
+  "exportBackup": "バックアップをエクスポート",
+  "restoreFromBackup": "バックアップから復元",
+  "habitName": "習慣の名前",
+  "successMetric": "達成基準",
+  "yesNo": "はい / いいえ",
+  "number": "数値",
+  "streakTarget": "連続目標",
+  "targetStreakDays": "目標連続日数",
+  "schedule": "スケジュール",
+  "everyDay": "毎日",
+  "certainDaysOfWeek": "曜日を指定",
+  "timesPerWeek": "週に複数回",
+  "color": "色",
+  "saveHabit": "習慣を保存",
+  "habitFajrPrayer": "ファジュルの礼拝",
+  "habitDhuhrPrayer": "ズフルの礼拝",
+  "habitAsrPrayer": "アスルの礼拝",
+  "habitMaghribPrayer": "マグリブの礼拝",
+  "habitIshaPrayer": "イシャーの礼拝",
+  "habitRecitingQuran": "クルアーンの朗読",
+  "todayLabel": "今日",
+  "prayerFajr": "ファジュル",
+  "prayerDhuhr": "ズフル",
+  "prayerAsr": "アスル",
+  "prayerMaghrib": "マグリブ",
+  "prayerIsha": "イシャー",
+  "notifyMode": "通知",
+  "silentMode": "サイレント",
+  "adhanMode": "アザーン",
+  "weekdayMonday": "月曜日",
+  "weekdayTuesday": "火曜日",
+  "weekdayWednesday": "水曜日",
+  "weekdayThursday": "木曜日",
+  "weekdayFriday": "金曜日",
+  "weekdaySaturday": "土曜日",
+  "weekdaySunday": "日曜日",
+  "settingsNumerals": "数字表記",
+  "numeralsWestern": "西洋数字 (0, 1, 2…)",
+  "numeralsEastern": "東アラビア数字 (٠, ١, ٢…)",
+  "unitPages": "ページ",
+  "deleteEntryTitle": "記録を削除",
+  "deleteEntryConfirm": "この記録を完全に削除してもよろしいですか?",
+  "targetAmountLabel": "目標量",
+  "unitLabel": "単位",
+  "timesPerWeekLabel": "週あたりの回数",
+  "restoreBackupTitle": "バックアップを復元",
+  "restoreBackupConfirm": "この端末に保存されているすべての習慣が、選択したバックアップの内容に置き換えられます。続けますか?",
+  "restoreAction": "復元",
+  "notificationPermissionDenied": "通知の許可が得られませんでした",
+  "prayerRemindersLabel": "礼拝リマインダー",
+  "prayerRemindersSubtitle": "各礼拝の30分後に、礼拝をしたか確認します",
+  "sendTestReminder": "今すぐテスト通知を送信",
+  "adhanVoiceLabel": "アザーンの声",
+  "adhanVoiceHint": "礼拝時間画面でマイクアイコン(アザーン)に設定した礼拝に使用されます。",
+  "takbeerOnly": "タクビールのみ",
+  "fullAdhan": "フルアザーン",
+  "testAdhanVoice": "この声をテスト",
+  "adhanAudioMissing": "この声の音声ファイルはまだ同梱されていません — android/app/src/main/res/raw に追加すると再生できます。",
+  "locationLabel": "場所",
+  "cityLabel": "都市",
+  "latitudeLabel": "緯度",
+  "longitudeLabel": "経度",
+  "calculationMethodLabel": "計算方法",
+  "madhabLabel": "マズハブ (アスルの計算)",
+  "shafiLabel": "シャーフィイー派",
+  "hanafiLabel": "ハナフィー派",
+  "manualCorrectionLabel": "手動補正 (分)",
+  "adjFajr": "ファジュル",
+  "adjDhuhr": "ズフル",
+  "adjAsr": "アスル",
+  "adjMaghrib": "マグリブ",
+  "adjIsha": "イシャー",
+  "cityDoha": "ドーハ",
+  "cityMecca": "メッカ",
+  "cityMedina": "メディナ",
+  "cityCairo": "カイロ",
+  "cityIstanbul": "イスタンブール",
+  "cityJakarta": "ジャカルタ",
+  "cityKarachi": "カラチ",
+  "cityLondon": "ロンドン",
+  "cityNewYork": "ニューヨーク",
+  "cityCustom": "カスタム",
+  "notificationPrayerTimeTitle": "礼拝の時間",
+  "notificationPrayerTimeBody": "{prayerName}の時間です",
+  "@notificationPrayerTimeBody": {
+    "placeholders": {
+      "prayerName": {"type": "String"}
+    }
+  },
+  "notificationReminderTitle": "礼拝リマインダー",
+  "notificationReminderBody": "{prayerName}の礼拝をしましたか?",
+  "@notificationReminderBody": {
+    "placeholders": {
+      "prayerName": {"type": "String"}
+    }
+  },
+  "notificationYes": "はい",
+  "notificationNo": "いいえ",
+  "weekdayMonShort": "月",
+  "weekdayTueShort": "火",
+  "weekdayWedShort": "水",
+  "weekdayThuShort": "木",
+  "weekdayFriShort": "金",
+  "weekdaySatShort": "土",
+  "weekdaySunShort": "日",
+  "pickAtLeastOneDay": "曜日を少なくとも1つ選んでください",
+  "setValueTitle": "値を設定",
+  "setUnitTitle": "{unit}を設定",
+  "@setUnitTitle": {
+    "placeholders": {
+      "unit": {"type": "String"}
+    }
+  },
+  "metricCurrentStreak": "現在の連続記録",
+  "metricStreakTarget": "連続目標",
+  "metricMaximumStreak": "最長連続記録",
+  "metricSuccessPercentage": "達成率",
+  "metricWeeklyAverage": "週平均",
+  "metricMonthlyAverage": "月平均",
+  "backupDescription": "すべての習慣データはこの端末にローカル保存されています。バックアップファイルをエクスポートして控えを保持するか、クラウドやメールで共有するなどして他の端末に移すことができます。",
+  "exportFailed": "エクスポートに失敗しました: {error}",
+  "@exportFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "importFailed": "インポートに失敗しました: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "restoredCount": "{count}件の習慣を復元しました",
+  "@restoredCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "shareBackupText": "イスラム習慣 バックアップ",
+  "valueAddedSuccess": "新しい値が正常に追加されました",
+  "prayerSunrise": "日の出",
+  "methodMuslimWorldLeague": "ムスリム世界連盟",
+  "methodEgyptian": "エジプト",
+  "methodKarachi": "カラチ",
+  "methodUmmAlQura": "ウンムルクラー",
+  "methodDubai": "ドバイ",
+  "methodMoonSightingCommittee": "月の目視委員会",
+  "methodNorthAmerica": "北米",
+  "methodKuwait": "クウェート",
+  "methodQatar": "カタール",
+  "methodSingapore": "シンガポール",
+  "methodTurkey": "トルコ",
+  "methodTehran": "テヘラン",
+  "methodOther": "その他",
+  "streakDays": "{count, plural, other{{count}日}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
+}

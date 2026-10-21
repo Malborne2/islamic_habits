@@ -254,6 +254,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fullAdhan => 'Full Adhan';
 
   @override
+  String get testAdhanVoice => 'Test this voice';
+
+  @override
+  String get adhanAudioMissing =>
+      'No audio file bundled for this voice yet — add it under android/app/src/main/res/raw to hear it.';
+
+  @override
   String get locationLabel => 'Location';
 
   @override
@@ -463,4 +470,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get methodOther => 'Other';
+
+  @override
+  String streakDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
 }

@@ -90,6 +90,8 @@
   "adhanVoiceHint": "Brukes for bønner satt til mikrofon-ikonet (adhan) på bønnetider-skjermen.",
   "takbeerOnly": "Kun Takbeer",
   "fullAdhan": "Full Adhan",
+  "testAdhanVoice": "Test denne stemmen",
+  "adhanAudioMissing": "Ingen lydfil er lagt til for denne stemmen ennå — legg den til under android/app/src/main/res/raw for å høre den.",
   "locationLabel": "Sted",
   "cityLabel": "By",
   "latitudeLabel": "Breddegrad",
@@ -185,5 +187,11 @@
   "methodSingapore": "Singapore",
   "methodTurkey": "Tyrkia",
   "methodTehran": "Teheran",
-  "methodOther": "Annet"
+  "methodOther": "Annet",
+  "streakDays": "{count, plural, one{{count} dag} other{{count} dager}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
 }

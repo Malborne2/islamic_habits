@@ -1,0 +1,197 @@
+{
+  "@@locale": "ur",
+  "appTitle": "اسلامی عادات",
+  "navHome": "ہوم",
+  "navPrayerTimes": "اوقاتِ نماز",
+  "navAllHabits": "تمام عادات",
+  "navFivePrayers": "پانچ نمازیں",
+  "navAddHabit": "نئی عادت شامل کریں",
+  "settingsTitle": "ترتیبات",
+  "settingsDarkMode": "ڈارک موڈ",
+  "settingsStartOfWeek": "ہفتے کا آغاز",
+  "settingsPrayerTimeSettings": "اوقاتِ نماز کی ترتیبات",
+  "settingsPrayerTimeSettingsSubtitle": "مقام، حساب کا طریقہ، اور نماز کی یاد دہانیاں",
+  "settingsBackupRestore": "بیک اپ اور بحالی",
+  "settingsBackupRestoreSubtitle": "اپنی عادات کا ڈیٹا ایکسپورٹ یا بحال کریں",
+  "settingsLanguage": "زبان",
+  "settingsLanguageSystem": "فون کی زبان",
+  "todayHabits": "آج کی عادات",
+  "todayProgress": "آج: {completed} / {total} عادات مکمل",
+  "@todayProgress": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "longestStreak": "طویل ترین تسلسل: {daysText} ۔ {habitName}",
+  "@longestStreak": {
+    "placeholders": {
+      "daysText": {"type": "String"},
+      "habitName": {"type": "String"}
+    }
+  },
+  "save": "محفوظ کریں",
+  "cancel": "منسوخ کریں",
+  "delete": "حذف کریں",
+  "setValue": "مقرر کریں",
+  "exportBackup": "بیک اپ ایکسپورٹ کریں",
+  "restoreFromBackup": "بیک اپ سے بحال کریں",
+  "habitName": "عادت کا نام",
+  "successMetric": "کامیابی کا معیار",
+  "yesNo": "ہاں / نہیں",
+  "number": "عدد",
+  "streakTarget": "تسلسل کا ہدف",
+  "targetStreakDays": "ہدف تسلسل (دن)",
+  "schedule": "شیڈول",
+  "everyDay": "ہر روز",
+  "certainDaysOfWeek": "ہفتے کے مخصوص دن",
+  "timesPerWeek": "ہفتے میں کئی بار",
+  "color": "رنگ",
+  "saveHabit": "عادت محفوظ کریں",
+  "habitFajrPrayer": "نماز فجر",
+  "habitDhuhrPrayer": "نماز ظہر",
+  "habitAsrPrayer": "نماز عصر",
+  "habitMaghribPrayer": "نماز مغرب",
+  "habitIshaPrayer": "نماز عشاء",
+  "habitRecitingQuran": "قرآن کی تلاوت",
+  "todayLabel": "آج",
+  "prayerFajr": "فجر",
+  "prayerDhuhr": "ظہر",
+  "prayerAsr": "عصر",
+  "prayerMaghrib": "مغرب",
+  "prayerIsha": "عشاء",
+  "notifyMode": "مطلع کریں",
+  "silentMode": "خاموش",
+  "adhanMode": "اذان",
+  "weekdayMonday": "پیر",
+  "weekdayTuesday": "منگل",
+  "weekdayWednesday": "بدھ",
+  "weekdayThursday": "جمعرات",
+  "weekdayFriday": "جمعہ",
+  "weekdaySaturday": "ہفتہ",
+  "weekdaySunday": "اتوار",
+  "settingsNumerals": "اعداد کی طرز",
+  "numeralsWestern": "مغربی (0, 1, 2…)",
+  "numeralsEastern": "مشرقی عربی (٠, ١, ٢…)",
+  "unitPages": "صفحات",
+  "deleteEntryTitle": "اندراج حذف کریں",
+  "deleteEntryConfirm": "کیا آپ واقعی اس اندراج کو مستقل طور پر حذف کرنا چاہتے ہیں؟",
+  "targetAmountLabel": "ہدف مقدار",
+  "unitLabel": "اکائی",
+  "timesPerWeekLabel": "ہفتے میں دفعہ",
+  "restoreBackupTitle": "بیک اپ بحال کریں",
+  "restoreBackupConfirm": "اس سے اس آلے پر محفوظ تمام عادات منتخب بیک اپ کی عادات سے بدل جائیں گی۔ جاری رکھیں؟",
+  "restoreAction": "بحال کریں",
+  "notificationPermissionDenied": "اطلاع کی اجازت نہیں دی گئی",
+  "prayerRemindersLabel": "نماز کی یاد دہانیاں",
+  "prayerRemindersSubtitle": "ہر نماز کے 30 منٹ بعد پوچھا جائے گا کہ آیا آپ نے نماز ادا کی",
+  "sendTestReminder": "ابھی ایک آزمائشی یاد دہانی بھیجیں",
+  "adhanVoiceLabel": "اذان کی آواز",
+  "adhanVoiceHint": "اوقاتِ نماز کی سکرین پر مائیکروفون آئیکن (اذان) پر مقرر نمازوں کے لیے استعمال ہوتی ہے۔",
+  "takbeerOnly": "صرف تکبیر",
+  "fullAdhan": "مکمل اذان",
+  "testAdhanVoice": "یہ آواز آزمائیں",
+  "adhanAudioMissing": "اس آواز کے لیے ابھی تک کوئی آڈیو فائل شامل نہیں کی گئی — اسے سننے کے لیے android/app/src/main/res/raw میں شامل کریں۔",
+  "locationLabel": "مقام",
+  "cityLabel": "شہر",
+  "latitudeLabel": "عرض بلد",
+  "longitudeLabel": "طول بلد",
+  "calculationMethodLabel": "حساب کا طریقہ",
+  "madhabLabel": "مذہب (عصر کا حساب)",
+  "shafiLabel": "شافعی",
+  "hanafiLabel": "حنفی",
+  "manualCorrectionLabel": "دستی تصحیح (منٹ)",
+  "adjFajr": "فجر",
+  "adjDhuhr": "ظہر",
+  "adjAsr": "عصر",
+  "adjMaghrib": "مغرب",
+  "adjIsha": "عشاء",
+  "cityDoha": "دوحہ",
+  "cityMecca": "مکہ",
+  "cityMedina": "مدینہ",
+  "cityCairo": "قاہرہ",
+  "cityIstanbul": "استنبول",
+  "cityJakarta": "جکارتہ",
+  "cityKarachi": "کراچی",
+  "cityLondon": "لندن",
+  "cityNewYork": "نیویارک",
+  "cityCustom": "حسب ضرورت",
+  "notificationPrayerTimeTitle": "نماز کا وقت",
+  "notificationPrayerTimeBody": "{prayerName} کا وقت ہو گیا ہے",
+  "@notificationPrayerTimeBody": {
+    "placeholders": {
+      "prayerName": {"type": "String"}
+    }
+  },
+  "notificationReminderTitle": "نماز کی یاد دہانی",
+  "notificationReminderBody": "کیا آپ نے {prayerName} ادا کی؟",
+  "@notificationReminderBody": {
+    "placeholders": {
+      "prayerName": {"type": "String"}
+    }
+  },
+  "notificationYes": "ہاں",
+  "notificationNo": "نہیں",
+  "weekdayMonShort": "پیر",
+  "weekdayTueShort": "منگل",
+  "weekdayWedShort": "بدھ",
+  "weekdayThuShort": "جمعرات",
+  "weekdayFriShort": "جمعہ",
+  "weekdaySatShort": "ہفتہ",
+  "weekdaySunShort": "اتوار",
+  "pickAtLeastOneDay": "ہفتے کا کم از کم ایک دن منتخب کریں",
+  "setValueTitle": "قدر مقرر کریں",
+  "setUnitTitle": "{unit} مقرر کریں",
+  "@setUnitTitle": {
+    "placeholders": {
+      "unit": {"type": "String"}
+    }
+  },
+  "metricCurrentStreak": "موجودہ تسلسل",
+  "metricStreakTarget": "تسلسل کا ہدف",
+  "metricMaximumStreak": "طویل ترین تسلسل",
+  "metricSuccessPercentage": "کامیابی کا تناسب",
+  "metricWeeklyAverage": "ہفتہ وار اوسط",
+  "metricMonthlyAverage": "ماہانہ اوسط",
+  "backupDescription": "تمام عادات کا ڈیٹا اس آلے پر مقامی طور پر محفوظ ہے۔ کاپی رکھنے کے لیے بیک اپ فائل ایکسپورٹ کریں یا اسے کلاؤڈ ڈرائیو یا ای میل پر شیئر کر کے دوسرے آلے پر منتقل کریں۔",
+  "exportFailed": "ایکسپورٹ ناکام ہو گیا: {error}",
+  "@exportFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "importFailed": "درآمد ناکام ہو گئی: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "restoredCount": "{count} عادات بحال کی گئیں",
+  "@restoredCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "shareBackupText": "اسلامی عادات کا بیک اپ",
+  "valueAddedSuccess": "نئی قدر کامیابی سے شامل کر دی گئی",
+  "prayerSunrise": "طلوع آفتاب",
+  "methodMuslimWorldLeague": "رابطہ عالم اسلامی",
+  "methodEgyptian": "مصری",
+  "methodKarachi": "کراچی",
+  "methodUmmAlQura": "ام القریٰ",
+  "methodDubai": "دبئی",
+  "methodMoonSightingCommittee": "رویت ہلال کمیٹی",
+  "methodNorthAmerica": "شمالی امریکہ",
+  "methodKuwait": "کویت",
+  "methodQatar": "قطر",
+  "methodSingapore": "سنگاپور",
+  "methodTurkey": "ترکی",
+  "methodTehran": "تہران",
+  "methodOther": "دیگر",
+  "streakDays": "{count, plural, one{{count} دن} other{{count} دن}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
+}

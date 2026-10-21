@@ -14,16 +14,12 @@ import 'package:islamic_habits/utility/prayer_settings.dart';
 const String _kChannelId = 'prayer_reminders';
 const String _kChannelName = 'Prayer reminders';
 
-// Separate channels per voice: once created, a notification channel's
-// sound can't be changed, so switching voices needs a different channel.
-const String _kTakbeerChannelId = 'prayer_adhan_takbeer';
-const String _kFullAdhanChannelId = 'prayer_adhan_full';
-
-// Place your own licensed audio at android/app/src/main/res/raw/takbeer.mp3
-// and android/app/src/main/res/raw/adhan_full.mp3 for these to actually
-// play; without them Android silently falls back to the default sound.
-const String _kTakbeerSoundResource = 'takbeer';
-const String _kFullAdhanSoundResource = 'adhan_full';
+// Separate channel per voice: once created, a notification channel's sound
+// can't be changed, so switching voices needs a different channel. See
+// android/app/ADHAN_AUDIO_README.md — without a matching file under
+// android/app/src/main/res/raw/, Android silently falls back to the
+// default notification sound instead of playing anything audible.
+String _adhanChannelId(AdhanVoiceOption voice) => 'prayer_adhan_${voice.id}';
 
 final FlutterLocalNotificationsPlugin _notificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -125,26 +121,31 @@ class NotificationService {
 
       if (mode == PrayerNotifyMode.adhan) {
         if (prayerTimes[i].isBefore(now)) continue;
-        final isTakbeer = PrayerSettings.adhanVoice == AdhanVoice.takbeer;
-        await _notificationsPlugin.zonedSchedule(
-          id: 10 + i,
-          title: l10n.notificationPrayerTimeTitle,
-          body: l10n.notificationPrayerTimeBody(displayName),
-          scheduledDate: tz.TZDateTime.from(prayerTimes[i], tz.local),
-          notificationDetails: NotificationDetails(
-            android: AndroidNotificationDetails(
-              isTakbeer ? _kTakbeerChannelId : _kFullAdhanChannelId,
-              isTakbeer ? 'Adhan (Takbeer)' : 'Adhan (Full)',
-              channelDescription: 'Plays the adhan at prayer time',
-              importance: Importance.high,
-              priority: Priority.high,
-              sound: RawResourceAndroidNotificationSound(isTakbeer
-                  ? _kTakbeerSoundResource
-                  : _kFullAdhanSoundResource),
+        final voice = PrayerSettings.adhanVoice;
+        try {
+          await _notificationsPlugin.zonedSchedule(
+            id: 10 + i,
+            title: l10n.notificationPrayerTimeTitle,
+            body: l10n.notificationPrayerTimeBody(displayName),
+            scheduledDate: tz.TZDateTime.from(prayerTimes[i], tz.local),
+            notificationDetails: NotificationDetails(
+              android: AndroidNotificationDetails(
+                _adhanChannelId(voice),
+                'Adhan (${voice.displayName})',
+                channelDescription: 'Plays the adhan at prayer time',
+                importance: Importance.high,
+                priority: Priority.high,
+                sound:
+                    RawResourceAndroidNotificationSound(voice.soundResource),
+              ),
             ),
-          ),
-          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-        );
+            androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+          );
+        } catch (_) {
+          // No audio file bundled for this voice (see
+          // android/app/ADHAN_AUDIO_README.md) — skip just this prayer
+          // rather than aborting the rest of the day's reminders.
+        }
         continue;
       }
 
@@ -194,6 +195,27 @@ class NotificationService {
         ),
       ),
       payload: kPrayersNames[0],
+    );
+  }
+
+  // Fires an immediate notification using the given voice's own channel and
+  // sound, so Settings can let the user preview a voice before saving it.
+  static Future<void> playTestAdhan(AdhanVoiceOption voice) async {
+    final l10n = await _currentLocalizations();
+    await _notificationsPlugin.show(
+      id: 98,
+      title: l10n.notificationPrayerTimeTitle,
+      body: voice.displayName,
+      notificationDetails: NotificationDetails(
+        android: AndroidNotificationDetails(
+          _adhanChannelId(voice),
+          'Adhan (${voice.displayName})',
+          channelDescription: 'Plays the adhan at prayer time',
+          importance: Importance.high,
+          priority: Priority.high,
+          sound: RawResourceAndroidNotificationSound(voice.soundResource),
+        ),
+      ),
     );
   }
 }

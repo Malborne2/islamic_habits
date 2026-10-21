@@ -1,0 +1,197 @@
+{
+  "@@locale": "fi",
+  "appTitle": "Islamilaiset tavat",
+  "navHome": "Koti",
+  "navPrayerTimes": "Rukousajat",
+  "navAllHabits": "Kaikki tavat",
+  "navFivePrayers": "Viisi rukousta",
+  "navAddHabit": "Lisää uusi tapa",
+  "settingsTitle": "Asetukset",
+  "settingsDarkMode": "Tumma tila",
+  "settingsStartOfWeek": "Viikon alkupäivä",
+  "settingsPrayerTimeSettings": "Rukousaika-asetukset",
+  "settingsPrayerTimeSettingsSubtitle": "Sijainti, laskentamenetelmä ja rukousmuistutukset",
+  "settingsBackupRestore": "Varmuuskopiointi ja palautus",
+  "settingsBackupRestoreSubtitle": "Vie tai palauta tapatietosi",
+  "settingsLanguage": "Kieli",
+  "settingsLanguageSystem": "Puhelimen kieli",
+  "todayHabits": "Tämän päivän tavat",
+  "todayProgress": "Tänään: {completed} / {total} tapaa tehty",
+  "@todayProgress": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "longestStreak": "Pisin putki: {daysText} · {habitName}",
+  "@longestStreak": {
+    "placeholders": {
+      "daysText": {"type": "String"},
+      "habitName": {"type": "String"}
+    }
+  },
+  "save": "Tallenna",
+  "cancel": "Peruuta",
+  "delete": "Poista",
+  "setValue": "Aseta",
+  "exportBackup": "Vie varmuuskopio",
+  "restoreFromBackup": "Palauta varmuuskopiosta",
+  "habitName": "Tavan nimi",
+  "successMetric": "Onnistumismittari",
+  "yesNo": "Kyllä / Ei",
+  "number": "Numero",
+  "streakTarget": "Putkitavoite",
+  "targetStreakDays": "Tavoiteputki (päivää)",
+  "schedule": "Aikataulu",
+  "everyDay": "Joka päivä",
+  "certainDaysOfWeek": "Tietyt viikonpäivät",
+  "timesPerWeek": "Tietty määrä kertoja viikossa",
+  "color": "Väri",
+  "saveHabit": "Tallenna tapa",
+  "habitFajrPrayer": "Fajr-rukous",
+  "habitDhuhrPrayer": "Dhuhr-rukous",
+  "habitAsrPrayer": "Asr-rukous",
+  "habitMaghribPrayer": "Maghrib-rukous",
+  "habitIshaPrayer": "Isha-rukous",
+  "habitRecitingQuran": "Koraanin lukeminen",
+  "todayLabel": "Tänään",
+  "prayerFajr": "Fajr",
+  "prayerDhuhr": "Dhuhr",
+  "prayerAsr": "Asr",
+  "prayerMaghrib": "Maghrib",
+  "prayerIsha": "Isha",
+  "notifyMode": "Ilmoita",
+  "silentMode": "Äänetön",
+  "adhanMode": "Adhan",
+  "weekdayMonday": "Maanantai",
+  "weekdayTuesday": "Tiistai",
+  "weekdayWednesday": "Keskiviikko",
+  "weekdayThursday": "Torstai",
+  "weekdayFriday": "Perjantai",
+  "weekdaySaturday": "Lauantai",
+  "weekdaySunday": "Sunnuntai",
+  "settingsNumerals": "Numeromuoto",
+  "numeralsWestern": "Länsimaiset (0, 1, 2…)",
+  "numeralsEastern": "Itäarabialaiset (٠, ١, ٢…)",
+  "unitPages": "sivua",
+  "deleteEntryTitle": "Poista merkintä",
+  "deleteEntryConfirm": "Haluatko varmasti poistaa tämän merkinnän pysyvästi?",
+  "targetAmountLabel": "Tavoitemäärä",
+  "unitLabel": "Yksikkö",
+  "timesPerWeekLabel": "Kertaa viikossa",
+  "restoreBackupTitle": "Palauta varmuuskopio",
+  "restoreBackupConfirm": "Tämä korvaa kaikki laitteelle tallennetut tavat valitun varmuuskopion tiedoilla. Jatketaanko?",
+  "restoreAction": "Palauta",
+  "notificationPermissionDenied": "Ilmoituslupaa ei myönnetty",
+  "prayerRemindersLabel": "Rukousmuistutukset",
+  "prayerRemindersSubtitle": "30 minuuttia jokaisen rukouksen jälkeen kysytään, rukoilitko",
+  "sendTestReminder": "Lähetä testimuistutus nyt",
+  "adhanVoiceLabel": "Adhan-ääni",
+  "adhanVoiceHint": "Käytetään rukouksille, jotka on asetettu mikrofonikuvakkeeseen (adhan) rukousaikanäytöllä.",
+  "takbeerOnly": "Vain takbir",
+  "fullAdhan": "Täysi adhan",
+  "testAdhanVoice": "Testaa tätä ääntä",
+  "adhanAudioMissing": "Tälle äänelle ei vielä ole liitetty äänitiedostoa — lisää se kansioon android/app/src/main/res/raw kuullaksesi sen.",
+  "locationLabel": "Sijainti",
+  "cityLabel": "Kaupunki",
+  "latitudeLabel": "Leveysaste",
+  "longitudeLabel": "Pituusaste",
+  "calculationMethodLabel": "Laskentamenetelmä",
+  "madhabLabel": "Madhhab (Asr-laskenta)",
+  "shafiLabel": "Shafi",
+  "hanafiLabel": "Hanafi",
+  "manualCorrectionLabel": "Manuaalinen korjaus (minuuttia)",
+  "adjFajr": "Fajr",
+  "adjDhuhr": "Dhuhr",
+  "adjAsr": "Asr",
+  "adjMaghrib": "Maghrib",
+  "adjIsha": "Isha",
+  "cityDoha": "Doha",
+  "cityMecca": "Mekka",
+  "cityMedina": "Medina",
+  "cityCairo": "Kairo",
+  "cityIstanbul": "Istanbul",
+  "cityJakarta": "Jakarta",
+  "cityKarachi": "Karachi",
+  "cityLondon": "Lontoo",
+  "cityNewYork": "New York",
+  "cityCustom": "Mukautettu",
+  "notificationPrayerTimeTitle": "Rukousaika",
+  "notificationPrayerTimeBody": "On aika rukoilla {prayerName}",
+  "@notificationPrayerTimeBody": {
+    "placeholders": {
+      "prayerName": {"type": "String"}
+    }
+  },
+  "notificationReminderTitle": "Rukousmuistutus",
+  "notificationReminderBody": "Rukoilitko {prayerName}?",
+  "@notificationReminderBody": {
+    "placeholders": {
+      "prayerName": {"type": "String"}
+    }
+  },
+  "notificationYes": "Kyllä",
+  "notificationNo": "Ei",
+  "weekdayMonShort": "Ma",
+  "weekdayTueShort": "Ti",
+  "weekdayWedShort": "Ke",
+  "weekdayThuShort": "To",
+  "weekdayFriShort": "Pe",
+  "weekdaySatShort": "La",
+  "weekdaySunShort": "Su",
+  "pickAtLeastOneDay": "Valitse vähintään yksi viikonpäivä",
+  "setValueTitle": "Aseta arvo",
+  "setUnitTitle": "Aseta {unit}",
+  "@setUnitTitle": {
+    "placeholders": {
+      "unit": {"type": "String"}
+    }
+  },
+  "metricCurrentStreak": "Nykyinen putki",
+  "metricStreakTarget": "Putkitavoite",
+  "metricMaximumStreak": "Pisin putki",
+  "metricSuccessPercentage": "Onnistumisprosentti",
+  "metricWeeklyAverage": "Viikkokeskiarvo",
+  "metricMonthlyAverage": "Kuukausikeskiarvo",
+  "backupDescription": "Kaikki tapatiedot tallennetaan paikallisesti tähän laitteeseen. Vie varmuuskopiotiedosto säilyttääksesi kopion tai siirtääksesi sen toiselle laitteelle, esimerkiksi jakamalla se pilvipalveluun tai sähköpostiin.",
+  "exportFailed": "Vienti epäonnistui: {error}",
+  "@exportFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "importFailed": "Tuonti epäonnistui: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "restoredCount": "Palautettiin {count} tapaa",
+  "@restoredCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "shareBackupText": "Islamilaiset tavat -varmuuskopio",
+  "valueAddedSuccess": "Uusi arvo lisätty onnistuneesti",
+  "prayerSunrise": "Auringonnousu",
+  "methodMuslimWorldLeague": "Muslim World League",
+  "methodEgyptian": "Egyptiläinen",
+  "methodKarachi": "Karachi",
+  "methodUmmAlQura": "Umm al-Qura",
+  "methodDubai": "Dubai",
+  "methodMoonSightingCommittee": "Kuun havainnointikomitea",
+  "methodNorthAmerica": "Pohjois-Amerikka",
+  "methodKuwait": "Kuwait",
+  "methodQatar": "Qatar",
+  "methodSingapore": "Singapore",
+  "methodTurkey": "Turkki",
+  "methodTehran": "Teheran",
+  "methodOther": "Muu",
+  "streakDays": "{count, plural, one{{count} päivä} other{{count} päivää}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
+}

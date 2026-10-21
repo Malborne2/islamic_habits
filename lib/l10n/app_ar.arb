@@ -90,6 +90,8 @@
   "adhanVoiceHint": "يُستخدم للصلوات المضبوطة على أيقونة الميكروفون (الأذان) في شاشة مواقيت الصلاة.",
   "takbeerOnly": "التكبير فقط",
   "fullAdhan": "الأذان كاملاً",
+  "testAdhanVoice": "تجربة هذا الصوت",
+  "adhanAudioMissing": "لا يوجد ملف صوتي لهذا الصوت بعد — أضفه ضمن android/app/src/main/res/raw لسماعه.",
   "locationLabel": "الموقع",
   "cityLabel": "المدينة",
   "latitudeLabel": "خط العرض",
@@ -185,5 +187,11 @@
   "methodSingapore": "سنغافورة",
   "methodTurkey": "تركيا",
   "methodTehran": "طهران",
-  "methodOther": "أخرى"
+  "methodOther": "أخرى",
+  "streakDays": "{count, plural, zero{0 يوم} one{يوم واحد} two{يومان} few{{count} أيام} many{{count} يومًا} other{{count} يوم}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
 }

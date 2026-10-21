@@ -7,6 +7,7 @@ import 'package:islamic_habits/utility/habit_name_localizer.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/route_observer.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -17,10 +18,9 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with RouteAware {
   late HijriCalendar hijriToday;
   DateTime today = DateTime.now();
-  final prayerHelper = PrayerHelper.fromSettings();
 
   @override
   void initState() {
@@ -29,10 +29,32 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route != null) appRouteObserver.subscribe(this, route);
+  }
+
+  @override
+  void dispose() {
+    appRouteObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  // Called when a route pushed on top of this screen (e.g. Settings) is
+  // popped back to it, so prayer time corrections made there show up
+  // immediately instead of needing an unrelated navigation first.
+  @override
+  void didPopNext() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context).toString();
     HijriCalendar.setLocal(locale == 'ar' ? 'ar' : 'en');
+    final prayerHelper = PrayerHelper.fromSettings();
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appTitle),

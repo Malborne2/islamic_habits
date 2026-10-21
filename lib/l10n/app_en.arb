@@ -90,6 +90,8 @@
   "adhanVoiceHint": "Used for prayers set to the microphone (adhan) bell icon on the Prayer times screen.",
   "takbeerOnly": "Takbeer only",
   "fullAdhan": "Full Adhan",
+  "testAdhanVoice": "Test this voice",
+  "adhanAudioMissing": "No audio file bundled for this voice yet — add it under android/app/src/main/res/raw to hear it.",
   "locationLabel": "Location",
   "cityLabel": "City",
   "latitudeLabel": "Latitude",
@@ -185,5 +187,11 @@
   "methodSingapore": "Singapore",
   "methodTurkey": "Turkey",
   "methodTehran": "Tehran",
-  "methodOther": "Other"
+  "methodOther": "Other",
+  "streakDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
 }

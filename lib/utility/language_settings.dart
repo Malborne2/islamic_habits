@@ -5,12 +5,24 @@ const List<Locale> kSupportedLocales = [
   Locale('en'),
   Locale('ar'),
   Locale('nb'),
+  Locale('ja'),
+  Locale('sv'),
+  Locale('fi'),
+  Locale('ur'),
+  Locale('fa'),
+  Locale('id'),
 ];
 
 const Map<String, String> kLanguageNames = {
   'en': 'English',
   'ar': 'العربية',
   'nb': 'Norsk',
+  'ja': '日本語',
+  'sv': 'Svenska',
+  'fi': 'Suomi',
+  'ur': 'اردو',
+  'fa': 'فارسی',
+  'id': 'Bahasa Indonesia',
 };
 
 // null means "follow the phone's language" (falling back to English if the

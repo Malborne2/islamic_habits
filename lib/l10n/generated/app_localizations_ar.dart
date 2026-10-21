@@ -252,6 +252,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get fullAdhan => 'الأذان كاملاً';
 
   @override
+  String get testAdhanVoice => 'تجربة هذا الصوت';
+
+  @override
+  String get adhanAudioMissing =>
+      'لا يوجد ملف صوتي لهذا الصوت بعد — أضفه ضمن android/app/src/main/res/raw لسماعه.';
+
+  @override
   String get locationLabel => 'الموقع';
 
   @override
@@ -461,4 +468,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get methodOther => 'أخرى';
+
+  @override
+  String streakDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count يوم',
+      many: '$count يومًا',
+      few: '$count أيام',
+      two: 'يومان',
+      one: 'يوم واحد',
+      zero: '0 يوم',
+    );
+    return '$_temp0';
+  }
 }

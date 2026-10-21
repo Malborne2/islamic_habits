@@ -59,11 +59,10 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
   @override
   void initState() {
     hijriFirstDay = HijriCalendar.fromDate(currentDate);
-    hijriLastDay =
-        HijriCalendar.fromDate(currentDate.add(const Duration(days: 7)));
+    hijriLastDay = HijriCalendar.fromDate(addDays(currentDate, 7));
     controller = PageController(initialPage: 1);
-    _lowerDate = currentDate.subtract(const Duration(days: 7));
-    _upperDate = currentDate.add(const Duration(days: 7));
+    _lowerDate = addDays(currentDate, -7);
+    _upperDate = addDays(currentDate, 7);
     startingDates = [_lowerDate, currentDate, _upperDate];
 
     super.initState();
@@ -143,10 +142,10 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
                     child: Center(
                         child: Text(
                       DateFormat('MMMM yyyy').format(currentDate) ==
-                              DateFormat('MMMM yyyy').format(
-                                  currentDate.add(const Duration(days: 6)))
+                              DateFormat('MMMM yyyy')
+                                  .format(addDays(currentDate, 6))
                           ? DateFormat('MMMM yyyy').format(currentDate)
-                          : '${DateFormat('MMMM').format(currentDate)} - ${DateFormat('MMMM yyyy').format(currentDate.add(const Duration(days: 6)))}',
+                          : '${DateFormat('MMMM').format(currentDate)} - ${DateFormat('MMMM yyyy').format(addDays(currentDate, 6))}',
                       style: const TextStyle(fontSize: 20),
                     )),
                   ),
@@ -179,30 +178,28 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
               onPageChanged: (index) {
                 setState(() {
                   if (index == startingDates.length - 1) {
-                    _upperDate = _upperDate.add(const Duration(days: 7));
+                    _upperDate = addDays(_upperDate, 7);
                     startingDates.add(_upperDate);
                   }
                   if (index == 0) {
-                    _lowerDate =
-                        _lowerDate.subtract(const Duration(days: 7));
+                    _lowerDate = addDays(_lowerDate, -7);
                     startingDates.insert(0, _lowerDate);
                     controller.jumpTo(
                         1.5 * MediaQuery.of(context).size.width);
                     controller.animateToPage(1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn);
-                    currentDate = currentDate.add(const Duration(days: 7));
+                    currentDate = addDays(currentDate, 7);
                   }
                   if (index > controller.page!.floor()) {
-                    currentDate = currentDate.add(const Duration(days: 7));
+                    currentDate = addDays(currentDate, 7);
                   } else {
-                    currentDate =
-                        currentDate.subtract(const Duration(days: 7));
+                    currentDate = addDays(currentDate, -7);
                   }
 
                   hijriFirstDay = HijriCalendar.fromDate(currentDate);
-                  hijriLastDay = HijriCalendar.fromDate(
-                      currentDate.add(const Duration(days: 7)));
+                  hijriLastDay =
+                      HijriCalendar.fromDate(addDays(currentDate, 7));
                 });
               },
               controller: controller,

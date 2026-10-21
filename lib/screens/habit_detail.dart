@@ -5,6 +5,7 @@ import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
+import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -20,7 +21,7 @@ class HabitDetail extends StatefulWidget {
 class _HabitDetailState extends State<HabitDetail> {
   late PageController controller;
   DateTime currentDate =
-      DateTime.now().subtract(Duration(days: DateTime.now().day - 1));
+      addDays(DateTime.now(), -(DateTime.now().day - 1));
 
   List<HabitPage> habitPages = [];
   late HijriCalendar hijriFirstDay;
@@ -30,7 +31,7 @@ class _HabitDetailState extends State<HabitDetail> {
   void initState() {
     hijriFirstDay = HijriCalendar.fromDate(currentDate);
     hijriLastDay = HijriCalendar.fromDate(
-        currentDate.add(Duration(days: daysOfMonth(currentDate))));
+        addDays(currentDate, daysOfMonth(currentDate)));
     controller = PageController(
         initialPage: (12 * (currentDate.year - 1971) + currentDate.month) - 1);
     DateTime date = DateTime(1971, 1);
@@ -41,8 +42,8 @@ class _HabitDetailState extends State<HabitDetail> {
         currentDate: date,
         onChanged: () => setState(() {}),
       );
-      date = date.add(
-          Duration(days: daysOfMonth(DateTime(1971 + (i ~/ 12), 1 + i % 12))));
+      date = addDays(
+          date, daysOfMonth(DateTime(1971 + (i ~/ 12), 1 + i % 12)));
       return myPage;
     });
 
@@ -58,6 +59,8 @@ class _HabitDetailState extends State<HabitDetail> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    HijriCalendar.setLocal(locale == 'ar' ? 'ar' : 'en');
     final metricNames = [
       l10n.metricCurrentStreak,
       l10n.metricStreakTarget,
@@ -150,16 +153,19 @@ class _HabitDetailState extends State<HabitDetail> {
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Center(
                         child: Text(
-                      DateFormat('MMMM yyyy').format(currentDate),
+                      localizeDigits(context,
+                          DateFormat('MMMM yyyy', locale).format(currentDate)),
                       style: const TextStyle(fontSize: 20),
                     )),
                   ),
                   subtitle: Center(
                     child: AutoSizeText(
-                      hijriFirstDay.toFormat("MMMM yyyy") ==
-                              hijriLastDay.toFormat("MMMM yyyy")
-                          ? hijriFirstDay.toFormat("MMMM yyyy")
-                          : '${hijriFirstDay.toFormat("MMMM")} - ${hijriLastDay.toFormat("MMMM yyyy")}',
+                      localizeDigits(
+                          context,
+                          hijriFirstDay.toFormat("MMMM yyyy") ==
+                                  hijriLastDay.toFormat("MMMM yyyy")
+                              ? hijriFirstDay.toFormat("MMMM yyyy")
+                              : '${hijriFirstDay.toFormat("MMMM")} - ${hijriLastDay.toFormat("MMMM yyyy")}'),
                       style: const TextStyle(fontSize: 18.0),
                       maxLines: 1,
                     ),
@@ -184,26 +190,25 @@ class _HabitDetailState extends State<HabitDetail> {
               onPageChanged: (index) {
                 setState(() {
                   if (index > controller.page!.floor()) {
-                    currentDate = currentDate
-                        .add(Duration(days: daysOfMonth(currentDate)));
+                    currentDate =
+                        addDays(currentDate, daysOfMonth(currentDate));
 
                     if (index == habitPages.length - 1) {
                       habitPages.add(HabitPage(
                         habit: widget.habit,
-                        currentDate: currentDate
-                            .add(Duration(days: daysOfMonth(currentDate))),
+                        currentDate:
+                            addDays(currentDate, daysOfMonth(currentDate)),
                         onChanged: () => setState(() {}),
                       ));
                     }
                   } else {
-                    currentDate = currentDate.subtract(Duration(
-                        days: daysOfMonth(
-                            currentDate.subtract(const Duration(days: 1)))));
+                    currentDate = addDays(currentDate,
+                        -daysOfMonth(addDays(currentDate, -1)));
                   }
 
                   hijriFirstDay = HijriCalendar.fromDate(currentDate);
-                  hijriLastDay = HijriCalendar.fromDate(currentDate
-                      .add(Duration(days: daysOfMonth(currentDate))));
+                  hijriLastDay = HijriCalendar.fromDate(
+                      addDays(currentDate, daysOfMonth(currentDate)));
                 });
               },
               children: habitPages

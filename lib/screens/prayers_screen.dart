@@ -5,9 +5,11 @@ import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
+import 'package:islamic_habits/utility/route_observer.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/functions.dart' show addDays;
 
 class PrayersScreen extends StatefulWidget {
   final List<Habit> habits;
@@ -16,8 +18,29 @@ class PrayersScreen extends StatefulWidget {
   _PrayersScreenState createState() => _PrayersScreenState();
 }
 
-class _PrayersScreenState extends State<PrayersScreen> {
+class _PrayersScreenState extends State<PrayersScreen> with RouteAware {
   DateTime _selectedDate = DateTime.now();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route != null) appRouteObserver.subscribe(this, route);
+  }
+
+  @override
+  void dispose() {
+    appRouteObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  // Called when a route pushed on top of this screen (e.g. Settings) is
+  // popped back to it, so prayer time corrections made there show up
+  // immediately instead of needing an unrelated navigation first.
+  @override
+  void didPopNext() {
+    setState(() {});
+  }
 
   bool get _isToday {
     final now = DateTime.now();
@@ -28,13 +51,13 @@ class _PrayersScreenState extends State<PrayersScreen> {
 
   void _goToPreviousDay() {
     setState(() {
-      _selectedDate = _selectedDate.subtract(const Duration(days: 1));
+      _selectedDate = addDays(_selectedDate, -1);
     });
   }
 
   void _goToNextDay() {
     setState(() {
-      _selectedDate = _selectedDate.add(const Duration(days: 1));
+      _selectedDate = addDays(_selectedDate, 1);
     });
   }
 

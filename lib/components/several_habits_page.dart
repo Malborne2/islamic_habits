@@ -4,7 +4,6 @@ import 'package:islamic_habits/screens/habit_detail.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
-import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/weekday_localizer.dart';
 
 class SeveralHabitsPage extends StatefulWidget {
@@ -21,8 +20,6 @@ class SeveralHabitsPage extends StatefulWidget {
 }
 
 class _SeveralHabitsPageState extends State<SeveralHabitsPage> {
-  final prayerHelper = PrayerHelper.fromSettings();
-
   List<Widget> generateHabitsList(double itemWidth) {
     List<Widget> habitWidgets = [
       Container(

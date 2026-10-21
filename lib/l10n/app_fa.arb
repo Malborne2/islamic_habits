@@ -1,0 +1,197 @@
+{
+  "@@locale": "fa",
+  "appTitle": "عادات اسلامی",
+  "navHome": "خانه",
+  "navPrayerTimes": "اوقات نماز",
+  "navAllHabits": "همه عادات",
+  "navFivePrayers": "پنج نماز",
+  "navAddHabit": "افزودن عادت جدید",
+  "settingsTitle": "تنظیمات",
+  "settingsDarkMode": "حالت تاریک",
+  "settingsStartOfWeek": "آغاز هفته",
+  "settingsPrayerTimeSettings": "تنظیمات اوقات نماز",
+  "settingsPrayerTimeSettingsSubtitle": "مکان، روش محاسبه و یادآورهای نماز",
+  "settingsBackupRestore": "پشتیبان‌گیری و بازیابی",
+  "settingsBackupRestoreSubtitle": "داده‌های عادات خود را برون‌بری یا بازیابی کنید",
+  "settingsLanguage": "زبان",
+  "settingsLanguageSystem": "زبان گوشی",
+  "todayHabits": "عادات امروز",
+  "todayProgress": "امروز: {completed} از {total} عادت انجام شد",
+  "@todayProgress": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "longestStreak": "طولانی‌ترین زنجیره: {daysText} · {habitName}",
+  "@longestStreak": {
+    "placeholders": {
+      "daysText": {"type": "String"},
+      "habitName": {"type": "String"}
+    }
+  },
+  "save": "ذخیره",
+  "cancel": "لغو",
+  "delete": "حذف",
+  "setValue": "تنظیم",
+  "exportBackup": "برون‌بری پشتیبان",
+  "restoreFromBackup": "بازیابی از پشتیبان",
+  "habitName": "نام عادت",
+  "successMetric": "معیار موفقیت",
+  "yesNo": "بله / خیر",
+  "number": "عدد",
+  "streakTarget": "هدف زنجیره",
+  "targetStreakDays": "هدف زنجیره (روز)",
+  "schedule": "برنامه",
+  "everyDay": "هر روز",
+  "certainDaysOfWeek": "روزهای مشخصی از هفته",
+  "timesPerWeek": "چند بار در هفته",
+  "color": "رنگ",
+  "saveHabit": "ذخیره عادت",
+  "habitFajrPrayer": "نماز فجر",
+  "habitDhuhrPrayer": "نماز ظهر",
+  "habitAsrPrayer": "نماز عصر",
+  "habitMaghribPrayer": "نماز مغرب",
+  "habitIshaPrayer": "نماز عشاء",
+  "habitRecitingQuran": "تلاوت قرآن",
+  "todayLabel": "امروز",
+  "prayerFajr": "فجر",
+  "prayerDhuhr": "ظهر",
+  "prayerAsr": "عصر",
+  "prayerMaghrib": "مغرب",
+  "prayerIsha": "عشاء",
+  "notifyMode": "اعلان",
+  "silentMode": "بی‌صدا",
+  "adhanMode": "اذان",
+  "weekdayMonday": "دوشنبه",
+  "weekdayTuesday": "سه‌شنبه",
+  "weekdayWednesday": "چهارشنبه",
+  "weekdayThursday": "پنجشنبه",
+  "weekdayFriday": "جمعه",
+  "weekdaySaturday": "شنبه",
+  "weekdaySunday": "یکشنبه",
+  "settingsNumerals": "شکل اعداد",
+  "numeralsWestern": "غربی (0, 1, 2…)",
+  "numeralsEastern": "عربی شرقی (٠, ١, ٢…)",
+  "unitPages": "صفحه",
+  "deleteEntryTitle": "حذف مورد",
+  "deleteEntryConfirm": "آیا مطمئن هستید که می‌خواهید این مورد را برای همیشه حذف کنید؟",
+  "targetAmountLabel": "مقدار هدف",
+  "unitLabel": "واحد",
+  "timesPerWeekLabel": "دفعات در هفته",
+  "restoreBackupTitle": "بازیابی پشتیبان",
+  "restoreBackupConfirm": "این کار همه عادات ذخیره‌شده در این دستگاه را با عادات پشتیبان انتخاب‌شده جایگزین می‌کند. ادامه می‌دهید؟",
+  "restoreAction": "بازیابی",
+  "notificationPermissionDenied": "اجازه اعلان داده نشد",
+  "prayerRemindersLabel": "یادآورهای نماز",
+  "prayerRemindersSubtitle": "۳۰ دقیقه پس از هر نماز، پرسیده می‌شود که آیا نماز خوانده‌اید",
+  "sendTestReminder": "ارسال یک یادآور آزمایشی اکنون",
+  "adhanVoiceLabel": "صدای اذان",
+  "adhanVoiceHint": "برای نمازهایی که روی نماد میکروفون (اذان) در صفحه اوقات نماز تنظیم شده‌اند استفاده می‌شود.",
+  "takbeerOnly": "فقط تکبیر",
+  "fullAdhan": "اذان کامل",
+  "testAdhanVoice": "آزمایش این صدا",
+  "adhanAudioMissing": "هنوز فایل صوتی برای این صدا اضافه نشده است — برای شنیدن آن، آن را در android/app/src/main/res/raw قرار دهید.",
+  "locationLabel": "مکان",
+  "cityLabel": "شهر",
+  "latitudeLabel": "عرض جغرافیایی",
+  "longitudeLabel": "طول جغرافیایی",
+  "calculationMethodLabel": "روش محاسبه",
+  "madhabLabel": "مذهب (محاسبه عصر)",
+  "shafiLabel": "شافعی",
+  "hanafiLabel": "حنفی",
+  "manualCorrectionLabel": "تصحیح دستی (دقیقه)",
+  "adjFajr": "فجر",
+  "adjDhuhr": "ظهر",
+  "adjAsr": "عصر",
+  "adjMaghrib": "مغرب",
+  "adjIsha": "عشاء",
+  "cityDoha": "دوحه",
+  "cityMecca": "مکه",
+  "cityMedina": "مدینه",
+  "cityCairo": "قاهره",
+  "cityIstanbul": "استانبول",
+  "cityJakarta": "جاکارتا",
+  "cityKarachi": "کراچی",
+  "cityLondon": "لندن",
+  "cityNewYork": "نیویورک",
+  "cityCustom": "سفارشی",
+  "notificationPrayerTimeTitle": "وقت نماز",
+  "notificationPrayerTimeBody": "وقت {prayerName} فرا رسیده است",
+  "@notificationPrayerTimeBody": {
+    "placeholders": {
+      "prayerName": {"type": "String"}
+    }
+  },
+  "notificationReminderTitle": "یادآور نماز",
+  "notificationReminderBody": "آیا {prayerName} را خوانده‌اید؟",
+  "@notificationReminderBody": {
+    "placeholders": {
+      "prayerName": {"type": "String"}
+    }
+  },
+  "notificationYes": "بله",
+  "notificationNo": "خیر",
+  "weekdayMonShort": "دوشنبه",
+  "weekdayTueShort": "سه‌شنبه",
+  "weekdayWedShort": "چهارشنبه",
+  "weekdayThuShort": "پنجشنبه",
+  "weekdayFriShort": "جمعه",
+  "weekdaySatShort": "شنبه",
+  "weekdaySunShort": "یکشنبه",
+  "pickAtLeastOneDay": "حداقل یک روز از هفته را انتخاب کنید",
+  "setValueTitle": "تنظیم مقدار",
+  "setUnitTitle": "تنظیم {unit}",
+  "@setUnitTitle": {
+    "placeholders": {
+      "unit": {"type": "String"}
+    }
+  },
+  "metricCurrentStreak": "زنجیره فعلی",
+  "metricStreakTarget": "هدف زنجیره",
+  "metricMaximumStreak": "طولانی‌ترین زنجیره",
+  "metricSuccessPercentage": "درصد موفقیت",
+  "metricWeeklyAverage": "میانگین هفتگی",
+  "metricMonthlyAverage": "میانگین ماهانه",
+  "backupDescription": "تمام داده‌های عادات به‌صورت محلی روی این دستگاه ذخیره می‌شوند. برای نگه‌داشتن یک نسخه یا انتقال آن به دستگاه دیگر، مثلاً با اشتراک‌گذاری در فضای ابری یا ایمیل، یک فایل پشتیبان برون‌بری کنید.",
+  "exportFailed": "برون‌بری ناموفق بود: {error}",
+  "@exportFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "importFailed": "درون‌ریزی ناموفق بود: {error}",
+  "@importFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "restoredCount": "{count} عادت بازیابی شد",
+  "@restoredCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "shareBackupText": "پشتیبان عادات اسلامی",
+  "valueAddedSuccess": "مقدار جدید با موفقیت افزوده شد",
+  "prayerSunrise": "طلوع آفتاب",
+  "methodMuslimWorldLeague": "رابطه جهانی اسلامی",
+  "methodEgyptian": "مصری",
+  "methodKarachi": "کراچی",
+  "methodUmmAlQura": "ام القری",
+  "methodDubai": "دبی",
+  "methodMoonSightingCommittee": "کمیته رؤیت هلال",
+  "methodNorthAmerica": "آمریکای شمالی",
+  "methodKuwait": "کویت",
+  "methodQatar": "قطر",
+  "methodSingapore": "سنگاپور",
+  "methodTurkey": "ترکیه",
+  "methodTehran": "تهران",
+  "methodOther": "سایر",
+  "streakDays": "{count, plural, one{{count} روز} other{{count} روز}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
+}

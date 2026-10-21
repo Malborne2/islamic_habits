@@ -3,7 +3,6 @@ import 'package:islamic_habits/components/buttonsList.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/functions.dart';
-import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/weekday_localizer.dart';
 
 class HabitPage extends StatefulWidget {
@@ -20,8 +19,6 @@ class HabitPage extends StatefulWidget {
 }
 
 class _HabitPageState extends State<HabitPage> {
-  final prayerHelper = PrayerHelper.fromSettings();
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(

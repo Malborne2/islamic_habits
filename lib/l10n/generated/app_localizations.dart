@@ -7,7 +7,13 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_fa.dart';
+import 'app_localizations_fi.dart';
+import 'app_localizations_id.dart';
+import 'app_localizations_ja.dart';
 import 'app_localizations_nb.dart';
+import 'app_localizations_sv.dart';
+import 'app_localizations_ur.dart';
 
 // ignore_for_file: type=lint
 
@@ -97,7 +103,13 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
     Locale('en'),
-    Locale('nb')
+    Locale('fa'),
+    Locale('fi'),
+    Locale('id'),
+    Locale('ja'),
+    Locale('nb'),
+    Locale('sv'),
+    Locale('ur')
   ];
 
   /// No description provided for @appTitle.
@@ -568,6 +580,18 @@ abstract class AppLocalizations {
   /// **'Full Adhan'**
   String get fullAdhan;
 
+  /// No description provided for @testAdhanVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Test this voice'**
+  String get testAdhanVoice;
+
+  /// No description provided for @adhanAudioMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'No audio file bundled for this voice yet — add it under android/app/src/main/res/raw to hear it.'**
+  String get adhanAudioMissing;
+
   /// No description provided for @locationLabel.
   ///
   /// In en, this message translates to:
@@ -963,6 +987,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get methodOther;
+
+  /// No description provided for @streakDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String streakDays(int count);
 }
 
 class _AppLocalizationsDelegate
@@ -975,8 +1005,17 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['ar', 'en', 'nb'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+        'ar',
+        'en',
+        'fa',
+        'fi',
+        'id',
+        'ja',
+        'nb',
+        'sv',
+        'ur'
+      ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -989,8 +1028,20 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsAr();
     case 'en':
       return AppLocalizationsEn();
+    case 'fa':
+      return AppLocalizationsFa();
+    case 'fi':
+      return AppLocalizationsFi();
+    case 'id':
+      return AppLocalizationsId();
+    case 'ja':
+      return AppLocalizationsJa();
     case 'nb':
       return AppLocalizationsNb();
+    case 'sv':
+      return AppLocalizationsSv();
+    case 'ur':
+      return AppLocalizationsUr();
   }
 
   throw FlutterError(

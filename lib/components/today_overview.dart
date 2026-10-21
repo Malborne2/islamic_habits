@@ -105,7 +105,7 @@ class _TodayOverviewState extends State<TodayOverview> {
                         const SizedBox(height: 4),
                         Text(
                           l10n.longestStreak(
-                              '$topStreak day${topStreak == 1 ? '' : 's'}',
+                              l10n.streakDays(topStreak),
                               localizedHabitName(context, topHabit.name)),
                           style: const TextStyle(fontSize: 13),
                         ),

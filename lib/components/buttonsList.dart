@@ -85,16 +85,38 @@ class _ButtonsListState extends State<ButtonsList> {
     return i < widget.length + getWeekDaysDiff() && i >= getWeekDaysDiff();
   }
 
+  // A day that isn't scheduled for this habit doesn't break the streak; if
+  // both the nearest scheduled day before and after it were completed, it
+  // should visually read as part of the same unbroken chain.
+  bool _isBridgedOffDay(DateTime date) {
+    if (widget.habit.isHabitDay(date)) return false;
+    DateTime prev = addDays(date, -1);
+    int guard = 0;
+    while (!widget.habit.isHabitDay(prev) && guard < 14) {
+      prev = addDays(prev, -1);
+      guard++;
+    }
+    DateTime next = addDays(date, 1);
+    guard = 0;
+    while (!widget.habit.isHabitDay(next) && guard < 14) {
+      next = addDays(next, 1);
+      guard++;
+    }
+    return widget.habit.getStatus(prev) == Status.SUCCESS &&
+        widget.habit.getStatus(next) == Status.SUCCESS;
+  }
+
+  bool _effectiveSuccess(DateTime date) {
+    return widget.habit.getStatus(date) == Status.SUCCESS ||
+        _isBridgedOffDay(date);
+  }
+
   bool isStreakBefore(DateTime date) {
-    return widget.habit.getStatus(date) == Status.SUCCESS &&
-        widget.habit.getStatus(date.subtract(const Duration(days: 1))) ==
-            Status.SUCCESS;
+    return _effectiveSuccess(date) && _effectiveSuccess(addDays(date, -1));
   }
 
   bool isStreakAfter(DateTime date) {
-    return widget.habit.getStatus(date) == Status.SUCCESS &&
-        widget.habit.getStatus(date.add(const Duration(days: 1))) ==
-            Status.SUCCESS;
+    return _effectiveSuccess(date) && _effectiveSuccess(addDays(date, 1));
   }
 
   @override
@@ -109,13 +131,16 @@ class _ButtonsListState extends State<ButtonsList> {
 
         List<Widget> habitDayButtons =
             List.generate(widget.isHabitDetail ? 42 : 7, (i) {
-          DateTime date =
-              widget.startDate.add(Duration(days: i - getWeekDaysDiff()));
+          DateTime date = addDays(widget.startDate, i - getWeekDaysDiff());
 
           return SizedBox(
             width: itemWidth,
             child: Stack(
-              clipBehavior: Clip.hardEdge,
+              // The connector lines intentionally overdraw past their own
+              // gap box (into the previous day's cell) so each inter-day
+              // gap is always fully covered; clipping here cut that off
+              // and left a visible dead zone before every circle.
+              clipBehavior: Clip.none,
               alignment: AlignmentDirectional.center,
               children: <Widget>[
                 RawMaterialButton(
@@ -164,6 +189,13 @@ class _ButtonsListState extends State<ButtonsList> {
                             type: widget.habit.type,
                             successPercentage:
                                 widget.habit.getSuccessPercentage(date),
+                            // Only show the empty outline when nothing was
+                            // actually logged; if the user did the habit
+                            // anyway on a day it isn't scheduled, it's a
+                            // real success and should render fully colored.
+                            outlineOnly: !widget.habit.isHabitDay(date) &&
+                                !widget.habit.hasData(date) &&
+                                _isBridgedOffDay(date),
                             onPressed: isTodayOrBefore(date)
                                 ? () {
                                     setState(() {

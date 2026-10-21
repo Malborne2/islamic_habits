@@ -86,7 +86,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
   late final _ishaAdj =
       TextEditingController(text: PrayerSettings.adjustments.isha.toString());
   late bool _remindersEnabled = PrayerSettings.remindersEnabled;
-  late AdhanVoice _adhanVoice = PrayerSettings.adhanVoice;
+  late AdhanVoiceOption _adhanVoice = PrayerSettings.adhanVoice;
 
   bool get _isCustomCity =>
       !kPrayerCities.any((c) => c.name == _cityName && c.name != 'Custom');
@@ -177,21 +177,54 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
             style: const TextStyle(fontSize: 12),
           ),
           const SizedBox(height: 8),
-          DropdownButtonFormField<AdhanVoice>(
-            initialValue: _adhanVoice,
-            decoration: kTextFieldDecoration,
-            items: [
-              DropdownMenuItem(
-                  value: AdhanVoice.takbeer, child: Text(l10n.takbeerOnly)),
-              DropdownMenuItem(
-                  value: AdhanVoice.full, child: Text(l10n.fullAdhan)),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: DropdownButtonFormField<AdhanVoiceOption>(
+                  initialValue: _adhanVoice,
+                  decoration: kTextFieldDecoration,
+                  items: kAdhanVoices
+                      .map((voice) => DropdownMenuItem(
+                            value: voice,
+                            child: Text(voice.id == 'takbeer'
+                                ? l10n.takbeerOnly
+                                : voice.id == 'full'
+                                    ? l10n.fullAdhan
+                                    : voice.displayName),
+                          ))
+                      .toList(),
+                  onChanged: (value) async {
+                    if (value == null) return;
+                    setState(() => _adhanVoice = value);
+                    await PrayerSettings.setAdhanVoice(value);
+                    await NotificationService.scheduleTodayReminders();
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              IconButton(
+                tooltip: l10n.testAdhanVoice,
+                icon: const Icon(Icons.play_circle_outline),
+                onPressed: () async {
+                  try {
+                    await NotificationService.playTestAdhan(_adhanVoice);
+                  } catch (_) {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(l10n.adhanAudioMissing)));
+                    }
+                  }
+                },
+              ),
             ],
-            onChanged: (value) async {
-              if (value == null) return;
-              setState(() => _adhanVoice = value);
-              await PrayerSettings.setAdhanVoice(value);
-              await NotificationService.scheduleTodayReminders();
-            },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              l10n.adhanAudioMissing,
+              style: const TextStyle(fontSize: 11),
+            ),
           ),
           const Divider(),
           Text(l10n.locationLabel,
