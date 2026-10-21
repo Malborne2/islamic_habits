@@ -273,6 +273,31 @@ class AppLocalizationsSv extends AppLocalizations {
   String get longitudeLabel => 'Longitud';
 
   @override
+  String get citySearchHint => 'Sök efter en stad';
+
+  @override
+  String get cityNotFoundPrompt => 'Hittar du inte din stad?';
+
+  @override
+  String get pickOnMap => 'Välj på kartan';
+
+  @override
+  String get noCitiesFound => 'Inga städer hittades';
+
+  @override
+  String get mapPickerTitle => 'Välj en plats';
+
+  @override
+  String get mapPickerInstructions =>
+      'Tryck var som helst på kartan för att ange din plats för bönetider';
+
+  @override
+  String get useThisLocation => 'Använd den här platsen';
+
+  @override
+  String get customLocationLabel => 'Anpassad plats';
+
+  @override
   String get calculationMethodLabel => 'Beräkningsmetod';
 
   @override

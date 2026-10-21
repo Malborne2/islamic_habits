@@ -273,6 +273,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get longitudeLabel => 'Longitude';
 
   @override
+  String get citySearchHint => 'Search for a city';
+
+  @override
+  String get cityNotFoundPrompt => 'Can\'t find your city?';
+
+  @override
+  String get pickOnMap => 'Pick on map';
+
+  @override
+  String get noCitiesFound => 'No cities found';
+
+  @override
+  String get mapPickerTitle => 'Pick a location';
+
+  @override
+  String get mapPickerInstructions =>
+      'Tap anywhere on the map to set your prayer-time location';
+
+  @override
+  String get useThisLocation => 'Use this location';
+
+  @override
+  String get customLocationLabel => 'Custom location';
+
+  @override
   String get calculationMethodLabel => 'Calculation method';
 
   @override

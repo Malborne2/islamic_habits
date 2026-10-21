@@ -616,6 +616,54 @@ abstract class AppLocalizations {
   /// **'Longitude'**
   String get longitudeLabel;
 
+  /// No description provided for @citySearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a city'**
+  String get citySearchHint;
+
+  /// No description provided for @cityNotFoundPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t find your city?'**
+  String get cityNotFoundPrompt;
+
+  /// No description provided for @pickOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick on map'**
+  String get pickOnMap;
+
+  /// No description provided for @noCitiesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No cities found'**
+  String get noCitiesFound;
+
+  /// No description provided for @mapPickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a location'**
+  String get mapPickerTitle;
+
+  /// No description provided for @mapPickerInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap anywhere on the map to set your prayer-time location'**
+  String get mapPickerInstructions;
+
+  /// No description provided for @useThisLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this location'**
+  String get useThisLocation;
+
+  /// No description provided for @customLocationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom location'**
+  String get customLocationLabel;
+
   /// No description provided for @calculationMethodLabel.
   ///
   /// In en, this message translates to:

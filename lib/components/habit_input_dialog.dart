@@ -18,7 +18,7 @@ class HabitInputDialog extends StatefulWidget {
 class _HabitInputDialogState extends State<HabitInputDialog> {
   final TextEditingController _controller = TextEditingController();
   late double value;
-  late Timer timer;
+  Timer? _holdTimer;
 
   @override
   void initState() {
@@ -29,8 +29,29 @@ class _HabitInputDialogState extends State<HabitInputDialog> {
 
   @override
   void dispose() {
+    _holdTimer?.cancel();
     _controller.dispose();
     super.dispose();
+  }
+
+  void _step(bool increment) {
+    setState(() {
+      if (increment) {
+        value++;
+      } else if (value > 0) {
+        value--;
+      }
+      _controller.text = value.toStringAsFixed(1);
+    });
+  }
+
+  void _startRepeat(bool increment) {
+    _holdTimer = Timer.periodic(
+        const Duration(milliseconds: 100), (t) => _step(increment));
+  }
+
+  void _stopRepeat() {
+    _holdTimer?.cancel();
   }
 
   void _confirmDelete() {
@@ -56,6 +77,8 @@ class _HabitInputDialogState extends State<HabitInputDialog> {
                 Navigator.of(context).pop();
                 Navigator.pop(context, null);
               },
+              style: TextButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.error),
               child: Text(l10n.delete),
             ),
           ],
@@ -100,33 +123,15 @@ class _HabitInputDialogState extends State<HabitInputDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 RoundIconButton(
-                  onTapDown: (TapDownDetails details) {
-                    timer = Timer.periodic(const Duration(milliseconds: 100),
-                        (t) {
-                      setState(() {
-                        value++;
-                        _controller.text = value.toStringAsFixed(1);
-                      });
-                    });
-                  },
-                  onTapUp: (TapUpDetails details) => timer.cancel(),
-                  onTapCancel: () => timer.cancel(),
+                  onTap: () => _step(true),
+                  onLongPressStart: () => _startRepeat(true),
+                  onLongPressEnd: _stopRepeat,
                   icon: FontAwesomeIcons.plus,
                 ),
                 RoundIconButton(
-                  onTapDown: (TapDownDetails details) {
-                    timer = Timer.periodic(const Duration(milliseconds: 100),
-                        (t) {
-                      setState(() {
-                        if (value > 0) {
-                          value--;
-                          _controller.text = value.toStringAsFixed(1);
-                        }
-                      });
-                    });
-                  },
-                  onTapUp: (TapUpDetails details) => timer.cancel(),
-                  onTapCancel: () => timer.cancel(),
+                  onTap: () => _step(false),
+                  onLongPressStart: () => _startRepeat(false),
+                  onLongPressEnd: _stopRepeat,
                   icon: FontAwesomeIcons.minus,
                 ),
               ],
@@ -134,9 +139,9 @@ class _HabitInputDialogState extends State<HabitInputDialog> {
             const SizedBox(height: 28),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+              child: FilledButton(
                 onPressed: () => Navigator.pop(context, value),
-                style: ElevatedButton.styleFrom(
+                style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14)),
@@ -145,12 +150,19 @@ class _HabitInputDialogState extends State<HabitInputDialog> {
               ),
             ),
             const SizedBox(height: 10),
+            // Delete and Cancel share the same outlined style so their
+            // weight reads as equal; only the color tells them apart —
+            // error-red for the destructive action, neutral for the
+            // no-op one.
             Row(
               children: <Widget>[
                 Expanded(
                   child: OutlinedButton(
                     onPressed: _confirmDelete,
                     style: OutlinedButton.styleFrom(
+                      foregroundColor: Theme.of(context).colorScheme.error,
+                      side: BorderSide(
+                          color: Theme.of(context).colorScheme.error),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
@@ -160,10 +172,13 @@ class _HabitInputDialogState extends State<HabitInputDialog> {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: TextButton(
-                    onPressed: () => Navigator.pop(context, widget.initialValue),
-                    style: TextButton.styleFrom(
+                  child: OutlinedButton(
+                    onPressed: () =>
+                        Navigator.pop(context, widget.initialValue),
+                    style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14)),
                     ),
                     child: Text(l10n.cancel),
                   ),

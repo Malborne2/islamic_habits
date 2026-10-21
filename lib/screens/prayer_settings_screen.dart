@@ -1,9 +1,11 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
+import 'package:islamic_habits/screens/city_picker_screen.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
+import 'package:islamic_habits/utility/world_cities.dart';
 
 String _calculationMethodLabel(AppLocalizations l10n, CalculationMethod method) {
   switch (method) {
@@ -36,31 +38,6 @@ String _calculationMethodLabel(AppLocalizations l10n, CalculationMethod method) 
   }
 }
 
-String _localizedCityName(AppLocalizations l10n, String name) {
-  switch (name) {
-    case 'Doha':
-      return l10n.cityDoha;
-    case 'Mecca':
-      return l10n.cityMecca;
-    case 'Medina':
-      return l10n.cityMedina;
-    case 'Cairo':
-      return l10n.cityCairo;
-    case 'Istanbul':
-      return l10n.cityIstanbul;
-    case 'Jakarta':
-      return l10n.cityJakarta;
-    case 'Karachi':
-      return l10n.cityKarachi;
-    case 'London':
-      return l10n.cityLondon;
-    case 'New York':
-      return l10n.cityNewYork;
-    default:
-      return l10n.cityCustom;
-  }
-}
-
 class PrayerSettingsScreen extends StatefulWidget {
   const PrayerSettingsScreen({super.key});
   @override
@@ -68,7 +45,7 @@ class PrayerSettingsScreen extends StatefulWidget {
 }
 
 class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
-  late String _cityName = PrayerSettings.cityName;
+  late String _cityLabel = PrayerSettings.cityName;
   late final _latController =
       TextEditingController(text: PrayerSettings.latitude.toString());
   late final _lonController =
@@ -88,9 +65,6 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
   late bool _remindersEnabled = PrayerSettings.remindersEnabled;
   late AdhanVoiceOption _adhanVoice = PrayerSettings.adhanVoice;
 
-  bool get _isCustomCity =>
-      !kPrayerCities.any((c) => c.name == _cityName && c.name != 'Custom');
-
   @override
   void dispose() {
     _latController.dispose();
@@ -103,21 +77,34 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
     super.dispose();
   }
 
-  void _onCityChanged(String? name) {
-    if (name == null) return;
+  Future<void> _openCityPicker() async {
+    final result = await Navigator.push<Object>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CityPickerScreen(
+          initialLatitude:
+              double.tryParse(_latController.text) ?? PrayerSettings.latitude,
+          initialLongitude: double.tryParse(_lonController.text) ??
+              PrayerSettings.longitude,
+        ),
+      ),
+    );
+    if (result == null || !mounted) return;
     setState(() {
-      _cityName = name;
-      final city = kPrayerCities.firstWhere((c) => c.name == name,
-          orElse: () => kPrayerCities.last);
-      if (name != 'Custom') {
-        _latController.text = city.latitude.toString();
-        _lonController.text = city.longitude.toString();
+      if (result is WorldCity) {
+        _cityLabel = localizedCityLabel(context, result);
+        _latController.text = result.latitude.toString();
+        _lonController.text = result.longitude.toString();
+      } else if (result is CustomLocation) {
+        _cityLabel = AppLocalizations.of(context).customLocationLabel;
+        _latController.text = result.latitude.toString();
+        _lonController.text = result.longitude.toString();
       }
     });
   }
 
   Future<void> _save() async {
-    PrayerSettings.cityName = _cityName;
+    PrayerSettings.cityName = _cityLabel;
     PrayerSettings.latitude =
         double.tryParse(_latController.text) ?? PrayerSettings.latitude;
     PrayerSettings.longitude =
@@ -230,41 +217,43 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
           Text(l10n.locationLabel,
               style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          DropdownButtonFormField<String>(
-            initialValue: _isCustomCity ? 'Custom' : _cityName,
-            decoration: kTextFieldDecoration.copyWith(labelText: l10n.cityLabel),
-            items: kPrayerCities
-                .map((c) => DropdownMenuItem(
-                    value: c.name, child: Text(_localizedCityName(l10n, c.name))))
-                .toList(),
-            onChanged: _onCityChanged,
-          ),
-          if (_isCustomCity) ...[
-            const SizedBox(height: 12),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextFormField(
-                    controller: _latController,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true, signed: true),
-                    decoration: kTextFieldDecoration.copyWith(
-                        labelText: l10n.latitudeLabel),
-                  ),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(14),
+              onTap: _openCityPicker,
+              child: InputDecorator(
+                decoration:
+                    kTextFieldDecoration.copyWith(labelText: l10n.cityLabel),
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.location_on,
+                        size: 18,
+                        color: Theme.of(context).colorScheme.primary),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(_cityLabel,
+                          style: const TextStyle(fontSize: 16)),
+                    ),
+                    const Icon(Icons.chevron_right),
+                  ],
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: TextFormField(
-                    controller: _lonController,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true, signed: true),
-                    decoration: kTextFieldDecoration.copyWith(
-                        labelText: l10n.longitudeLabel),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 4, top: 4),
+            child: Text(
+              '${double.tryParse(_latController.text)?.toStringAsFixed(4) ?? _latController.text}, '
+              '${double.tryParse(_lonController.text)?.toStringAsFixed(4) ?? _lonController.text}',
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.6)),
+            ),
+          ),
           const SizedBox(height: 24),
           Text(l10n.calculationMethodLabel,
               style: const TextStyle(fontWeight: FontWeight.bold)),

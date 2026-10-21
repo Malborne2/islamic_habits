@@ -273,6 +273,31 @@ class AppLocalizationsNb extends AppLocalizations {
   String get longitudeLabel => 'Lengdegrad';
 
   @override
+  String get citySearchHint => 'Søk etter en by';
+
+  @override
+  String get cityNotFoundPrompt => 'Finner du ikke byen din?';
+
+  @override
+  String get pickOnMap => 'Velg på kart';
+
+  @override
+  String get noCitiesFound => 'Ingen byer funnet';
+
+  @override
+  String get mapPickerTitle => 'Velg et sted';
+
+  @override
+  String get mapPickerInstructions =>
+      'Trykk hvor som helst på kartet for å angi stedet for bønnetider';
+
+  @override
+  String get useThisLocation => 'Bruk dette stedet';
+
+  @override
+  String get customLocationLabel => 'Egendefinert sted';
+
+  @override
   String get calculationMethodLabel => 'Beregningsmetode';
 
   @override

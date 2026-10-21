@@ -87,22 +87,25 @@ class _HabitDetailState extends State<HabitDetail> {
           ? '${monthlyAverage.toStringAsFixed(1)} ${localizedUnit(context, widget.habit.numberUnit)}'
           : '${monthlyAverage.toStringAsFixed(0)}%',
     ];
-
-    const metricTextStyle = TextStyle(fontSize: 13);
-    List<Widget> metrics = List.generate(
-        metricNames.length,
-        (i) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Text(metricNames[i], style: metricTextStyle),
-            ));
-    List<Widget> values = List.generate(
-        metrics.length,
-        (i) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Text(metricValues[i],
-                  style:
-                      metricTextStyle.copyWith(fontWeight: FontWeight.w600)),
-            ));
+    const metricIcons = <IconData>[
+      Icons.local_fire_department,
+      Icons.flag,
+      Icons.emoji_events,
+      Icons.pie_chart,
+      Icons.calendar_view_week,
+      Icons.calendar_month,
+    ];
+    final target = widget.habit.successTarget > 0
+        ? widget.habit.successTarget
+        : 1;
+    final metricFractions = <double>[
+      currentStreak / target,
+      1.0,
+      widget.habit.getMaximumStreak() / target,
+      overallSuccessRate / 100,
+      isNumberHabit ? weeklyAverage / target : weeklyAverage / 100,
+      isNumberHabit ? monthlyAverage / target : monthlyAverage / 100,
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -184,7 +187,12 @@ class _HabitDetailState extends State<HabitDetail> {
               ),
             ),
           ),
-          Expanded(
+          // A fixed height derived from the grid's own geometry (7 columns,
+          // up to 6 rows) rather than Expanded, so the calendar never
+          // leaves dead space below a short month, and the stats section
+          // below always starts right where the calendar actually ends.
+          SizedBox(
+            height: _calendarHeight(context),
             child: PageView(
               controller: controller,
               onPageChanged: (index) {
@@ -211,37 +219,105 @@ class _HabitDetailState extends State<HabitDetail> {
                       addDays(currentDate, daysOfMonth(currentDate)));
                 });
               },
-              children: habitPages
-                  .map((page) => SingleChildScrollView(child: page))
-                  .toList(),
+              children: habitPages,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-            child: Material(
-              elevation: 1,
-              color: widget.habit.color.withAlpha(50),
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                    width: 1,
-                    color: widget.habit.color.withValues(alpha: 0.5)),
-                borderRadius: BorderRadius.circular(18),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+              child: Column(
+                children: List.generate(
+                  metricNames.length,
+                  (i) => _StatBarRow(
+                    icon: metricIcons[i],
+                    value: metricValues[i],
+                    fraction: metricFractions[i],
+                    label: metricNames[i],
+                    color: widget.habit.color,
+                  ),
+                ),
               ),
-              child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: metrics),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: values)
-                    ],
-                  )),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Mirrors ButtonsList' own grid math (7 columns, cells 0.8x the column
+  // width, Wrap's runSpacing of 5) to size the calendar to exactly 6 rows —
+  // the most any month needs — so every month renders at the same height
+  // with nothing left over beneath it.
+  double _calendarHeight(BuildContext context) {
+    final columnWidth = MediaQuery.of(context).size.width / 7;
+    final diameter = columnWidth * 0.8;
+    const weekdayHeaderHeight = 48.0;
+    const rowSpacing = 5.0;
+    const maxRows = 6;
+    return weekdayHeaderHeight + maxRows * diameter + (maxRows - 1) * rowSpacing;
+  }
+}
+
+// One stat as a labelled horizontal bar instead of a plain number in a
+// table — the fill length gives an at-a-glance sense of progress that a
+// bare figure doesn't.
+class _StatBarRow extends StatelessWidget {
+  final IconData icon;
+  final String value;
+  final double fraction;
+  final String label;
+  final Color color;
+  const _StatBarRow({
+    required this.icon,
+    required this.value,
+    required this.fraction,
+    required this.label,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 7),
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: 34,
+            height: 34,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.16),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: color, size: 17),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(label, style: const TextStyle(fontSize: 12.5)),
+                    Text(value,
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: color)),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: LinearProgressIndicator(
+                    value: fraction.clamp(0.0, 1.0),
+                    minHeight: 8,
+                    backgroundColor: color.withValues(alpha: 0.14),
+                    valueColor: AlwaysStoppedAnimation<Color>(color),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

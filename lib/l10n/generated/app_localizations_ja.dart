@@ -267,6 +267,30 @@ class AppLocalizationsJa extends AppLocalizations {
   String get longitudeLabel => '経度';
 
   @override
+  String get citySearchHint => '都市を検索';
+
+  @override
+  String get cityNotFoundPrompt => '都市が見つかりませんか?';
+
+  @override
+  String get pickOnMap => '地図で選択';
+
+  @override
+  String get noCitiesFound => '都市が見つかりません';
+
+  @override
+  String get mapPickerTitle => '場所を選択';
+
+  @override
+  String get mapPickerInstructions => '地図上の任意の場所をタップして礼拝時間の場所を設定します';
+
+  @override
+  String get useThisLocation => 'この場所を使用';
+
+  @override
+  String get customLocationLabel => 'カスタムの場所';
+
+  @override
   String get calculationMethodLabel => '計算方法';
 
   @override

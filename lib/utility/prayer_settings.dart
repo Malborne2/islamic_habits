@@ -1,13 +1,6 @@
 import 'package:adhan/adhan.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PrayerCity {
-  final String name;
-  final double latitude;
-  final double longitude;
-  const PrayerCity(this.name, this.latitude, this.longitude);
-}
-
 // Per-prayer notification behavior, selected via the bell icon on the
 // prayer times screen.
 enum PrayerNotifyMode { notify, silent, adhan }
@@ -31,18 +24,6 @@ const List<AdhanVoiceOption> kAdhanVoices = [
   AdhanVoiceOption('madinah', 'adhan_madinah', 'Madinah (Haramain)'),
 ];
 
-const List<PrayerCity> kPrayerCities = [
-  PrayerCity('Doha', 25.3157001, 51.8788493),
-  PrayerCity('Mecca', 21.3891, 39.8579),
-  PrayerCity('Medina', 24.5247, 39.5692),
-  PrayerCity('Cairo', 30.0444, 31.2357),
-  PrayerCity('Istanbul', 41.0082, 28.9784),
-  PrayerCity('Jakarta', -6.2088, 106.8456),
-  PrayerCity('Karachi', 24.8607, 67.0011),
-  PrayerCity('London', 51.5072, -0.1276),
-  PrayerCity('New York', 40.7128, -74.0060),
-  PrayerCity('Custom', 0, 0),
-];
 
 // Global, in-memory prayer configuration. Mirrors the pattern already used by
 // kStartOfWeek: a mutable value every screen reads directly, loaded once at

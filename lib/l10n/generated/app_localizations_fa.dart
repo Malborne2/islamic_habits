@@ -272,6 +272,31 @@ class AppLocalizationsFa extends AppLocalizations {
   String get longitudeLabel => 'طول جغرافیایی';
 
   @override
+  String get citySearchHint => 'جستجوی شهر';
+
+  @override
+  String get cityNotFoundPrompt => 'شهر خود را پیدا نمی‌کنید؟';
+
+  @override
+  String get pickOnMap => 'انتخاب روی نقشه';
+
+  @override
+  String get noCitiesFound => 'هیچ شهری یافت نشد';
+
+  @override
+  String get mapPickerTitle => 'انتخاب مکان';
+
+  @override
+  String get mapPickerInstructions =>
+      'برای تعیین مکان محاسبه اوقات نماز، هر جایی از نقشه را لمس کنید';
+
+  @override
+  String get useThisLocation => 'استفاده از این مکان';
+
+  @override
+  String get customLocationLabel => 'مکان سفارشی';
+
+  @override
   String get calculationMethodLabel => 'روش محاسبه';
 
   @override

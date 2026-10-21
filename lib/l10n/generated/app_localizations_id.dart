@@ -272,6 +272,31 @@ class AppLocalizationsId extends AppLocalizations {
   String get longitudeLabel => 'Bujur';
 
   @override
+  String get citySearchHint => 'Cari kota';
+
+  @override
+  String get cityNotFoundPrompt => 'Tidak menemukan kota Anda?';
+
+  @override
+  String get pickOnMap => 'Pilih di peta';
+
+  @override
+  String get noCitiesFound => 'Tidak ada kota yang ditemukan';
+
+  @override
+  String get mapPickerTitle => 'Pilih lokasi';
+
+  @override
+  String get mapPickerInstructions =>
+      'Ketuk di mana saja pada peta untuk mengatur lokasi waktu salat Anda';
+
+  @override
+  String get useThisLocation => 'Gunakan lokasi ini';
+
+  @override
+  String get customLocationLabel => 'Lokasi kustom';
+
+  @override
   String get calculationMethodLabel => 'Metode perhitungan';
 
   @override

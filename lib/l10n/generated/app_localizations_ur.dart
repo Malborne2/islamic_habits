@@ -272,6 +272,31 @@ class AppLocalizationsUr extends AppLocalizations {
   String get longitudeLabel => 'طول بلد';
 
   @override
+  String get citySearchHint => 'شہر تلاش کریں';
+
+  @override
+  String get cityNotFoundPrompt => 'اپنا شہر نہیں مل رہا؟';
+
+  @override
+  String get pickOnMap => 'نقشے پر منتخب کریں';
+
+  @override
+  String get noCitiesFound => 'کوئی شہر نہیں ملا';
+
+  @override
+  String get mapPickerTitle => 'مقام منتخب کریں';
+
+  @override
+  String get mapPickerInstructions =>
+      'نماز کے وقت کا مقام مقرر کرنے کے لیے نقشے پر کہیں بھی ٹیپ کریں';
+
+  @override
+  String get useThisLocation => 'یہ مقام استعمال کریں';
+
+  @override
+  String get customLocationLabel => 'حسب ضرورت مقام';
+
+  @override
   String get calculationMethodLabel => 'حساب کا طریقہ';
 
   @override

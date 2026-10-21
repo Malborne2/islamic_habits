@@ -271,6 +271,31 @@ class AppLocalizationsFi extends AppLocalizations {
   String get longitudeLabel => 'Pituusaste';
 
   @override
+  String get citySearchHint => 'Hae kaupunkia';
+
+  @override
+  String get cityNotFoundPrompt => 'Etkö löydä kaupunkiasi?';
+
+  @override
+  String get pickOnMap => 'Valitse kartalta';
+
+  @override
+  String get noCitiesFound => 'Kaupunkeja ei löytynyt';
+
+  @override
+  String get mapPickerTitle => 'Valitse sijainti';
+
+  @override
+  String get mapPickerInstructions =>
+      'Napauta karttaa mistä tahansa asettaaksesi rukousaikojen sijainnin';
+
+  @override
+  String get useThisLocation => 'Käytä tätä sijaintia';
+
+  @override
+  String get customLocationLabel => 'Mukautettu sijainti';
+
+  @override
   String get calculationMethodLabel => 'Laskentamenetelmä';
 
   @override

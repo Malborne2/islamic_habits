@@ -271,6 +271,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get longitudeLabel => 'خط الطول';
 
   @override
+  String get citySearchHint => 'ابحث عن مدينة';
+
+  @override
+  String get cityNotFoundPrompt => 'لم تجد مدينتك؟';
+
+  @override
+  String get pickOnMap => 'اختر من الخريطة';
+
+  @override
+  String get noCitiesFound => 'لم يتم العثور على مدن';
+
+  @override
+  String get mapPickerTitle => 'اختر موقعًا';
+
+  @override
+  String get mapPickerInstructions =>
+      'اضغط في أي مكان على الخريطة لتحديد موقعك لحساب مواقيت الصلاة';
+
+  @override
+  String get useThisLocation => 'استخدم هذا الموقع';
+
+  @override
+  String get customLocationLabel => 'موقع مخصص';
+
+  @override
   String get calculationMethodLabel => 'طريقة الحساب';
 
   @override

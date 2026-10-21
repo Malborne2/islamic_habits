@@ -1,0 +1,232 @@
+import 'package:flutter/widgets.dart';
+import 'package:islamic_habits/utility/world_cities_i18n.dart';
+
+// A point picked by hand on the map picker, for when a city isn't in
+// kWorldCities. Never derived from the device's own location.
+class CustomLocation {
+  final double latitude;
+  final double longitude;
+  const CustomLocation(this.latitude, this.longitude);
+}
+
+// A bundled, offline list of major world cities for the prayer-location
+// picker. Deliberately not exhaustive — it's meant to cover the city
+// someone is likely to search for without needing device location or a
+// network lookup. Coordinates are city-center approximations, which is
+// precise enough for prayer-time calculation.
+class WorldCity {
+  final String name;
+  final String country;
+  final double latitude;
+  final double longitude;
+  const WorldCity(this.name, this.country, this.latitude, this.longitude);
+
+  String get label => '$name, $country';
+}
+
+// Falls back to the English name whenever the current locale, or this
+// particular city/country, has no translation in world_cities_i18n.dart.
+String localizedCityName(BuildContext context, WorldCity city) {
+  final lang = Localizations.localeOf(context).languageCode;
+  return kCityNameTranslations[city.name]?[lang] ?? city.name;
+}
+
+String localizedCountryName(BuildContext context, String country) {
+  final lang = Localizations.localeOf(context).languageCode;
+  return kCountryNameTranslations[country]?[lang] ?? country;
+}
+
+String localizedCityLabel(BuildContext context, WorldCity city) {
+  return '${localizedCityName(context, city)}, '
+      '${localizedCountryName(context, city.country)}';
+}
+
+const List<WorldCity> kWorldCities = [
+  WorldCity('Mecca', 'Saudi Arabia', 21.3891, 39.8579),
+  WorldCity('Medina', 'Saudi Arabia', 24.5247, 39.5692),
+  WorldCity('Riyadh', 'Saudi Arabia', 24.7136, 46.6753),
+  WorldCity('Jeddah', 'Saudi Arabia', 21.4858, 39.1925),
+  WorldCity('Doha', 'Qatar', 25.3157001, 51.8788493),
+  WorldCity('Dubai', 'United Arab Emirates', 25.2048, 55.2708),
+  WorldCity('Abu Dhabi', 'United Arab Emirates', 24.4539, 54.3773),
+  WorldCity('Sharjah', 'United Arab Emirates', 25.3463, 55.4209),
+  WorldCity('Kuwait City', 'Kuwait', 29.3759, 47.9774),
+  WorldCity('Manama', 'Bahrain', 26.2285, 50.5860),
+  WorldCity('Muscat', 'Oman', 23.5880, 58.3829),
+  WorldCity('Amman', 'Jordan', 31.9454, 35.9284),
+  WorldCity('Beirut', 'Lebanon', 33.8938, 35.5018),
+  WorldCity('Damascus', 'Syria', 33.5138, 36.2765),
+  WorldCity('Baghdad', 'Iraq', 33.3152, 44.3661),
+  WorldCity('Jerusalem', 'Palestine', 31.7683, 35.2137),
+  WorldCity('Gaza', 'Palestine', 31.5017, 34.4668),
+  WorldCity('Sanaa', 'Yemen', 15.3694, 44.1910),
+  WorldCity('Cairo', 'Egypt', 30.0444, 31.2357),
+  WorldCity('Alexandria', 'Egypt', 31.2001, 29.9187),
+  WorldCity('Khartoum', 'Sudan', 15.5007, 32.5599),
+  WorldCity('Tripoli', 'Libya', 32.8872, 13.1913),
+  WorldCity('Tunis', 'Tunisia', 36.8065, 10.1815),
+  WorldCity('Algiers', 'Algeria', 36.7538, 3.0588),
+  WorldCity('Casablanca', 'Morocco', 33.5731, -7.5898),
+  WorldCity('Rabat', 'Morocco', 34.0209, -6.8417),
+  WorldCity('Nouakchott', 'Mauritania', 18.0735, -15.9582),
+  WorldCity('Istanbul', 'Turkey', 41.0082, 28.9784),
+  WorldCity('Ankara', 'Turkey', 39.9334, 32.8597),
+  WorldCity('Izmir', 'Turkey', 38.4237, 27.1428),
+  WorldCity('Tehran', 'Iran', 35.6892, 51.3890),
+  WorldCity('Mashhad', 'Iran', 36.2605, 59.6168),
+  WorldCity('Isfahan', 'Iran', 32.6539, 51.6660),
+  WorldCity('Baku', 'Azerbaijan', 40.4093, 49.8671),
+  WorldCity('Tbilisi', 'Georgia', 41.7151, 44.8271),
+  WorldCity('Yerevan', 'Armenia', 40.1792, 44.4991),
+  WorldCity('Karachi', 'Pakistan', 24.8607, 67.0011),
+  WorldCity('Lahore', 'Pakistan', 31.5497, 74.3436),
+  WorldCity('Islamabad', 'Pakistan', 33.6844, 73.0479),
+  WorldCity('Peshawar', 'Pakistan', 34.0151, 71.5249),
+  WorldCity('Kabul', 'Afghanistan', 34.5553, 69.2075),
+  WorldCity('New Delhi', 'India', 28.6139, 77.2090),
+  WorldCity('Mumbai', 'India', 19.0760, 72.8777),
+  WorldCity('Hyderabad', 'India', 17.3850, 78.4867),
+  WorldCity('Lucknow', 'India', 26.8467, 80.9462),
+  WorldCity('Bengaluru', 'India', 12.9716, 77.5946),
+  WorldCity('Kolkata', 'India', 22.5726, 88.3639),
+  WorldCity('Dhaka', 'Bangladesh', 23.8103, 90.4125),
+  WorldCity('Chittagong', 'Bangladesh', 22.3569, 91.7832),
+  WorldCity('Colombo', 'Sri Lanka', 6.9271, 79.8612),
+  WorldCity('Kathmandu', 'Nepal', 27.7172, 85.3240),
+  WorldCity('Male', 'Maldives', 4.1755, 73.5093),
+  WorldCity('Tashkent', 'Uzbekistan', 41.2995, 69.2401),
+  WorldCity('Almaty', 'Kazakhstan', 43.2220, 76.8512),
+  WorldCity('Astana', 'Kazakhstan', 51.1694, 71.4491),
+  WorldCity('Bishkek', 'Kyrgyzstan', 42.8746, 74.5698),
+  WorldCity('Dushanbe', 'Tajikistan', 38.5598, 68.7870),
+  WorldCity('Ashgabat', 'Turkmenistan', 37.9601, 58.3261),
+  WorldCity('Jakarta', 'Indonesia', -6.2088, 106.8456),
+  WorldCity('Surabaya', 'Indonesia', -7.2575, 112.7521),
+  WorldCity('Bandung', 'Indonesia', -6.9175, 107.6191),
+  WorldCity('Medan', 'Indonesia', 3.5952, 98.6722),
+  WorldCity('Kuala Lumpur', 'Malaysia', 3.1390, 101.6869),
+  WorldCity('Johor Bahru', 'Malaysia', 1.4927, 103.7414),
+  WorldCity('Singapore', 'Singapore', 1.3521, 103.8198),
+  WorldCity('Manila', 'Philippines', 14.5995, 120.9842),
+  WorldCity('Bangkok', 'Thailand', 13.7563, 100.5018),
+  WorldCity('Hanoi', 'Vietnam', 21.0278, 105.8342),
+  WorldCity('Ho Chi Minh City', 'Vietnam', 10.8231, 106.6297),
+  WorldCity('Phnom Penh', 'Cambodia', 11.5564, 104.9282),
+  WorldCity('Yangon', 'Myanmar', 16.8661, 96.1951),
+  WorldCity('Beijing', 'China', 39.9042, 116.4074),
+  WorldCity('Shanghai', 'China', 31.2304, 121.4737),
+  WorldCity('Guangzhou', 'China', 23.1291, 113.2644),
+  WorldCity('Urumqi', 'China', 43.8256, 87.6168),
+  WorldCity('Hong Kong', 'China', 22.3193, 114.1694),
+  WorldCity('Taipei', 'Taiwan', 25.0330, 121.5654),
+  WorldCity('Seoul', 'South Korea', 37.5665, 126.9780),
+  WorldCity('Tokyo', 'Japan', 35.6762, 139.6503),
+  WorldCity('Osaka', 'Japan', 34.6937, 135.5023),
+  WorldCity('Nagoya', 'Japan', 35.1815, 136.9066),
+  WorldCity('Sapporo', 'Japan', 43.0618, 141.3545),
+  WorldCity('London', 'United Kingdom', 51.5072, -0.1276),
+  WorldCity('Birmingham', 'United Kingdom', 52.4862, -1.8904),
+  WorldCity('Manchester', 'United Kingdom', 53.4808, -2.2426),
+  WorldCity('Bradford', 'United Kingdom', 53.7960, -1.7594),
+  WorldCity('Glasgow', 'United Kingdom', 55.8642, -4.2518),
+  WorldCity('Dublin', 'Ireland', 53.3498, -6.2603),
+  WorldCity('Paris', 'France', 48.8566, 2.3522),
+  WorldCity('Marseille', 'France', 43.2965, 5.3698),
+  WorldCity('Lyon', 'France', 45.7640, 4.8357),
+  WorldCity('Berlin', 'Germany', 52.5200, 13.4050),
+  WorldCity('Hamburg', 'Germany', 53.5511, 9.9937),
+  WorldCity('Munich', 'Germany', 48.1351, 11.5820),
+  WorldCity('Cologne', 'Germany', 50.9375, 6.9603),
+  WorldCity('Frankfurt', 'Germany', 50.1109, 8.6821),
+  WorldCity('Madrid', 'Spain', 40.4168, -3.7038),
+  WorldCity('Barcelona', 'Spain', 41.3851, 2.1734),
+  WorldCity('Rome', 'Italy', 41.9028, 12.4964),
+  WorldCity('Milan', 'Italy', 45.4642, 9.1900),
+  WorldCity('Amsterdam', 'Netherlands', 52.3676, 4.9041),
+  WorldCity('Rotterdam', 'Netherlands', 51.9244, 4.4777),
+  WorldCity('Brussels', 'Belgium', 50.8503, 4.3517),
+  WorldCity('Antwerp', 'Belgium', 51.2194, 4.4025),
+  WorldCity('Zurich', 'Switzerland', 47.3769, 8.5417),
+  WorldCity('Geneva', 'Switzerland', 46.2044, 6.1432),
+  WorldCity('Vienna', 'Austria', 48.2082, 16.3738),
+  WorldCity('Stockholm', 'Sweden', 59.3293, 18.0686),
+  WorldCity('Gothenburg', 'Sweden', 57.7089, 11.9746),
+  WorldCity('Malmo', 'Sweden', 55.6050, 13.0038),
+  WorldCity('Oslo', 'Norway', 59.9139, 10.7522),
+  WorldCity('Bergen', 'Norway', 60.3913, 5.3221),
+  WorldCity('Copenhagen', 'Denmark', 55.6761, 12.5683),
+  WorldCity('Helsinki', 'Finland', 60.1699, 24.9384),
+  WorldCity('Tampere', 'Finland', 61.4978, 23.7610),
+  WorldCity('Reykjavik', 'Iceland', 64.1466, -21.9426),
+  WorldCity('Warsaw', 'Poland', 52.2297, 21.0122),
+  WorldCity('Krakow', 'Poland', 50.0647, 19.9450),
+  WorldCity('Prague', 'Czech Republic', 50.0755, 14.4378),
+  WorldCity('Budapest', 'Hungary', 47.4979, 19.0402),
+  WorldCity('Bucharest', 'Romania', 44.4268, 26.1025),
+  WorldCity('Sofia', 'Bulgaria', 42.6977, 23.3219),
+  WorldCity('Athens', 'Greece', 37.9838, 23.7275),
+  WorldCity('Belgrade', 'Serbia', 44.7866, 20.4489),
+  WorldCity('Sarajevo', 'Bosnia and Herzegovina', 43.8563, 18.4131),
+  WorldCity('Zagreb', 'Croatia', 45.8150, 15.9819),
+  WorldCity('Skopje', 'North Macedonia', 41.9981, 21.4254),
+  WorldCity('Tirana', 'Albania', 41.3275, 19.8187),
+  WorldCity('Pristina', 'Kosovo', 42.6629, 21.1655),
+  WorldCity('Lisbon', 'Portugal', 38.7223, -9.1393),
+  WorldCity('Porto', 'Portugal', 41.1579, -8.6291),
+  WorldCity('Kyiv', 'Ukraine', 50.4501, 30.5234),
+  WorldCity('Moscow', 'Russia', 55.7558, 37.6173),
+  WorldCity('Saint Petersburg', 'Russia', 59.9343, 30.3351),
+  WorldCity('Kazan', 'Russia', 55.8304, 49.0661),
+  WorldCity('Grozny', 'Russia', 43.3178, 45.6949),
+  WorldCity('Minsk', 'Belarus', 53.9006, 27.5590),
+  WorldCity('New York', 'United States', 40.7128, -74.0060),
+  WorldCity('Los Angeles', 'United States', 34.0522, -118.2437),
+  WorldCity('Chicago', 'United States', 41.8781, -87.6298),
+  WorldCity('Houston', 'United States', 29.7604, -95.3698),
+  WorldCity('Dearborn', 'United States', 42.3223, -83.1763),
+  WorldCity('Washington', 'United States', 38.9072, -77.0369),
+  WorldCity('San Francisco', 'United States', 37.7749, -122.4194),
+  WorldCity('Toronto', 'Canada', 43.6532, -79.3832),
+  WorldCity('Montreal', 'Canada', 45.5019, -73.5674),
+  WorldCity('Vancouver', 'Canada', 49.2827, -123.1207),
+  WorldCity('Mexico City', 'Mexico', 19.4326, -99.1332),
+  WorldCity('Sao Paulo', 'Brazil', -23.5505, -46.6333),
+  WorldCity('Rio de Janeiro', 'Brazil', -22.9068, -43.1729),
+  WorldCity('Buenos Aires', 'Argentina', -34.6037, -58.3816),
+  WorldCity('Bogota', 'Colombia', 4.7110, -74.0721),
+  WorldCity('Lima', 'Peru', -12.0464, -77.0428),
+  WorldCity('Santiago', 'Chile', -33.4489, -70.6693),
+  WorldCity('Lagos', 'Nigeria', 6.5244, 3.3792),
+  WorldCity('Abuja', 'Nigeria', 9.0765, 7.3986),
+  WorldCity('Kano', 'Nigeria', 12.0022, 8.5920),
+  WorldCity('Accra', 'Ghana', 5.6037, -0.1870),
+  WorldCity('Dakar', 'Senegal', 14.7167, -17.4677),
+  WorldCity('Bamako', 'Mali', 12.6392, -8.0029),
+  WorldCity('Niamey', 'Niger', 13.5127, 2.1128),
+  WorldCity('Ouagadougou', 'Burkina Faso', 12.3714, -1.5197),
+  WorldCity('Abidjan', 'Ivory Coast', 5.3600, -4.0083),
+  WorldCity('Conakry', 'Guinea', 9.6412, -13.5784),
+  WorldCity('Addis Ababa', 'Ethiopia', 9.0054, 38.7636),
+  WorldCity('Mogadishu', 'Somalia', 2.0469, 45.3182),
+  WorldCity('Djibouti', 'Djibouti', 11.5886, 43.1456),
+  WorldCity('Nairobi', 'Kenya', -1.2921, 36.8219),
+  WorldCity('Mombasa', 'Kenya', -4.0435, 39.6682),
+  WorldCity('Dar es Salaam', 'Tanzania', -6.7924, 39.2083),
+  WorldCity('Zanzibar City', 'Tanzania', -6.1659, 39.2026),
+  WorldCity('Kampala', 'Uganda', 0.3476, 32.5825),
+  WorldCity('Kigali', 'Rwanda', -1.9403, 29.8739),
+  WorldCity('Kinshasa', 'DR Congo', -4.4419, 15.2663),
+  WorldCity('Johannesburg', 'South Africa', -26.2041, 28.0473),
+  WorldCity('Cape Town', 'South Africa', -33.9249, 18.4241),
+  WorldCity('Durban', 'South Africa', -29.8587, 31.0218),
+  WorldCity('Harare', 'Zimbabwe', -17.8292, 31.0522),
+  WorldCity('Lusaka', 'Zambia', -15.3875, 28.3228),
+  WorldCity('Maputo', 'Mozambique', -25.9692, 32.5732),
+  WorldCity('Antananarivo', 'Madagascar', -18.8792, 47.5079),
+  WorldCity('Sydney', 'Australia', -33.8688, 151.2093),
+  WorldCity('Melbourne', 'Australia', -37.8136, 144.9631),
+  WorldCity('Brisbane', 'Australia', -27.4698, 153.0251),
+  WorldCity('Perth', 'Australia', -31.9505, 115.8605),
+  WorldCity('Auckland', 'New Zealand', -36.8509, 174.7645),
+  WorldCity('Wellington', 'New Zealand', -41.2865, 174.7762),
+];
