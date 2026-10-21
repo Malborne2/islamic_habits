@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:islamic_habits/components/habit_drawer.dart';
+import 'package:islamic_habits/components/today_overview.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:hijri/hijri_calendar.dart';
@@ -34,10 +35,9 @@ class _MainScreenState extends State<MainScreen> {
         habits: widget.islamicHabits,
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Center(
-          child: Column(
-            children: <Widget>[
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+        child: ListView(
+          children: <Widget>[
               Card(
                 margin: EdgeInsets.zero,
                 child: Padding(
@@ -160,8 +160,8 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
               ),
-            ],
-          ),
+              TodayOverview(habits: widget.islamicHabits),
+          ],
         ),
       ),
     );
