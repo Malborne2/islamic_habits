@@ -89,7 +89,7 @@ class _PrayersScreenState extends State<PrayersScreen> with RouteAware {
       case PrayerNotifyMode.silent:
         return Icons.notifications_off;
       case PrayerNotifyMode.adhan:
-        return Icons.mic;
+        return Icons.volume_up;
     }
   }
 

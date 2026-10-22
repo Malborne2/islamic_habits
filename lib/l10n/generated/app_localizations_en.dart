@@ -255,11 +255,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'Exempt this app from battery optimization';
 
   @override
+  String get exactAlarmButton => 'Allow exact alarm times (recommended)';
+
+  @override
+  String get exactAlarmGranted =>
+      'Exact alarms are allowed — reminders will fire on time.';
+
+  @override
+  String get exactAlarmNotGranted =>
+      'Exact alarms are still not allowed — try the system settings screen that just opened.';
+
+  @override
+  String get adhanTakbeerOnlyLabel => 'Takbeer only';
+
+  @override
+  String get adhanTakbeerOnlyHint =>
+      'Stop after the opening takbeer instead of playing the full recording';
+
+  @override
   String get adhanVoiceLabel => 'Adhan voice';
 
   @override
   String get adhanVoiceHint =>
-      'Used for prayers set to the microphone (adhan) bell icon on the Prayer times screen.';
+      'Used for prayers set to the speaker (adhan) icon on the Prayer times screen.';
 
   @override
   String get takbeerOnly => 'Takbeer only';

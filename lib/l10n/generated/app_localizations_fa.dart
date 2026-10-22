@@ -254,11 +254,29 @@ class AppLocalizationsFa extends AppLocalizations {
       'این برنامه را از بهینه‌سازی باتری مستثنی کنید';
 
   @override
+  String get exactAlarmButton => 'اجازه زمان‌بندی دقیق هشدار (توصیه‌شده)';
+
+  @override
+  String get exactAlarmGranted =>
+      'زمان‌های دقیق مجاز است — یادآوری‌ها به‌موقع فعال می‌شوند.';
+
+  @override
+  String get exactAlarmNotGranted =>
+      'زمان‌های دقیق هنوز مجاز نیست — صفحه تنظیمات سیستم که اکنون باز شد را امتحان کنید.';
+
+  @override
+  String get adhanTakbeerOnlyLabel => 'فقط تکبیر';
+
+  @override
+  String get adhanTakbeerOnlyHint =>
+      'به‌جای پخش کامل ضبط، بعد از تکبیر ابتدایی متوقف شود';
+
+  @override
   String get adhanVoiceLabel => 'صدای اذان';
 
   @override
   String get adhanVoiceHint =>
-      'برای نمازهایی که روی نماد میکروفون (اذان) در صفحه اوقات نماز تنظیم شده‌اند استفاده می‌شود.';
+      'برای نمازهایی که روی نماد بلندگو (اذان) در صفحه اوقات نماز تنظیم شده‌اند استفاده می‌شود.';
 
   @override
   String get takbeerOnly => 'فقط تکبیر';

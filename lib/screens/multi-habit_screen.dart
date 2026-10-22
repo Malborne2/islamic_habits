@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:islamic_habits/components/habit_button.dart';
 import 'package:islamic_habits/components/habit_drawer.dart';
 import 'package:islamic_habits/components/several_habits_page.dart';
+import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/screens/add_habit_screen.dart';
 import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
@@ -10,17 +11,26 @@ import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+// Which localized string to show as the AppBar title. Resolved live from
+// AppLocalizations in build() rather than baked into a String field at
+// navigation time — otherwise, if the app's language changes while this
+// screen is still on the navigator stack, the title stays stuck in
+// whatever language was active when the screen was first pushed, even
+// though the rest of the screen (which reads AppLocalizations.of(context)
+// directly in build) updates immediately.
+enum SeveralHabitsTitle { allHabits, fivePrayers }
+
 class SeveralHabitsScreen extends StatefulWidget {
   final List<Habit> habits;
   final List<Habit>? allHabits;
-  final String title;
+  final SeveralHabitsTitle titleKind;
   final Color color;
   final bool showAddButton;
   const SeveralHabitsScreen({
     super.key,
     required this.habits,
     this.allHabits,
-    this.title = 'All habits',
+    this.titleKind = SeveralHabitsTitle.allHabits,
     this.color = Colors.teal,
     this.showAddButton = true,
   });
@@ -92,7 +102,9 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.titleKind == SeveralHabitsTitle.fivePrayers
+            ? AppLocalizations.of(context).navFivePrayers
+            : AppLocalizations.of(context).navAllHabits),
         backgroundColor: widget.color,
         actions: <Widget>[
           Row(

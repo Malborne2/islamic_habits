@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/screens/city_picker_screen.dart';
+import 'package:islamic_habits/utility/adhan_voice_i18n.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
@@ -64,6 +67,17 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
       TextEditingController(text: PrayerSettings.adjustments.isha.toString());
   late bool _remindersEnabled = PrayerSettings.remindersEnabled;
   late AdhanVoiceOption _adhanVoice = PrayerSettings.adhanVoice;
+  late bool _adhanTakbeerOnly = PrayerSettings.adhanTakbeerOnly;
+  bool _isTestPlaying = false;
+  late final StreamSubscription<void> _testCompleteSub;
+
+  @override
+  void initState() {
+    super.initState();
+    _testCompleteSub = NotificationService.onTestAdhanComplete.listen((_) {
+      if (mounted) setState(() => _isTestPlaying = false);
+    });
+  }
 
   @override
   void dispose() {
@@ -74,7 +88,26 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
     _asrAdj.dispose();
     _maghribAdj.dispose();
     _ishaAdj.dispose();
+    _testCompleteSub.cancel();
+    NotificationService.stopTestAdhan();
     super.dispose();
+  }
+
+  Future<void> _toggleTestAdhan() async {
+    if (_isTestPlaying) {
+      await NotificationService.stopTestAdhan();
+      if (mounted) setState(() => _isTestPlaying = false);
+      return;
+    }
+    try {
+      await NotificationService.playTestAdhan(_adhanVoice);
+      if (mounted) setState(() => _isTestPlaying = true);
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context).adhanAudioMissing)));
+      }
+    }
   }
 
   Future<void> _openCityPicker() async {
@@ -131,6 +164,10 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
             content:
                 Text(AppLocalizations.of(context).notificationPermissionDenied)));
       }
+      // Prompt for exact-alarm access right away too, so reminders are
+      // reliable from the start instead of only after the user notices
+      // they're late and digs for the button below.
+      await NotificationService.requestExactAlarmPermission();
     }
     setState(() => _remindersEnabled = value);
     await PrayerSettings.setRemindersEnabled(value);
@@ -167,6 +204,18 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
             onPressed: NotificationService.requestIgnoreBatteryOptimizations,
             child: Text(l10n.batteryOptimizationButton),
           ),
+          TextButton(
+            onPressed: () async {
+              final granted =
+                  await NotificationService.requestExactAlarmPermission();
+              if (!mounted) return;
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(granted
+                      ? l10n.exactAlarmGranted
+                      : l10n.exactAlarmNotGranted)));
+            },
+            child: Text(l10n.exactAlarmButton),
+          ),
           const SizedBox(height: 8),
           Text(l10n.adhanVoiceLabel,
               style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -185,16 +234,17 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                   items: kAdhanVoices
                       .map((voice) => DropdownMenuItem(
                             value: voice,
-                            child: Text(voice.id == 'takbeer'
-                                ? l10n.takbeerOnly
-                                : voice.id == 'full'
-                                    ? l10n.fullAdhan
-                                    : voice.displayName),
+                            child:
+                                Text(localizedAdhanVoiceName(context, voice)),
                           ))
                       .toList(),
                   onChanged: (value) async {
                     if (value == null) return;
-                    setState(() => _adhanVoice = value);
+                    await NotificationService.stopTestAdhan();
+                    setState(() {
+                      _adhanVoice = value;
+                      _isTestPlaying = false;
+                    });
                     await PrayerSettings.setAdhanVoice(value);
                     await NotificationService.scheduleTodayReminders();
                   },
@@ -203,26 +253,27 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
               const SizedBox(width: 8),
               IconButton(
                 tooltip: l10n.testAdhanVoice,
-                icon: const Icon(Icons.play_circle_outline),
-                onPressed: () async {
-                  try {
-                    await NotificationService.playTestAdhan(_adhanVoice);
-                  } catch (_) {
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(l10n.adhanAudioMissing)));
-                    }
-                  }
-                },
+                icon: Icon(_isTestPlaying
+                    ? Icons.stop_circle_outlined
+                    : Icons.play_circle_outline),
+                onPressed: _toggleTestAdhan,
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Text(
-              l10n.adhanAudioMissing,
-              style: const TextStyle(fontSize: 11),
-            ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(l10n.adhanTakbeerOnlyLabel),
+            subtitle: Text(l10n.adhanTakbeerOnlyHint),
+            value: _adhanTakbeerOnly,
+            onChanged: (value) async {
+              await NotificationService.stopTestAdhan();
+              setState(() {
+                _adhanTakbeerOnly = value;
+                _isTestPlaying = false;
+              });
+              await PrayerSettings.setAdhanTakbeerOnly(value);
+              await NotificationService.scheduleTodayReminders();
+            },
           ),
           const Divider(),
           Text(l10n.locationLabel,

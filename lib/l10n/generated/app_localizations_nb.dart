@@ -255,11 +255,29 @@ class AppLocalizationsNb extends AppLocalizations {
       'Unnta denne appen fra batterioptimalisering';
 
   @override
+  String get exactAlarmButton => 'Tillat eksakte alarmtider (anbefalt)';
+
+  @override
+  String get exactAlarmGranted =>
+      'Eksakte alarmer er tillatt — påminnelser kommer til rett tid.';
+
+  @override
+  String get exactAlarmNotGranted =>
+      'Eksakte alarmer er fortsatt ikke tillatt — prøv systeminnstillingene som nettopp åpnet.';
+
+  @override
+  String get adhanTakbeerOnlyLabel => 'Kun takbir';
+
+  @override
+  String get adhanTakbeerOnlyHint =>
+      'Stopp etter den innledende takbiren i stedet for å spille hele opptaket';
+
+  @override
   String get adhanVoiceLabel => 'Adhan-stemme';
 
   @override
   String get adhanVoiceHint =>
-      'Brukes for bønner satt til mikrofon-ikonet (adhan) på bønnetider-skjermen.';
+      'Brukes for bønner satt til høyttaler-ikonet (adhan) på bønnetider-skjermen.';
 
   @override
   String get takbeerOnly => 'Kun Takbeer';

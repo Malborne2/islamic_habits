@@ -253,11 +253,29 @@ class AppLocalizationsAr extends AppLocalizations {
       'استثناء هذا التطبيق من تحسين البطارية';
 
   @override
+  String get exactAlarmButton => 'السماح بأوقات تنبيه دقيقة (موصى به)';
+
+  @override
+  String get exactAlarmGranted =>
+      'التنبيهات الدقيقة مسموح بها — ستصل التذكيرات في وقتها.';
+
+  @override
+  String get exactAlarmNotGranted =>
+      'التنبيهات الدقيقة لا تزال غير مسموح بها — جرّب شاشة إعدادات النظام التي فُتحت للتو.';
+
+  @override
+  String get adhanTakbeerOnlyLabel => 'التكبير فقط';
+
+  @override
+  String get adhanTakbeerOnlyHint =>
+      'التوقف بعد التكبير الافتتاحي بدلاً من تشغيل التسجيل كاملاً';
+
+  @override
   String get adhanVoiceLabel => 'صوت الأذان';
 
   @override
   String get adhanVoiceHint =>
-      'يُستخدم للصلوات المضبوطة على أيقونة الميكروفون (الأذان) في شاشة مواقيت الصلاة.';
+      'يُستخدم للصلوات المضبوطة على أيقونة مكبر الصوت (الأذان) في شاشة مواقيت الصلاة.';
 
   @override
   String get takbeerOnly => 'التكبير فقط';

@@ -15,7 +15,6 @@ class HabitDrawer extends StatelessWidget {
 
   Future<void> _addHabit(BuildContext context) async {
     final navigator = Navigator.of(context);
-    final title = AppLocalizations.of(context).navAllHabits;
     navigator.pop();
     final newHabit = await navigator.push<Habit>(
         MaterialPageRoute(
@@ -25,8 +24,7 @@ class HabitDrawer extends StatelessWidget {
       habits.add(newHabit);
       navigator.pushAndRemoveUntil(
           MaterialPageRoute(
-              builder: (context) =>
-                  SeveralHabitsScreen(habits: habits, title: title),
+              builder: (context) => SeveralHabitsScreen(habits: habits),
               settings: const RouteSettings(name: '/SeveralHabitsScreen')),
           (route) => route.settings.name == '/MainScreen');
     }
@@ -117,8 +115,7 @@ class HabitDrawer extends StatelessWidget {
       ListTile(
         title: Text(l10n.navAllHabits),
         onTap: () => _navigateTo(context, '/SeveralHabitsScreen',
-            (context) =>
-                SeveralHabitsScreen(habits: habits, title: l10n.navAllHabits)),
+            (context) => SeveralHabitsScreen(habits: habits)),
       ),
     ];
     final prayerNames =
@@ -137,7 +134,7 @@ class HabitDrawer extends StatelessWidget {
             (context) => SeveralHabitsScreen(
                   habits: prayerHabits,
                   allHabits: habits,
-                  title: l10n.navFivePrayers,
+                  titleKind: SeveralHabitsTitle.fivePrayers,
                   color: Colors.blueGrey,
                   showAddButton: false,
                 )),

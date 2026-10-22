@@ -254,11 +254,29 @@ class AppLocalizationsUr extends AppLocalizations {
       'اس ایپ کو بیٹری آپٹیمائزیشن سے مستثنیٰ کریں';
 
   @override
+  String get exactAlarmButton => 'عین وقت پر الارم کی اجازت دیں (تجویز کردہ)';
+
+  @override
+  String get exactAlarmGranted =>
+      'عین وقت کے الارم کی اجازت ہے — یاد دہانیاں وقت پر موصول ہوں گی۔';
+
+  @override
+  String get exactAlarmNotGranted =>
+      'عین وقت کے الارم کی اب بھی اجازت نہیں ہے — ابھی کھلنے والی سسٹم سیٹنگز اسکرین آزمائیں۔';
+
+  @override
+  String get adhanTakbeerOnlyLabel => 'صرف تکبیر';
+
+  @override
+  String get adhanTakbeerOnlyHint =>
+      'مکمل ریکارڈنگ چلانے کے بجائے ابتدائی تکبیر کے بعد رک جائیں';
+
+  @override
   String get adhanVoiceLabel => 'اذان کی آواز';
 
   @override
   String get adhanVoiceHint =>
-      'اوقاتِ نماز کی سکرین پر مائیکروفون آئیکن (اذان) پر مقرر نمازوں کے لیے استعمال ہوتی ہے۔';
+      'اوقاتِ نماز کی سکرین پر اسپیکر آئیکن (اذان) پر مقرر نمازوں کے لیے استعمال ہوتی ہے۔';
 
   @override
   String get takbeerOnly => 'صرف تکبیر';

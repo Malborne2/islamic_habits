@@ -6,6 +6,7 @@ import 'package:islamic_habits/components/habit_drawer.dart';
 import 'package:islamic_habits/components/today_overview.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
+import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/habit.dart';
@@ -20,7 +21,8 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> with RouteAware {
+class _MainScreenState extends State<MainScreen>
+    with RouteAware, WidgetsBindingObserver {
   late HijriCalendar hijriToday;
   DateTime today = DateTime.now();
   Timer? _countdownTimer;
@@ -33,6 +35,7 @@ class _MainScreenState extends State<MainScreen> with RouteAware {
     // following prayer on its own once the current one's time passes.
     _countdownTimer =
         Timer.periodic(const Duration(seconds: 30), (_) => setState(() {}));
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -46,7 +49,28 @@ class _MainScreenState extends State<MainScreen> with RouteAware {
   void dispose() {
     _countdownTimer?.cancel();
     appRouteObserver.unsubscribe(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  // scheduleTodayReminders() only schedules the CURRENT day's remaining
+  // prayers; without this, an app left running overnight (never cold
+  // started again) would never get the next day's reminders/Adhan
+  // scheduled at all.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      final now = DateTime.now();
+      if (now.year != today.year ||
+          now.month != today.month ||
+          now.day != today.day) {
+        setState(() {
+          today = now;
+          hijriToday = HijriCalendar.fromDate(today);
+        });
+      }
+      NotificationService.scheduleTodayReminders();
+    }
   }
 
   // Called when a route pushed on top of this screen (e.g. Settings) is

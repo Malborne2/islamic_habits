@@ -580,6 +580,36 @@ abstract class AppLocalizations {
   /// **'Exempt this app from battery optimization'**
   String get batteryOptimizationButton;
 
+  /// No description provided for @exactAlarmButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow exact alarm times (recommended)'**
+  String get exactAlarmButton;
+
+  /// No description provided for @exactAlarmGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact alarms are allowed — reminders will fire on time.'**
+  String get exactAlarmGranted;
+
+  /// No description provided for @exactAlarmNotGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact alarms are still not allowed — try the system settings screen that just opened.'**
+  String get exactAlarmNotGranted;
+
+  /// No description provided for @adhanTakbeerOnlyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Takbeer only'**
+  String get adhanTakbeerOnlyLabel;
+
+  /// No description provided for @adhanTakbeerOnlyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop after the opening takbeer instead of playing the full recording'**
+  String get adhanTakbeerOnlyHint;
+
   /// No description provided for @adhanVoiceLabel.
   ///
   /// In en, this message translates to:
@@ -589,7 +619,7 @@ abstract class AppLocalizations {
   /// No description provided for @adhanVoiceHint.
   ///
   /// In en, this message translates to:
-  /// **'Used for prayers set to the microphone (adhan) bell icon on the Prayer times screen.'**
+  /// **'Used for prayers set to the speaker (adhan) icon on the Prayer times screen.'**
   String get adhanVoiceHint;
 
   /// No description provided for @takbeerOnly.

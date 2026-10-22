@@ -249,10 +249,26 @@ class AppLocalizationsJa extends AppLocalizations {
   String get batteryOptimizationButton => 'このアプリをバッテリー最適化の対象外にする';
 
   @override
+  String get exactAlarmButton => '正確なアラーム時刻を許可する(推奨)';
+
+  @override
+  String get exactAlarmGranted => '正確なアラームが許可されています — リマインダーは時間どおりに届きます。';
+
+  @override
+  String get exactAlarmNotGranted =>
+      '正確なアラームはまだ許可されていません — 開いたシステム設定画面でお試しください。';
+
+  @override
+  String get adhanTakbeerOnlyLabel => 'タクビールのみ';
+
+  @override
+  String get adhanTakbeerOnlyHint => '録音全体を再生せず、冒頭のタクビールの後で停止します';
+
+  @override
   String get adhanVoiceLabel => 'アザーンの声';
 
   @override
-  String get adhanVoiceHint => '礼拝時間画面でマイクアイコン(アザーン)に設定した礼拝に使用されます。';
+  String get adhanVoiceHint => '礼拝時間画面でスピーカーアイコン(アザーン)に設定した礼拝に使用されます。';
 
   @override
   String get takbeerOnly => 'タクビールのみ';

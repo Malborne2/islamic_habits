@@ -253,11 +253,29 @@ class AppLocalizationsFi extends AppLocalizations {
       'Vapauta tämä sovellus akun optimoinnista';
 
   @override
+  String get exactAlarmButton => 'Salli tarkat hälytysajat (suositellaan)';
+
+  @override
+  String get exactAlarmGranted =>
+      'Tarkat hälytykset ovat sallittuja — muistutukset saapuvat ajallaan.';
+
+  @override
+  String get exactAlarmNotGranted =>
+      'Tarkat hälytykset eivät ole vieläkään sallittuja — kokeile juuri avautunutta järjestelmäasetusnäyttöä.';
+
+  @override
+  String get adhanTakbeerOnlyLabel => 'Vain takbir';
+
+  @override
+  String get adhanTakbeerOnlyHint =>
+      'Pysäytä alkutakbirin jälkeen koko tallenteen toistamisen sijaan';
+
+  @override
   String get adhanVoiceLabel => 'Adhan-ääni';
 
   @override
   String get adhanVoiceHint =>
-      'Käytetään rukouksille, jotka on asetettu mikrofonikuvakkeeseen (adhan) rukousaikanäytöllä.';
+      'Käytetään rukouksille, jotka on asetettu kaiutinkuvakkeeseen (adhan) rukousaikanäytöllä.';
 
   @override
   String get takbeerOnly => 'Vain takbir';

@@ -254,11 +254,29 @@ class AppLocalizationsId extends AppLocalizations {
       'Kecualikan aplikasi ini dari pengoptimalan baterai';
 
   @override
+  String get exactAlarmButton => 'Izinkan waktu alarm tepat (disarankan)';
+
+  @override
+  String get exactAlarmGranted =>
+      'Alarm tepat waktu diizinkan — pengingat akan muncul tepat waktu.';
+
+  @override
+  String get exactAlarmNotGranted =>
+      'Alarm tepat waktu masih belum diizinkan — coba layar pengaturan sistem yang baru saja terbuka.';
+
+  @override
+  String get adhanTakbeerOnlyLabel => 'Hanya takbir';
+
+  @override
+  String get adhanTakbeerOnlyHint =>
+      'Berhenti setelah takbir pembuka alih-alih memutar rekaman lengkap';
+
+  @override
   String get adhanVoiceLabel => 'Suara azan';
 
   @override
   String get adhanVoiceHint =>
-      'Digunakan untuk salat yang diatur ke ikon mikrofon (azan) di layar waktu salat.';
+      'Digunakan untuk salat yang diatur ke ikon speaker (azan) di layar waktu salat.';
 
   @override
   String get takbeerOnly => 'Hanya takbir';
