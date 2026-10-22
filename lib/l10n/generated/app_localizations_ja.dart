@@ -27,6 +27,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get navAddHabit => '新しい習慣を追加';
 
   @override
+  String get editHabitTitle => '習慣を編集';
+
+  @override
+  String get editHabitAction => '習慣を編集';
+
+  @override
   String get settingsTitle => '設定';
 
   @override
@@ -234,6 +240,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sendTestReminder => '今すぐテスト通知を送信';
+
+  @override
+  String get batteryOptimizationHint =>
+      'それでもリマインダーが正しい時間に届かない場合、端末のバッテリー最適化がバックグラウンドでの通知を遅延または妨げている可能性があります。';
+
+  @override
+  String get batteryOptimizationButton => 'このアプリをバッテリー最適化の対象外にする';
 
   @override
   String get adhanVoiceLabel => 'アザーンの声';
@@ -497,5 +510,15 @@ class AppLocalizationsJa extends AppLocalizations {
       other: '$count日',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nextPrayerCountdownHm(int hours, int minutes) {
+    return 'あと$hours時間$minutes分';
+  }
+
+  @override
+  String nextPrayerCountdownM(int minutes) {
+    return 'あと$minutes分';
   }
 }

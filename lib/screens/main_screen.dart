@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:islamic_habits/components/habit_drawer.dart';
@@ -21,11 +23,16 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with RouteAware {
   late HijriCalendar hijriToday;
   DateTime today = DateTime.now();
+  Timer? _countdownTimer;
 
   @override
   void initState() {
     super.initState();
     hijriToday = HijriCalendar.fromDate(today);
+    // Ticks the next-prayer countdown and lets it roll over to the
+    // following prayer on its own once the current one's time passes.
+    _countdownTimer =
+        Timer.periodic(const Duration(seconds: 30), (_) => setState(() {}));
   }
 
   @override
@@ -37,6 +44,7 @@ class _MainScreenState extends State<MainScreen> with RouteAware {
 
   @override
   void dispose() {
+    _countdownTimer?.cancel();
     appRouteObserver.unsubscribe(this);
     super.dispose();
   }
@@ -122,13 +130,15 @@ class _MainScreenState extends State<MainScreen> with RouteAware {
                         ),
                       ),
                       Expanded(
+                        flex: 3,
                         child: Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
                                 child: AutoSizeText(
                                   localizedPrayerDisplayName(
                                       context, prayerHelper.getNextPrayerName()),
@@ -145,50 +155,14 @@ class _MainScreenState extends State<MainScreen> with RouteAware {
                                         prayerHelper.getNextPrayerTime())),
                                 maxLines: 1,
                                 style: const TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 60,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child: VerticalDivider(
-                            thickness: 1,
-                            width: 2,
-                            indent: 2,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: AutoSizeText(
-                                  localizedPrayerDisplayName(
-                                      context, prayerHelper.getLaterPrayerName()),
-                                  maxLines: 1,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              AutoSizeText(
-                                localizeDigits(
-                                    context,
-                                    DateFormat.jm(locale).format(
-                                        prayerHelper.getLaterPrayerTime())),
-                                maxLines: 1,
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                              const SizedBox(height: 6),
+                              _CountdownBadge(
+                                remaining: prayerHelper
+                                    .getNextPrayerTime()
+                                    .difference(DateTime.now()),
                               ),
                             ],
                           ),
@@ -201,6 +175,41 @@ class _MainScreenState extends State<MainScreen> with RouteAware {
               TodayOverview(habits: widget.islamicHabits),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// A small pill showing how long until the next prayer, e.g. "in 2h 14m" or
+// "in 42m" once under an hour. Clamped to zero so a prayer time that's just
+// passed (before the next build picks the following prayer) never shows a
+// negative countdown.
+class _CountdownBadge extends StatelessWidget {
+  final Duration remaining;
+  const _CountdownBadge({required this.remaining});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final clamped = remaining.isNegative ? Duration.zero : remaining;
+    final hours = clamped.inHours;
+    final minutes = clamped.inMinutes % 60;
+    final text = hours > 0
+        ? l10n.nextPrayerCountdownHm(hours, minutes)
+        : l10n.nextPrayerCountdownM(minutes);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.16),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: AutoSizeText(
+        localizeDigits(context, text),
+        maxLines: 1,
+        style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: Theme.of(context).colorScheme.primary),
       ),
     );
   }

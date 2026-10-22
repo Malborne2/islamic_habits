@@ -127,22 +127,38 @@ class _ButtonsListState extends State<ButtonsList> {
         // never any leftover space that could cause overflow.
         final double itemWidth = constraints.maxWidth / 7;
         final double diameter = itemWidth * 0.8;
-        final double gap = (itemWidth - diameter) / 2; // space on each side
 
         List<Widget> habitDayButtons =
             List.generate(widget.isHabitDetail ? 42 : 7, (i) {
           DateTime date = addDays(widget.startDate, i - getWeekDaysDiff());
 
+          final chainColor = widget.habit.color.withValues(alpha: 0.8);
+          final showChain = isHabitButton(i);
+
           return SizedBox(
             width: itemWidth,
             child: Stack(
-              // The connector lines intentionally overdraw past their own
-              // gap box (into the previous day's cell) so each inter-day
-              // gap is always fully covered; clipping here cut that off
-              // and left a visible dead zone before every circle.
-              clipBehavior: Clip.none,
               alignment: AlignmentDirectional.center,
               children: <Widget>[
+                // Drawn first (bottom of the stack) so it sits entirely
+                // behind the circle — each half only needs to reach the
+                // cell's own center, not stop exactly at the circle's
+                // edge, so there's no gap/border math to get wrong.
+                SizedBox(
+                  width: itemWidth,
+                  height: diameter,
+                  child: CustomPaint(
+                    painter: DrawHorizontalLine(
+                      beforeColor: showChain && isStreakBefore(date)
+                          ? chainColor
+                          : Colors.transparent,
+                      afterColor: showChain && isStreakAfter(date)
+                          ? chainColor
+                          : Colors.transparent,
+                      width: 3,
+                    ),
+                  ),
+                ),
                 RawMaterialButton(
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   shape: CircleBorder(
@@ -163,71 +179,40 @@ class _ButtonsListState extends State<ButtonsList> {
                     height: diameter,
                   ),
                 ),
-                // Row fills the full slot so streak-line SizedBoxes are
-                // sized explicitly — no zero-width CustomPaint ambiguity.
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    SizedBox(
-                      width: gap,
-                      child: CustomPaint(
-                        painter: DrawHorizontalLine(
-                            isBefore: true,
-                            lineColor: isStreakBefore(date) && isHabitButton(i)
-                                ? widget.habit.color.withValues(alpha: 0.8)
-                                : Colors.transparent,
-                            width: 3,
-                            lineLength: gap),
+                showChain
+                    ? HabitButton(
+                        day: date,
+                        diameter: diameter,
+                        successColor: widget.habit.color,
+                        failColor: widget.failColor,
+                        type: widget.habit.type,
+                        successPercentage:
+                            widget.habit.getSuccessPercentage(date),
+                        // Only show the empty outline when nothing was
+                        // actually logged; if the user did the habit
+                        // anyway on a day it isn't scheduled, it's a
+                        // real success and should render fully colored.
+                        outlineOnly: !widget.habit.isHabitDay(date) &&
+                            !widget.habit.hasData(date) &&
+                            _isBridgedOffDay(date),
+                        onPressed: isTodayOrBefore(date)
+                            ? () {
+                                setState(() {
+                                  onButtonPressed(date);
+                                });
+                              }
+                            : () {},
+                        status: widget.habit.getStatus(date),
+                      )
+                    : RawMaterialButton(
+                        onPressed: null,
+                        materialTapTargetSize:
+                            MaterialTapTargetSize.shrinkWrap,
+                        constraints: BoxConstraints.tightFor(
+                          width: diameter,
+                          height: diameter,
+                        ),
                       ),
-                    ),
-                    isHabitButton(i)
-                        ? HabitButton(
-                            day: date,
-                            diameter: diameter,
-                            successColor: widget.habit.color,
-                            failColor: widget.failColor,
-                            type: widget.habit.type,
-                            successPercentage:
-                                widget.habit.getSuccessPercentage(date),
-                            // Only show the empty outline when nothing was
-                            // actually logged; if the user did the habit
-                            // anyway on a day it isn't scheduled, it's a
-                            // real success and should render fully colored.
-                            outlineOnly: !widget.habit.isHabitDay(date) &&
-                                !widget.habit.hasData(date) &&
-                                _isBridgedOffDay(date),
-                            onPressed: isTodayOrBefore(date)
-                                ? () {
-                                    setState(() {
-                                      onButtonPressed(date);
-                                    });
-                                  }
-                                : () {},
-                            status: widget.habit.getStatus(date),
-                          )
-                        : RawMaterialButton(
-                            onPressed: null,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            constraints: BoxConstraints.tightFor(
-                              width: diameter,
-                              height: diameter,
-                            ),
-                          ),
-                    SizedBox(
-                      width: gap,
-                      child: CustomPaint(
-                        painter: DrawHorizontalLine(
-                            isBefore: false,
-                            lineColor: isStreakAfter(date) && isHabitButton(i)
-                                ? widget.habit.color.withValues(alpha: 0.8)
-                                : Colors.transparent,
-                            width: 3,
-                            lineLength: gap),
-                      ),
-                    ),
-                  ],
-                )
               ],
             ),
           );

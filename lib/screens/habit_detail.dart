@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:islamic_habits/components/habit_drawer.dart';
 import 'package:islamic_habits/components/habit_page.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
+import 'package:islamic_habits/screens/add_habit_screen.dart';
+import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
@@ -61,9 +63,11 @@ class _HabitDetailState extends State<HabitDetail> {
     final l10n = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context).toString();
     HijriCalendar.setLocal(locale == 'ar' ? 'ar' : 'en');
+    // The streak target isn't shown as its own row any more — it's folded
+    // into the current-streak value as "3/40" instead, since a lone
+    // progress bar for a fixed goal number didn't read as a stat.
     final metricNames = [
       l10n.metricCurrentStreak,
-      l10n.metricStreakTarget,
       l10n.metricMaximumStreak,
       l10n.metricSuccessPercentage,
       l10n.metricWeeklyAverage,
@@ -74,10 +78,12 @@ class _HabitDetailState extends State<HabitDetail> {
     final weeklyAverage = widget.habit.getAverageOverPeriod(7);
     final monthlyAverage = widget.habit.getAverageOverPeriod(30);
     final isNumberHabit = widget.habit.type == HabitType.NUMBER;
+    final target = widget.habit.successTarget > 0
+        ? widget.habit.successTarget
+        : 1;
 
     List<String> metricValues = [
-      currentStreak.toString(),
-      widget.habit.successTarget.toString(),
+      '$currentStreak/$target',
       widget.habit.getMaximumStreak().toString(),
       '${overallSuccessRate.toStringAsFixed(0)}%',
       isNumberHabit
@@ -89,29 +95,43 @@ class _HabitDetailState extends State<HabitDetail> {
     ];
     const metricIcons = <IconData>[
       Icons.local_fire_department,
-      Icons.flag,
       Icons.emoji_events,
       Icons.pie_chart,
       Icons.calendar_view_week,
       Icons.calendar_month,
     ];
-    final target = widget.habit.successTarget > 0
-        ? widget.habit.successTarget
-        : 1;
     final metricFractions = <double>[
       currentStreak / target,
-      1.0,
       widget.habit.getMaximumStreak() / target,
       overallSuccessRate / 100,
       isNumberHabit ? weeklyAverage / target : weeklyAverage / 100,
       isNumberHabit ? monthlyAverage / target : monthlyAverage / 100,
     ];
 
+    final isBuiltInPrayerHabit = kPrayersNames
+        .map((name) => '$name Prayer')
+        .contains(widget.habit.name);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(localizedHabitName(context, widget.habit.name)),
         backgroundColor: widget.habit.color,
         actions: <Widget>[
+          if (!isBuiltInPrayerHabit)
+            IconButton(
+              tooltip: l10n.editHabitAction,
+              icon: const Icon(Icons.edit_outlined),
+              onPressed: () async {
+                await Navigator.push<Habit>(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        AddHabitScreen(editingHabit: widget.habit),
+                  ),
+                );
+                if (mounted) setState(() {});
+              },
+            ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

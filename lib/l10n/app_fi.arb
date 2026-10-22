@@ -6,6 +6,8 @@
   "navAllHabits": "Kaikki tavat",
   "navFivePrayers": "Viisi rukousta",
   "navAddHabit": "Lisää uusi tapa",
+  "editHabitTitle": "Muokkaa tapaa",
+  "editHabitAction": "Muokkaa tapaa",
   "settingsTitle": "Asetukset",
   "settingsDarkMode": "Tumma tila",
   "settingsStartOfWeek": "Viikon alkupäivä",
@@ -86,6 +88,8 @@
   "prayerRemindersLabel": "Rukousmuistutukset",
   "prayerRemindersSubtitle": "30 minuuttia jokaisen rukouksen jälkeen kysytään, rukoilitko",
   "sendTestReminder": "Lähetä testimuistutus nyt",
+  "batteryOptimizationHint": "Jos muistutukset eivät silti saavu oikeaan aikaan, puhelimesi akun optimointi saattaa viivästyttää tai estää niitä taustalla.",
+  "batteryOptimizationButton": "Vapauta tämä sovellus akun optimoinnista",
   "adhanVoiceLabel": "Adhan-ääni",
   "adhanVoiceHint": "Käytetään rukouksille, jotka on asetettu mikrofonikuvakkeeseen (adhan) rukousaikanäytöllä.",
   "takbeerOnly": "Vain takbir",
@@ -200,6 +204,19 @@
   "@streakDays": {
     "placeholders": {
       "count": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownHm": "{hours} t {minutes} min kuluttua",
+  "@nextPrayerCountdownHm": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownM": "{minutes} min kuluttua",
+  "@nextPrayerCountdownM": {
+    "placeholders": {
+      "minutes": {"type": "int"}
     }
   }
 }

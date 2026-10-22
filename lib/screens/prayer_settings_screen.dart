@@ -156,6 +156,17 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
             onPressed: NotificationService.sendTestNotification,
             child: Text(l10n.sendTestReminder),
           ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Text(
+              l10n.batteryOptimizationHint,
+              style: const TextStyle(fontSize: 11),
+            ),
+          ),
+          TextButton(
+            onPressed: NotificationService.requestIgnoreBatteryOptimizations,
+            child: Text(l10n.batteryOptimizationButton),
+          ),
           const SizedBox(height: 8),
           Text(l10n.adhanVoiceLabel,
               style: const TextStyle(fontWeight: FontWeight.bold)),

@@ -27,6 +27,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navAddHabit => 'إضافة عادة جديدة';
 
   @override
+  String get editHabitTitle => 'تعديل العادة';
+
+  @override
+  String get editHabitAction => 'تعديل العادة';
+
+  @override
   String get settingsTitle => 'الإعدادات';
 
   @override
@@ -237,6 +243,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sendTestReminder => 'إرسال تذكير تجريبي الآن';
+
+  @override
+  String get batteryOptimizationHint =>
+      'إذا كانت التذكيرات لا تصل في الوقت المحدد، فقد يكون تحسين البطارية في هاتفك يؤخرها أو يمنعها في الخلفية.';
+
+  @override
+  String get batteryOptimizationButton =>
+      'استثناء هذا التطبيق من تحسين البطارية';
 
   @override
   String get adhanVoiceLabel => 'صوت الأذان';
@@ -507,5 +521,15 @@ class AppLocalizationsAr extends AppLocalizations {
       zero: '0 يوم',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nextPrayerCountdownHm(int hours, int minutes) {
+    return 'خلال $hours س $minutes د';
+  }
+
+  @override
+  String nextPrayerCountdownM(int minutes) {
+    return 'خلال $minutes د';
   }
 }

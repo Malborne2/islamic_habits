@@ -6,6 +6,8 @@
   "navAllHabits": "جميع العادات",
   "navFivePrayers": "الصلوات الخمس",
   "navAddHabit": "إضافة عادة جديدة",
+  "editHabitTitle": "تعديل العادة",
+  "editHabitAction": "تعديل العادة",
   "settingsTitle": "الإعدادات",
   "settingsDarkMode": "الوضع الداكن",
   "settingsStartOfWeek": "بداية الأسبوع",
@@ -86,6 +88,8 @@
   "prayerRemindersLabel": "تذكيرات الصلاة",
   "prayerRemindersSubtitle": "بعد 30 دقيقة من كل صلاة، اسأل عما إذا كنت قد صليت",
   "sendTestReminder": "إرسال تذكير تجريبي الآن",
+  "batteryOptimizationHint": "إذا كانت التذكيرات لا تصل في الوقت المحدد، فقد يكون تحسين البطارية في هاتفك يؤخرها أو يمنعها في الخلفية.",
+  "batteryOptimizationButton": "استثناء هذا التطبيق من تحسين البطارية",
   "adhanVoiceLabel": "صوت الأذان",
   "adhanVoiceHint": "يُستخدم للصلوات المضبوطة على أيقونة الميكروفون (الأذان) في شاشة مواقيت الصلاة.",
   "takbeerOnly": "التكبير فقط",
@@ -200,6 +204,19 @@
   "@streakDays": {
     "placeholders": {
       "count": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownHm": "خلال {hours} س {minutes} د",
+  "@nextPrayerCountdownHm": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownM": "خلال {minutes} د",
+  "@nextPrayerCountdownM": {
+    "placeholders": {
+      "minutes": {"type": "int"}
     }
   }
 }

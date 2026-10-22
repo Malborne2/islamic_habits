@@ -6,6 +6,8 @@
   "navAllHabits": "Alle vaner",
   "navFivePrayers": "De fem bønnene",
   "navAddHabit": "Legg til ny vane",
+  "editHabitTitle": "Rediger vane",
+  "editHabitAction": "Rediger vane",
   "settingsTitle": "Innstillinger",
   "settingsDarkMode": "Mørk modus",
   "settingsStartOfWeek": "Ukens start",
@@ -86,6 +88,8 @@
   "prayerRemindersLabel": "Bønnepåminnelser",
   "prayerRemindersSubtitle": "30 minutter etter hver bønn, spør om du har bedt",
   "sendTestReminder": "Send en testpåminnelse nå",
+  "batteryOptimizationHint": "Hvis påminnelser fortsatt ikke kommer til rett tid, kan telefonens batterioptimalisering forsinke eller blokkere dem i bakgrunnen.",
+  "batteryOptimizationButton": "Unnta denne appen fra batterioptimalisering",
   "adhanVoiceLabel": "Adhan-stemme",
   "adhanVoiceHint": "Brukes for bønner satt til mikrofon-ikonet (adhan) på bønnetider-skjermen.",
   "takbeerOnly": "Kun Takbeer",
@@ -200,6 +204,19 @@
   "@streakDays": {
     "placeholders": {
       "count": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownHm": "om {hours}t {minutes}m",
+  "@nextPrayerCountdownHm": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownM": "om {minutes}m",
+  "@nextPrayerCountdownM": {
+    "placeholders": {
+      "minutes": {"type": "int"}
     }
   }
 }

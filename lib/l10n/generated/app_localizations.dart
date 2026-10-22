@@ -148,6 +148,18 @@ abstract class AppLocalizations {
   /// **'Add new habit'**
   String get navAddHabit;
 
+  /// No description provided for @editHabitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit habit'**
+  String get editHabitTitle;
+
+  /// No description provided for @editHabitAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit habit'**
+  String get editHabitAction;
+
   /// No description provided for @settingsTitle.
   ///
   /// In en, this message translates to:
@@ -555,6 +567,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send a test reminder now'**
   String get sendTestReminder;
+
+  /// No description provided for @batteryOptimizationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'If reminders still don\'t arrive at the right time, your phone\'s battery optimization may be delaying or blocking them in the background.'**
+  String get batteryOptimizationHint;
+
+  /// No description provided for @batteryOptimizationButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt this app from battery optimization'**
+  String get batteryOptimizationButton;
 
   /// No description provided for @adhanVoiceLabel.
   ///
@@ -1041,6 +1065,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 day} other{{count} days}}'**
   String streakDays(int count);
+
+  /// No description provided for @nextPrayerCountdownHm.
+  ///
+  /// In en, this message translates to:
+  /// **'in {hours}h {minutes}m'**
+  String nextPrayerCountdownHm(int hours, int minutes);
+
+  /// No description provided for @nextPrayerCountdownM.
+  ///
+  /// In en, this message translates to:
+  /// **'in {minutes}m'**
+  String nextPrayerCountdownM(int minutes);
 }
 
 class _AppLocalizationsDelegate

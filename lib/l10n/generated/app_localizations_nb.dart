@@ -27,6 +27,12 @@ class AppLocalizationsNb extends AppLocalizations {
   String get navAddHabit => 'Legg til ny vane';
 
   @override
+  String get editHabitTitle => 'Rediger vane';
+
+  @override
+  String get editHabitAction => 'Rediger vane';
+
+  @override
   String get settingsTitle => 'Innstillinger';
 
   @override
@@ -239,6 +245,14 @@ class AppLocalizationsNb extends AppLocalizations {
 
   @override
   String get sendTestReminder => 'Send en testpåminnelse nå';
+
+  @override
+  String get batteryOptimizationHint =>
+      'Hvis påminnelser fortsatt ikke kommer til rett tid, kan telefonens batterioptimalisering forsinke eller blokkere dem i bakgrunnen.';
+
+  @override
+  String get batteryOptimizationButton =>
+      'Unnta denne appen fra batterioptimalisering';
 
   @override
   String get adhanVoiceLabel => 'Adhan-stemme';
@@ -505,5 +519,15 @@ class AppLocalizationsNb extends AppLocalizations {
       one: '$count dag',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nextPrayerCountdownHm(int hours, int minutes) {
+    return 'om ${hours}t ${minutes}m';
+  }
+
+  @override
+  String nextPrayerCountdownM(int minutes) {
+    return 'om ${minutes}m';
   }
 }

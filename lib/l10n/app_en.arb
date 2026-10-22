@@ -6,6 +6,8 @@
   "navAllHabits": "All habits",
   "navFivePrayers": "The five prayers",
   "navAddHabit": "Add new habit",
+  "editHabitTitle": "Edit habit",
+  "editHabitAction": "Edit habit",
   "settingsTitle": "Settings",
   "settingsDarkMode": "Dark mode",
   "settingsStartOfWeek": "Start of week",
@@ -86,6 +88,8 @@
   "prayerRemindersLabel": "Prayer reminders",
   "prayerRemindersSubtitle": "30 minutes after each prayer, ask whether you prayed",
   "sendTestReminder": "Send a test reminder now",
+  "batteryOptimizationHint": "If reminders still don't arrive at the right time, your phone's battery optimization may be delaying or blocking them in the background.",
+  "batteryOptimizationButton": "Exempt this app from battery optimization",
   "adhanVoiceLabel": "Adhan voice",
   "adhanVoiceHint": "Used for prayers set to the microphone (adhan) bell icon on the Prayer times screen.",
   "takbeerOnly": "Takbeer only",
@@ -200,6 +204,19 @@
   "@streakDays": {
     "placeholders": {
       "count": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownHm": "in {hours}h {minutes}m",
+  "@nextPrayerCountdownHm": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownM": "in {minutes}m",
+  "@nextPrayerCountdownM": {
+    "placeholders": {
+      "minutes": {"type": "int"}
     }
   }
 }

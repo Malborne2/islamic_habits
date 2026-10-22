@@ -6,6 +6,8 @@
   "navAllHabits": "Semua kebiasaan",
   "navFivePrayers": "Lima salat",
   "navAddHabit": "Tambah kebiasaan baru",
+  "editHabitTitle": "Edit kebiasaan",
+  "editHabitAction": "Edit kebiasaan",
   "settingsTitle": "Pengaturan",
   "settingsDarkMode": "Mode gelap",
   "settingsStartOfWeek": "Awal minggu",
@@ -86,6 +88,8 @@
   "prayerRemindersLabel": "Pengingat salat",
   "prayerRemindersSubtitle": "30 menit setelah setiap salat, tanyakan apakah Anda sudah salat",
   "sendTestReminder": "Kirim pengingat uji coba sekarang",
+  "batteryOptimizationHint": "Jika pengingat masih belum muncul tepat waktu, pengoptimalan baterai ponsel Anda mungkin menunda atau memblokirnya di latar belakang.",
+  "batteryOptimizationButton": "Kecualikan aplikasi ini dari pengoptimalan baterai",
   "adhanVoiceLabel": "Suara azan",
   "adhanVoiceHint": "Digunakan untuk salat yang diatur ke ikon mikrofon (azan) di layar waktu salat.",
   "takbeerOnly": "Hanya takbir",
@@ -200,6 +204,19 @@
   "@streakDays": {
     "placeholders": {
       "count": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownHm": "dalam {hours}j {minutes}m",
+  "@nextPrayerCountdownHm": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownM": "dalam {minutes}m",
+  "@nextPrayerCountdownM": {
+    "placeholders": {
+      "minutes": {"type": "int"}
     }
   }
 }

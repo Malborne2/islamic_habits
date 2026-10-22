@@ -5,6 +5,7 @@ import 'package:islamic_habits/components/several_habits_page.dart';
 import 'package:islamic_habits/screens/add_habit_screen.dart';
 import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -40,6 +41,7 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
   Widget _buildPages(DateTime dateTime) {
     return SeveralHabitsPage(
       habits: widget.habits,
+      allHabits: widget.allHabits,
       currentDate: dateTime,
       onChanged: () => setState(() {}),
     );
@@ -76,6 +78,8 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).toString();
+    HijriCalendar.setLocal(locale == 'ar' ? 'ar' : 'en');
     final today = DateTime.now();
     final habitsToday =
         widget.habits.where((habit) => habit.isHabitDay(today)).toList();
@@ -141,20 +145,26 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Center(
                         child: Text(
-                      DateFormat('MMMM yyyy').format(currentDate) ==
-                              DateFormat('MMMM yyyy')
-                                  .format(addDays(currentDate, 6))
-                          ? DateFormat('MMMM yyyy').format(currentDate)
-                          : '${DateFormat('MMMM').format(currentDate)} - ${DateFormat('MMMM yyyy').format(addDays(currentDate, 6))}',
+                      localizeDigits(
+                          context,
+                          DateFormat('MMMM yyyy', locale)
+                                      .format(currentDate) ==
+                                  DateFormat('MMMM yyyy', locale)
+                                      .format(addDays(currentDate, 6))
+                              ? DateFormat('MMMM yyyy', locale)
+                                  .format(currentDate)
+                              : '${DateFormat('MMMM', locale).format(currentDate)} - ${DateFormat('MMMM yyyy', locale).format(addDays(currentDate, 6))}'),
                       style: const TextStyle(fontSize: 20),
                     )),
                   ),
                   subtitle: Center(
                     child: AutoSizeText(
-                      hijriFirstDay.toFormat("MMMM yyyy") ==
-                              hijriLastDay.toFormat("MMMM yyyy")
-                          ? hijriFirstDay.toFormat("MMMM yyyy")
-                          : '${hijriFirstDay.toFormat("MMMM")} - ${hijriLastDay.toFormat("MMMM yyyy")}',
+                      localizeDigits(
+                          context,
+                          hijriFirstDay.toFormat("MMMM yyyy") ==
+                                  hijriLastDay.toFormat("MMMM yyyy")
+                              ? hijriFirstDay.toFormat("MMMM yyyy")
+                              : '${hijriFirstDay.toFormat("MMMM")} - ${hijriLastDay.toFormat("MMMM yyyy")}'),
                       style: const TextStyle(fontSize: 18.0),
                       maxLines: 1,
                     ),

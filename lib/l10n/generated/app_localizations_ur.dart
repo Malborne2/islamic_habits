@@ -27,6 +27,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get navAddHabit => 'نئی عادت شامل کریں';
 
   @override
+  String get editHabitTitle => 'عادت میں ترمیم کریں';
+
+  @override
+  String get editHabitAction => 'عادت میں ترمیم کریں';
+
+  @override
   String get settingsTitle => 'ترتیبات';
 
   @override
@@ -238,6 +244,14 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get sendTestReminder => 'ابھی ایک آزمائشی یاد دہانی بھیجیں';
+
+  @override
+  String get batteryOptimizationHint =>
+      'اگر یاد دہانیاں اب بھی صحیح وقت پر موصول نہیں ہو رہیں تو ہو سکتا ہے آپ کے فون کی بیٹری آپٹیمائزیشن انہیں پس منظر میں تاخیر یا بلاک کر رہی ہو۔';
+
+  @override
+  String get batteryOptimizationButton =>
+      'اس ایپ کو بیٹری آپٹیمائزیشن سے مستثنیٰ کریں';
 
   @override
   String get adhanVoiceLabel => 'اذان کی آواز';
@@ -504,5 +518,15 @@ class AppLocalizationsUr extends AppLocalizations {
       one: '$count دن',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nextPrayerCountdownHm(int hours, int minutes) {
+    return '$hours گھنٹے $minutes منٹ میں';
+  }
+
+  @override
+  String nextPrayerCountdownM(int minutes) {
+    return '$minutes منٹ میں';
   }
 }

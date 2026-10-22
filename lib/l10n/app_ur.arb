@@ -6,6 +6,8 @@
   "navAllHabits": "تمام عادات",
   "navFivePrayers": "پانچ نمازیں",
   "navAddHabit": "نئی عادت شامل کریں",
+  "editHabitTitle": "عادت میں ترمیم کریں",
+  "editHabitAction": "عادت میں ترمیم کریں",
   "settingsTitle": "ترتیبات",
   "settingsDarkMode": "ڈارک موڈ",
   "settingsStartOfWeek": "ہفتے کا آغاز",
@@ -86,6 +88,8 @@
   "prayerRemindersLabel": "نماز کی یاد دہانیاں",
   "prayerRemindersSubtitle": "ہر نماز کے 30 منٹ بعد پوچھا جائے گا کہ آیا آپ نے نماز ادا کی",
   "sendTestReminder": "ابھی ایک آزمائشی یاد دہانی بھیجیں",
+  "batteryOptimizationHint": "اگر یاد دہانیاں اب بھی صحیح وقت پر موصول نہیں ہو رہیں تو ہو سکتا ہے آپ کے فون کی بیٹری آپٹیمائزیشن انہیں پس منظر میں تاخیر یا بلاک کر رہی ہو۔",
+  "batteryOptimizationButton": "اس ایپ کو بیٹری آپٹیمائزیشن سے مستثنیٰ کریں",
   "adhanVoiceLabel": "اذان کی آواز",
   "adhanVoiceHint": "اوقاتِ نماز کی سکرین پر مائیکروفون آئیکن (اذان) پر مقرر نمازوں کے لیے استعمال ہوتی ہے۔",
   "takbeerOnly": "صرف تکبیر",
@@ -200,6 +204,19 @@
   "@streakDays": {
     "placeholders": {
       "count": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownHm": "{hours} گھنٹے {minutes} منٹ میں",
+  "@nextPrayerCountdownHm": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownM": "{minutes} منٹ میں",
+  "@nextPrayerCountdownM": {
+    "placeholders": {
+      "minutes": {"type": "int"}
     }
   }
 }

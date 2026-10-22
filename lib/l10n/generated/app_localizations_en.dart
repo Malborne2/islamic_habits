@@ -27,6 +27,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navAddHabit => 'Add new habit';
 
   @override
+  String get editHabitTitle => 'Edit habit';
+
+  @override
+  String get editHabitAction => 'Edit habit';
+
+  @override
   String get settingsTitle => 'Settings';
 
   @override
@@ -239,6 +245,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sendTestReminder => 'Send a test reminder now';
+
+  @override
+  String get batteryOptimizationHint =>
+      'If reminders still don\'t arrive at the right time, your phone\'s battery optimization may be delaying or blocking them in the background.';
+
+  @override
+  String get batteryOptimizationButton =>
+      'Exempt this app from battery optimization';
 
   @override
   String get adhanVoiceLabel => 'Adhan voice';
@@ -505,5 +519,15 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 day',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nextPrayerCountdownHm(int hours, int minutes) {
+    return 'in ${hours}h ${minutes}m';
+  }
+
+  @override
+  String nextPrayerCountdownM(int minutes) {
+    return 'in ${minutes}m';
   }
 }

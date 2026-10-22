@@ -9,11 +9,16 @@ import 'package:islamic_habits/utility/weekday_localizer.dart';
 class SeveralHabitsPage extends StatefulWidget {
   final DateTime currentDate;
   final List<Habit> habits;
+  // The full habit list, for the drawer on the detail screen a tap here
+  // opens — habits may be a filtered subset (e.g. just the five prayers),
+  // in which case that drawer would otherwise only show this subset too.
+  final List<Habit>? allHabits;
   final VoidCallback? onChanged;
   const SeveralHabitsPage(
       {super.key,
       required this.currentDate,
       required this.habits,
+      this.allHabits,
       this.onChanged});
   @override
   _SeveralHabitsPageState createState() => _SeveralHabitsPageState();
@@ -44,8 +49,9 @@ class _SeveralHabitsPageState extends State<SeveralHabitsPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      HabitDetail(habit: habit, habits: widget.habits),
+                  builder: (context) => HabitDetail(
+                      habit: habit,
+                      habits: widget.allHabits ?? widget.habits),
                   settings: RouteSettings(name: '/${habit.name}'),
                 ));
           },

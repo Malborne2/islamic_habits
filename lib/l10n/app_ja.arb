@@ -6,6 +6,8 @@
   "navAllHabits": "すべての習慣",
   "navFivePrayers": "五行の礼拝",
   "navAddHabit": "新しい習慣を追加",
+  "editHabitTitle": "習慣を編集",
+  "editHabitAction": "習慣を編集",
   "settingsTitle": "設定",
   "settingsDarkMode": "ダークモード",
   "settingsStartOfWeek": "週の開始日",
@@ -86,6 +88,8 @@
   "prayerRemindersLabel": "礼拝リマインダー",
   "prayerRemindersSubtitle": "各礼拝の30分後に、礼拝をしたか確認します",
   "sendTestReminder": "今すぐテスト通知を送信",
+  "batteryOptimizationHint": "それでもリマインダーが正しい時間に届かない場合、端末のバッテリー最適化がバックグラウンドでの通知を遅延または妨げている可能性があります。",
+  "batteryOptimizationButton": "このアプリをバッテリー最適化の対象外にする",
   "adhanVoiceLabel": "アザーンの声",
   "adhanVoiceHint": "礼拝時間画面でマイクアイコン(アザーン)に設定した礼拝に使用されます。",
   "takbeerOnly": "タクビールのみ",
@@ -200,6 +204,19 @@
   "@streakDays": {
     "placeholders": {
       "count": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownHm": "あと{hours}時間{minutes}分",
+  "@nextPrayerCountdownHm": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "nextPrayerCountdownM": "あと{minutes}分",
+  "@nextPrayerCountdownM": {
+    "placeholders": {
+      "minutes": {"type": "int"}
     }
   }
 }

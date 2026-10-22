@@ -15,25 +15,46 @@ List<String> _weekdayShortNames(AppLocalizations l10n) => [
     ];
 
 class AddHabitScreen extends StatefulWidget {
-  const AddHabitScreen({super.key});
+  // When set, the screen edits this habit in place (keeping its id and
+  // logged history) instead of creating a new one.
+  final Habit? editingHabit;
+  const AddHabitScreen({super.key, this.editingHabit});
   @override
   _AddHabitScreenState createState() => _AddHabitScreenState();
 }
 
 class _AddHabitScreenState extends State<AddHabitScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _targetValueController = TextEditingController();
-  final _unitController = TextEditingController();
+  late final _nameController =
+      TextEditingController(text: widget.editingHabit?.name);
+  late final _targetValueController = TextEditingController(
+      text: widget.editingHabit != null &&
+              widget.editingHabit!.type == HabitType.NUMBER
+          ? widget.editingHabit!.successValue.toString()
+          : null);
+  late final _unitController =
+      TextEditingController(text: widget.editingHabit?.numberUnit);
   bool _unitDefaultSet = false;
-  final _streakTargetController = TextEditingController(text: '40');
-  final _timesPerWeekController = TextEditingController(text: '3');
+  late final _streakTargetController = TextEditingController(
+      text: (widget.editingHabit?.successTarget ?? 40).toString());
+  late final _timesPerWeekController = TextEditingController(
+      text: (widget.editingHabit?.habitDays == HabitDays.TIMES_PER_WEEK
+              ? widget.editingHabit!.habitPeriod?.first
+              : null)
+          ?.toString() ??
+          '3');
 
-  HabitType _type = HabitType.YES_NO;
-  HabitDays _habitDays = HabitDays.EVERYDAY;
-  final Set<int> _selectedWeekdays = {};
-  Color _selectedColor = kHabitColors[0];
+  late HabitType _type = widget.editingHabit?.type ?? HabitType.YES_NO;
+  late HabitDays _habitDays =
+      widget.editingHabit?.habitDays ?? HabitDays.EVERYDAY;
+  late final Set<int> _selectedWeekdays = {
+    if (widget.editingHabit?.habitDays == HabitDays.DAYS_OF_WEEK)
+      ...?widget.editingHabit?.habitPeriod,
+  };
+  late Color _selectedColor = widget.editingHabit?.color ?? kHabitColors[0];
   String? _scheduleError;
+
+  bool get _isEditing => widget.editingHabit != null;
 
   @override
   void dispose() {
@@ -65,23 +86,42 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
         ? 'pages'
         : enteredUnit;
 
-    final habit = Habit(
-      name: _nameController.text.trim(),
-      color: _selectedColor,
-      type: _type,
-      criteria: Criteria.AT_LEAST,
-      successValue:
-          _type == HabitType.YES_NO ? 1 : double.parse(_targetValueController.text),
-      successTarget: int.tryParse(_streakTargetController.text) ?? 40,
-      habitDays: _habitDays,
-      habitPeriod: _habitDays == HabitDays.DAYS_OF_WEEK
-          ? (_selectedWeekdays.toList()..sort())
-          : _habitDays == HabitDays.TIMES_PER_WEEK
-              ? [int.parse(_timesPerWeekController.text)]
-              : null,
-      numberUnit: unit,
-    );
-    await HabitDao().addHabit(habit);
+    final habitPeriod = _habitDays == HabitDays.DAYS_OF_WEEK
+        ? (_selectedWeekdays.toList()..sort())
+        : _habitDays == HabitDays.TIMES_PER_WEEK
+            ? [int.parse(_timesPerWeekController.text)]
+            : null;
+    final successValue = _type == HabitType.YES_NO
+        ? 1.0
+        : double.parse(_targetValueController.text);
+    final successTarget = int.tryParse(_streakTargetController.text) ?? 40;
+
+    final Habit habit;
+    if (_isEditing) {
+      habit = widget.editingHabit!
+        ..name = _nameController.text.trim()
+        ..color = _selectedColor
+        ..type = _type
+        ..successValue = successValue
+        ..successTarget = successTarget
+        ..habitDays = _habitDays
+        ..habitPeriod = habitPeriod
+        ..numberUnit = unit;
+      await HabitDao().updateHabit(habit);
+    } else {
+      habit = Habit(
+        name: _nameController.text.trim(),
+        color: _selectedColor,
+        type: _type,
+        criteria: Criteria.AT_LEAST,
+        successValue: successValue,
+        successTarget: successTarget,
+        habitDays: _habitDays,
+        habitPeriod: habitPeriod,
+        numberUnit: unit,
+      );
+      await HabitDao().addHabit(habit);
+    }
     if (mounted) Navigator.pop(context, habit);
   }
 
@@ -90,10 +130,11 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
     final l10n = AppLocalizations.of(context);
     if (!_unitDefaultSet) {
       _unitDefaultSet = true;
-      _unitController.text = l10n.unitPages;
+      if (_unitController.text.isEmpty) _unitController.text = l10n.unitPages;
     }
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.navAddHabit)),
+      appBar:
+          AppBar(title: Text(_isEditing ? l10n.editHabitTitle : l10n.navAddHabit)),
       body: Form(
         key: _formKey,
         child: ListView(

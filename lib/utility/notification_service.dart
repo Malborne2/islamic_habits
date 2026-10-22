@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
@@ -66,6 +68,18 @@ String _localizedPrayerName(AppLocalizations l10n, int index) {
 class NotificationService {
   static Future<void> initialize() async {
     tz.initializeTimeZones();
+    // Without this, tz.local silently stays UTC, so every zonedSchedule
+    // below computes the wrong wall-clock instant — in most timezones that
+    // instant is already in the past by the time it's scheduled, so the
+    // notification is just dropped, which is why reminders never fired
+    // despite scheduling appearing to succeed.
+    try {
+      final deviceTimeZone = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(deviceTimeZone));
+    } catch (_) {
+      // Falls back to UTC if the platform can't report a timezone; better
+      // than crashing, though reminder times will be off until this works.
+    }
     const androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
     const initSettings = InitializationSettings(android: androidSettings);
@@ -82,6 +96,19 @@ class NotificationService {
             AndroidFlutterLocalNotificationsPlugin>();
     final granted = await androidPlugin?.requestNotificationsPermission();
     return granted ?? false;
+  }
+
+  // Many OEMs (Xiaomi, Samsung, etc.) aggressively kill background alarms
+  // for apps that aren't exempted from battery optimization, even when the
+  // alarm itself is scheduled correctly. This opens the system dialog that
+  // lets the user exempt the app directly; there's no way to do this
+  // silently, and no reliable way to check whether it's already granted.
+  static Future<void> requestIgnoreBatteryOptimizations() async {
+    const intent = AndroidIntent(
+      action: 'android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS',
+      data: 'package:dev.smoothchocolate.islamic_habits',
+    );
+    await intent.launch();
   }
 
   static Future<void> cancelAllPrayerReminders() async {

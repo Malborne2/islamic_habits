@@ -27,6 +27,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get navAddHabit => 'Tambah kebiasaan baru';
 
   @override
+  String get editHabitTitle => 'Edit kebiasaan';
+
+  @override
+  String get editHabitAction => 'Edit kebiasaan';
+
+  @override
   String get settingsTitle => 'Pengaturan';
 
   @override
@@ -238,6 +244,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get sendTestReminder => 'Kirim pengingat uji coba sekarang';
+
+  @override
+  String get batteryOptimizationHint =>
+      'Jika pengingat masih belum muncul tepat waktu, pengoptimalan baterai ponsel Anda mungkin menunda atau memblokirnya di latar belakang.';
+
+  @override
+  String get batteryOptimizationButton =>
+      'Kecualikan aplikasi ini dari pengoptimalan baterai';
 
   @override
   String get adhanVoiceLabel => 'Suara azan';
@@ -503,5 +517,15 @@ class AppLocalizationsId extends AppLocalizations {
       other: '$count hari',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nextPrayerCountdownHm(int hours, int minutes) {
+    return 'dalam ${hours}j ${minutes}m';
+  }
+
+  @override
+  String nextPrayerCountdownM(int minutes) {
+    return 'dalam ${minutes}m';
   }
 }

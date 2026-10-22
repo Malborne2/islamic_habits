@@ -27,6 +27,12 @@ class AppLocalizationsFi extends AppLocalizations {
   String get navAddHabit => 'Lisää uusi tapa';
 
   @override
+  String get editHabitTitle => 'Muokkaa tapaa';
+
+  @override
+  String get editHabitAction => 'Muokkaa tapaa';
+
+  @override
   String get settingsTitle => 'Asetukset';
 
   @override
@@ -237,6 +243,14 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get sendTestReminder => 'Lähetä testimuistutus nyt';
+
+  @override
+  String get batteryOptimizationHint =>
+      'Jos muistutukset eivät silti saavu oikeaan aikaan, puhelimesi akun optimointi saattaa viivästyttää tai estää niitä taustalla.';
+
+  @override
+  String get batteryOptimizationButton =>
+      'Vapauta tämä sovellus akun optimoinnista';
 
   @override
   String get adhanVoiceLabel => 'Adhan-ääni';
@@ -503,5 +517,15 @@ class AppLocalizationsFi extends AppLocalizations {
       one: '$count päivä',
     );
     return '$_temp0';
+  }
+
+  @override
+  String nextPrayerCountdownHm(int hours, int minutes) {
+    return '$hours t $minutes min kuluttua';
+  }
+
+  @override
+  String nextPrayerCountdownM(int minutes) {
+    return '$minutes min kuluttua';
   }
 }
