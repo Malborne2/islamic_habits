@@ -83,6 +83,51 @@ class AppLocalizationsAr extends AppLocalizations {
   String get delete => 'حذف';
 
   @override
+  String get edit => 'تعديل';
+
+  @override
+  String get archive => 'أرشفة';
+
+  @override
+  String get unarchive => 'استعادة';
+
+  @override
+  String get archivedHabits => 'العادات المؤرشفة';
+
+  @override
+  String get noArchivedHabits => 'لا توجد عادات مؤرشفة';
+
+  @override
+  String get archivedHabitsHint =>
+      'تحتفظ العادات المؤرشفة بسجلها ولكنها تختفي من الرئيسية والإحصائيات.';
+
+  @override
+  String get habitIcon => 'الأيقونة';
+
+  @override
+  String get chooseIcon => 'اختر أيقونة';
+
+  @override
+  String get removeIcon => 'إزالة الأيقونة';
+
+  @override
+  String get deleteHabitTitle => 'حذف العادة؟';
+
+  @override
+  String deleteHabitMessage(String name) {
+    return 'سيتم حذف \"$name\" وكل سجلها نهائيًا. لا يمكن التراجع عن ذلك.';
+  }
+
+  @override
+  String get habitDeleted => 'تم حذف العادة';
+
+  @override
+  String get habitArchived => 'تمت أرشفة العادة';
+
+  @override
+  String get habitRestored => 'تمت استعادة العادة';
+
+  @override
   String get setValue => 'تعيين';
 
   @override
@@ -550,4 +595,158 @@ class AppLocalizationsAr extends AppLocalizations {
   String nextPrayerCountdownM(int minutes) {
     return 'خلال $minutes د';
   }
+
+  @override
+  String get customColor => 'لون مخصص';
+
+  @override
+  String get selectColor => 'اختيار';
+
+  @override
+  String get navStatistics => 'الإحصائيات';
+
+  @override
+  String get reminderLabel => 'التذكير';
+
+  @override
+  String get reminderEnabledLabel => 'تذكير يومي';
+
+  @override
+  String get reminderEnabledSubtitle => 'احصل على إشعار في الوقت الذي تختاره';
+
+  @override
+  String get reminderTimeLabel => 'وقت التذكير';
+
+  @override
+  String get reminderIndependentHint =>
+      'هذا التذكير منفصل عن تذكيرات الصلاة ويعمل حتى عندما تكون تذكيرات الصلاة متوقفة.';
+
+  @override
+  String reminderDailyAt(String time) {
+    return 'يوميًا في $time';
+  }
+
+  @override
+  String get reminderOff => 'متوقف';
+
+  @override
+  String get notificationHabitReminderTitle => 'تذكير بعادة';
+
+  @override
+  String notificationHabitReminderBody(String habitName) {
+    return 'حان وقت $habitName';
+  }
+
+  @override
+  String get enterName => 'أدخل اسمًا';
+
+  @override
+  String get enterNumberGreaterThanZero => 'أدخل رقمًا أكبر من 0';
+
+  @override
+  String get enterNumberOneToSeven => 'أدخل رقمًا من 1 إلى 7';
+
+  @override
+  String get onboardingSkip => 'تخطي';
+
+  @override
+  String get onboardingNext => 'التالي';
+
+  @override
+  String get onboardingGetStarted => 'ابدأ الآن';
+
+  @override
+  String get onboardingWelcomeTitle => 'مرحبًا بك في Islamic Habits';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'ابنِ روتينًا منتظمًا حول الصلاة والقرآن والعادات التي تهمك.';
+
+  @override
+  String get onboardingHabitsTitle => 'نقرة واحدة يوميًا';
+
+  @override
+  String get onboardingHabitsBody =>
+      'تابع العادات بنعم/لا أو بالأرقام، واختر ألوانك، وشاهد تقدمك بلمحة.';
+
+  @override
+  String get onboardingPrayerTitle => 'أوقات الصلاة أينما كنت';
+
+  @override
+  String get onboardingPrayerBody =>
+      'اختر من آلاف المدن أو حدد موقعك بدقة للحصول على أوقات صلاة دقيقة.';
+
+  @override
+  String get onboardingRemindersTitle => 'تذكيرات تناسب يومك';
+
+  @override
+  String get onboardingRemindersBody =>
+      'اضبط تذكيرًا يوميًا لأي عادة وأجب بنعم أو لا مباشرة من الإشعار.';
+
+  @override
+  String get onboardingStatsTitle => 'شاهد تقدمك';
+
+  @override
+  String get onboardingStatsBody =>
+      'تساعدك الرسوم البيانية والسلاسل ونسب النجاح على البقاء متحفزًا ومعرفة ما يحتاج إلى انتباه.';
+
+  @override
+  String get statisticsOverallSuccess => 'النجاح الإجمالي';
+
+  @override
+  String get statisticsOverallSuccessSubtitle =>
+      'عبر جميع أيام العادات المسجلة';
+
+  @override
+  String get statisticsBestStreak => 'أفضل سلسلة';
+
+  @override
+  String get statisticsTotalHabits => 'العادات';
+
+  @override
+  String get statisticsDailyCompletion => 'الإنجاز اليومي';
+
+  @override
+  String get statisticsDailyCompletionSubtitle =>
+      'إنجاز عاداتك خلال آخر 30 يومًا';
+
+  @override
+  String get statisticsWeeklyProgress => 'التقدم الأسبوعي';
+
+  @override
+  String get statisticsWeeklyProgressSubtitle =>
+      'متوسط الإنجاز خلال الأسابيع الأربعة الماضية';
+
+  @override
+  String get statisticsMonthlyProgress => 'التقدم الشهري';
+
+  @override
+  String get statisticsMonthlyProgressSubtitle =>
+      'متوسط الإنجاز خلال الأشهر الستة الماضية';
+
+  @override
+  String get statisticsBreakdown => 'تفصيل العادات';
+
+  @override
+  String get statisticsBreakdownSubtitle =>
+      'أيام العادات المكتملة والفائتة وغير المسجلة خلال آخر 30 يومًا';
+
+  @override
+  String get statisticsSuccess => 'مكتمل';
+
+  @override
+  String get statisticsMissed => 'فائت';
+
+  @override
+  String get statisticsNoData => 'لا توجد بيانات';
+
+  @override
+  String get statisticsHabitPerformance => 'أداء العادات';
+
+  @override
+  String get statisticsNoDataTitle => 'لا توجد بيانات بعد';
+
+  @override
+  String get statisticsNoDataBody =>
+      'ابدأ بتسجيل عاداتك لترى الرسوم البيانية والسلاسل ونسب النجاح هنا.';
 }

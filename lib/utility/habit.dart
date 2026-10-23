@@ -20,6 +20,22 @@ class Habit {
   List<int>? habitPeriod;
   String numberUnit;
 
+  // Optional icon chosen from flutter_islamic_icons. Stored as the glyph's
+  // code point so the database stays independent of the package's constant
+  // names; null keeps the original colored-dot look for older habits.
+  int? iconCodePoint;
+
+  // Archived habits keep all of their history but are hidden from Home,
+  // the drawer's habit list, reminders, and statistics.
+  bool archived;
+
+  // Optional per-habit daily reminder. reminderMinutes is stored as minutes
+  // since midnight (0..1439) so it survives backup/restore and stays
+  // timezone-independent; it is only meaningful when reminderEnabled is
+  // true. Both fields default to "off" for habits saved by older builds.
+  bool reminderEnabled;
+  int? reminderMinutes;
+
   Habit({
     required this.name,
     required this.color,
@@ -31,10 +47,32 @@ class Habit {
     required this.criteria,
     this.description = '',
     this.numberUnit = 'pages',
+    this.iconCodePoint,
+    this.archived = false,
+    this.reminderEnabled = false,
+    this.reminderMinutes,
     DateTime? createdTime,
     Map<String, Map<String, double>>? habitData,
   })  : createdTime = createdTime ?? DateTime.now(),
         habitData = habitData ?? {};
+
+  bool get hasReminder => reminderEnabled && reminderMinutes != null;
+
+  TimeOfDay? get reminderTime => reminderMinutes == null
+      ? null
+      : TimeOfDay(
+          hour: reminderMinutes! ~/ 60,
+          minute: reminderMinutes! % 60,
+        );
+
+  set reminderTime(TimeOfDay? time) {
+    if (time == null) {
+      reminderMinutes = null;
+      reminderEnabled = false;
+    } else {
+      reminderMinutes = time.hour * 60 + time.minute;
+    }
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -53,6 +91,10 @@ class Habit {
       'habitDays': habitDays.toString(),
       'habitPeriod': habitPeriod,
       'numberUnit': numberUnit,
+      'iconCodePoint': iconCodePoint,
+      'archived': archived,
+      'reminderEnabled': reminderEnabled,
+      'reminderMinutes': reminderMinutes,
     };
   }
 
@@ -83,6 +125,11 @@ class Habit {
       habitDays: HabitDays.values.firstWhere((e) => e.toString() == map['habitDays']),
       habitPeriod: (map['habitPeriod'] as List?)?.cast<int>(),
       numberUnit: map['numberUnit'] as String? ?? 'pages',
+      iconCodePoint: map['iconCodePoint'] as int?,
+      archived: map['archived'] as bool? ?? false,
+      reminderEnabled: (map['reminderEnabled'] as bool? ?? false) &&
+          map['reminderMinutes'] != null,
+      reminderMinutes: map['reminderMinutes'] as int?,
     );
   }
 

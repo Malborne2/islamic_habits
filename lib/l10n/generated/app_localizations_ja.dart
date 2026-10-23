@@ -82,6 +82,50 @@ class AppLocalizationsJa extends AppLocalizations {
   String get delete => '削除';
 
   @override
+  String get edit => '編集';
+
+  @override
+  String get archive => 'アーカイブ';
+
+  @override
+  String get unarchive => '復元';
+
+  @override
+  String get archivedHabits => 'アーカイブした習慣';
+
+  @override
+  String get noArchivedHabits => 'アーカイブした習慣はありません';
+
+  @override
+  String get archivedHabitsHint => 'アーカイブした習慣は履歴を保持しますが、ホームと統計には表示されません。';
+
+  @override
+  String get habitIcon => 'アイコン';
+
+  @override
+  String get chooseIcon => 'アイコンを選択';
+
+  @override
+  String get removeIcon => 'アイコンを削除';
+
+  @override
+  String get deleteHabitTitle => '習慣を削除しますか？';
+
+  @override
+  String deleteHabitMessage(String name) {
+    return '「$name」とそのすべての履歴が完全に削除されます。この操作は元に戻せません。';
+  }
+
+  @override
+  String get habitDeleted => '習慣を削除しました';
+
+  @override
+  String get habitArchived => '習慣をアーカイブしました';
+
+  @override
+  String get habitRestored => '習慣を復元しました';
+
+  @override
   String get setValue => '設定';
 
   @override
@@ -537,4 +581,149 @@ class AppLocalizationsJa extends AppLocalizations {
   String nextPrayerCountdownM(int minutes) {
     return 'あと$minutes分';
   }
+
+  @override
+  String get customColor => 'カスタムカラー';
+
+  @override
+  String get selectColor => '選択';
+
+  @override
+  String get navStatistics => '統計';
+
+  @override
+  String get reminderLabel => 'リマインダー';
+
+  @override
+  String get reminderEnabledLabel => '毎日のリマインダー';
+
+  @override
+  String get reminderEnabledSubtitle => '指定した時刻に通知を受け取ります';
+
+  @override
+  String get reminderTimeLabel => 'リマインダー時刻';
+
+  @override
+  String get reminderIndependentHint =>
+      'このリマインダーは礼拝のリマインダーとは別で、礼拝のリマインダーがオフでも機能します。';
+
+  @override
+  String reminderDailyAt(String time) {
+    return '毎日 $time';
+  }
+
+  @override
+  String get reminderOff => 'オフ';
+
+  @override
+  String get notificationHabitReminderTitle => '習慣のリマインダー';
+
+  @override
+  String notificationHabitReminderBody(String habitName) {
+    return '$habitNameの時間です';
+  }
+
+  @override
+  String get enterName => '名前を入力してください';
+
+  @override
+  String get enterNumberGreaterThanZero => '0より大きい数値を入力してください';
+
+  @override
+  String get enterNumberOneToSeven => '1〜7の数値を入力してください';
+
+  @override
+  String get onboardingSkip => 'スキップ';
+
+  @override
+  String get onboardingNext => '次へ';
+
+  @override
+  String get onboardingGetStarted => '始める';
+
+  @override
+  String get onboardingWelcomeTitle => 'Islamic Habits へようこそ';
+
+  @override
+  String get onboardingWelcomeBody =>
+      '礼拝、クルアーン、そしてあなたにとって大切な習慣を中心に、継続できるルーティンを作りましょう。';
+
+  @override
+  String get onboardingHabitsTitle => '1日1タップ';
+
+  @override
+  String get onboardingHabitsBody => 'はい／いいえと数値の習慣を記録し、好きな色を選び、進捗をひと目で確認できます。';
+
+  @override
+  String get onboardingPrayerTitle => 'どこにいても礼拝時刻を';
+
+  @override
+  String get onboardingPrayerBody => '数千の都市から選ぶか、正確な場所を指定して正確な礼拝時刻を取得できます。';
+
+  @override
+  String get onboardingRemindersTitle => '一日に合ったリマインダー';
+
+  @override
+  String get onboardingRemindersBody =>
+      'どの習慣にも毎日のリマインダーを設定し、通知から直接「はい」または「いいえ」で回答できます。';
+
+  @override
+  String get onboardingStatsTitle => '進捗を確認';
+
+  @override
+  String get onboardingStatsBody => 'グラフ、連続記録、成功率でモチベーションを保ち、注意すべき点がわかります。';
+
+  @override
+  String get statisticsOverallSuccess => '全体の成功率';
+
+  @override
+  String get statisticsOverallSuccessSubtitle => '記録されたすべての習慣日';
+
+  @override
+  String get statisticsBestStreak => '最高連続記録';
+
+  @override
+  String get statisticsTotalHabits => '習慣';
+
+  @override
+  String get statisticsDailyCompletion => '日別の達成率';
+
+  @override
+  String get statisticsDailyCompletionSubtitle => '過去30日間の習慣の達成状況';
+
+  @override
+  String get statisticsWeeklyProgress => '週間の進捗';
+
+  @override
+  String get statisticsWeeklyProgressSubtitle => '過去4週間の平均達成率';
+
+  @override
+  String get statisticsMonthlyProgress => '月間の進捗';
+
+  @override
+  String get statisticsMonthlyProgressSubtitle => '過去6か月間の平均達成率';
+
+  @override
+  String get statisticsBreakdown => '習慣の内訳';
+
+  @override
+  String get statisticsBreakdownSubtitle => '過去30日間の達成・未達成・未記録の習慣日';
+
+  @override
+  String get statisticsSuccess => '達成';
+
+  @override
+  String get statisticsMissed => '未達成';
+
+  @override
+  String get statisticsNoData => 'データなし';
+
+  @override
+  String get statisticsHabitPerformance => '習慣のパフォーマンス';
+
+  @override
+  String get statisticsNoDataTitle => 'まだデータがありません';
+
+  @override
+  String get statisticsNoDataBody => '習慣の記録を始めると、ここにグラフ、連続記録、成功率が表示されます。';
 }

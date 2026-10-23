@@ -108,8 +108,8 @@ class _HabitInputDialogState extends State<HabitInputDialog> {
               style: const TextStyle(fontSize: 22),
               controller: _controller,
               textAlign: TextAlign.center,
-              cursorColor: Colors.deepPurple,
-              decoration: kTextFieldDecoration,
+              cursorColor: brandAccent(context),
+              decoration: habitTextFieldDecoration(context),
               onChanged: (v) {
                 setState(() {
                   value = double.tryParse(v) ?? value;

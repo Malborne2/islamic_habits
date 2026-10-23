@@ -1,227 +1,315 @@
 {
-  "@@locale": "nb",
-  "appTitle": "Islamske Vaner",
-  "navHome": "Hjem",
-  "navPrayerTimes": "Bønnetider",
-  "navAllHabits": "Alle vaner",
-  "navFivePrayers": "De fem bønnene",
-  "navAddHabit": "Legg til ny vane",
-  "editHabitTitle": "Rediger vane",
-  "editHabitAction": "Rediger vane",
-  "settingsTitle": "Innstillinger",
-  "settingsDarkMode": "Mørk modus",
-  "settingsStartOfWeek": "Ukens start",
-  "settingsPrayerTimeSettings": "Innstillinger for bønnetider",
-  "settingsPrayerTimeSettingsSubtitle": "Sted, beregningsmetode og bønnepåminnelser",
-  "settingsBackupRestore": "Sikkerhetskopi og gjenoppretting",
-  "settingsBackupRestoreSubtitle": "Eksporter eller gjenopprett vanedataene dine",
-  "settingsLanguage": "Språk",
-  "settingsLanguageSystem": "Telefonens språk",
-  "todayHabits": "Dagens vaner",
-  "todayProgress": "I dag: {completed} / {total} vaner fullført",
-  "@todayProgress": {
-    "placeholders": {
-      "completed": {"type": "int"},
-      "total": {"type": "int"}
-    }
-  },
-  "longestStreak": "Lengste rekke: {daysText} · {habitName}",
-  "@longestStreak": {
-    "placeholders": {
-      "daysText": {"type": "String"},
-      "habitName": {"type": "String"}
-    }
-  },
-  "save": "Lagre",
-  "cancel": "Avbryt",
-  "delete": "Slett",
-  "setValue": "Angi",
-  "exportBackup": "Eksporter sikkerhetskopi",
-  "restoreFromBackup": "Gjenopprett fra sikkerhetskopi",
-  "habitName": "Vanens navn",
-  "successMetric": "Suksessmål",
-  "yesNo": "Ja / Nei",
-  "number": "Tall",
-  "streakTarget": "Rekkemål",
-  "targetStreakDays": "Rekkemål (dager)",
-  "schedule": "Tidsplan",
-  "everyDay": "Hver dag",
-  "certainDaysOfWeek": "Bestemte ukedager",
-  "timesPerWeek": "Et antall ganger per uke",
-  "color": "Farge",
-  "saveHabit": "Lagre vane",
-  "habitFajrPrayer": "Fajr-bønn",
-  "habitDhuhrPrayer": "Dhuhr-bønn",
-  "habitAsrPrayer": "Asr-bønn",
-  "habitMaghribPrayer": "Maghrib-bønn",
-  "habitIshaPrayer": "Isha-bønn",
-  "habitRecitingQuran": "Resitere Koranen",
-  "todayLabel": "I dag",
-  "prayerFajr": "Fajr",
-  "prayerDhuhr": "Dhuhr",
-  "prayerAsr": "Asr",
-  "prayerMaghrib": "Maghrib",
-  "prayerIsha": "Isha",
-  "notifyMode": "Varsle",
-  "silentMode": "Stille",
-  "adhanMode": "Adhan",
-  "weekdayMonday": "Mandag",
-  "weekdayTuesday": "Tirsdag",
-  "weekdayWednesday": "Onsdag",
-  "weekdayThursday": "Torsdag",
-  "weekdayFriday": "Fredag",
-  "weekdaySaturday": "Lørdag",
-  "weekdaySunday": "Søndag",
-  "settingsNumerals": "Tallsiffer",
-  "numeralsWestern": "Vestlige (0, 1, 2…)",
-  "numeralsEastern": "Østarabiske (٠, ١, ٢…)",
-  "unitPages": "sider",
-  "deleteEntryTitle": "Slett oppføring",
-  "deleteEntryConfirm": "Er du sikker på at du vil slette denne oppføringen permanent?",
-  "targetAmountLabel": "Målverdi",
-  "unitLabel": "Enhet",
-  "timesPerWeekLabel": "Ganger per uke",
-  "restoreBackupTitle": "Gjenopprett sikkerhetskopi",
-  "restoreBackupConfirm": "Dette vil erstatte alle vaner som er lagret på denne enheten med de fra den valgte sikkerhetskopien. Fortsette?",
-  "restoreAction": "Gjenopprett",
-  "notificationPermissionDenied": "Varslingstillatelse ble ikke gitt",
-  "prayerRemindersLabel": "Bønnepåminnelser",
-  "prayerRemindersSubtitle": "30 minutter etter hver bønn, spør om du har bedt",
-  "sendTestReminder": "Send en testpåminnelse nå",
-  "batteryOptimizationHint": "Hvis påminnelser fortsatt ikke kommer til rett tid, kan telefonens batterioptimalisering forsinke eller blokkere dem i bakgrunnen.",
-  "batteryOptimizationButton": "Unnta denne appen fra batterioptimalisering",
-  "exactAlarmButton": "Tillat eksakte alarmtider (anbefalt)",
-  "exactAlarmGranted": "Eksakte alarmer er tillatt — påminnelser kommer til rett tid.",
-  "exactAlarmNotGranted": "Eksakte alarmer er fortsatt ikke tillatt — prøv systeminnstillingene som nettopp åpnet.",
-  "adhanTakbeerOnlyLabel": "Kun takbir",
-  "adhanTakbeerOnlyHint": "Stopp etter den innledende takbiren i stedet for å spille hele opptaket",
-  "adhanVoiceLabel": "Adhan-stemme",
-  "adhanVoiceHint": "Brukes for bønner satt til høyttaler-ikonet (adhan) på bønnetider-skjermen.",
-  "takbeerOnly": "Kun Takbeer",
-  "fullAdhan": "Full Adhan",
-  "testAdhanVoice": "Test denne stemmen",
-  "adhanAudioMissing": "Ingen lydfil er lagt til for denne stemmen ennå — legg den til under android/app/src/main/res/raw for å høre den.",
-  "locationLabel": "Sted",
-  "cityLabel": "By",
-  "latitudeLabel": "Breddegrad",
-  "longitudeLabel": "Lengdegrad",
-  "citySearchHint": "Søk etter en by",
-  "cityNotFoundPrompt": "Finner du ikke byen din?",
-  "pickOnMap": "Velg på kart",
-  "noCitiesFound": "Ingen byer funnet",
-  "mapPickerTitle": "Velg et sted",
-  "mapPickerInstructions": "Trykk hvor som helst på kartet for å angi stedet for bønnetider",
-  "useThisLocation": "Bruk dette stedet",
-  "customLocationLabel": "Egendefinert sted",
-  "calculationMethodLabel": "Beregningsmetode",
-  "madhabLabel": "Madhab (Asr-beregning)",
-  "shafiLabel": "Shafi",
-  "hanafiLabel": "Hanafi",
-  "manualCorrectionLabel": "Manuell korreksjon (minutter)",
-  "adjFajr": "Fajr",
-  "adjDhuhr": "Dhuhr",
-  "adjAsr": "Asr",
-  "adjMaghrib": "Maghrib",
-  "adjIsha": "Isha",
-  "cityDoha": "Doha",
-  "cityMecca": "Mekka",
-  "cityMedina": "Medina",
-  "cityCairo": "Kairo",
-  "cityIstanbul": "Istanbul",
-  "cityJakarta": "Jakarta",
-  "cityKarachi": "Karachi",
-  "cityLondon": "London",
-  "cityNewYork": "New York",
-  "cityCustom": "Egendefinert",
-  "notificationPrayerTimeTitle": "Bønnetid",
-  "notificationPrayerTimeBody": "Det er tid for {prayerName}",
-  "@notificationPrayerTimeBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationReminderTitle": "Bønnepåminnelse",
-  "notificationReminderBody": "Ba du {prayerName}?",
-  "@notificationReminderBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationYes": "Ja",
-  "notificationNo": "Nei",
-  "weekdayMonShort": "Man",
-  "weekdayTueShort": "Tir",
-  "weekdayWedShort": "Ons",
-  "weekdayThuShort": "Tor",
-  "weekdayFriShort": "Fre",
-  "weekdaySatShort": "Lør",
-  "weekdaySunShort": "Søn",
-  "pickAtLeastOneDay": "Velg minst én ukedag",
-  "setValueTitle": "Angi verdi",
-  "setUnitTitle": "Angi {unit}",
-  "@setUnitTitle": {
-    "placeholders": {
-      "unit": {"type": "String"}
-    }
-  },
-  "metricCurrentStreak": "Nåværende rekke",
-  "metricStreakTarget": "Rekkemål",
-  "metricMaximumStreak": "Lengste rekke",
-  "metricSuccessPercentage": "Suksessrate",
-  "metricWeeklyAverage": "Ukentlig gjennomsnitt",
-  "metricMonthlyAverage": "Månedlig gjennomsnitt",
-  "backupDescription": "Alle vanedata lagres lokalt på denne enheten. Eksporter en sikkerhetskopi for å beholde en kopi eller flytte den til en annen enhet, for eksempel ved å dele den til en skylagring eller e-post.",
-  "exportFailed": "Eksport mislyktes: {error}",
-  "@exportFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "importFailed": "Import mislyktes: {error}",
-  "@importFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "restoredCount": "Gjenopprettet {count} vane(r)",
-  "@restoredCount": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "shareBackupText": "Sikkerhetskopi av Islamske Vaner",
-  "valueAddedSuccess": "Ny verdi lagt til",
-  "prayerSunrise": "Soloppgang",
-  "methodMuslimWorldLeague": "Muslim World League",
-  "methodEgyptian": "Egyptisk",
-  "methodKarachi": "Karachi",
-  "methodUmmAlQura": "Umm al-Qura",
-  "methodDubai": "Dubai",
-  "methodMoonSightingCommittee": "Månesiktingskomiteen",
-  "methodNorthAmerica": "Nord-Amerika",
-  "methodKuwait": "Kuwait",
-  "methodQatar": "Qatar",
-  "methodSingapore": "Singapore",
-  "methodTurkey": "Tyrkia",
-  "methodTehran": "Teheran",
-  "methodOther": "Annet",
-  "streakDays": "{count, plural, one{{count} dag} other{{count} dager}}",
-  "@streakDays": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownHm": "om {hours}t {minutes}m",
-  "@nextPrayerCountdownHm": {
-    "placeholders": {
-      "hours": {"type": "int"},
-      "minutes": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownM": "om {minutes}m",
-  "@nextPrayerCountdownM": {
-    "placeholders": {
-      "minutes": {"type": "int"}
-    }
-  }
+    "@@locale":  "nb",
+    "appTitle":  "Islamske Vaner",
+    "navHome":  "Hjem",
+    "navPrayerTimes":  "Bønnetider",
+    "navAllHabits":  "Alle vaner",
+    "navFivePrayers":  "De fem bønnene",
+    "navAddHabit":  "Legg til ny vane",
+    "editHabitTitle":  "Rediger vane",
+    "editHabitAction":  "Rediger vane",
+    "settingsTitle":  "Innstillinger",
+    "settingsDarkMode":  "Mørk modus",
+    "settingsStartOfWeek":  "Ukens start",
+    "settingsPrayerTimeSettings":  "Innstillinger for bønnetider",
+    "settingsPrayerTimeSettingsSubtitle":  "Sted, beregningsmetode og bønnepåminnelser",
+    "settingsBackupRestore":  "Sikkerhetskopi og gjenoppretting",
+    "settingsBackupRestoreSubtitle":  "Eksporter eller gjenopprett vanedataene dine",
+    "settingsLanguage":  "Språk",
+    "settingsLanguageSystem":  "Telefonens språk",
+    "todayHabits":  "Dagens vaner",
+    "todayProgress":  "I dag: {completed} / {total} vaner fullført",
+    "@todayProgress":  {
+                           "placeholders":  {
+                                                "completed":  {
+                                                                  "type":  "int"
+                                                              },
+                                                "total":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "longestStreak":  "Lengste rekke: {daysText} · {habitName}",
+    "@longestStreak":  {
+                           "placeholders":  {
+                                                "daysText":  {
+                                                                 "type":  "String"
+                                                             },
+                                                "habitName":  {
+                                                                  "type":  "String"
+                                                              }
+                                            }
+                       },
+    "save":  "Lagre",
+    "cancel":  "Avbryt",
+    "delete":  "Slett",
+    "edit": "Rediger",
+    "archive": "Arkiver",
+    "unarchive": "Gjenopprett",
+    "archivedHabits": "Arkiverte vaner",
+    "noArchivedHabits": "Ingen arkiverte vaner",
+    "archivedHabitsHint": "Arkiverte vaner beholder historikken, men skjules fra Hjem og statistikk.",
+    "habitIcon": "Ikon",
+    "chooseIcon": "Velg ikon",
+    "removeIcon": "Fjern ikon",
+    "deleteHabitTitle": "Slette vanen?",
+    "deleteHabitMessage": "«{name}» og hele historikken slettes permanent. Dette kan ikke angres.",
+    "habitDeleted": "Vanen er slettet",
+    "habitArchived": "Vanen er arkivert",
+    "habitRestored": "Vanen er gjenopprettet",
+    "setValue":  "Angi",
+    "exportBackup":  "Eksporter sikkerhetskopi",
+    "restoreFromBackup":  "Gjenopprett fra sikkerhetskopi",
+    "habitName":  "Vanens navn",
+    "successMetric":  "Suksessmål",
+    "yesNo":  "Ja / Nei",
+    "number":  "Tall",
+    "streakTarget":  "Rekkemål",
+    "targetStreakDays":  "Rekkemål (dager)",
+    "schedule":  "Tidsplan",
+    "everyDay":  "Hver dag",
+    "certainDaysOfWeek":  "Bestemte ukedager",
+    "timesPerWeek":  "Et antall ganger per uke",
+    "color":  "Farge",
+    "saveHabit":  "Lagre vane",
+    "habitFajrPrayer":  "Fajr-bønn",
+    "habitDhuhrPrayer":  "Dhuhr-bønn",
+    "habitAsrPrayer":  "Asr-bønn",
+    "habitMaghribPrayer":  "Maghrib-bønn",
+    "habitIshaPrayer":  "Isha-bønn",
+    "habitRecitingQuran":  "Resitere Koranen",
+    "todayLabel":  "I dag",
+    "prayerFajr":  "Fajr",
+    "prayerDhuhr":  "Dhuhr",
+    "prayerAsr":  "Asr",
+    "prayerMaghrib":  "Maghrib",
+    "prayerIsha":  "Isha",
+    "notifyMode":  "Varsle",
+    "silentMode":  "Stille",
+    "adhanMode":  "Adhan",
+    "weekdayMonday":  "Mandag",
+    "weekdayTuesday":  "Tirsdag",
+    "weekdayWednesday":  "Onsdag",
+    "weekdayThursday":  "Torsdag",
+    "weekdayFriday":  "Fredag",
+    "weekdaySaturday":  "Lørdag",
+    "weekdaySunday":  "Søndag",
+    "settingsNumerals":  "Tallsiffer",
+    "numeralsWestern":  "Vestlige (0, 1, 2…)",
+    "numeralsEastern":  "Østarabiske (٠, ١, ٢…)",
+    "unitPages":  "sider",
+    "deleteEntryTitle":  "Slett oppføring",
+    "deleteEntryConfirm":  "Er du sikker på at du vil slette denne oppføringen permanent?",
+    "targetAmountLabel":  "Målverdi",
+    "unitLabel":  "Enhet",
+    "timesPerWeekLabel":  "Ganger per uke",
+    "restoreBackupTitle":  "Gjenopprett sikkerhetskopi",
+    "restoreBackupConfirm":  "Dette vil erstatte alle vaner som er lagret på denne enheten med de fra den valgte sikkerhetskopien. Fortsette?",
+    "restoreAction":  "Gjenopprett",
+    "notificationPermissionDenied":  "Varslingstillatelse ble ikke gitt",
+    "prayerRemindersLabel":  "Bønnepåminnelser",
+    "prayerRemindersSubtitle":  "30 minutter etter hver bønn, spør om du har bedt",
+    "sendTestReminder":  "Send en testpåminnelse nå",
+    "batteryOptimizationHint":  "Hvis påminnelser fortsatt ikke kommer til rett tid, kan telefonens batterioptimalisering forsinke eller blokkere dem i bakgrunnen.",
+    "batteryOptimizationButton":  "Unnta denne appen fra batterioptimalisering",
+    "exactAlarmButton":  "Tillat eksakte alarmtider (anbefalt)",
+    "exactAlarmGranted":  "Eksakte alarmer er tillatt — påminnelser kommer til rett tid.",
+    "exactAlarmNotGranted":  "Eksakte alarmer er fortsatt ikke tillatt — prøv systeminnstillingene som nettopp åpnet.",
+    "adhanTakbeerOnlyLabel":  "Kun takbir",
+    "adhanTakbeerOnlyHint":  "Stopp etter den innledende takbiren i stedet for å spille hele opptaket",
+    "adhanVoiceLabel":  "Adhan-stemme",
+    "adhanVoiceHint":  "Brukes for bønner satt til høyttaler-ikonet (adhan) på bønnetider-skjermen.",
+    "takbeerOnly":  "Kun Takbeer",
+    "fullAdhan":  "Full Adhan",
+    "testAdhanVoice":  "Test denne stemmen",
+    "adhanAudioMissing":  "Ingen lydfil er lagt til for denne stemmen ennå — legg den til under android/app/src/main/res/raw for å høre den.",
+    "locationLabel":  "Sted",
+    "cityLabel":  "By",
+    "latitudeLabel":  "Breddegrad",
+    "longitudeLabel":  "Lengdegrad",
+    "citySearchHint":  "Søk etter en by",
+    "cityNotFoundPrompt":  "Finner du ikke byen din?",
+    "pickOnMap":  "Velg på kart",
+    "noCitiesFound":  "Ingen byer funnet",
+    "mapPickerTitle":  "Velg et sted",
+    "mapPickerInstructions":  "Trykk hvor som helst på kartet for å angi stedet for bønnetider",
+    "useThisLocation":  "Bruk dette stedet",
+    "customLocationLabel":  "Egendefinert sted",
+    "calculationMethodLabel":  "Beregningsmetode",
+    "madhabLabel":  "Madhab (Asr-beregning)",
+    "shafiLabel":  "Shafi",
+    "hanafiLabel":  "Hanafi",
+    "manualCorrectionLabel":  "Manuell korreksjon (minutter)",
+    "adjFajr":  "Fajr",
+    "adjDhuhr":  "Dhuhr",
+    "adjAsr":  "Asr",
+    "adjMaghrib":  "Maghrib",
+    "adjIsha":  "Isha",
+    "cityDoha":  "Doha",
+    "cityMecca":  "Mekka",
+    "cityMedina":  "Medina",
+    "cityCairo":  "Kairo",
+    "cityIstanbul":  "Istanbul",
+    "cityJakarta":  "Jakarta",
+    "cityKarachi":  "Karachi",
+    "cityLondon":  "London",
+    "cityNewYork":  "New York",
+    "cityCustom":  "Egendefinert",
+    "notificationPrayerTimeTitle":  "Bønnetid",
+    "notificationPrayerTimeBody":  "Det er tid for {prayerName}",
+    "@notificationPrayerTimeBody":  {
+                                        "placeholders":  {
+                                                             "prayerName":  {
+                                                                                "type":  "String"
+                                                                            }
+                                                         }
+                                    },
+    "notificationReminderTitle":  "Bønnepåminnelse",
+    "notificationReminderBody":  "Ba du {prayerName}?",
+    "@notificationReminderBody":  {
+                                      "placeholders":  {
+                                                           "prayerName":  {
+                                                                              "type":  "String"
+                                                                          }
+                                                       }
+                                  },
+    "notificationYes":  "Ja",
+    "notificationNo":  "Nei",
+    "weekdayMonShort":  "Man",
+    "weekdayTueShort":  "Tir",
+    "weekdayWedShort":  "Ons",
+    "weekdayThuShort":  "Tor",
+    "weekdayFriShort":  "Fre",
+    "weekdaySatShort":  "Lør",
+    "weekdaySunShort":  "Søn",
+    "pickAtLeastOneDay":  "Velg minst én ukedag",
+    "setValueTitle":  "Angi verdi",
+    "setUnitTitle":  "Angi {unit}",
+    "@setUnitTitle":  {
+                          "placeholders":  {
+                                               "unit":  {
+                                                            "type":  "String"
+                                                        }
+                                           }
+                      },
+    "metricCurrentStreak":  "Nåværende rekke",
+    "metricStreakTarget":  "Rekkemål",
+    "metricMaximumStreak":  "Lengste rekke",
+    "metricSuccessPercentage":  "Suksessrate",
+    "metricWeeklyAverage":  "Ukentlig gjennomsnitt",
+    "metricMonthlyAverage":  "Månedlig gjennomsnitt",
+    "backupDescription":  "Alle vanedata lagres lokalt på denne enheten. Eksporter en sikkerhetskopi for å beholde en kopi eller flytte den til en annen enhet, for eksempel ved å dele den til en skylagring eller e-post.",
+    "exportFailed":  "Eksport mislyktes: {error}",
+    "@exportFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "importFailed":  "Import mislyktes: {error}",
+    "@importFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "restoredCount":  "Gjenopprettet {count} vane(r)",
+    "@restoredCount":  {
+                           "placeholders":  {
+                                                "count":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "shareBackupText":  "Sikkerhetskopi av Islamske Vaner",
+    "valueAddedSuccess":  "Ny verdi lagt til",
+    "prayerSunrise":  "Soloppgang",
+    "methodMuslimWorldLeague":  "Muslim World League",
+    "methodEgyptian":  "Egyptisk",
+    "methodKarachi":  "Karachi",
+    "methodUmmAlQura":  "Umm al-Qura",
+    "methodDubai":  "Dubai",
+    "methodMoonSightingCommittee":  "Månesiktingskomiteen",
+    "methodNorthAmerica":  "Nord-Amerika",
+    "methodKuwait":  "Kuwait",
+    "methodQatar":  "Qatar",
+    "methodSingapore":  "Singapore",
+    "methodTurkey":  "Tyrkia",
+    "methodTehran":  "Teheran",
+    "methodOther":  "Annet",
+    "streakDays":  "{count, plural, one{{count} dag} other{{count} dager}}",
+    "@streakDays":  {
+                        "placeholders":  {
+                                             "count":  {
+                                                           "type":  "int"
+                                                       }
+                                         }
+                    },
+    "nextPrayerCountdownHm":  "om {hours}t {minutes}m",
+    "@nextPrayerCountdownHm":  {
+                                   "placeholders":  {
+                                                        "hours":  {
+                                                                      "type":  "int"
+                                                                  },
+                                                        "minutes":  {
+                                                                        "type":  "int"
+                                                                    }
+                                                    }
+                               },
+    "nextPrayerCountdownM":  "om {minutes}m",
+    "@nextPrayerCountdownM":  {
+                                  "placeholders":  {
+                                                       "minutes":  {
+                                                                       "type":  "int"
+                                                                   }
+                                                   }
+                              },
+    "customColor":  "Egendefinert farge",
+    "selectColor":  "Velg",
+    "navStatistics":  "Statistikk",
+    "reminderLabel":  "Påminnelse",
+    "reminderEnabledLabel":  "Daglig påminnelse",
+    "reminderEnabledSubtitle":  "Få et varsel på tidspunktet du velger",
+    "reminderTimeLabel":  "Påminnelsestid",
+    "reminderIndependentHint":  "Denne påminnelsen er separat fra bønnepåminnelsene og fungerer selv når bønnepåminnelsene er av.",
+    "reminderDailyAt":  "Daglig kl. {time}",
+    "reminderOff":  "Av",
+    "notificationHabitReminderTitle":  "Vanevarsel",
+    "notificationHabitReminderBody":  "Tid for {habitName}",
+    "enterName":  "Skriv inn et navn",
+    "enterNumberGreaterThanZero":  "Skriv inn et tall større enn 0",
+    "enterNumberOneToSeven":  "Skriv inn et tall fra 1 til 7",
+    "onboardingSkip":  "Hopp over",
+    "onboardingNext":  "Neste",
+    "onboardingGetStarted":  "Kom i gang",
+    "onboardingWelcomeTitle":  "Velkommen til Islamic Habits",
+    "onboardingWelcomeBody":  "Bygg en jevn rutine rundt bønn, Koranen og vanene som betyr noe for deg.",
+    "onboardingHabitsTitle":  "Ett trykk om dagen",
+    "onboardingHabitsBody":  "Følg ja/nei- og tallvaner, velg dine egne farger og se fremgangen din med et blikk.",
+    "onboardingPrayerTitle":  "Bønnetider, uansett hvor du er",
+    "onboardingPrayerBody":  "Velg blant tusenvis av byer eller velg din nøyaktige posisjon for korrekte bønnetider.",
+    "onboardingRemindersTitle":  "Påminnelser som passer dagen din",
+    "onboardingRemindersBody":  "Sett en daglig påminnelse for enhver vane og svar ja eller nei direkte fra varselet.",
+    "onboardingStatsTitle":  "Se fremgangen din",
+    "onboardingStatsBody":  "Diagrammer, rekker og suksessrater hjelper deg å holde motivasjonen oppe og se hva som trenger oppmerksomhet.",
+    "statisticsOverallSuccess":  "Samlet suksess",
+    "statisticsOverallSuccessSubtitle":  "På tvers av alle registrerte vanedager",
+    "statisticsBestStreak":  "Beste rekke",
+    "statisticsTotalHabits":  "Vaner",
+    "statisticsDailyCompletion":  "Daglig fullføring",
+    "statisticsDailyCompletionSubtitle":  "Fullføringen av vanene dine de siste 30 dagene",
+    "statisticsWeeklyProgress":  "Ukentlig fremgang",
+    "statisticsWeeklyProgressSubtitle":  "Gjennomsnittlig fullføring de siste fire ukene",
+    "statisticsMonthlyProgress":  "Månedlig fremgang",
+    "statisticsMonthlyProgressSubtitle":  "Gjennomsnittlig fullføring de siste seks månedene",
+    "statisticsBreakdown":  "Vanedetaljer",
+    "statisticsBreakdownSubtitle":  "Fullførte, tapte og uregistrerte vanedager de siste 30 dagene",
+    "statisticsSuccess":  "Fullført",
+    "statisticsMissed":  "Tapt",
+    "statisticsNoData":  "Ingen data",
+    "statisticsHabitPerformance":  "Vaneresultater",
+    "statisticsNoDataTitle":  "Ingen data ennå",
+    "statisticsNoDataBody":  "Begynn å registrere vanene dine for å se diagrammer, rekker og suksessrater her."
 }

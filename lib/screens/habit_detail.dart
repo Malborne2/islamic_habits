@@ -7,10 +7,18 @@ import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
+import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+
+String _formatReminderTime(BuildContext context, TimeOfDay time) {
+  return MaterialLocalizations.of(context).formatTimeOfDay(
+    time,
+    alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
+  );
+}
 
 class HabitDetail extends StatefulWidget {
   final Habit habit;
@@ -50,10 +58,20 @@ class _HabitDetailState extends State<HabitDetail> {
     });
 
     super.initState();
+    NotificationService.habitDataRevision.addListener(_onHabitDataChanged);
+  }
+
+  // The habit object is shared with the screen that opened this one, so a
+  // rebuild is enough to show an edited color/icon. The drawer on this page
+  // can also edit the habit, and without this listener the app bar kept the
+  // old color until the page was reopened.
+  void _onHabitDataChanged() {
+    if (mounted) setState(() {});
   }
 
   @override
   void dispose() {
+    NotificationService.habitDataRevision.removeListener(_onHabitDataChanged);
     controller.dispose();
     super.dispose();
   }
@@ -246,16 +264,53 @@ class _HabitDetailState extends State<HabitDetail> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
               child: Column(
-                children: List.generate(
-                  metricNames.length,
-                  (i) => _StatBarRow(
-                    icon: metricIcons[i],
-                    value: metricValues[i],
-                    fraction: metricFractions[i],
-                    label: metricNames[i],
-                    color: widget.habit.color,
+                children: <Widget>[
+                  ...List.generate(
+                    metricNames.length,
+                    (i) => _StatBarRow(
+                      icon: metricIcons[i],
+                      value: metricValues[i],
+                      fraction: metricFractions[i],
+                      label: metricNames[i],
+                      color: widget.habit.color,
+                    ),
                   ),
-                ),
+                  // Habit reminders are edited on the same screen as the
+                  // habit itself (opened by the edit button above); this card
+                  // is a read-only summary plus a shortcut to that screen.
+                  if (!isBuiltInPrayerHabit)
+                    Card(
+                      margin: const EdgeInsets.only(top: 14),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 2),
+                        leading: Icon(
+                          widget.habit.hasReminder
+                              ? Icons.notifications_active_outlined
+                              : Icons.notifications_off_outlined,
+                          color: brandAccent(context),
+                        ),
+                        title: Text(l10n.reminderLabel),
+                        subtitle: Text(
+                          widget.habit.hasReminder
+                              ? l10n.reminderDailyAt(_formatReminderTime(
+                                  context, widget.habit.reminderTime!))
+                              : l10n.reminderOff,
+                        ),
+                        trailing: const Icon(Icons.edit_outlined),
+                        onTap: () async {
+                          await Navigator.push<Habit>(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  AddHabitScreen(editingHabit: widget.habit),
+                            ),
+                          );
+                          if (mounted) setState(() {});
+                        },
+                      ),
+                    ),
+                ],
               ),
             ),
           ),

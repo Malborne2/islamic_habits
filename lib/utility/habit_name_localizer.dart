@@ -5,8 +5,12 @@ import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 // match notifications, exports, etc.); this only translates it for
 // display, for the default habits created on first launch. Any other
 // (user-created) habit name is shown as typed.
-String localizedHabitName(BuildContext context, String name) {
-  final l10n = AppLocalizations.of(context);
+String localizedHabitName(BuildContext context, String name) =>
+    localizedHabitNameFromL10n(AppLocalizations.of(context), name);
+
+// The same translation, for callers (notification scheduling) that already
+// hold an AppLocalizations instance but have no BuildContext.
+String localizedHabitNameFromL10n(AppLocalizations l10n, String name) {
   switch (name) {
     case 'Al Fajir Prayer':
       return l10n.habitFajrPrayer;

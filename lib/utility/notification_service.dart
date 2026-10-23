@@ -1,8 +1,9 @@
+import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart' show debugPrint;
+import 'package:flutter/foundation.dart' show ValueNotifier, debugPrint;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -11,6 +12,7 @@ import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/data_access_object.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/habit_name_localizer.dart';
 import 'package:islamic_habits/utility/language_settings.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
@@ -28,6 +30,19 @@ const String _kChannelName = 'Prayer reminders';
 const String _kTestReminderPayload = '__test_reminder__';
 const String _kAdhanChannelId = 'prayer_adhan';
 const String _kAdhanChannelName = 'Prayer Adhan';
+const String _kHabitReminderChannelId = 'habit_reminders';
+const String _kHabitReminderChannelName = 'Habit reminders';
+const String _kHabitReminderPayloadPrefix = 'habit_reminder:';
+// Reserved ID range for per-habit daily reminders. Prayer reminders use
+// 0-4, adhan 10-14 and the Settings test 99, so this cannot collide.
+const int _kHabitReminderIdBase = 1000;
+const String _kHabitUpdatePortName = 'islamic_habits_habit_updates';
+
+// Notification actions that arrive while the app isn't foregrounded are
+// handled on a background isolate. Its statics (including habitDataRevision)
+// are separate from the UI isolate's, so it needs to message the UI isolate
+// over a named port after writing to the database.
+bool _isBackgroundResponse = false;
 
 String _adhanSoundResource(AdhanVoiceOption voice, bool takbeerOnly) =>
     takbeerOnly ? voice.takbeerResource : voice.fullResource;
@@ -75,7 +90,55 @@ String _localizedPrayerName(AppLocalizations l10n, int index) {
 // whether the prayer was performed; answering Yes/No marks that habit's
 // data for today directly, without opening the app.
 class NotificationService {
+  // Bumped whenever a notification action writes habit data. Screens that
+  // hold an in-memory Habit list listen to this and reload from the database,
+  // so a Yes/No tapped on the notification shows up immediately without
+  // needing an app restart.
+  static final ValueNotifier<int> habitDataRevision = ValueNotifier<int>(0);
+
+  static ReceivePort? _habitUpdatePort;
+  static bool _habitUpdatePortRegistered = false;
+
+  // Listens for "habit data changed" messages sent by a background-isolate
+  // notification action. The port is kept alive for the app's lifetime.
+  static void _ensureHabitUpdatePort() {
+    if (_habitUpdatePortRegistered) return;
+    final existing = IsolateNameServer.lookupPortByName(_kHabitUpdatePortName);
+    if (existing != null) {
+      IsolateNameServer.removePortNameMapping(_kHabitUpdatePortName);
+    }
+    _habitUpdatePort = ReceivePort();
+    _habitUpdatePort!.listen((message) async {
+      try {
+        if (message is Map) {
+          final actionId = message['actionId'];
+          if (actionId is! String) return;
+          bool recorded = false;
+          if (message['type'] == 'habit') {
+            final habitId = message['habitId'];
+            if (habitId is int) {
+              recorded =
+                  await _recordHabitReminderResponse(habitId, actionId);
+            }
+          } else {
+            final prayerName = message['prayerName'];
+            if (prayerName is String) {
+              recorded = await _recordHabitResponse(prayerName, actionId);
+            }
+          }
+          if (recorded) habitDataRevision.value++;
+        }
+      } catch (e) {
+        _log('Failed applying forwarded habit response: $e');
+      }
+    });
+    IsolateNameServer.registerPortWithName(
+        _habitUpdatePort!.sendPort, _kHabitUpdatePortName);
+    _habitUpdatePortRegistered = true;
+  }
+
   static Future<void> initialize() async {
+    _ensureHabitUpdatePort();
     tz.initializeTimeZones();
     // Without this, tz.local silently stays UTC, so every zonedSchedule
     // below computes the wrong wall-clock instant — in most timezones that
@@ -84,8 +147,20 @@ class NotificationService {
     // despite scheduling appearing to succeed.
     try {
       final deviceTimeZone = await FlutterTimezone.getLocalTimezone();
-      tz.setLocalLocation(tz.getLocation(deviceTimeZone));
-      _log('Resolved device timezone: $deviceTimeZone (tz.local=${tz.local.name})');
+      // Some Android builds still report the old (renamed) IANA name, which
+      // the timezone package can no longer resolve. Map the common ones to
+      // their current names before giving up and staying on UTC.
+      const aliases = <String, String>{
+        'Europe/Kiev': 'Europe/Kyiv',
+        'Asia/Calcutta': 'Asia/Kolkata',
+        'Asia/Katmandu': 'Asia/Kathmandu',
+        'Asia/Rangoon': 'Asia/Yangon',
+        'America/Godthab': 'America/Nuuk',
+      };
+      final resolvedName = aliases[deviceTimeZone] ?? deviceTimeZone;
+      tz.setLocalLocation(tz.getLocation(resolvedName));
+      _log('Resolved device timezone: $deviceTimeZone '
+          '($resolvedName, tz.local=${tz.local.name})');
     } catch (e) {
       // Falls back to UTC if the platform can't report a timezone; better
       // than crashing, though reminder times will be off until this works.
@@ -102,7 +177,9 @@ class NotificationService {
     final canExact = await _androidPlugin()?.canScheduleExactNotifications();
     _log('canScheduleExactNotifications: $canExact');
     await _createReminderChannel();
+    await _createHabitReminderChannel();
     await ensureAdhanChannelMatchesSettings();
+    await _deleteLegacyChannels();
   }
 
   // Normally a channel is only created the first time a notification is
@@ -123,6 +200,26 @@ class NotificationService {
       ));
     } catch (e) {
       _log('Failed creating reminder channel: $e');
+    }
+  }
+
+  // Habit reminders have their own channel so they are independent of the
+  // global prayer-reminder switch and show up as a separate category in the
+  // system notification settings.
+  static Future<void> _createHabitReminderChannel() async {
+    final plugin = _androidPlugin();
+    if (plugin == null) return;
+    try {
+      await plugin.createNotificationChannel(const AndroidNotificationChannel(
+        _kHabitReminderChannelId,
+        _kHabitReminderChannelName,
+        description: 'Daily reminders for your custom habits',
+        importance: Importance.high,
+        playSound: false,
+        enableVibration: true,
+      ));
+    } catch (e) {
+      _log('Failed creating habit reminder channel: $e');
     }
   }
 
@@ -151,6 +248,43 @@ class NotificationService {
           'takbeerOnly=$takbeerOnly');
     } catch (e) {
       _log('Failed recreating adhan channel: $e');
+    }
+  }
+
+  // Android keeps a notification channel until the app explicitly deletes it,
+  // so channels created by older builds (one per adhan voice) remain listed
+  // under the app's notification settings even though this build only uses
+  // the fixed channels above. Remove every other channel so the system
+  // settings screen shows exactly "Prayer Adhan", "Prayer reminders" and
+  // "Habit reminders".
+  static Future<void> _deleteLegacyChannels() async {
+    final plugin = _androidPlugin();
+    if (plugin == null) return;
+    try {
+      final channels =
+          await plugin.getNotificationChannels() ??
+              const <AndroidNotificationChannel>[];
+      final legacyGroupIds = <String>{};
+      for (final channel in channels) {
+        if (channel.id == _kChannelId ||
+            channel.id == _kAdhanChannelId ||
+            channel.id == _kHabitReminderChannelId) {
+          continue;
+        }
+        if (channel.groupId != null) {
+          legacyGroupIds.add(channel.groupId!);
+        }
+        await plugin.deleteNotificationChannel(channelId: channel.id);
+        _log('Deleted legacy notification channel: ${channel.id}');
+      }
+      // The old per-voice channels were also grouped; deleting the channels
+      // leaves the empty group behind in the system notification settings.
+      for (final groupId in legacyGroupIds) {
+        await plugin.deleteNotificationChannelGroup(groupId: groupId);
+        _log('Deleted legacy notification channel group: $groupId');
+      }
+    } catch (e) {
+      _log('Failed deleting legacy notification channels: $e');
     }
   }
 
@@ -191,24 +325,45 @@ class NotificationService {
     return result ?? false;
   }
 
-  static Future<void> cancelAllPrayerReminders() async {
+  // Cancels pending prayer notifications. IDs listed in [preserveIds] are
+  // left untouched so a notification that has already been delivered stays
+  // visible when the app reschedules (e.g. on resume right after it fired).
+  static Future<void> cancelAllPrayerReminders({
+    Set<int> preserveIds = const <int>{},
+  }) async {
     for (int i = 0; i < kPrayersNames.length; i++) {
-      await _notificationsPlugin.cancel(id: i);
-      await _notificationsPlugin.cancel(id: 10 + i);
+      if (!preserveIds.contains(i)) {
+        await _notificationsPlugin.cancel(id: i);
+      }
+      if (!preserveIds.contains(10 + i)) {
+        await _notificationsPlugin.cancel(id: 10 + i);
+      }
     }
   }
 
-  // Schedules today's remaining prayers according to each prayer's mode:
-  // silent (nothing), notify (a Yes/No reminder 30 minutes later), or
-  // adhan (a sound-only notification right at the prayer time). Adhan mode
-  // always schedules regardless of PrayerSettings.remindersEnabled — that
-  // switch's own label only describes the 30-minutes-later Yes/No
-  // reminder, so it must not also silently block Adhan notifications,
-  // which the user enables per-prayer via the speaker icon. Called
-  // whenever the app starts/resumes; there is no background job to
+  // Schedules today's remaining prayers. The two notification types are
+  // independent:
+  //   - Adhan (id 10+i): controlled by the per-prayer bell; only
+  //     PrayerNotifyMode.adhan schedules it, at the prayer time.
+  //   - "Did you pray?" reminder (id i): controlled ONLY by the global
+  //     PrayerSettings.remindersEnabled switch, 30 minutes after every
+  //     prayer, regardless of that prayer's bell mode.
+  // Called whenever the app starts/resumes; there is no background job to
   // reschedule the next day on its own.
   static Future<void> scheduleTodayReminders() async {
-    await cancelAllPrayerReminders();
+    // Notifications that are already posted must survive this reschedule.
+    // Otherwise opening the app a few seconds after a reminder fires would
+    // cancel it (and then skip re-adding it because its time has passed).
+    Set<int> activeIds = const <int>{};
+    try {
+      activeIds = (await _notificationsPlugin.getActiveNotifications())
+          .map((n) => n.id)
+          .whereType<int>()
+          .toSet();
+    } catch (e) {
+      _log('Could not read active notifications: $e');
+    }
+    await cancelAllPrayerReminders(preserveIds: activeIds);
 
     final canExact = await _androidPlugin()?.canScheduleExactNotifications();
     final scheduleMode = canExact == true
@@ -233,55 +388,55 @@ class NotificationService {
 
     for (int i = 0; i < prayerTimes.length; i++) {
       final mode = PrayerSettings.prayerModes[i];
-      if (mode == PrayerNotifyMode.silent) {
-        _log('  [$i] ${kPrayersNames[i]}: silent, skipped');
-        continue;
-      }
       // The payload stays the canonical English key so it always matches
       // the stored habit name, regardless of display language.
       final habitPrayerName = kPrayersNames[i];
       final displayName = _localizedPrayerName(l10n, i);
 
+      // Adhan at the prayer time — still driven by the per-prayer bell.
       if (mode == PrayerNotifyMode.adhan) {
         if (prayerTimes[i].isBefore(now)) {
           _log('  [$i] ${kPrayersNames[i]}: adhan time ${prayerTimes[i]} '
               'already passed, skipped');
-          continue;
-        }
-        final voice = PrayerSettings.adhanVoice;
-        final takbeerOnly = PrayerSettings.adhanTakbeerOnly;
-        try {
-          await _notificationsPlugin.zonedSchedule(
-            id: 10 + i,
-            title: l10n.notificationPrayerTimeTitle,
-            body: l10n.notificationPrayerTimeBody(displayName),
-            scheduledDate: tz.TZDateTime.from(prayerTimes[i], tz.local),
-            notificationDetails: NotificationDetails(
-              android: AndroidNotificationDetails(
-                _kAdhanChannelId,
-                _kAdhanChannelName,
-                channelDescription: 'Plays the adhan at prayer time',
-                importance: Importance.high,
-                priority: Priority.high,
-                sound: RawResourceAndroidNotificationSound(
-                    _adhanSoundResource(voice, takbeerOnly)),
+        } else {
+          final voice = PrayerSettings.adhanVoice;
+          final takbeerOnly = PrayerSettings.adhanTakbeerOnly;
+          try {
+            await _notificationsPlugin.zonedSchedule(
+              id: 10 + i,
+              title: l10n.notificationPrayerTimeTitle,
+              body: l10n.notificationPrayerTimeBody(displayName),
+              scheduledDate: tz.TZDateTime.from(prayerTimes[i], tz.local),
+              notificationDetails: NotificationDetails(
+                android: AndroidNotificationDetails(
+                  _kAdhanChannelId,
+                  _kAdhanChannelName,
+                  channelDescription: 'Plays the adhan at prayer time',
+                  importance: Importance.high,
+                  priority: Priority.high,
+                  sound: RawResourceAndroidNotificationSound(
+                      _adhanSoundResource(voice, takbeerOnly)),
+                ),
               ),
-            ),
-            androidScheduleMode: scheduleMode,
-          );
-          _log('  [$i] ${kPrayersNames[i]}: adhan scheduled for '
-              '${prayerTimes[i]}');
-        } catch (e) {
-          // No audio file bundled for this voice (see
-          // android/app/ADHAN_AUDIO_README.md) — skip just this prayer
-          // rather than aborting the rest of the day's reminders.
-          _log('  [$i] ${kPrayersNames[i]}: adhan schedule FAILED: $e');
+              androidScheduleMode: scheduleMode,
+            );
+            _log('  [$i] ${kPrayersNames[i]}: adhan scheduled for '
+                '${prayerTimes[i]}');
+          } catch (e) {
+            // No audio file bundled for this voice (see
+            // android/app/ADHAN_AUDIO_README.md) — skip just this prayer
+            // rather than aborting the rest of the day's reminders.
+            _log('  [$i] ${kPrayersNames[i]}: adhan schedule FAILED: $e');
+          }
         }
-        continue;
+      } else if (mode == PrayerNotifyMode.silent) {
+        _log('  [$i] ${kPrayersNames[i]}: silent at prayer time (no adhan)');
       }
 
+      // 30-minute-later reminder — independent of the per-prayer bell;
+      // gated only by the global "Prayer reminders" switch.
       if (!PrayerSettings.remindersEnabled) {
-        _log('  [$i] ${kPrayersNames[i]}: notify reminders disabled, skipped');
+        _log('  [$i] ${kPrayersNames[i]}: reminders disabled, skipped');
         continue;
       }
 
@@ -303,8 +458,8 @@ class NotificationService {
             channelDescription: 'Reminders to log your prayer habits',
             importance: Importance.high,
             priority: Priority.high,
-            // The plain bell mode is meant to be vibration-only, as opposed
-            // to the speaker (adhan) mode which plays a reciter's voice.
+            // The reminder is vibration-only; adhan mode (when enabled for
+            // a prayer) plays the reciter at prayer time instead.
             playSound: false,
             enableVibration: true,
             actions: <AndroidNotificationAction>[
@@ -321,6 +476,107 @@ class NotificationService {
       _log('  [$i] ${kPrayersNames[i]}: reminder scheduled for '
           '$reminderTime (payload=$habitPrayerName)');
     }
+  }
+
+  // Clears the previously scheduled habit reminders and schedules one daily
+  // repeating reminder for every habit whose own reminder switch is on.
+  // Deliberately does not read PrayerSettings.remindersEnabled: habit
+  // reminders are independent of the global prayer-reminder setting.
+  static Future<void> scheduleHabitReminders() async {
+    final plugin = _notificationsPlugin;
+    try {
+      final pending = await plugin.pendingNotificationRequests();
+      for (final request in pending) {
+        if (request.id >= _kHabitReminderIdBase &&
+            request.id < _kHabitReminderIdBase + 100000) {
+          await plugin.cancel(id: request.id);
+        }
+      }
+    } catch (e) {
+      _log('Could not clear previous habit reminders: $e');
+    }
+
+    final habits = await HabitDao().getActive();
+    final l10n = await _currentLocalizations();
+    final canExact = await _androidPlugin()?.canScheduleExactNotifications();
+    final scheduleMode = canExact == true
+        ? AndroidScheduleMode.exactAllowWhileIdle
+        : AndroidScheduleMode.inexactAllowWhileIdle;
+    final now = tz.TZDateTime.now(tz.local);
+    _log('scheduleHabitReminders: canExact=$canExact, using $scheduleMode, '
+        'now=$now, tz.local=${tz.local.name}');
+
+    for (final habit in habits) {
+      final habitId = habit.id;
+      final minutes = habit.reminderMinutes;
+      if (!habit.reminderEnabled || habitId == null || minutes == null) {
+        continue;
+      }
+      final hour = minutes ~/ 60;
+      final minute = minutes % 60;
+      var scheduled = tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        now.day,
+        hour,
+        minute,
+      );
+      if (!scheduled.isAfter(now)) {
+        final tomorrow = DateTime(now.year, now.month, now.day + 1);
+        scheduled = tz.TZDateTime(
+          tz.local,
+          tomorrow.year,
+          tomorrow.month,
+          tomorrow.day,
+          hour,
+          minute,
+        );
+      }
+      final displayName = localizedHabitNameFromL10n(l10n, habit.name);
+      final actions = habit.type == HabitType.YES_NO
+          ? <AndroidNotificationAction>[
+              AndroidNotificationAction('yes', l10n.notificationYes,
+                  cancelNotification: true),
+              AndroidNotificationAction('no', l10n.notificationNo,
+                  cancelNotification: true),
+            ]
+          : null;
+      try {
+        await plugin.zonedSchedule(
+          id: _kHabitReminderIdBase + habitId,
+          title: l10n.notificationHabitReminderTitle,
+          body: l10n.notificationHabitReminderBody(displayName),
+          scheduledDate: scheduled,
+          notificationDetails: NotificationDetails(
+            android: AndroidNotificationDetails(
+              _kHabitReminderChannelId,
+              _kHabitReminderChannelName,
+              channelDescription: 'Daily reminders for your custom habits',
+              importance: Importance.high,
+              priority: Priority.high,
+              playSound: false,
+              enableVibration: true,
+              actions: actions,
+            ),
+          ),
+          androidScheduleMode: scheduleMode,
+          // Repeats every day at the same wall-clock time, which also keeps
+          // the time correct across daylight-saving changes.
+          matchDateTimeComponents: DateTimeComponents.time,
+          payload: '$_kHabitReminderPayloadPrefix$habitId',
+        );
+        _log('Habit "$displayName" reminder scheduled daily at '
+            '${scheduled.hour}:${scheduled.minute.toString().padLeft(2, '0')} '
+            '(id=${_kHabitReminderIdBase + habitId})');
+      } catch (e) {
+        _log('Habit "$displayName" reminder schedule FAILED: $e');
+      }
+    }
+  }
+
+  static Future<void> cancelHabitReminder(int habitId) async {
+    await _notificationsPlugin.cancel(id: _kHabitReminderIdBase + habitId);
   }
 
   static Future<void> sendTestNotification() async {
@@ -378,6 +634,12 @@ class NotificationService {
 
 @pragma('vm:entry-point')
 void _handleBackgroundResponse(NotificationResponse response) {
+  // This callback runs in a fresh background isolate that doesn't have the
+  // Flutter plugin registrant set up automatically. Without this,
+  // path_provider (used to locate demo.db) throws MissingPluginException and
+  // the Yes/No answer is never written.
+  _isBackgroundResponse = true;
+  DartPluginRegistrant.ensureInitialized();
   _applyResponse(response);
 }
 
@@ -386,16 +648,16 @@ void _handleResponse(NotificationResponse response) {
 }
 
 void _applyResponse(NotificationResponse response) async {
-  final prayerName = response.payload;
-  _log('Notification response: actionId=${response.actionId}, '
-      'payload=$prayerName');
-  if (prayerName == null) return;
-  if (response.actionId != 'yes' && response.actionId != 'no') return;
+  final payload = response.payload;
+  final actionId = response.actionId;
+  _log('Notification response: actionId=$actionId, payload=$payload');
+  if (payload == null) return;
+  if (actionId == null || (actionId != 'yes' && actionId != 'no')) return;
 
   // The "Send a test reminder now" button in Settings reuses this same
   // Yes/No flow so the notification itself can be tested, but it isn't a
   // real "did you pray" prompt — it must not touch actual habit data.
-  if (prayerName == _kTestReminderPayload) {
+  if (payload == _kTestReminderPayload) {
     _log('Test reminder response: dismissing without recording');
     if (response.id != null) {
       await _notificationsPlugin.cancel(id: response.id!);
@@ -403,6 +665,101 @@ void _applyResponse(NotificationResponse response) async {
     return;
   }
 
+  // Per-habit reminder responses use their own payload prefix and write to
+  // the habit with that database id, rather than looking a prayer up by
+  // name. Only YES_NO habits include the Yes/No actions.
+  if (payload.startsWith(_kHabitReminderPayloadPrefix)) {
+    final habitId = int.tryParse(
+        payload.substring(_kHabitReminderPayloadPrefix.length));
+    if (habitId == null) {
+      _log('Invalid habit reminder payload: $payload');
+      return;
+    }
+    if (_isBackgroundResponse) {
+      final port = IsolateNameServer.lookupPortByName(_kHabitUpdatePortName);
+      if (port != null) {
+        port.send(<String, dynamic>{
+          'type': 'habit',
+          'habitId': habitId,
+          'actionId': actionId,
+        });
+        _log('Forwarded $actionId for habit $habitId to UI isolate');
+        if (response.id != null) {
+          await _notificationsPlugin.cancel(id: response.id!);
+        }
+        return;
+      }
+    }
+    final recorded =
+        await _recordHabitReminderResponse(habitId, actionId);
+    if (recorded && !_isBackgroundResponse) {
+      NotificationService.habitDataRevision.value++;
+    }
+    if (response.id != null) {
+      await _notificationsPlugin.cancel(id: response.id!);
+    }
+    return;
+  }
+
+  final prayerName = payload;
+
+  // A background-isolate action can't safely write the Sembast database
+  // while the UI isolate is alive: the UI isolate keeps its own in-memory
+  // database instance, so the file would change underneath it and its
+  // reload would still serve the old cached value. Hand the answer to the
+  // UI isolate when it's listening; only write here when the app isn't
+  // running (the next cold start then reads the file from scratch).
+  if (_isBackgroundResponse) {
+    final port = IsolateNameServer.lookupPortByName(_kHabitUpdatePortName);
+    if (port != null) {
+      port.send(<String, dynamic>{
+        'type': 'prayer',
+        'prayerName': prayerName,
+        'actionId': actionId,
+      });
+      _log('Forwarded $actionId for "$prayerName" to UI isolate');
+      if (response.id != null) {
+        await _notificationsPlugin.cancel(id: response.id!);
+      }
+      return;
+    }
+  }
+
+  final recorded = await _recordHabitResponse(prayerName, actionId);
+  if (recorded && !_isBackgroundResponse) {
+    NotificationService.habitDataRevision.value++;
+  }
+
+  // The action itself is already set to auto-dismiss (cancelNotification:
+  // true), but cancel explicitly too as a safety net in case that platform
+  // behavior is ever unavailable.
+  if (response.id != null) {
+    await _notificationsPlugin.cancel(id: response.id!);
+  }
+}
+
+Future<bool> _recordHabitReminderResponse(int habitId, String actionId) async {
+  final dao = HabitDao();
+  final habits = await dao.getAll();
+  Habit? habit;
+  for (final h in habits) {
+    if (h.id == habitId) {
+      habit = h;
+      break;
+    }
+  }
+  if (habit == null) {
+    _log('No habit with id $habitId found — response not recorded');
+    return false;
+  }
+  habit.setHabitDataValue(DateTime.now(), actionId == 'yes' ? 1 : 0);
+  await dao.updateHabit(habit);
+  _log('Recorded $actionId for habit "${habit.name}" '
+      '(background=$_isBackgroundResponse)');
+  return true;
+}
+
+Future<bool> _recordHabitResponse(String prayerName, String actionId) async {
   final dao = HabitDao();
   final habits = await dao.getAll();
   final habitName = '$prayerName Prayer';
@@ -415,19 +772,14 @@ void _applyResponse(NotificationResponse response) async {
   }
   if (habit == null) {
     _log('No habit named "$habitName" found — response not recorded');
-    return;
+    return false;
   }
-  habit.setHabitDataValue(DateTime.now(), response.actionId == 'yes' ? 1 : 0);
+  habit.setHabitDataValue(DateTime.now(), actionId == 'yes' ? 1 : 0);
   // setHabitDataValue only mutates this in-memory Habit; without this it
   // was silently lost — nothing ever wrote the Yes/No answer back to the
   // database, so the habit's data never actually changed.
   await dao.updateHabit(habit);
-  _log('Recorded ${response.actionId} for "$habitName"');
-
-  // The action itself is already set to auto-dismiss (cancelNotification:
-  // true), but cancel explicitly too as a safety net in case that platform
-  // behavior is ever unavailable.
-  if (response.id != null) {
-    await _notificationsPlugin.cancel(id: response.id!);
-  }
+  _log('Recorded $actionId for "$habitName" '
+      '(background=$_isBackgroundResponse)');
+  return true;
 }

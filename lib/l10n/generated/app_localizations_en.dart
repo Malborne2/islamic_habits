@@ -84,6 +84,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delete => 'Delete';
 
   @override
+  String get edit => 'Edit';
+
+  @override
+  String get archive => 'Archive';
+
+  @override
+  String get unarchive => 'Restore';
+
+  @override
+  String get archivedHabits => 'Archived habits';
+
+  @override
+  String get noArchivedHabits => 'No archived habits';
+
+  @override
+  String get archivedHabitsHint =>
+      'Archived habits keep their history but are hidden from Home and statistics.';
+
+  @override
+  String get habitIcon => 'Icon';
+
+  @override
+  String get chooseIcon => 'Choose icon';
+
+  @override
+  String get removeIcon => 'Remove icon';
+
+  @override
+  String get deleteHabitTitle => 'Delete habit?';
+
+  @override
+  String deleteHabitMessage(String name) {
+    return '\"$name\" and all of its history will be permanently deleted. This cannot be undone.';
+  }
+
+  @override
+  String get habitDeleted => 'Habit deleted';
+
+  @override
+  String get habitArchived => 'Habit archived';
+
+  @override
+  String get habitRestored => 'Habit restored';
+
+  @override
   String get setValue => 'Set';
 
   @override
@@ -548,4 +593,159 @@ class AppLocalizationsEn extends AppLocalizations {
   String nextPrayerCountdownM(int minutes) {
     return 'in ${minutes}m';
   }
+
+  @override
+  String get customColor => 'Custom color';
+
+  @override
+  String get selectColor => 'Select';
+
+  @override
+  String get navStatistics => 'Statistics';
+
+  @override
+  String get reminderLabel => 'Reminder';
+
+  @override
+  String get reminderEnabledLabel => 'Daily reminder';
+
+  @override
+  String get reminderEnabledSubtitle =>
+      'Get a notification at the time you choose';
+
+  @override
+  String get reminderTimeLabel => 'Reminder time';
+
+  @override
+  String get reminderIndependentHint =>
+      'This reminder is separate from prayer reminders and works even when prayer reminders are off.';
+
+  @override
+  String reminderDailyAt(String time) {
+    return 'Daily at $time';
+  }
+
+  @override
+  String get reminderOff => 'Off';
+
+  @override
+  String get notificationHabitReminderTitle => 'Habit reminder';
+
+  @override
+  String notificationHabitReminderBody(String habitName) {
+    return 'Time for $habitName';
+  }
+
+  @override
+  String get enterName => 'Enter a name';
+
+  @override
+  String get enterNumberGreaterThanZero => 'Enter a number greater than 0';
+
+  @override
+  String get enterNumberOneToSeven => 'Enter a number from 1 to 7';
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingGetStarted => 'Get started';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to Islamic Habits';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'Build a consistent routine around prayer, Quran, and the habits that matter to you.';
+
+  @override
+  String get onboardingHabitsTitle => 'One tap a day';
+
+  @override
+  String get onboardingHabitsBody =>
+      'Track Yes/No and number habits, choose your own colors, and see your progress at a glance.';
+
+  @override
+  String get onboardingPrayerTitle => 'Prayer times, wherever you are';
+
+  @override
+  String get onboardingPrayerBody =>
+      'Choose from thousands of cities or pick your exact location for accurate prayer times.';
+
+  @override
+  String get onboardingRemindersTitle => 'Reminders that fit your day';
+
+  @override
+  String get onboardingRemindersBody =>
+      'Set a daily reminder for any habit and answer Yes or No right from the notification.';
+
+  @override
+  String get onboardingStatsTitle => 'See your progress';
+
+  @override
+  String get onboardingStatsBody =>
+      'Charts, streaks, and success rates help you stay motivated and spot what needs attention.';
+
+  @override
+  String get statisticsOverallSuccess => 'Overall success';
+
+  @override
+  String get statisticsOverallSuccessSubtitle =>
+      'Across all tracked habit days';
+
+  @override
+  String get statisticsBestStreak => 'Best streak';
+
+  @override
+  String get statisticsTotalHabits => 'Habits';
+
+  @override
+  String get statisticsDailyCompletion => 'Daily completion';
+
+  @override
+  String get statisticsDailyCompletionSubtitle =>
+      'Your habit completion for the last 30 days';
+
+  @override
+  String get statisticsWeeklyProgress => 'Weekly progress';
+
+  @override
+  String get statisticsWeeklyProgressSubtitle =>
+      'Average completion over the last four weeks';
+
+  @override
+  String get statisticsMonthlyProgress => 'Monthly progress';
+
+  @override
+  String get statisticsMonthlyProgressSubtitle =>
+      'Average completion over the last six months';
+
+  @override
+  String get statisticsBreakdown => 'Habit breakdown';
+
+  @override
+  String get statisticsBreakdownSubtitle =>
+      'Completed, missed, and unlogged habit days in the last 30 days';
+
+  @override
+  String get statisticsSuccess => 'Completed';
+
+  @override
+  String get statisticsMissed => 'Missed';
+
+  @override
+  String get statisticsNoData => 'No data';
+
+  @override
+  String get statisticsHabitPerformance => 'Habit performance';
+
+  @override
+  String get statisticsNoDataTitle => 'No data yet';
+
+  @override
+  String get statisticsNoDataBody =>
+      'Start logging your habits to see charts, streaks, and success rates here.';
 }

@@ -18,8 +18,9 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="${applicationName}"
-        android:label="islamic_habits"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Islamic Habits"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -38,6 +39,11 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- Impeller's Vulkan text compositing leaves stale glyph tiles on
+             some Android emulator GPUs; Skia renders this UI reliably. -->
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableImpeller"
+            android:value="false" />
         <!-- Required by flutter_local_notifications — without these, scheduled
              notifications never fire (the AlarmManager broadcast that's meant
              to trigger ScheduledNotificationReceiver has nowhere to go) and

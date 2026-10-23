@@ -84,6 +84,51 @@ class AppLocalizationsSv extends AppLocalizations {
   String get delete => 'Ta bort';
 
   @override
+  String get edit => 'Redigera';
+
+  @override
+  String get archive => 'Arkivera';
+
+  @override
+  String get unarchive => 'Återställ';
+
+  @override
+  String get archivedHabits => 'Arkiverade vanor';
+
+  @override
+  String get noArchivedHabits => 'Inga arkiverade vanor';
+
+  @override
+  String get archivedHabitsHint =>
+      'Arkiverade vanor behåller historiken men döljs från Hem och statistik.';
+
+  @override
+  String get habitIcon => 'Ikon';
+
+  @override
+  String get chooseIcon => 'Välj ikon';
+
+  @override
+  String get removeIcon => 'Ta bort ikon';
+
+  @override
+  String get deleteHabitTitle => 'Radera vanan?';
+
+  @override
+  String deleteHabitMessage(String name) {
+    return '”$name” och all dess historik raderas permanent. Detta kan inte ångras.';
+  }
+
+  @override
+  String get habitDeleted => 'Vanen raderades';
+
+  @override
+  String get habitArchived => 'Vanan arkiverades';
+
+  @override
+  String get habitRestored => 'Vanan återställdes';
+
+  @override
   String get setValue => 'Ange';
 
   @override
@@ -548,4 +593,158 @@ class AppLocalizationsSv extends AppLocalizations {
   String nextPrayerCountdownM(int minutes) {
     return 'om ${minutes}m';
   }
+
+  @override
+  String get customColor => 'Anpassad färg';
+
+  @override
+  String get selectColor => 'Välj';
+
+  @override
+  String get navStatistics => 'Statistik';
+
+  @override
+  String get reminderLabel => 'Påminnelse';
+
+  @override
+  String get reminderEnabledLabel => 'Daglig påminnelse';
+
+  @override
+  String get reminderEnabledSubtitle => 'Få en avisering vid tiden du väljer';
+
+  @override
+  String get reminderTimeLabel => 'Påminnelsetid';
+
+  @override
+  String get reminderIndependentHint =>
+      'Den här påminnelsen är separat från bönepåminnelserna och fungerar även när bönepåminnelserna är avstängda.';
+
+  @override
+  String reminderDailyAt(String time) {
+    return 'Dagligen kl. $time';
+  }
+
+  @override
+  String get reminderOff => 'Av';
+
+  @override
+  String get notificationHabitReminderTitle => 'Vanepåminnelse';
+
+  @override
+  String notificationHabitReminderBody(String habitName) {
+    return 'Dags för $habitName';
+  }
+
+  @override
+  String get enterName => 'Ange ett namn';
+
+  @override
+  String get enterNumberGreaterThanZero => 'Ange ett tal större än 0';
+
+  @override
+  String get enterNumberOneToSeven => 'Ange ett tal från 1 till 7';
+
+  @override
+  String get onboardingSkip => 'Hoppa över';
+
+  @override
+  String get onboardingNext => 'Nästa';
+
+  @override
+  String get onboardingGetStarted => 'Kom igång';
+
+  @override
+  String get onboardingWelcomeTitle => 'Välkommen till Islamic Habits';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'Bygg en jämn rutin kring bön, Koranen och vanorna som betyder något för dig.';
+
+  @override
+  String get onboardingHabitsTitle => 'Ett tryck om dagen';
+
+  @override
+  String get onboardingHabitsBody =>
+      'Följ ja/nej- och siffervanor, välj dina egna färger och se dina framsteg direkt.';
+
+  @override
+  String get onboardingPrayerTitle => 'Bönetider, var du än är';
+
+  @override
+  String get onboardingPrayerBody =>
+      'Välj bland tusentals städer eller välj din exakta plats för korrekta bönetider.';
+
+  @override
+  String get onboardingRemindersTitle => 'Påminnelser som passar din dag';
+
+  @override
+  String get onboardingRemindersBody =>
+      'Ställ in en daglig påminnelse för vilken vana som helst och svara ja eller nej direkt från aviseringen.';
+
+  @override
+  String get onboardingStatsTitle => 'Se dina framsteg';
+
+  @override
+  String get onboardingStatsBody =>
+      'Diagram, sviter och framgångsfrekvens hjälper dig att hålla motivationen uppe och se vad som behöver uppmärksamhet.';
+
+  @override
+  String get statisticsOverallSuccess => 'Total framgång';
+
+  @override
+  String get statisticsOverallSuccessSubtitle =>
+      'Över alla registrerade vanedagar';
+
+  @override
+  String get statisticsBestStreak => 'Bästa svit';
+
+  @override
+  String get statisticsTotalHabits => 'Vanor';
+
+  @override
+  String get statisticsDailyCompletion => 'Dagligt slutförande';
+
+  @override
+  String get statisticsDailyCompletionSubtitle =>
+      'Ditt slutförande av vanor de senaste 30 dagarna';
+
+  @override
+  String get statisticsWeeklyProgress => 'Veckoframsteg';
+
+  @override
+  String get statisticsWeeklyProgressSubtitle =>
+      'Genomsnittligt slutförande de senaste fyra veckorna';
+
+  @override
+  String get statisticsMonthlyProgress => 'Månadsframsteg';
+
+  @override
+  String get statisticsMonthlyProgressSubtitle =>
+      'Genomsnittligt slutförande de senaste sex månaderna';
+
+  @override
+  String get statisticsBreakdown => 'Vanöversikt';
+
+  @override
+  String get statisticsBreakdownSubtitle =>
+      'Slutförda, missade och oregistrerade vanedagar de senaste 30 dagarna';
+
+  @override
+  String get statisticsSuccess => 'Slutförd';
+
+  @override
+  String get statisticsMissed => 'Missad';
+
+  @override
+  String get statisticsNoData => 'Ingen data';
+
+  @override
+  String get statisticsHabitPerformance => 'Vaneprestation';
+
+  @override
+  String get statisticsNoDataTitle => 'Ingen data än';
+
+  @override
+  String get statisticsNoDataBody =>
+      'Börja logga dina vanor för att se diagram, sviter och framgångsfrekvens här.';
 }

@@ -58,4 +58,15 @@ class HabitDao {
       return habit;
     }).toList();
   }
+
+  // Active habits drive Home, the drawer, reminders, and statistics; archived
+  // ones are only listed on the archive screen. getAll() deliberately keeps
+  // returning everything so backups still include archived habits.
+  Future<List<Habit>> getActive() async {
+    return (await getAll()).where((habit) => !habit.archived).toList();
+  }
+
+  Future<List<Habit>> getArchived() async {
+    return (await getAll()).where((habit) => habit.archived).toList();
+  }
 }

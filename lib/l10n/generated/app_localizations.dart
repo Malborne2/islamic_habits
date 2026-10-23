@@ -250,6 +250,90 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get delete;
 
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @archive.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get archive;
+
+  /// No description provided for @unarchive.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get unarchive;
+
+  /// No description provided for @archivedHabits.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived habits'**
+  String get archivedHabits;
+
+  /// No description provided for @noArchivedHabits.
+  ///
+  /// In en, this message translates to:
+  /// **'No archived habits'**
+  String get noArchivedHabits;
+
+  /// No description provided for @archivedHabitsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived habits keep their history but are hidden from Home and statistics.'**
+  String get archivedHabitsHint;
+
+  /// No description provided for @habitIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get habitIcon;
+
+  /// No description provided for @chooseIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose icon'**
+  String get chooseIcon;
+
+  /// No description provided for @removeIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove icon'**
+  String get removeIcon;
+
+  /// No description provided for @deleteHabitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete habit?'**
+  String get deleteHabitTitle;
+
+  /// No description provided for @deleteHabitMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{name}\" and all of its history will be permanently deleted. This cannot be undone.'**
+  String deleteHabitMessage(String name);
+
+  /// No description provided for @habitDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit deleted'**
+  String get habitDeleted;
+
+  /// No description provided for @habitArchived.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit archived'**
+  String get habitArchived;
+
+  /// No description provided for @habitRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit restored'**
+  String get habitRestored;
+
   /// No description provided for @setValue.
   ///
   /// In en, this message translates to:
@@ -1107,6 +1191,282 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'in {minutes}m'**
   String nextPrayerCountdownM(int minutes);
+
+  /// No description provided for @customColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom color'**
+  String get customColor;
+
+  /// No description provided for @selectColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get selectColor;
+
+  /// No description provided for @navStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get navStatistics;
+
+  /// No description provided for @reminderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get reminderLabel;
+
+  /// No description provided for @reminderEnabledLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get reminderEnabledLabel;
+
+  /// No description provided for @reminderEnabledSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a notification at the time you choose'**
+  String get reminderEnabledSubtitle;
+
+  /// No description provided for @reminderTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder time'**
+  String get reminderTimeLabel;
+
+  /// No description provided for @reminderIndependentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'This reminder is separate from prayer reminders and works even when prayer reminders are off.'**
+  String get reminderIndependentHint;
+
+  /// No description provided for @reminderDailyAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily at {time}'**
+  String reminderDailyAt(String time);
+
+  /// No description provided for @reminderOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get reminderOff;
+
+  /// No description provided for @notificationHabitReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit reminder'**
+  String get notificationHabitReminderTitle;
+
+  /// No description provided for @notificationHabitReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Time for {habitName}'**
+  String notificationHabitReminderBody(String habitName);
+
+  /// No description provided for @enterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name'**
+  String get enterName;
+
+  /// No description provided for @enterNumberGreaterThanZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number greater than 0'**
+  String get enterNumberGreaterThanZero;
+
+  /// No description provided for @enterNumberOneToSeven.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number from 1 to 7'**
+  String get enterNumberOneToSeven;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onboardingGetStarted;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Islamic Habits'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Build a consistent routine around prayer, Quran, and the habits that matter to you.'**
+  String get onboardingWelcomeBody;
+
+  /// No description provided for @onboardingHabitsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'One tap a day'**
+  String get onboardingHabitsTitle;
+
+  /// No description provided for @onboardingHabitsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Track Yes/No and number habits, choose your own colors, and see your progress at a glance.'**
+  String get onboardingHabitsBody;
+
+  /// No description provided for @onboardingPrayerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times, wherever you are'**
+  String get onboardingPrayerTitle;
+
+  /// No description provided for @onboardingPrayerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from thousands of cities or pick your exact location for accurate prayer times.'**
+  String get onboardingPrayerBody;
+
+  /// No description provided for @onboardingRemindersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders that fit your day'**
+  String get onboardingRemindersTitle;
+
+  /// No description provided for @onboardingRemindersBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a daily reminder for any habit and answer Yes or No right from the notification.'**
+  String get onboardingRemindersBody;
+
+  /// No description provided for @onboardingStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'See your progress'**
+  String get onboardingStatsTitle;
+
+  /// No description provided for @onboardingStatsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Charts, streaks, and success rates help you stay motivated and spot what needs attention.'**
+  String get onboardingStatsBody;
+
+  /// No description provided for @statisticsOverallSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall success'**
+  String get statisticsOverallSuccess;
+
+  /// No description provided for @statisticsOverallSuccessSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Across all tracked habit days'**
+  String get statisticsOverallSuccessSubtitle;
+
+  /// No description provided for @statisticsBestStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Best streak'**
+  String get statisticsBestStreak;
+
+  /// No description provided for @statisticsTotalHabits.
+  ///
+  /// In en, this message translates to:
+  /// **'Habits'**
+  String get statisticsTotalHabits;
+
+  /// No description provided for @statisticsDailyCompletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily completion'**
+  String get statisticsDailyCompletion;
+
+  /// No description provided for @statisticsDailyCompletionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your habit completion for the last 30 days'**
+  String get statisticsDailyCompletionSubtitle;
+
+  /// No description provided for @statisticsWeeklyProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly progress'**
+  String get statisticsWeeklyProgress;
+
+  /// No description provided for @statisticsWeeklyProgressSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Average completion over the last four weeks'**
+  String get statisticsWeeklyProgressSubtitle;
+
+  /// No description provided for @statisticsMonthlyProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly progress'**
+  String get statisticsMonthlyProgress;
+
+  /// No description provided for @statisticsMonthlyProgressSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Average completion over the last six months'**
+  String get statisticsMonthlyProgressSubtitle;
+
+  /// No description provided for @statisticsBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit breakdown'**
+  String get statisticsBreakdown;
+
+  /// No description provided for @statisticsBreakdownSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed, missed, and unlogged habit days in the last 30 days'**
+  String get statisticsBreakdownSubtitle;
+
+  /// No description provided for @statisticsSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get statisticsSuccess;
+
+  /// No description provided for @statisticsMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed'**
+  String get statisticsMissed;
+
+  /// No description provided for @statisticsNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get statisticsNoData;
+
+  /// No description provided for @statisticsHabitPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit performance'**
+  String get statisticsHabitPerformance;
+
+  /// No description provided for @statisticsNoDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No data yet'**
+  String get statisticsNoDataTitle;
+
+  /// No description provided for @statisticsNoDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Start logging your habits to see charts, streaks, and success rates here.'**
+  String get statisticsNoDataBody;
 }
 
 class _AppLocalizationsDelegate

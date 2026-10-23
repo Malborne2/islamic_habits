@@ -4,8 +4,10 @@ import 'package:islamic_habits/components/habit_drawer.dart';
 import 'package:islamic_habits/components/several_habits_page.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/screens/add_habit_screen.dart';
+import 'package:islamic_habits/utility/data_access_object.dart';
 import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
@@ -48,10 +50,18 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
   late HijriCalendar hijriFirstDay;
   late HijriCalendar hijriLastDay;
 
+  // Local copies so an edit made from this screen's drawer (or a detail page
+  // opened from it) is reflected immediately. The habits are reloaded from
+  // the database whenever habit data changes, keeping archived/removed ones
+  // out of the list as well.
+  late List<Habit> _habits;
+  List<Habit>? _allHabits;
+  int _reloadGeneration = 0;
+
   Widget _buildPages(DateTime dateTime) {
     return SeveralHabitsPage(
-      habits: widget.habits,
-      allHabits: widget.allHabits,
+      habits: _habits,
+      allHabits: _allHabits,
       currentDate: dateTime,
       onChanged: () => setState(() {}),
     );
@@ -64,8 +74,28 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
             builder: (context) => const AddHabitScreen(),
             settings: const RouteSettings(name: '/AddHabitScreen')));
     if (newHabit != null) {
-      setState(() => widget.habits.add(newHabit));
+      setState(() => _habits.add(newHabit));
     }
+  }
+
+  void _onHabitDataChanged() {
+    _reloadHabits();
+  }
+
+  Future<void> _reloadHabits() async {
+    final generation = ++_reloadGeneration;
+    final active = await HabitDao().getActive();
+    if (!mounted || generation != _reloadGeneration) return;
+    setState(() {
+      // Keep the subset this screen was opened with (all habits or just the
+      // five prayers), but use the fresh objects so colors, icons and names
+      // update without reopening the screen.
+      final visibleIds = _habits.map((habit) => habit.id).toSet();
+      _habits = active
+          .where((habit) => visibleIds.contains(habit.id))
+          .toList();
+      _allHabits = widget.allHabits == null ? null : active;
+    });
   }
 
   @override
@@ -76,12 +106,18 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
     _lowerDate = addDays(currentDate, -7);
     _upperDate = addDays(currentDate, 7);
     startingDates = [_lowerDate, currentDate, _upperDate];
+    _habits = List<Habit>.of(widget.habits);
+    _allHabits = widget.allHabits == null
+        ? null
+        : List<Habit>.of(widget.allHabits!);
+    NotificationService.habitDataRevision.addListener(_onHabitDataChanged);
 
     super.initState();
   }
 
   @override
   void dispose() {
+    NotificationService.habitDataRevision.removeListener(_onHabitDataChanged);
     controller.dispose();
     super.dispose();
   }
@@ -92,7 +128,7 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
     HijriCalendar.setLocal(locale == 'ar' ? 'ar' : 'en');
     final today = DateTime.now();
     final habitsToday =
-        widget.habits.where((habit) => habit.isHabitDay(today)).toList();
+        _habits.where((habit) => habit.isHabitDay(today)).toList();
     final completedToday = habitsToday
         .where((habit) => habit.getStatus(today) == Status.SUCCESS)
         .length;
@@ -126,7 +162,7 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
         ],
       ),
       drawer: HabitDrawer(
-        habits: widget.allHabits ?? widget.habits,
+        habits: _allHabits ?? _habits,
       ),
       floatingActionButton: widget.showAddButton
           ? FloatingActionButton(

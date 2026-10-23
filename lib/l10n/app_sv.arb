@@ -1,227 +1,315 @@
 {
-  "@@locale": "sv",
-  "appTitle": "Islamiska vanor",
-  "navHome": "Hem",
-  "navPrayerTimes": "Bönetider",
-  "navAllHabits": "Alla vanor",
-  "navFivePrayers": "De fem bönerna",
-  "navAddHabit": "Lägg till ny vana",
-  "editHabitTitle": "Redigera vana",
-  "editHabitAction": "Redigera vana",
-  "settingsTitle": "Inställningar",
-  "settingsDarkMode": "Mörkt läge",
-  "settingsStartOfWeek": "Veckans start",
-  "settingsPrayerTimeSettings": "Inställningar för bönetider",
-  "settingsPrayerTimeSettingsSubtitle": "Plats, beräkningsmetod och böneparminnelser",
-  "settingsBackupRestore": "Säkerhetskopiera och återställ",
-  "settingsBackupRestoreSubtitle": "Exportera eller återställ dina vandata",
-  "settingsLanguage": "Språk",
-  "settingsLanguageSystem": "Telefonens språk",
-  "todayHabits": "Dagens vanor",
-  "todayProgress": "Idag: {completed} / {total} vanor klara",
-  "@todayProgress": {
-    "placeholders": {
-      "completed": {"type": "int"},
-      "total": {"type": "int"}
-    }
-  },
-  "longestStreak": "Längsta svit: {daysText} · {habitName}",
-  "@longestStreak": {
-    "placeholders": {
-      "daysText": {"type": "String"},
-      "habitName": {"type": "String"}
-    }
-  },
-  "save": "Spara",
-  "cancel": "Avbryt",
-  "delete": "Ta bort",
-  "setValue": "Ange",
-  "exportBackup": "Exportera säkerhetskopia",
-  "restoreFromBackup": "Återställ från säkerhetskopia",
-  "habitName": "Vanans namn",
-  "successMetric": "Framgångsmått",
-  "yesNo": "Ja / Nej",
-  "number": "Nummer",
-  "streakTarget": "Svitmål",
-  "targetStreakDays": "Målsvit (dagar)",
-  "schedule": "Schema",
-  "everyDay": "Varje dag",
-  "certainDaysOfWeek": "Vissa veckodagar",
-  "timesPerWeek": "Ett antal gånger per vecka",
-  "color": "Färg",
-  "saveHabit": "Spara vana",
-  "habitFajrPrayer": "Fajr-bönen",
-  "habitDhuhrPrayer": "Dhuhr-bönen",
-  "habitAsrPrayer": "Asr-bönen",
-  "habitMaghribPrayer": "Maghrib-bönen",
-  "habitIshaPrayer": "Isha-bönen",
-  "habitRecitingQuran": "Recitera Koranen",
-  "todayLabel": "Idag",
-  "prayerFajr": "Fajr",
-  "prayerDhuhr": "Dhuhr",
-  "prayerAsr": "Asr",
-  "prayerMaghrib": "Maghrib",
-  "prayerIsha": "Isha",
-  "notifyMode": "Meddela",
-  "silentMode": "Tyst",
-  "adhanMode": "Adhan",
-  "weekdayMonday": "Måndag",
-  "weekdayTuesday": "Tisdag",
-  "weekdayWednesday": "Onsdag",
-  "weekdayThursday": "Torsdag",
-  "weekdayFriday": "Fredag",
-  "weekdaySaturday": "Lördag",
-  "weekdaySunday": "Söndag",
-  "settingsNumerals": "Sifferform",
-  "numeralsWestern": "Västerländska (0, 1, 2…)",
-  "numeralsEastern": "Östarabiska (٠, ١, ٢…)",
-  "unitPages": "sidor",
-  "deleteEntryTitle": "Ta bort post",
-  "deleteEntryConfirm": "Är du säker på att du vill ta bort den här posten permanent?",
-  "targetAmountLabel": "Målmängd",
-  "unitLabel": "Enhet",
-  "timesPerWeekLabel": "Gånger per vecka",
-  "restoreBackupTitle": "Återställ säkerhetskopia",
-  "restoreBackupConfirm": "Detta ersätter alla vanor som för närvarande lagras på enheten med dem från den valda säkerhetskopian. Fortsätta?",
-  "restoreAction": "Återställ",
-  "notificationPermissionDenied": "Tillstånd för meddelanden beviljades inte",
-  "prayerRemindersLabel": "Bönepåminnelser",
-  "prayerRemindersSubtitle": "30 minuter efter varje bön, fråga om du har bett",
-  "sendTestReminder": "Skicka en testpåminnelse nu",
-  "batteryOptimizationHint": "Om påminnelser fortfarande inte kommer i rätt tid kan telefonens batterioptimering fördröja eller blockera dem i bakgrunden.",
-  "batteryOptimizationButton": "Undanta den här appen från batterioptimering",
-  "exactAlarmButton": "Tillåt exakta larmtider (rekommenderas)",
-  "exactAlarmGranted": "Exakta larm är tillåtna — påminnelser kommer i rätt tid.",
-  "exactAlarmNotGranted": "Exakta larm är fortfarande inte tillåtna — prova systeminställningarna som just öppnades.",
-  "adhanTakbeerOnlyLabel": "Endast takbir",
-  "adhanTakbeerOnlyHint": "Stoppa efter den inledande takbiren istället för att spela hela inspelningen",
-  "adhanVoiceLabel": "Adhan-röst",
-  "adhanVoiceHint": "Används för böner inställda på högtalarikonen (adhan) på bönetidsskärmen.",
-  "takbeerOnly": "Endast takbir",
-  "fullAdhan": "Fullständig adhan",
-  "testAdhanVoice": "Testa den här rösten",
-  "adhanAudioMissing": "Ingen ljudfil är ännu bifogad för den här rösten — lägg till den under android/app/src/main/res/raw för att höra den.",
-  "locationLabel": "Plats",
-  "cityLabel": "Stad",
-  "latitudeLabel": "Latitud",
-  "longitudeLabel": "Longitud",
-  "citySearchHint": "Sök efter en stad",
-  "cityNotFoundPrompt": "Hittar du inte din stad?",
-  "pickOnMap": "Välj på kartan",
-  "noCitiesFound": "Inga städer hittades",
-  "mapPickerTitle": "Välj en plats",
-  "mapPickerInstructions": "Tryck var som helst på kartan för att ange din plats för bönetider",
-  "useThisLocation": "Använd den här platsen",
-  "customLocationLabel": "Anpassad plats",
-  "calculationMethodLabel": "Beräkningsmetod",
-  "madhabLabel": "Madhhab (Asr-beräkning)",
-  "shafiLabel": "Shafi",
-  "hanafiLabel": "Hanafi",
-  "manualCorrectionLabel": "Manuell korrigering (minuter)",
-  "adjFajr": "Fajr",
-  "adjDhuhr": "Dhuhr",
-  "adjAsr": "Asr",
-  "adjMaghrib": "Maghrib",
-  "adjIsha": "Isha",
-  "cityDoha": "Doha",
-  "cityMecca": "Mecka",
-  "cityMedina": "Medina",
-  "cityCairo": "Kairo",
-  "cityIstanbul": "Istanbul",
-  "cityJakarta": "Jakarta",
-  "cityKarachi": "Karachi",
-  "cityLondon": "London",
-  "cityNewYork": "New York",
-  "cityCustom": "Anpassad",
-  "notificationPrayerTimeTitle": "Bönetid",
-  "notificationPrayerTimeBody": "Det är dags för {prayerName}",
-  "@notificationPrayerTimeBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationReminderTitle": "Bönepåminnelse",
-  "notificationReminderBody": "Bad du {prayerName}?",
-  "@notificationReminderBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationYes": "Ja",
-  "notificationNo": "Nej",
-  "weekdayMonShort": "Mån",
-  "weekdayTueShort": "Tis",
-  "weekdayWedShort": "Ons",
-  "weekdayThuShort": "Tor",
-  "weekdayFriShort": "Fre",
-  "weekdaySatShort": "Lör",
-  "weekdaySunShort": "Sön",
-  "pickAtLeastOneDay": "Välj minst en veckodag",
-  "setValueTitle": "Ange värde",
-  "setUnitTitle": "Ange {unit}",
-  "@setUnitTitle": {
-    "placeholders": {
-      "unit": {"type": "String"}
-    }
-  },
-  "metricCurrentStreak": "Nuvarande svit",
-  "metricStreakTarget": "Svitmål",
-  "metricMaximumStreak": "Längsta svit",
-  "metricSuccessPercentage": "Framgångsprocent",
-  "metricWeeklyAverage": "Veckogenomsnitt",
-  "metricMonthlyAverage": "Månadsgenomsnitt",
-  "backupDescription": "All vandata lagras lokalt på den här enheten. Exportera en säkerhetskopia för att behålla en kopia eller flytta den till en annan enhet, till exempel genom att dela den till en molntjänst eller e-post.",
-  "exportFailed": "Export misslyckades: {error}",
-  "@exportFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "importFailed": "Import misslyckades: {error}",
-  "@importFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "restoredCount": "Återställde {count} vana/vanor",
-  "@restoredCount": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "shareBackupText": "Säkerhetskopia av Islamiska vanor",
-  "valueAddedSuccess": "Nytt värde tillagt",
-  "prayerSunrise": "Soluppgång",
-  "methodMuslimWorldLeague": "Muslimska världsförbundet",
-  "methodEgyptian": "Egyptisk",
-  "methodKarachi": "Karachi",
-  "methodUmmAlQura": "Umm al-Qura",
-  "methodDubai": "Dubai",
-  "methodMoonSightingCommittee": "Månskådningskommittén",
-  "methodNorthAmerica": "Nordamerika",
-  "methodKuwait": "Kuwait",
-  "methodQatar": "Qatar",
-  "methodSingapore": "Singapore",
-  "methodTurkey": "Turkiet",
-  "methodTehran": "Teheran",
-  "methodOther": "Annan",
-  "streakDays": "{count, plural, one{{count} dag} other{{count} dagar}}",
-  "@streakDays": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownHm": "om {hours}t {minutes}m",
-  "@nextPrayerCountdownHm": {
-    "placeholders": {
-      "hours": {"type": "int"},
-      "minutes": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownM": "om {minutes}m",
-  "@nextPrayerCountdownM": {
-    "placeholders": {
-      "minutes": {"type": "int"}
-    }
-  }
+    "@@locale":  "sv",
+    "appTitle":  "Islamiska vanor",
+    "navHome":  "Hem",
+    "navPrayerTimes":  "Bönetider",
+    "navAllHabits":  "Alla vanor",
+    "navFivePrayers":  "De fem bönerna",
+    "navAddHabit":  "Lägg till ny vana",
+    "editHabitTitle":  "Redigera vana",
+    "editHabitAction":  "Redigera vana",
+    "settingsTitle":  "Inställningar",
+    "settingsDarkMode":  "Mörkt läge",
+    "settingsStartOfWeek":  "Veckans start",
+    "settingsPrayerTimeSettings":  "Inställningar för bönetider",
+    "settingsPrayerTimeSettingsSubtitle":  "Plats, beräkningsmetod och böneparminnelser",
+    "settingsBackupRestore":  "Säkerhetskopiera och återställ",
+    "settingsBackupRestoreSubtitle":  "Exportera eller återställ dina vandata",
+    "settingsLanguage":  "Språk",
+    "settingsLanguageSystem":  "Telefonens språk",
+    "todayHabits":  "Dagens vanor",
+    "todayProgress":  "Idag: {completed} / {total} vanor klara",
+    "@todayProgress":  {
+                           "placeholders":  {
+                                                "completed":  {
+                                                                  "type":  "int"
+                                                              },
+                                                "total":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "longestStreak":  "Längsta svit: {daysText} · {habitName}",
+    "@longestStreak":  {
+                           "placeholders":  {
+                                                "daysText":  {
+                                                                 "type":  "String"
+                                                             },
+                                                "habitName":  {
+                                                                  "type":  "String"
+                                                              }
+                                            }
+                       },
+    "save":  "Spara",
+    "cancel":  "Avbryt",
+    "delete":  "Ta bort",
+    "edit": "Redigera",
+    "archive": "Arkivera",
+    "unarchive": "Återställ",
+    "archivedHabits": "Arkiverade vanor",
+    "noArchivedHabits": "Inga arkiverade vanor",
+    "archivedHabitsHint": "Arkiverade vanor behåller historiken men döljs från Hem och statistik.",
+    "habitIcon": "Ikon",
+    "chooseIcon": "Välj ikon",
+    "removeIcon": "Ta bort ikon",
+    "deleteHabitTitle": "Radera vanan?",
+    "deleteHabitMessage": "”{name}” och all dess historik raderas permanent. Detta kan inte ångras.",
+    "habitDeleted": "Vanen raderades",
+    "habitArchived": "Vanan arkiverades",
+    "habitRestored": "Vanan återställdes",
+    "setValue":  "Ange",
+    "exportBackup":  "Exportera säkerhetskopia",
+    "restoreFromBackup":  "Återställ från säkerhetskopia",
+    "habitName":  "Vanans namn",
+    "successMetric":  "Framgångsmått",
+    "yesNo":  "Ja / Nej",
+    "number":  "Nummer",
+    "streakTarget":  "Svitmål",
+    "targetStreakDays":  "Målsvit (dagar)",
+    "schedule":  "Schema",
+    "everyDay":  "Varje dag",
+    "certainDaysOfWeek":  "Vissa veckodagar",
+    "timesPerWeek":  "Ett antal gånger per vecka",
+    "color":  "Färg",
+    "saveHabit":  "Spara vana",
+    "habitFajrPrayer":  "Fajr-bönen",
+    "habitDhuhrPrayer":  "Dhuhr-bönen",
+    "habitAsrPrayer":  "Asr-bönen",
+    "habitMaghribPrayer":  "Maghrib-bönen",
+    "habitIshaPrayer":  "Isha-bönen",
+    "habitRecitingQuran":  "Recitera Koranen",
+    "todayLabel":  "Idag",
+    "prayerFajr":  "Fajr",
+    "prayerDhuhr":  "Dhuhr",
+    "prayerAsr":  "Asr",
+    "prayerMaghrib":  "Maghrib",
+    "prayerIsha":  "Isha",
+    "notifyMode":  "Meddela",
+    "silentMode":  "Tyst",
+    "adhanMode":  "Adhan",
+    "weekdayMonday":  "Måndag",
+    "weekdayTuesday":  "Tisdag",
+    "weekdayWednesday":  "Onsdag",
+    "weekdayThursday":  "Torsdag",
+    "weekdayFriday":  "Fredag",
+    "weekdaySaturday":  "Lördag",
+    "weekdaySunday":  "Söndag",
+    "settingsNumerals":  "Sifferform",
+    "numeralsWestern":  "Västerländska (0, 1, 2…)",
+    "numeralsEastern":  "Östarabiska (٠, ١, ٢…)",
+    "unitPages":  "sidor",
+    "deleteEntryTitle":  "Ta bort post",
+    "deleteEntryConfirm":  "Är du säker på att du vill ta bort den här posten permanent?",
+    "targetAmountLabel":  "Målmängd",
+    "unitLabel":  "Enhet",
+    "timesPerWeekLabel":  "Gånger per vecka",
+    "restoreBackupTitle":  "Återställ säkerhetskopia",
+    "restoreBackupConfirm":  "Detta ersätter alla vanor som för närvarande lagras på enheten med dem från den valda säkerhetskopian. Fortsätta?",
+    "restoreAction":  "Återställ",
+    "notificationPermissionDenied":  "Tillstånd för meddelanden beviljades inte",
+    "prayerRemindersLabel":  "Bönepåminnelser",
+    "prayerRemindersSubtitle":  "30 minuter efter varje bön, fråga om du har bett",
+    "sendTestReminder":  "Skicka en testpåminnelse nu",
+    "batteryOptimizationHint":  "Om påminnelser fortfarande inte kommer i rätt tid kan telefonens batterioptimering fördröja eller blockera dem i bakgrunden.",
+    "batteryOptimizationButton":  "Undanta den här appen från batterioptimering",
+    "exactAlarmButton":  "Tillåt exakta larmtider (rekommenderas)",
+    "exactAlarmGranted":  "Exakta larm är tillåtna — påminnelser kommer i rätt tid.",
+    "exactAlarmNotGranted":  "Exakta larm är fortfarande inte tillåtna — prova systeminställningarna som just öppnades.",
+    "adhanTakbeerOnlyLabel":  "Endast takbir",
+    "adhanTakbeerOnlyHint":  "Stoppa efter den inledande takbiren istället för att spela hela inspelningen",
+    "adhanVoiceLabel":  "Adhan-röst",
+    "adhanVoiceHint":  "Används för böner inställda på högtalarikonen (adhan) på bönetidsskärmen.",
+    "takbeerOnly":  "Endast takbir",
+    "fullAdhan":  "Fullständig adhan",
+    "testAdhanVoice":  "Testa den här rösten",
+    "adhanAudioMissing":  "Ingen ljudfil är ännu bifogad för den här rösten — lägg till den under android/app/src/main/res/raw för att höra den.",
+    "locationLabel":  "Plats",
+    "cityLabel":  "Stad",
+    "latitudeLabel":  "Latitud",
+    "longitudeLabel":  "Longitud",
+    "citySearchHint":  "Sök efter en stad",
+    "cityNotFoundPrompt":  "Hittar du inte din stad?",
+    "pickOnMap":  "Välj på kartan",
+    "noCitiesFound":  "Inga städer hittades",
+    "mapPickerTitle":  "Välj en plats",
+    "mapPickerInstructions":  "Tryck var som helst på kartan för att ange din plats för bönetider",
+    "useThisLocation":  "Använd den här platsen",
+    "customLocationLabel":  "Anpassad plats",
+    "calculationMethodLabel":  "Beräkningsmetod",
+    "madhabLabel":  "Madhhab (Asr-beräkning)",
+    "shafiLabel":  "Shafi",
+    "hanafiLabel":  "Hanafi",
+    "manualCorrectionLabel":  "Manuell korrigering (minuter)",
+    "adjFajr":  "Fajr",
+    "adjDhuhr":  "Dhuhr",
+    "adjAsr":  "Asr",
+    "adjMaghrib":  "Maghrib",
+    "adjIsha":  "Isha",
+    "cityDoha":  "Doha",
+    "cityMecca":  "Mecka",
+    "cityMedina":  "Medina",
+    "cityCairo":  "Kairo",
+    "cityIstanbul":  "Istanbul",
+    "cityJakarta":  "Jakarta",
+    "cityKarachi":  "Karachi",
+    "cityLondon":  "London",
+    "cityNewYork":  "New York",
+    "cityCustom":  "Anpassad",
+    "notificationPrayerTimeTitle":  "Bönetid",
+    "notificationPrayerTimeBody":  "Det är dags för {prayerName}",
+    "@notificationPrayerTimeBody":  {
+                                        "placeholders":  {
+                                                             "prayerName":  {
+                                                                                "type":  "String"
+                                                                            }
+                                                         }
+                                    },
+    "notificationReminderTitle":  "Bönepåminnelse",
+    "notificationReminderBody":  "Bad du {prayerName}?",
+    "@notificationReminderBody":  {
+                                      "placeholders":  {
+                                                           "prayerName":  {
+                                                                              "type":  "String"
+                                                                          }
+                                                       }
+                                  },
+    "notificationYes":  "Ja",
+    "notificationNo":  "Nej",
+    "weekdayMonShort":  "Mån",
+    "weekdayTueShort":  "Tis",
+    "weekdayWedShort":  "Ons",
+    "weekdayThuShort":  "Tor",
+    "weekdayFriShort":  "Fre",
+    "weekdaySatShort":  "Lör",
+    "weekdaySunShort":  "Sön",
+    "pickAtLeastOneDay":  "Välj minst en veckodag",
+    "setValueTitle":  "Ange värde",
+    "setUnitTitle":  "Ange {unit}",
+    "@setUnitTitle":  {
+                          "placeholders":  {
+                                               "unit":  {
+                                                            "type":  "String"
+                                                        }
+                                           }
+                      },
+    "metricCurrentStreak":  "Nuvarande svit",
+    "metricStreakTarget":  "Svitmål",
+    "metricMaximumStreak":  "Längsta svit",
+    "metricSuccessPercentage":  "Framgångsprocent",
+    "metricWeeklyAverage":  "Veckogenomsnitt",
+    "metricMonthlyAverage":  "Månadsgenomsnitt",
+    "backupDescription":  "All vandata lagras lokalt på den här enheten. Exportera en säkerhetskopia för att behålla en kopia eller flytta den till en annan enhet, till exempel genom att dela den till en molntjänst eller e-post.",
+    "exportFailed":  "Export misslyckades: {error}",
+    "@exportFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "importFailed":  "Import misslyckades: {error}",
+    "@importFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "restoredCount":  "Återställde {count} vana/vanor",
+    "@restoredCount":  {
+                           "placeholders":  {
+                                                "count":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "shareBackupText":  "Säkerhetskopia av Islamiska vanor",
+    "valueAddedSuccess":  "Nytt värde tillagt",
+    "prayerSunrise":  "Soluppgång",
+    "methodMuslimWorldLeague":  "Muslimska världsförbundet",
+    "methodEgyptian":  "Egyptisk",
+    "methodKarachi":  "Karachi",
+    "methodUmmAlQura":  "Umm al-Qura",
+    "methodDubai":  "Dubai",
+    "methodMoonSightingCommittee":  "Månskådningskommittén",
+    "methodNorthAmerica":  "Nordamerika",
+    "methodKuwait":  "Kuwait",
+    "methodQatar":  "Qatar",
+    "methodSingapore":  "Singapore",
+    "methodTurkey":  "Turkiet",
+    "methodTehran":  "Teheran",
+    "methodOther":  "Annan",
+    "streakDays":  "{count, plural, one{{count} dag} other{{count} dagar}}",
+    "@streakDays":  {
+                        "placeholders":  {
+                                             "count":  {
+                                                           "type":  "int"
+                                                       }
+                                         }
+                    },
+    "nextPrayerCountdownHm":  "om {hours}t {minutes}m",
+    "@nextPrayerCountdownHm":  {
+                                   "placeholders":  {
+                                                        "hours":  {
+                                                                      "type":  "int"
+                                                                  },
+                                                        "minutes":  {
+                                                                        "type":  "int"
+                                                                    }
+                                                    }
+                               },
+    "nextPrayerCountdownM":  "om {minutes}m",
+    "@nextPrayerCountdownM":  {
+                                  "placeholders":  {
+                                                       "minutes":  {
+                                                                       "type":  "int"
+                                                                   }
+                                                   }
+                              },
+    "customColor":  "Anpassad färg",
+    "selectColor":  "Välj",
+    "navStatistics":  "Statistik",
+    "reminderLabel":  "Påminnelse",
+    "reminderEnabledLabel":  "Daglig påminnelse",
+    "reminderEnabledSubtitle":  "Få en avisering vid tiden du väljer",
+    "reminderTimeLabel":  "Påminnelsetid",
+    "reminderIndependentHint":  "Den här påminnelsen är separat från bönepåminnelserna och fungerar även när bönepåminnelserna är avstängda.",
+    "reminderDailyAt":  "Dagligen kl. {time}",
+    "reminderOff":  "Av",
+    "notificationHabitReminderTitle":  "Vanepåminnelse",
+    "notificationHabitReminderBody":  "Dags för {habitName}",
+    "enterName":  "Ange ett namn",
+    "enterNumberGreaterThanZero":  "Ange ett tal större än 0",
+    "enterNumberOneToSeven":  "Ange ett tal från 1 till 7",
+    "onboardingSkip":  "Hoppa över",
+    "onboardingNext":  "Nästa",
+    "onboardingGetStarted":  "Kom igång",
+    "onboardingWelcomeTitle":  "Välkommen till Islamic Habits",
+    "onboardingWelcomeBody":  "Bygg en jämn rutin kring bön, Koranen och vanorna som betyder något för dig.",
+    "onboardingHabitsTitle":  "Ett tryck om dagen",
+    "onboardingHabitsBody":  "Följ ja/nej- och siffervanor, välj dina egna färger och se dina framsteg direkt.",
+    "onboardingPrayerTitle":  "Bönetider, var du än är",
+    "onboardingPrayerBody":  "Välj bland tusentals städer eller välj din exakta plats för korrekta bönetider.",
+    "onboardingRemindersTitle":  "Påminnelser som passar din dag",
+    "onboardingRemindersBody":  "Ställ in en daglig påminnelse för vilken vana som helst och svara ja eller nej direkt från aviseringen.",
+    "onboardingStatsTitle":  "Se dina framsteg",
+    "onboardingStatsBody":  "Diagram, sviter och framgångsfrekvens hjälper dig att hålla motivationen uppe och se vad som behöver uppmärksamhet.",
+    "statisticsOverallSuccess":  "Total framgång",
+    "statisticsOverallSuccessSubtitle":  "Över alla registrerade vanedagar",
+    "statisticsBestStreak":  "Bästa svit",
+    "statisticsTotalHabits":  "Vanor",
+    "statisticsDailyCompletion":  "Dagligt slutförande",
+    "statisticsDailyCompletionSubtitle":  "Ditt slutförande av vanor de senaste 30 dagarna",
+    "statisticsWeeklyProgress":  "Veckoframsteg",
+    "statisticsWeeklyProgressSubtitle":  "Genomsnittligt slutförande de senaste fyra veckorna",
+    "statisticsMonthlyProgress":  "Månadsframsteg",
+    "statisticsMonthlyProgressSubtitle":  "Genomsnittligt slutförande de senaste sex månaderna",
+    "statisticsBreakdown":  "Vanöversikt",
+    "statisticsBreakdownSubtitle":  "Slutförda, missade och oregistrerade vanedagar de senaste 30 dagarna",
+    "statisticsSuccess":  "Slutförd",
+    "statisticsMissed":  "Missad",
+    "statisticsNoData":  "Ingen data",
+    "statisticsHabitPerformance":  "Vaneprestation",
+    "statisticsNoDataTitle":  "Ingen data än",
+    "statisticsNoDataBody":  "Börja logga dina vanor för att se diagram, sviter och framgångsfrekvens här."
 }

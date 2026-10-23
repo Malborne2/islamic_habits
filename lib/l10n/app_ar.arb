@@ -1,227 +1,315 @@
 {
-  "@@locale": "ar",
-  "appTitle": "العادات الإسلامية",
-  "navHome": "الرئيسية",
-  "navPrayerTimes": "مواقيت الصلاة",
-  "navAllHabits": "جميع العادات",
-  "navFivePrayers": "الصلوات الخمس",
-  "navAddHabit": "إضافة عادة جديدة",
-  "editHabitTitle": "تعديل العادة",
-  "editHabitAction": "تعديل العادة",
-  "settingsTitle": "الإعدادات",
-  "settingsDarkMode": "الوضع الداكن",
-  "settingsStartOfWeek": "بداية الأسبوع",
-  "settingsPrayerTimeSettings": "إعدادات مواقيت الصلاة",
-  "settingsPrayerTimeSettingsSubtitle": "الموقع وطريقة الحساب وتذكيرات الصلاة",
-  "settingsBackupRestore": "النسخ الاحتياطي والاستعادة",
-  "settingsBackupRestoreSubtitle": "تصدير أو استعادة بيانات عاداتك",
-  "settingsLanguage": "اللغة",
-  "settingsLanguageSystem": "لغة الهاتف",
-  "todayHabits": "عادات اليوم",
-  "todayProgress": "اليوم: {completed} / {total} عادات مكتملة",
-  "@todayProgress": {
-    "placeholders": {
-      "completed": {"type": "int"},
-      "total": {"type": "int"}
-    }
-  },
-  "longestStreak": "أطول سلسلة: {daysText} · {habitName}",
-  "@longestStreak": {
-    "placeholders": {
-      "daysText": {"type": "String"},
-      "habitName": {"type": "String"}
-    }
-  },
-  "save": "حفظ",
-  "cancel": "إلغاء",
-  "delete": "حذف",
-  "setValue": "تعيين",
-  "exportBackup": "تصدير نسخة احتياطية",
-  "restoreFromBackup": "استعادة من نسخة احتياطية",
-  "habitName": "اسم العادة",
-  "successMetric": "مقياس النجاح",
-  "yesNo": "نعم / لا",
-  "number": "رقم",
-  "streakTarget": "هدف التسلسل",
-  "targetStreakDays": "هدف التسلسل (أيام)",
-  "schedule": "الجدول الزمني",
-  "everyDay": "كل يوم",
-  "certainDaysOfWeek": "أيام معينة من الأسبوع",
-  "timesPerWeek": "عدد مرات في الأسبوع",
-  "color": "اللون",
-  "saveHabit": "حفظ العادة",
-  "habitFajrPrayer": "صلاة الفجر",
-  "habitDhuhrPrayer": "صلاة الظهر",
-  "habitAsrPrayer": "صلاة العصر",
-  "habitMaghribPrayer": "صلاة المغرب",
-  "habitIshaPrayer": "صلاة العشاء",
-  "habitRecitingQuran": "قراءة القرآن",
-  "todayLabel": "اليوم",
-  "prayerFajr": "الفجر",
-  "prayerDhuhr": "الظهر",
-  "prayerAsr": "العصر",
-  "prayerMaghrib": "المغرب",
-  "prayerIsha": "العشاء",
-  "notifyMode": "تنبيه",
-  "silentMode": "صامت",
-  "adhanMode": "أذان",
-  "weekdayMonday": "الإثنين",
-  "weekdayTuesday": "الثلاثاء",
-  "weekdayWednesday": "الأربعاء",
-  "weekdayThursday": "الخميس",
-  "weekdayFriday": "الجمعة",
-  "weekdaySaturday": "السبت",
-  "weekdaySunday": "الأحد",
-  "settingsNumerals": "الأرقام",
-  "numeralsWestern": "أرقام غربية (0, 1, 2…)",
-  "numeralsEastern": "أرقام هندية (٠, ١, ٢…)",
-  "unitPages": "صفحات",
-  "deleteEntryTitle": "حذف الإدخال",
-  "deleteEntryConfirm": "هل أنت متأكد أنك تريد حذف هذا الإدخال نهائيًا؟",
-  "targetAmountLabel": "القيمة المستهدفة",
-  "unitLabel": "الوحدة",
-  "timesPerWeekLabel": "عدد المرات في الأسبوع",
-  "restoreBackupTitle": "استعادة النسخة الاحتياطية",
-  "restoreBackupConfirm": "سيؤدي هذا إلى استبدال جميع العادات المخزنة حاليًا على هذا الجهاز بتلك الموجودة في النسخة الاحتياطية المحددة. هل تريد المتابعة؟",
-  "restoreAction": "استعادة",
-  "notificationPermissionDenied": "لم يتم منح إذن الإشعارات",
-  "prayerRemindersLabel": "تذكيرات الصلاة",
-  "prayerRemindersSubtitle": "بعد 30 دقيقة من كل صلاة، اسأل عما إذا كنت قد صليت",
-  "sendTestReminder": "إرسال تذكير تجريبي الآن",
-  "batteryOptimizationHint": "إذا كانت التذكيرات لا تصل في الوقت المحدد، فقد يكون تحسين البطارية في هاتفك يؤخرها أو يمنعها في الخلفية.",
-  "batteryOptimizationButton": "استثناء هذا التطبيق من تحسين البطارية",
-  "exactAlarmButton": "السماح بأوقات تنبيه دقيقة (موصى به)",
-  "exactAlarmGranted": "التنبيهات الدقيقة مسموح بها — ستصل التذكيرات في وقتها.",
-  "exactAlarmNotGranted": "التنبيهات الدقيقة لا تزال غير مسموح بها — جرّب شاشة إعدادات النظام التي فُتحت للتو.",
-  "adhanTakbeerOnlyLabel": "التكبير فقط",
-  "adhanTakbeerOnlyHint": "التوقف بعد التكبير الافتتاحي بدلاً من تشغيل التسجيل كاملاً",
-  "adhanVoiceLabel": "صوت الأذان",
-  "adhanVoiceHint": "يُستخدم للصلوات المضبوطة على أيقونة مكبر الصوت (الأذان) في شاشة مواقيت الصلاة.",
-  "takbeerOnly": "التكبير فقط",
-  "fullAdhan": "الأذان كاملاً",
-  "testAdhanVoice": "تجربة هذا الصوت",
-  "adhanAudioMissing": "لا يوجد ملف صوتي لهذا الصوت بعد — أضفه ضمن android/app/src/main/res/raw لسماعه.",
-  "locationLabel": "الموقع",
-  "cityLabel": "المدينة",
-  "latitudeLabel": "خط العرض",
-  "longitudeLabel": "خط الطول",
-  "citySearchHint": "ابحث عن مدينة",
-  "cityNotFoundPrompt": "لم تجد مدينتك؟",
-  "pickOnMap": "اختر من الخريطة",
-  "noCitiesFound": "لم يتم العثور على مدن",
-  "mapPickerTitle": "اختر موقعًا",
-  "mapPickerInstructions": "اضغط في أي مكان على الخريطة لتحديد موقعك لحساب مواقيت الصلاة",
-  "useThisLocation": "استخدم هذا الموقع",
-  "customLocationLabel": "موقع مخصص",
-  "calculationMethodLabel": "طريقة الحساب",
-  "madhabLabel": "المذهب (حساب العصر)",
-  "shafiLabel": "شافعي",
-  "hanafiLabel": "حنفي",
-  "manualCorrectionLabel": "التصحيح اليدوي (بالدقائق)",
-  "adjFajr": "الفجر",
-  "adjDhuhr": "الظهر",
-  "adjAsr": "العصر",
-  "adjMaghrib": "المغرب",
-  "adjIsha": "العشاء",
-  "cityDoha": "الدوحة",
-  "cityMecca": "مكة المكرمة",
-  "cityMedina": "المدينة المنورة",
-  "cityCairo": "القاهرة",
-  "cityIstanbul": "إسطنبول",
-  "cityJakarta": "جاكرتا",
-  "cityKarachi": "كراتشي",
-  "cityLondon": "لندن",
-  "cityNewYork": "نيويورك",
-  "cityCustom": "مخصص",
-  "notificationPrayerTimeTitle": "وقت الصلاة",
-  "notificationPrayerTimeBody": "حان وقت {prayerName}",
-  "@notificationPrayerTimeBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationReminderTitle": "تذكير بالصلاة",
-  "notificationReminderBody": "هل صليت {prayerName}؟",
-  "@notificationReminderBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationYes": "نعم",
-  "notificationNo": "لا",
-  "weekdayMonShort": "إث",
-  "weekdayTueShort": "ثل",
-  "weekdayWedShort": "أر",
-  "weekdayThuShort": "خم",
-  "weekdayFriShort": "جم",
-  "weekdaySatShort": "سب",
-  "weekdaySunShort": "أح",
-  "pickAtLeastOneDay": "اختر يومًا واحدًا على الأقل من أيام الأسبوع",
-  "setValueTitle": "تعيين القيمة",
-  "setUnitTitle": "تعيين {unit}",
-  "@setUnitTitle": {
-    "placeholders": {
-      "unit": {"type": "String"}
-    }
-  },
-  "metricCurrentStreak": "السلسلة الحالية",
-  "metricStreakTarget": "هدف السلسلة",
-  "metricMaximumStreak": "أطول سلسلة",
-  "metricSuccessPercentage": "نسبة النجاح",
-  "metricWeeklyAverage": "المعدل الأسبوعي",
-  "metricMonthlyAverage": "المعدل الشهري",
-  "backupDescription": "يتم تخزين جميع بيانات العادات محليًا على هذا الجهاز. قم بتصدير ملف نسخة احتياطية للاحتفاظ بنسخة أو نقلها إلى جهاز آخر، على سبيل المثال عن طريق مشاركتها عبر محرك أقراص سحابي أو البريد الإلكتروني.",
-  "exportFailed": "فشل التصدير: {error}",
-  "@exportFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "importFailed": "فشل الاستيراد: {error}",
-  "@importFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "restoredCount": "تمت استعادة {count} عادة",
-  "@restoredCount": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "shareBackupText": "نسخة احتياطية من العادات الإسلامية",
-  "valueAddedSuccess": "تمت إضافة القيمة الجديدة بنجاح",
-  "prayerSunrise": "الشروق",
-  "methodMuslimWorldLeague": "رابطة العالم الإسلامي",
-  "methodEgyptian": "الهيئة المصرية العامة للمساحة",
-  "methodKarachi": "جامعة كراتشي",
-  "methodUmmAlQura": "أم القرى",
-  "methodDubai": "دبي",
-  "methodMoonSightingCommittee": "لجنة رؤية الهلال",
-  "methodNorthAmerica": "أمريكا الشمالية",
-  "methodKuwait": "الكويت",
-  "methodQatar": "قطر",
-  "methodSingapore": "سنغافورة",
-  "methodTurkey": "تركيا",
-  "methodTehran": "طهران",
-  "methodOther": "أخرى",
-  "streakDays": "{count, plural, zero{0 يوم} one{يوم واحد} two{يومان} few{{count} أيام} many{{count} يومًا} other{{count} يوم}}",
-  "@streakDays": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownHm": "خلال {hours} س {minutes} د",
-  "@nextPrayerCountdownHm": {
-    "placeholders": {
-      "hours": {"type": "int"},
-      "minutes": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownM": "خلال {minutes} د",
-  "@nextPrayerCountdownM": {
-    "placeholders": {
-      "minutes": {"type": "int"}
-    }
-  }
+    "@@locale":  "ar",
+    "appTitle":  "العادات الإسلامية",
+    "navHome":  "الرئيسية",
+    "navPrayerTimes":  "مواقيت الصلاة",
+    "navAllHabits":  "جميع العادات",
+    "navFivePrayers":  "الصلوات الخمس",
+    "navAddHabit":  "إضافة عادة جديدة",
+    "editHabitTitle":  "تعديل العادة",
+    "editHabitAction":  "تعديل العادة",
+    "settingsTitle":  "الإعدادات",
+    "settingsDarkMode":  "الوضع الداكن",
+    "settingsStartOfWeek":  "بداية الأسبوع",
+    "settingsPrayerTimeSettings":  "إعدادات مواقيت الصلاة",
+    "settingsPrayerTimeSettingsSubtitle":  "الموقع وطريقة الحساب وتذكيرات الصلاة",
+    "settingsBackupRestore":  "النسخ الاحتياطي والاستعادة",
+    "settingsBackupRestoreSubtitle":  "تصدير أو استعادة بيانات عاداتك",
+    "settingsLanguage":  "اللغة",
+    "settingsLanguageSystem":  "لغة الهاتف",
+    "todayHabits":  "عادات اليوم",
+    "todayProgress":  "اليوم: {completed} / {total} عادات مكتملة",
+    "@todayProgress":  {
+                           "placeholders":  {
+                                                "completed":  {
+                                                                  "type":  "int"
+                                                              },
+                                                "total":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "longestStreak":  "أطول سلسلة: {daysText} · {habitName}",
+    "@longestStreak":  {
+                           "placeholders":  {
+                                                "daysText":  {
+                                                                 "type":  "String"
+                                                             },
+                                                "habitName":  {
+                                                                  "type":  "String"
+                                                              }
+                                            }
+                       },
+    "save":  "حفظ",
+    "cancel":  "إلغاء",
+    "delete":  "حذف",
+    "edit": "تعديل",
+    "archive": "أرشفة",
+    "unarchive": "استعادة",
+    "archivedHabits": "العادات المؤرشفة",
+    "noArchivedHabits": "لا توجد عادات مؤرشفة",
+    "archivedHabitsHint": "تحتفظ العادات المؤرشفة بسجلها ولكنها تختفي من الرئيسية والإحصائيات.",
+    "habitIcon": "الأيقونة",
+    "chooseIcon": "اختر أيقونة",
+    "removeIcon": "إزالة الأيقونة",
+    "deleteHabitTitle": "حذف العادة؟",
+    "deleteHabitMessage": "سيتم حذف \"{name}\" وكل سجلها نهائيًا. لا يمكن التراجع عن ذلك.",
+    "habitDeleted": "تم حذف العادة",
+    "habitArchived": "تمت أرشفة العادة",
+    "habitRestored": "تمت استعادة العادة",
+    "setValue":  "تعيين",
+    "exportBackup":  "تصدير نسخة احتياطية",
+    "restoreFromBackup":  "استعادة من نسخة احتياطية",
+    "habitName":  "اسم العادة",
+    "successMetric":  "مقياس النجاح",
+    "yesNo":  "نعم / لا",
+    "number":  "رقم",
+    "streakTarget":  "هدف التسلسل",
+    "targetStreakDays":  "هدف التسلسل (أيام)",
+    "schedule":  "الجدول الزمني",
+    "everyDay":  "كل يوم",
+    "certainDaysOfWeek":  "أيام معينة من الأسبوع",
+    "timesPerWeek":  "عدد مرات في الأسبوع",
+    "color":  "اللون",
+    "saveHabit":  "حفظ العادة",
+    "habitFajrPrayer":  "صلاة الفجر",
+    "habitDhuhrPrayer":  "صلاة الظهر",
+    "habitAsrPrayer":  "صلاة العصر",
+    "habitMaghribPrayer":  "صلاة المغرب",
+    "habitIshaPrayer":  "صلاة العشاء",
+    "habitRecitingQuran":  "قراءة القرآن",
+    "todayLabel":  "اليوم",
+    "prayerFajr":  "الفجر",
+    "prayerDhuhr":  "الظهر",
+    "prayerAsr":  "العصر",
+    "prayerMaghrib":  "المغرب",
+    "prayerIsha":  "العشاء",
+    "notifyMode":  "تنبيه",
+    "silentMode":  "صامت",
+    "adhanMode":  "أذان",
+    "weekdayMonday":  "الإثنين",
+    "weekdayTuesday":  "الثلاثاء",
+    "weekdayWednesday":  "الأربعاء",
+    "weekdayThursday":  "الخميس",
+    "weekdayFriday":  "الجمعة",
+    "weekdaySaturday":  "السبت",
+    "weekdaySunday":  "الأحد",
+    "settingsNumerals":  "الأرقام",
+    "numeralsWestern":  "أرقام غربية (0, 1, 2…)",
+    "numeralsEastern":  "أرقام هندية (٠, ١, ٢…)",
+    "unitPages":  "صفحات",
+    "deleteEntryTitle":  "حذف الإدخال",
+    "deleteEntryConfirm":  "هل أنت متأكد أنك تريد حذف هذا الإدخال نهائيًا؟",
+    "targetAmountLabel":  "القيمة المستهدفة",
+    "unitLabel":  "الوحدة",
+    "timesPerWeekLabel":  "عدد المرات في الأسبوع",
+    "restoreBackupTitle":  "استعادة النسخة الاحتياطية",
+    "restoreBackupConfirm":  "سيؤدي هذا إلى استبدال جميع العادات المخزنة حاليًا على هذا الجهاز بتلك الموجودة في النسخة الاحتياطية المحددة. هل تريد المتابعة؟",
+    "restoreAction":  "استعادة",
+    "notificationPermissionDenied":  "لم يتم منح إذن الإشعارات",
+    "prayerRemindersLabel":  "تذكيرات الصلاة",
+    "prayerRemindersSubtitle":  "بعد 30 دقيقة من كل صلاة، اسأل عما إذا كنت قد صليت",
+    "sendTestReminder":  "إرسال تذكير تجريبي الآن",
+    "batteryOptimizationHint":  "إذا كانت التذكيرات لا تصل في الوقت المحدد، فقد يكون تحسين البطارية في هاتفك يؤخرها أو يمنعها في الخلفية.",
+    "batteryOptimizationButton":  "استثناء هذا التطبيق من تحسين البطارية",
+    "exactAlarmButton":  "السماح بأوقات تنبيه دقيقة (موصى به)",
+    "exactAlarmGranted":  "التنبيهات الدقيقة مسموح بها — ستصل التذكيرات في وقتها.",
+    "exactAlarmNotGranted":  "التنبيهات الدقيقة لا تزال غير مسموح بها — جرّب شاشة إعدادات النظام التي فُتحت للتو.",
+    "adhanTakbeerOnlyLabel":  "التكبير فقط",
+    "adhanTakbeerOnlyHint":  "التوقف بعد التكبير الافتتاحي بدلاً من تشغيل التسجيل كاملاً",
+    "adhanVoiceLabel":  "صوت الأذان",
+    "adhanVoiceHint":  "يُستخدم للصلوات المضبوطة على أيقونة مكبر الصوت (الأذان) في شاشة مواقيت الصلاة.",
+    "takbeerOnly":  "التكبير فقط",
+    "fullAdhan":  "الأذان كاملاً",
+    "testAdhanVoice":  "تجربة هذا الصوت",
+    "adhanAudioMissing":  "لا يوجد ملف صوتي لهذا الصوت بعد — أضفه ضمن android/app/src/main/res/raw لسماعه.",
+    "locationLabel":  "الموقع",
+    "cityLabel":  "المدينة",
+    "latitudeLabel":  "خط العرض",
+    "longitudeLabel":  "خط الطول",
+    "citySearchHint":  "ابحث عن مدينة",
+    "cityNotFoundPrompt":  "لم تجد مدينتك؟",
+    "pickOnMap":  "اختر من الخريطة",
+    "noCitiesFound":  "لم يتم العثور على مدن",
+    "mapPickerTitle":  "اختر موقعًا",
+    "mapPickerInstructions":  "اضغط في أي مكان على الخريطة لتحديد موقعك لحساب مواقيت الصلاة",
+    "useThisLocation":  "استخدم هذا الموقع",
+    "customLocationLabel":  "موقع مخصص",
+    "calculationMethodLabel":  "طريقة الحساب",
+    "madhabLabel":  "المذهب (حساب العصر)",
+    "shafiLabel":  "شافعي",
+    "hanafiLabel":  "حنفي",
+    "manualCorrectionLabel":  "التصحيح اليدوي (بالدقائق)",
+    "adjFajr":  "الفجر",
+    "adjDhuhr":  "الظهر",
+    "adjAsr":  "العصر",
+    "adjMaghrib":  "المغرب",
+    "adjIsha":  "العشاء",
+    "cityDoha":  "الدوحة",
+    "cityMecca":  "مكة المكرمة",
+    "cityMedina":  "المدينة المنورة",
+    "cityCairo":  "القاهرة",
+    "cityIstanbul":  "إسطنبول",
+    "cityJakarta":  "جاكرتا",
+    "cityKarachi":  "كراتشي",
+    "cityLondon":  "لندن",
+    "cityNewYork":  "نيويورك",
+    "cityCustom":  "مخصص",
+    "notificationPrayerTimeTitle":  "وقت الصلاة",
+    "notificationPrayerTimeBody":  "حان وقت {prayerName}",
+    "@notificationPrayerTimeBody":  {
+                                        "placeholders":  {
+                                                             "prayerName":  {
+                                                                                "type":  "String"
+                                                                            }
+                                                         }
+                                    },
+    "notificationReminderTitle":  "تذكير بالصلاة",
+    "notificationReminderBody":  "هل صليت {prayerName}؟",
+    "@notificationReminderBody":  {
+                                      "placeholders":  {
+                                                           "prayerName":  {
+                                                                              "type":  "String"
+                                                                          }
+                                                       }
+                                  },
+    "notificationYes":  "نعم",
+    "notificationNo":  "لا",
+    "weekdayMonShort":  "إث",
+    "weekdayTueShort":  "ثل",
+    "weekdayWedShort":  "أر",
+    "weekdayThuShort":  "خم",
+    "weekdayFriShort":  "جم",
+    "weekdaySatShort":  "سب",
+    "weekdaySunShort":  "أح",
+    "pickAtLeastOneDay":  "اختر يومًا واحدًا على الأقل من أيام الأسبوع",
+    "setValueTitle":  "تعيين القيمة",
+    "setUnitTitle":  "تعيين {unit}",
+    "@setUnitTitle":  {
+                          "placeholders":  {
+                                               "unit":  {
+                                                            "type":  "String"
+                                                        }
+                                           }
+                      },
+    "metricCurrentStreak":  "السلسلة الحالية",
+    "metricStreakTarget":  "هدف السلسلة",
+    "metricMaximumStreak":  "أطول سلسلة",
+    "metricSuccessPercentage":  "نسبة النجاح",
+    "metricWeeklyAverage":  "المعدل الأسبوعي",
+    "metricMonthlyAverage":  "المعدل الشهري",
+    "backupDescription":  "يتم تخزين جميع بيانات العادات محليًا على هذا الجهاز. قم بتصدير ملف نسخة احتياطية للاحتفاظ بنسخة أو نقلها إلى جهاز آخر، على سبيل المثال عن طريق مشاركتها عبر محرك أقراص سحابي أو البريد الإلكتروني.",
+    "exportFailed":  "فشل التصدير: {error}",
+    "@exportFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "importFailed":  "فشل الاستيراد: {error}",
+    "@importFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "restoredCount":  "تمت استعادة {count} عادة",
+    "@restoredCount":  {
+                           "placeholders":  {
+                                                "count":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "shareBackupText":  "نسخة احتياطية من العادات الإسلامية",
+    "valueAddedSuccess":  "تمت إضافة القيمة الجديدة بنجاح",
+    "prayerSunrise":  "الشروق",
+    "methodMuslimWorldLeague":  "رابطة العالم الإسلامي",
+    "methodEgyptian":  "الهيئة المصرية العامة للمساحة",
+    "methodKarachi":  "جامعة كراتشي",
+    "methodUmmAlQura":  "أم القرى",
+    "methodDubai":  "دبي",
+    "methodMoonSightingCommittee":  "لجنة رؤية الهلال",
+    "methodNorthAmerica":  "أمريكا الشمالية",
+    "methodKuwait":  "الكويت",
+    "methodQatar":  "قطر",
+    "methodSingapore":  "سنغافورة",
+    "methodTurkey":  "تركيا",
+    "methodTehran":  "طهران",
+    "methodOther":  "أخرى",
+    "streakDays":  "{count, plural, zero{0 يوم} one{يوم واحد} two{يومان} few{{count} أيام} many{{count} يومًا} other{{count} يوم}}",
+    "@streakDays":  {
+                        "placeholders":  {
+                                             "count":  {
+                                                           "type":  "int"
+                                                       }
+                                         }
+                    },
+    "nextPrayerCountdownHm":  "خلال {hours} س {minutes} د",
+    "@nextPrayerCountdownHm":  {
+                                   "placeholders":  {
+                                                        "hours":  {
+                                                                      "type":  "int"
+                                                                  },
+                                                        "minutes":  {
+                                                                        "type":  "int"
+                                                                    }
+                                                    }
+                               },
+    "nextPrayerCountdownM":  "خلال {minutes} د",
+    "@nextPrayerCountdownM":  {
+                                  "placeholders":  {
+                                                       "minutes":  {
+                                                                       "type":  "int"
+                                                                   }
+                                                   }
+                              },
+    "customColor":  "لون مخصص",
+    "selectColor":  "اختيار",
+    "navStatistics":  "الإحصائيات",
+    "reminderLabel":  "التذكير",
+    "reminderEnabledLabel":  "تذكير يومي",
+    "reminderEnabledSubtitle":  "احصل على إشعار في الوقت الذي تختاره",
+    "reminderTimeLabel":  "وقت التذكير",
+    "reminderIndependentHint":  "هذا التذكير منفصل عن تذكيرات الصلاة ويعمل حتى عندما تكون تذكيرات الصلاة متوقفة.",
+    "reminderDailyAt":  "يوميًا في {time}",
+    "reminderOff":  "متوقف",
+    "notificationHabitReminderTitle":  "تذكير بعادة",
+    "notificationHabitReminderBody":  "حان وقت {habitName}",
+    "enterName":  "أدخل اسمًا",
+    "enterNumberGreaterThanZero":  "أدخل رقمًا أكبر من 0",
+    "enterNumberOneToSeven":  "أدخل رقمًا من 1 إلى 7",
+    "onboardingSkip":  "تخطي",
+    "onboardingNext":  "التالي",
+    "onboardingGetStarted":  "ابدأ الآن",
+    "onboardingWelcomeTitle":  "مرحبًا بك في Islamic Habits",
+    "onboardingWelcomeBody":  "ابنِ روتينًا منتظمًا حول الصلاة والقرآن والعادات التي تهمك.",
+    "onboardingHabitsTitle":  "نقرة واحدة يوميًا",
+    "onboardingHabitsBody":  "تابع العادات بنعم/لا أو بالأرقام، واختر ألوانك، وشاهد تقدمك بلمحة.",
+    "onboardingPrayerTitle":  "أوقات الصلاة أينما كنت",
+    "onboardingPrayerBody":  "اختر من آلاف المدن أو حدد موقعك بدقة للحصول على أوقات صلاة دقيقة.",
+    "onboardingRemindersTitle":  "تذكيرات تناسب يومك",
+    "onboardingRemindersBody":  "اضبط تذكيرًا يوميًا لأي عادة وأجب بنعم أو لا مباشرة من الإشعار.",
+    "onboardingStatsTitle":  "شاهد تقدمك",
+    "onboardingStatsBody":  "تساعدك الرسوم البيانية والسلاسل ونسب النجاح على البقاء متحفزًا ومعرفة ما يحتاج إلى انتباه.",
+    "statisticsOverallSuccess":  "النجاح الإجمالي",
+    "statisticsOverallSuccessSubtitle":  "عبر جميع أيام العادات المسجلة",
+    "statisticsBestStreak":  "أفضل سلسلة",
+    "statisticsTotalHabits":  "العادات",
+    "statisticsDailyCompletion":  "الإنجاز اليومي",
+    "statisticsDailyCompletionSubtitle":  "إنجاز عاداتك خلال آخر 30 يومًا",
+    "statisticsWeeklyProgress":  "التقدم الأسبوعي",
+    "statisticsWeeklyProgressSubtitle":  "متوسط الإنجاز خلال الأسابيع الأربعة الماضية",
+    "statisticsMonthlyProgress":  "التقدم الشهري",
+    "statisticsMonthlyProgressSubtitle":  "متوسط الإنجاز خلال الأشهر الستة الماضية",
+    "statisticsBreakdown":  "تفصيل العادات",
+    "statisticsBreakdownSubtitle":  "أيام العادات المكتملة والفائتة وغير المسجلة خلال آخر 30 يومًا",
+    "statisticsSuccess":  "مكتمل",
+    "statisticsMissed":  "فائت",
+    "statisticsNoData":  "لا توجد بيانات",
+    "statisticsHabitPerformance":  "أداء العادات",
+    "statisticsNoDataTitle":  "لا توجد بيانات بعد",
+    "statisticsNoDataBody":  "ابدأ بتسجيل عاداتك لترى الرسوم البيانية والسلاسل ونسب النجاح هنا."
 }

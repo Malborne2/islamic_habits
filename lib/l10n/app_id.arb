@@ -1,227 +1,315 @@
 {
-  "@@locale": "id",
-  "appTitle": "Kebiasaan Islami",
-  "navHome": "Beranda",
-  "navPrayerTimes": "Waktu salat",
-  "navAllHabits": "Semua kebiasaan",
-  "navFivePrayers": "Lima salat",
-  "navAddHabit": "Tambah kebiasaan baru",
-  "editHabitTitle": "Edit kebiasaan",
-  "editHabitAction": "Edit kebiasaan",
-  "settingsTitle": "Pengaturan",
-  "settingsDarkMode": "Mode gelap",
-  "settingsStartOfWeek": "Awal minggu",
-  "settingsPrayerTimeSettings": "Pengaturan waktu salat",
-  "settingsPrayerTimeSettingsSubtitle": "Lokasi, metode perhitungan, dan pengingat salat",
-  "settingsBackupRestore": "Cadangkan & Pulihkan",
-  "settingsBackupRestoreSubtitle": "Ekspor atau pulihkan data kebiasaan Anda",
-  "settingsLanguage": "Bahasa",
-  "settingsLanguageSystem": "Bahasa ponsel",
-  "todayHabits": "Kebiasaan hari ini",
-  "todayProgress": "Hari ini: {completed} / {total} kebiasaan selesai",
-  "@todayProgress": {
-    "placeholders": {
-      "completed": {"type": "int"},
-      "total": {"type": "int"}
-    }
-  },
-  "longestStreak": "Rentetan terpanjang: {daysText} · {habitName}",
-  "@longestStreak": {
-    "placeholders": {
-      "daysText": {"type": "String"},
-      "habitName": {"type": "String"}
-    }
-  },
-  "save": "Simpan",
-  "cancel": "Batal",
-  "delete": "Hapus",
-  "setValue": "Atur",
-  "exportBackup": "Ekspor cadangan",
-  "restoreFromBackup": "Pulihkan dari cadangan",
-  "habitName": "Nama kebiasaan",
-  "successMetric": "Ukuran keberhasilan",
-  "yesNo": "Ya / Tidak",
-  "number": "Angka",
-  "streakTarget": "Target rentetan",
-  "targetStreakDays": "Target rentetan (hari)",
-  "schedule": "Jadwal",
-  "everyDay": "Setiap hari",
-  "certainDaysOfWeek": "Hari tertentu dalam seminggu",
-  "timesPerWeek": "Beberapa kali per minggu",
-  "color": "Warna",
-  "saveHabit": "Simpan kebiasaan",
-  "habitFajrPrayer": "Salat Subuh",
-  "habitDhuhrPrayer": "Salat Zuhur",
-  "habitAsrPrayer": "Salat Asar",
-  "habitMaghribPrayer": "Salat Magrib",
-  "habitIshaPrayer": "Salat Isya",
-  "habitRecitingQuran": "Membaca Al-Qur'an",
-  "todayLabel": "Hari ini",
-  "prayerFajr": "Subuh",
-  "prayerDhuhr": "Zuhur",
-  "prayerAsr": "Asar",
-  "prayerMaghrib": "Magrib",
-  "prayerIsha": "Isya",
-  "notifyMode": "Beri tahu",
-  "silentMode": "Senyap",
-  "adhanMode": "Azan",
-  "weekdayMonday": "Senin",
-  "weekdayTuesday": "Selasa",
-  "weekdayWednesday": "Rabu",
-  "weekdayThursday": "Kamis",
-  "weekdayFriday": "Jumat",
-  "weekdaySaturday": "Sabtu",
-  "weekdaySunday": "Minggu",
-  "settingsNumerals": "Angka",
-  "numeralsWestern": "Barat (0, 1, 2…)",
-  "numeralsEastern": "Arab Timur (٠, ١, ٢…)",
-  "unitPages": "halaman",
-  "deleteEntryTitle": "Hapus entri",
-  "deleteEntryConfirm": "Apakah Anda yakin ingin menghapus entri ini secara permanen?",
-  "targetAmountLabel": "Jumlah target",
-  "unitLabel": "Satuan",
-  "timesPerWeekLabel": "Kali per minggu",
-  "restoreBackupTitle": "Pulihkan cadangan",
-  "restoreBackupConfirm": "Tindakan ini akan mengganti semua kebiasaan yang tersimpan di perangkat ini dengan data dari cadangan yang dipilih. Lanjutkan?",
-  "restoreAction": "Pulihkan",
-  "notificationPermissionDenied": "Izin notifikasi tidak diberikan",
-  "prayerRemindersLabel": "Pengingat salat",
-  "prayerRemindersSubtitle": "30 menit setelah setiap salat, tanyakan apakah Anda sudah salat",
-  "sendTestReminder": "Kirim pengingat uji coba sekarang",
-  "batteryOptimizationHint": "Jika pengingat masih belum muncul tepat waktu, pengoptimalan baterai ponsel Anda mungkin menunda atau memblokirnya di latar belakang.",
-  "batteryOptimizationButton": "Kecualikan aplikasi ini dari pengoptimalan baterai",
-  "exactAlarmButton": "Izinkan waktu alarm tepat (disarankan)",
-  "exactAlarmGranted": "Alarm tepat waktu diizinkan — pengingat akan muncul tepat waktu.",
-  "exactAlarmNotGranted": "Alarm tepat waktu masih belum diizinkan — coba layar pengaturan sistem yang baru saja terbuka.",
-  "adhanTakbeerOnlyLabel": "Hanya takbir",
-  "adhanTakbeerOnlyHint": "Berhenti setelah takbir pembuka alih-alih memutar rekaman lengkap",
-  "adhanVoiceLabel": "Suara azan",
-  "adhanVoiceHint": "Digunakan untuk salat yang diatur ke ikon speaker (azan) di layar waktu salat.",
-  "takbeerOnly": "Hanya takbir",
-  "fullAdhan": "Azan lengkap",
-  "testAdhanVoice": "Uji coba suara ini",
-  "adhanAudioMissing": "Belum ada berkas audio untuk suara ini — tambahkan di android/app/src/main/res/raw untuk mendengarkannya.",
-  "locationLabel": "Lokasi",
-  "cityLabel": "Kota",
-  "latitudeLabel": "Lintang",
-  "longitudeLabel": "Bujur",
-  "citySearchHint": "Cari kota",
-  "cityNotFoundPrompt": "Tidak menemukan kota Anda?",
-  "pickOnMap": "Pilih di peta",
-  "noCitiesFound": "Tidak ada kota yang ditemukan",
-  "mapPickerTitle": "Pilih lokasi",
-  "mapPickerInstructions": "Ketuk di mana saja pada peta untuk mengatur lokasi waktu salat Anda",
-  "useThisLocation": "Gunakan lokasi ini",
-  "customLocationLabel": "Lokasi kustom",
-  "calculationMethodLabel": "Metode perhitungan",
-  "madhabLabel": "Mazhab (perhitungan Asar)",
-  "shafiLabel": "Syafi'i",
-  "hanafiLabel": "Hanafi",
-  "manualCorrectionLabel": "Koreksi manual (menit)",
-  "adjFajr": "Subuh",
-  "adjDhuhr": "Zuhur",
-  "adjAsr": "Asar",
-  "adjMaghrib": "Magrib",
-  "adjIsha": "Isya",
-  "cityDoha": "Doha",
-  "cityMecca": "Mekah",
-  "cityMedina": "Madinah",
-  "cityCairo": "Kairo",
-  "cityIstanbul": "Istanbul",
-  "cityJakarta": "Jakarta",
-  "cityKarachi": "Karachi",
-  "cityLondon": "London",
-  "cityNewYork": "New York",
-  "cityCustom": "Kustom",
-  "notificationPrayerTimeTitle": "Waktu salat",
-  "notificationPrayerTimeBody": "Sudah waktunya {prayerName}",
-  "@notificationPrayerTimeBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationReminderTitle": "Pengingat salat",
-  "notificationReminderBody": "Apakah Anda sudah melaksanakan {prayerName}?",
-  "@notificationReminderBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationYes": "Ya",
-  "notificationNo": "Tidak",
-  "weekdayMonShort": "Sen",
-  "weekdayTueShort": "Sel",
-  "weekdayWedShort": "Rab",
-  "weekdayThuShort": "Kam",
-  "weekdayFriShort": "Jum",
-  "weekdaySatShort": "Sab",
-  "weekdaySunShort": "Min",
-  "pickAtLeastOneDay": "Pilih setidaknya satu hari dalam seminggu",
-  "setValueTitle": "Atur nilai",
-  "setUnitTitle": "Atur {unit}",
-  "@setUnitTitle": {
-    "placeholders": {
-      "unit": {"type": "String"}
-    }
-  },
-  "metricCurrentStreak": "Rentetan Saat Ini",
-  "metricStreakTarget": "Target Rentetan",
-  "metricMaximumStreak": "Rentetan Terpanjang",
-  "metricSuccessPercentage": "Persentase Keberhasilan",
-  "metricWeeklyAverage": "Rata-rata Mingguan",
-  "metricMonthlyAverage": "Rata-rata Bulanan",
-  "backupDescription": "Semua data kebiasaan disimpan secara lokal di perangkat ini. Ekspor berkas cadangan untuk menyimpan salinan atau memindahkannya ke perangkat lain, misalnya dengan membagikannya ke penyimpanan cloud atau email.",
-  "exportFailed": "Ekspor gagal: {error}",
-  "@exportFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "importFailed": "Impor gagal: {error}",
-  "@importFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "restoredCount": "{count} kebiasaan dipulihkan",
-  "@restoredCount": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "shareBackupText": "Cadangan Kebiasaan Islami",
-  "valueAddedSuccess": "Nilai baru berhasil ditambahkan",
-  "prayerSunrise": "Matahari terbit",
-  "methodMuslimWorldLeague": "Liga Muslim Dunia",
-  "methodEgyptian": "Mesir",
-  "methodKarachi": "Karachi",
-  "methodUmmAlQura": "Umm al-Qura",
-  "methodDubai": "Dubai",
-  "methodMoonSightingCommittee": "Komite Rukyatul Hilal",
-  "methodNorthAmerica": "Amerika Utara",
-  "methodKuwait": "Kuwait",
-  "methodQatar": "Qatar",
-  "methodSingapore": "Singapura",
-  "methodTurkey": "Turki",
-  "methodTehran": "Teheran",
-  "methodOther": "Lainnya",
-  "streakDays": "{count, plural, other{{count} hari}}",
-  "@streakDays": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownHm": "dalam {hours}j {minutes}m",
-  "@nextPrayerCountdownHm": {
-    "placeholders": {
-      "hours": {"type": "int"},
-      "minutes": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownM": "dalam {minutes}m",
-  "@nextPrayerCountdownM": {
-    "placeholders": {
-      "minutes": {"type": "int"}
-    }
-  }
+    "@@locale":  "id",
+    "appTitle":  "Kebiasaan Islami",
+    "navHome":  "Beranda",
+    "navPrayerTimes":  "Waktu salat",
+    "navAllHabits":  "Semua kebiasaan",
+    "navFivePrayers":  "Lima salat",
+    "navAddHabit":  "Tambah kebiasaan baru",
+    "editHabitTitle":  "Edit kebiasaan",
+    "editHabitAction":  "Edit kebiasaan",
+    "settingsTitle":  "Pengaturan",
+    "settingsDarkMode":  "Mode gelap",
+    "settingsStartOfWeek":  "Awal minggu",
+    "settingsPrayerTimeSettings":  "Pengaturan waktu salat",
+    "settingsPrayerTimeSettingsSubtitle":  "Lokasi, metode perhitungan, dan pengingat salat",
+    "settingsBackupRestore":  "Cadangkan \u0026 Pulihkan",
+    "settingsBackupRestoreSubtitle":  "Ekspor atau pulihkan data kebiasaan Anda",
+    "settingsLanguage":  "Bahasa",
+    "settingsLanguageSystem":  "Bahasa ponsel",
+    "todayHabits":  "Kebiasaan hari ini",
+    "todayProgress":  "Hari ini: {completed} / {total} kebiasaan selesai",
+    "@todayProgress":  {
+                           "placeholders":  {
+                                                "completed":  {
+                                                                  "type":  "int"
+                                                              },
+                                                "total":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "longestStreak":  "Rentetan terpanjang: {daysText} · {habitName}",
+    "@longestStreak":  {
+                           "placeholders":  {
+                                                "daysText":  {
+                                                                 "type":  "String"
+                                                             },
+                                                "habitName":  {
+                                                                  "type":  "String"
+                                                              }
+                                            }
+                       },
+    "save":  "Simpan",
+    "cancel":  "Batal",
+    "delete":  "Hapus",
+    "edit": "Edit",
+    "archive": "Arsipkan",
+    "unarchive": "Pulihkan",
+    "archivedHabits": "Kebiasaan diarsipkan",
+    "noArchivedHabits": "Tidak ada kebiasaan yang diarsipkan",
+    "archivedHabitsHint": "Kebiasaan yang diarsipkan menyimpan riwayatnya tetapi disembunyikan dari Beranda dan statistik.",
+    "habitIcon": "Ikon",
+    "chooseIcon": "Pilih ikon",
+    "removeIcon": "Hapus ikon",
+    "deleteHabitTitle": "Hapus kebiasaan?",
+    "deleteHabitMessage": "\"{name}\" dan seluruh riwayatnya akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.",
+    "habitDeleted": "Kebiasaan dihapus",
+    "habitArchived": "Kebiasaan diarsipkan",
+    "habitRestored": "Kebiasaan dipulihkan",
+    "setValue":  "Atur",
+    "exportBackup":  "Ekspor cadangan",
+    "restoreFromBackup":  "Pulihkan dari cadangan",
+    "habitName":  "Nama kebiasaan",
+    "successMetric":  "Ukuran keberhasilan",
+    "yesNo":  "Ya / Tidak",
+    "number":  "Angka",
+    "streakTarget":  "Target rentetan",
+    "targetStreakDays":  "Target rentetan (hari)",
+    "schedule":  "Jadwal",
+    "everyDay":  "Setiap hari",
+    "certainDaysOfWeek":  "Hari tertentu dalam seminggu",
+    "timesPerWeek":  "Beberapa kali per minggu",
+    "color":  "Warna",
+    "saveHabit":  "Simpan kebiasaan",
+    "habitFajrPrayer":  "Salat Subuh",
+    "habitDhuhrPrayer":  "Salat Zuhur",
+    "habitAsrPrayer":  "Salat Asar",
+    "habitMaghribPrayer":  "Salat Magrib",
+    "habitIshaPrayer":  "Salat Isya",
+    "habitRecitingQuran":  "Membaca Al-Qur\u0027an",
+    "todayLabel":  "Hari ini",
+    "prayerFajr":  "Subuh",
+    "prayerDhuhr":  "Zuhur",
+    "prayerAsr":  "Asar",
+    "prayerMaghrib":  "Magrib",
+    "prayerIsha":  "Isya",
+    "notifyMode":  "Beri tahu",
+    "silentMode":  "Senyap",
+    "adhanMode":  "Azan",
+    "weekdayMonday":  "Senin",
+    "weekdayTuesday":  "Selasa",
+    "weekdayWednesday":  "Rabu",
+    "weekdayThursday":  "Kamis",
+    "weekdayFriday":  "Jumat",
+    "weekdaySaturday":  "Sabtu",
+    "weekdaySunday":  "Minggu",
+    "settingsNumerals":  "Angka",
+    "numeralsWestern":  "Barat (0, 1, 2…)",
+    "numeralsEastern":  "Arab Timur (٠, ١, ٢…)",
+    "unitPages":  "halaman",
+    "deleteEntryTitle":  "Hapus entri",
+    "deleteEntryConfirm":  "Apakah Anda yakin ingin menghapus entri ini secara permanen?",
+    "targetAmountLabel":  "Jumlah target",
+    "unitLabel":  "Satuan",
+    "timesPerWeekLabel":  "Kali per minggu",
+    "restoreBackupTitle":  "Pulihkan cadangan",
+    "restoreBackupConfirm":  "Tindakan ini akan mengganti semua kebiasaan yang tersimpan di perangkat ini dengan data dari cadangan yang dipilih. Lanjutkan?",
+    "restoreAction":  "Pulihkan",
+    "notificationPermissionDenied":  "Izin notifikasi tidak diberikan",
+    "prayerRemindersLabel":  "Pengingat salat",
+    "prayerRemindersSubtitle":  "30 menit setelah setiap salat, tanyakan apakah Anda sudah salat",
+    "sendTestReminder":  "Kirim pengingat uji coba sekarang",
+    "batteryOptimizationHint":  "Jika pengingat masih belum muncul tepat waktu, pengoptimalan baterai ponsel Anda mungkin menunda atau memblokirnya di latar belakang.",
+    "batteryOptimizationButton":  "Kecualikan aplikasi ini dari pengoptimalan baterai",
+    "exactAlarmButton":  "Izinkan waktu alarm tepat (disarankan)",
+    "exactAlarmGranted":  "Alarm tepat waktu diizinkan — pengingat akan muncul tepat waktu.",
+    "exactAlarmNotGranted":  "Alarm tepat waktu masih belum diizinkan — coba layar pengaturan sistem yang baru saja terbuka.",
+    "adhanTakbeerOnlyLabel":  "Hanya takbir",
+    "adhanTakbeerOnlyHint":  "Berhenti setelah takbir pembuka alih-alih memutar rekaman lengkap",
+    "adhanVoiceLabel":  "Suara azan",
+    "adhanVoiceHint":  "Digunakan untuk salat yang diatur ke ikon speaker (azan) di layar waktu salat.",
+    "takbeerOnly":  "Hanya takbir",
+    "fullAdhan":  "Azan lengkap",
+    "testAdhanVoice":  "Uji coba suara ini",
+    "adhanAudioMissing":  "Belum ada berkas audio untuk suara ini — tambahkan di android/app/src/main/res/raw untuk mendengarkannya.",
+    "locationLabel":  "Lokasi",
+    "cityLabel":  "Kota",
+    "latitudeLabel":  "Lintang",
+    "longitudeLabel":  "Bujur",
+    "citySearchHint":  "Cari kota",
+    "cityNotFoundPrompt":  "Tidak menemukan kota Anda?",
+    "pickOnMap":  "Pilih di peta",
+    "noCitiesFound":  "Tidak ada kota yang ditemukan",
+    "mapPickerTitle":  "Pilih lokasi",
+    "mapPickerInstructions":  "Ketuk di mana saja pada peta untuk mengatur lokasi waktu salat Anda",
+    "useThisLocation":  "Gunakan lokasi ini",
+    "customLocationLabel":  "Lokasi kustom",
+    "calculationMethodLabel":  "Metode perhitungan",
+    "madhabLabel":  "Mazhab (perhitungan Asar)",
+    "shafiLabel":  "Syafi\u0027i",
+    "hanafiLabel":  "Hanafi",
+    "manualCorrectionLabel":  "Koreksi manual (menit)",
+    "adjFajr":  "Subuh",
+    "adjDhuhr":  "Zuhur",
+    "adjAsr":  "Asar",
+    "adjMaghrib":  "Magrib",
+    "adjIsha":  "Isya",
+    "cityDoha":  "Doha",
+    "cityMecca":  "Mekah",
+    "cityMedina":  "Madinah",
+    "cityCairo":  "Kairo",
+    "cityIstanbul":  "Istanbul",
+    "cityJakarta":  "Jakarta",
+    "cityKarachi":  "Karachi",
+    "cityLondon":  "London",
+    "cityNewYork":  "New York",
+    "cityCustom":  "Kustom",
+    "notificationPrayerTimeTitle":  "Waktu salat",
+    "notificationPrayerTimeBody":  "Sudah waktunya {prayerName}",
+    "@notificationPrayerTimeBody":  {
+                                        "placeholders":  {
+                                                             "prayerName":  {
+                                                                                "type":  "String"
+                                                                            }
+                                                         }
+                                    },
+    "notificationReminderTitle":  "Pengingat salat",
+    "notificationReminderBody":  "Apakah Anda sudah melaksanakan {prayerName}?",
+    "@notificationReminderBody":  {
+                                      "placeholders":  {
+                                                           "prayerName":  {
+                                                                              "type":  "String"
+                                                                          }
+                                                       }
+                                  },
+    "notificationYes":  "Ya",
+    "notificationNo":  "Tidak",
+    "weekdayMonShort":  "Sen",
+    "weekdayTueShort":  "Sel",
+    "weekdayWedShort":  "Rab",
+    "weekdayThuShort":  "Kam",
+    "weekdayFriShort":  "Jum",
+    "weekdaySatShort":  "Sab",
+    "weekdaySunShort":  "Min",
+    "pickAtLeastOneDay":  "Pilih setidaknya satu hari dalam seminggu",
+    "setValueTitle":  "Atur nilai",
+    "setUnitTitle":  "Atur {unit}",
+    "@setUnitTitle":  {
+                          "placeholders":  {
+                                               "unit":  {
+                                                            "type":  "String"
+                                                        }
+                                           }
+                      },
+    "metricCurrentStreak":  "Rentetan Saat Ini",
+    "metricStreakTarget":  "Target Rentetan",
+    "metricMaximumStreak":  "Rentetan Terpanjang",
+    "metricSuccessPercentage":  "Persentase Keberhasilan",
+    "metricWeeklyAverage":  "Rata-rata Mingguan",
+    "metricMonthlyAverage":  "Rata-rata Bulanan",
+    "backupDescription":  "Semua data kebiasaan disimpan secara lokal di perangkat ini. Ekspor berkas cadangan untuk menyimpan salinan atau memindahkannya ke perangkat lain, misalnya dengan membagikannya ke penyimpanan cloud atau email.",
+    "exportFailed":  "Ekspor gagal: {error}",
+    "@exportFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "importFailed":  "Impor gagal: {error}",
+    "@importFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "restoredCount":  "{count} kebiasaan dipulihkan",
+    "@restoredCount":  {
+                           "placeholders":  {
+                                                "count":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "shareBackupText":  "Cadangan Kebiasaan Islami",
+    "valueAddedSuccess":  "Nilai baru berhasil ditambahkan",
+    "prayerSunrise":  "Matahari terbit",
+    "methodMuslimWorldLeague":  "Liga Muslim Dunia",
+    "methodEgyptian":  "Mesir",
+    "methodKarachi":  "Karachi",
+    "methodUmmAlQura":  "Umm al-Qura",
+    "methodDubai":  "Dubai",
+    "methodMoonSightingCommittee":  "Komite Rukyatul Hilal",
+    "methodNorthAmerica":  "Amerika Utara",
+    "methodKuwait":  "Kuwait",
+    "methodQatar":  "Qatar",
+    "methodSingapore":  "Singapura",
+    "methodTurkey":  "Turki",
+    "methodTehran":  "Teheran",
+    "methodOther":  "Lainnya",
+    "streakDays":  "{count, plural, other{{count} hari}}",
+    "@streakDays":  {
+                        "placeholders":  {
+                                             "count":  {
+                                                           "type":  "int"
+                                                       }
+                                         }
+                    },
+    "nextPrayerCountdownHm":  "dalam {hours}j {minutes}m",
+    "@nextPrayerCountdownHm":  {
+                                   "placeholders":  {
+                                                        "hours":  {
+                                                                      "type":  "int"
+                                                                  },
+                                                        "minutes":  {
+                                                                        "type":  "int"
+                                                                    }
+                                                    }
+                               },
+    "nextPrayerCountdownM":  "dalam {minutes}m",
+    "@nextPrayerCountdownM":  {
+                                  "placeholders":  {
+                                                       "minutes":  {
+                                                                       "type":  "int"
+                                                                   }
+                                                   }
+                              },
+    "customColor":  "Warna khusus",
+    "selectColor":  "Pilih",
+    "navStatistics":  "Statistik",
+    "reminderLabel":  "Pengingat",
+    "reminderEnabledLabel":  "Pengingat harian",
+    "reminderEnabledSubtitle":  "Dapatkan notifikasi pada waktu yang Anda pilih",
+    "reminderTimeLabel":  "Waktu pengingat",
+    "reminderIndependentHint":  "Pengingat ini terpisah dari pengingat salat dan tetap berfungsi meskipun pengingat salat dimatikan.",
+    "reminderDailyAt":  "Setiap hari pukul {time}",
+    "reminderOff":  "Mati",
+    "notificationHabitReminderTitle":  "Pengingat kebiasaan",
+    "notificationHabitReminderBody":  "Waktunya {habitName}",
+    "enterName":  "Masukkan nama",
+    "enterNumberGreaterThanZero":  "Masukkan angka lebih dari 0",
+    "enterNumberOneToSeven":  "Masukkan angka 1 sampai 7",
+    "onboardingSkip":  "Lewati",
+    "onboardingNext":  "Berikutnya",
+    "onboardingGetStarted":  "Mulai",
+    "onboardingWelcomeTitle":  "Selamat datang di Islamic Habits",
+    "onboardingWelcomeBody":  "Bangun rutinitas yang konsisten seputar salat, Al-Qur\u0027an, dan kebiasaan yang penting bagi Anda.",
+    "onboardingHabitsTitle":  "Satu ketukan sehari",
+    "onboardingHabitsBody":  "Lacak kebiasaan Ya/Tidak dan angka, pilih warna Anda sendiri, dan lihat kemajuan Anda sekilas.",
+    "onboardingPrayerTitle":  "Waktu salat, di mana pun Anda berada",
+    "onboardingPrayerBody":  "Pilih dari ribuan kota atau pilih lokasi tepat Anda untuk waktu salat yang akurat.",
+    "onboardingRemindersTitle":  "Pengingat yang sesuai harimu",
+    "onboardingRemindersBody":  "Atur pengingat harian untuk kebiasaan apa pun dan jawab Ya atau Tidak langsung dari notifikasi.",
+    "onboardingStatsTitle":  "Lihat kemajuan Anda",
+    "onboardingStatsBody":  "Grafik, rentetan, dan tingkat keberhasilan membantu Anda tetap termotivasi dan mengetahui apa yang perlu diperhatikan.",
+    "statisticsOverallSuccess":  "Keberhasilan keseluruhan",
+    "statisticsOverallSuccessSubtitle":  "Di semua hari kebiasaan yang tercatat",
+    "statisticsBestStreak":  "Rentetan terbaik",
+    "statisticsTotalHabits":  "Kebiasaan",
+    "statisticsDailyCompletion":  "Penyelesaian harian",
+    "statisticsDailyCompletionSubtitle":  "Penyelesaian kebiasaan Anda selama 30 hari terakhir",
+    "statisticsWeeklyProgress":  "Kemajuan mingguan",
+    "statisticsWeeklyProgressSubtitle":  "Rata-rata penyelesaian selama empat minggu terakhir",
+    "statisticsMonthlyProgress":  "Kemajuan bulanan",
+    "statisticsMonthlyProgressSubtitle":  "Rata-rata penyelesaian selama enam bulan terakhir",
+    "statisticsBreakdown":  "Rincian kebiasaan",
+    "statisticsBreakdownSubtitle":  "Hari kebiasaan yang selesai, terlewat, dan belum dicatat dalam 30 hari terakhir",
+    "statisticsSuccess":  "Selesai",
+    "statisticsMissed":  "Terlewat",
+    "statisticsNoData":  "Tidak ada data",
+    "statisticsHabitPerformance":  "Performa kebiasaan",
+    "statisticsNoDataTitle":  "Belum ada data",
+    "statisticsNoDataBody":  "Mulai catat kebiasaan Anda untuk melihat grafik, rentetan, dan tingkat keberhasilan di sini."
 }

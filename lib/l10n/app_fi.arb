@@ -1,227 +1,315 @@
 {
-  "@@locale": "fi",
-  "appTitle": "Islamilaiset tavat",
-  "navHome": "Koti",
-  "navPrayerTimes": "Rukousajat",
-  "navAllHabits": "Kaikki tavat",
-  "navFivePrayers": "Viisi rukousta",
-  "navAddHabit": "Lisää uusi tapa",
-  "editHabitTitle": "Muokkaa tapaa",
-  "editHabitAction": "Muokkaa tapaa",
-  "settingsTitle": "Asetukset",
-  "settingsDarkMode": "Tumma tila",
-  "settingsStartOfWeek": "Viikon alkupäivä",
-  "settingsPrayerTimeSettings": "Rukousaika-asetukset",
-  "settingsPrayerTimeSettingsSubtitle": "Sijainti, laskentamenetelmä ja rukousmuistutukset",
-  "settingsBackupRestore": "Varmuuskopiointi ja palautus",
-  "settingsBackupRestoreSubtitle": "Vie tai palauta tapatietosi",
-  "settingsLanguage": "Kieli",
-  "settingsLanguageSystem": "Puhelimen kieli",
-  "todayHabits": "Tämän päivän tavat",
-  "todayProgress": "Tänään: {completed} / {total} tapaa tehty",
-  "@todayProgress": {
-    "placeholders": {
-      "completed": {"type": "int"},
-      "total": {"type": "int"}
-    }
-  },
-  "longestStreak": "Pisin putki: {daysText} · {habitName}",
-  "@longestStreak": {
-    "placeholders": {
-      "daysText": {"type": "String"},
-      "habitName": {"type": "String"}
-    }
-  },
-  "save": "Tallenna",
-  "cancel": "Peruuta",
-  "delete": "Poista",
-  "setValue": "Aseta",
-  "exportBackup": "Vie varmuuskopio",
-  "restoreFromBackup": "Palauta varmuuskopiosta",
-  "habitName": "Tavan nimi",
-  "successMetric": "Onnistumismittari",
-  "yesNo": "Kyllä / Ei",
-  "number": "Numero",
-  "streakTarget": "Putkitavoite",
-  "targetStreakDays": "Tavoiteputki (päivää)",
-  "schedule": "Aikataulu",
-  "everyDay": "Joka päivä",
-  "certainDaysOfWeek": "Tietyt viikonpäivät",
-  "timesPerWeek": "Tietty määrä kertoja viikossa",
-  "color": "Väri",
-  "saveHabit": "Tallenna tapa",
-  "habitFajrPrayer": "Fajr-rukous",
-  "habitDhuhrPrayer": "Dhuhr-rukous",
-  "habitAsrPrayer": "Asr-rukous",
-  "habitMaghribPrayer": "Maghrib-rukous",
-  "habitIshaPrayer": "Isha-rukous",
-  "habitRecitingQuran": "Koraanin lukeminen",
-  "todayLabel": "Tänään",
-  "prayerFajr": "Fajr",
-  "prayerDhuhr": "Dhuhr",
-  "prayerAsr": "Asr",
-  "prayerMaghrib": "Maghrib",
-  "prayerIsha": "Isha",
-  "notifyMode": "Ilmoita",
-  "silentMode": "Äänetön",
-  "adhanMode": "Adhan",
-  "weekdayMonday": "Maanantai",
-  "weekdayTuesday": "Tiistai",
-  "weekdayWednesday": "Keskiviikko",
-  "weekdayThursday": "Torstai",
-  "weekdayFriday": "Perjantai",
-  "weekdaySaturday": "Lauantai",
-  "weekdaySunday": "Sunnuntai",
-  "settingsNumerals": "Numeromuoto",
-  "numeralsWestern": "Länsimaiset (0, 1, 2…)",
-  "numeralsEastern": "Itäarabialaiset (٠, ١, ٢…)",
-  "unitPages": "sivua",
-  "deleteEntryTitle": "Poista merkintä",
-  "deleteEntryConfirm": "Haluatko varmasti poistaa tämän merkinnän pysyvästi?",
-  "targetAmountLabel": "Tavoitemäärä",
-  "unitLabel": "Yksikkö",
-  "timesPerWeekLabel": "Kertaa viikossa",
-  "restoreBackupTitle": "Palauta varmuuskopio",
-  "restoreBackupConfirm": "Tämä korvaa kaikki laitteelle tallennetut tavat valitun varmuuskopion tiedoilla. Jatketaanko?",
-  "restoreAction": "Palauta",
-  "notificationPermissionDenied": "Ilmoituslupaa ei myönnetty",
-  "prayerRemindersLabel": "Rukousmuistutukset",
-  "prayerRemindersSubtitle": "30 minuuttia jokaisen rukouksen jälkeen kysytään, rukoilitko",
-  "sendTestReminder": "Lähetä testimuistutus nyt",
-  "batteryOptimizationHint": "Jos muistutukset eivät silti saavu oikeaan aikaan, puhelimesi akun optimointi saattaa viivästyttää tai estää niitä taustalla.",
-  "batteryOptimizationButton": "Vapauta tämä sovellus akun optimoinnista",
-  "exactAlarmButton": "Salli tarkat hälytysajat (suositellaan)",
-  "exactAlarmGranted": "Tarkat hälytykset ovat sallittuja — muistutukset saapuvat ajallaan.",
-  "exactAlarmNotGranted": "Tarkat hälytykset eivät ole vieläkään sallittuja — kokeile juuri avautunutta järjestelmäasetusnäyttöä.",
-  "adhanTakbeerOnlyLabel": "Vain takbir",
-  "adhanTakbeerOnlyHint": "Pysäytä alkutakbirin jälkeen koko tallenteen toistamisen sijaan",
-  "adhanVoiceLabel": "Adhan-ääni",
-  "adhanVoiceHint": "Käytetään rukouksille, jotka on asetettu kaiutinkuvakkeeseen (adhan) rukousaikanäytöllä.",
-  "takbeerOnly": "Vain takbir",
-  "fullAdhan": "Täysi adhan",
-  "testAdhanVoice": "Testaa tätä ääntä",
-  "adhanAudioMissing": "Tälle äänelle ei vielä ole liitetty äänitiedostoa — lisää se kansioon android/app/src/main/res/raw kuullaksesi sen.",
-  "locationLabel": "Sijainti",
-  "cityLabel": "Kaupunki",
-  "latitudeLabel": "Leveysaste",
-  "longitudeLabel": "Pituusaste",
-  "citySearchHint": "Hae kaupunkia",
-  "cityNotFoundPrompt": "Etkö löydä kaupunkiasi?",
-  "pickOnMap": "Valitse kartalta",
-  "noCitiesFound": "Kaupunkeja ei löytynyt",
-  "mapPickerTitle": "Valitse sijainti",
-  "mapPickerInstructions": "Napauta karttaa mistä tahansa asettaaksesi rukousaikojen sijainnin",
-  "useThisLocation": "Käytä tätä sijaintia",
-  "customLocationLabel": "Mukautettu sijainti",
-  "calculationMethodLabel": "Laskentamenetelmä",
-  "madhabLabel": "Madhhab (Asr-laskenta)",
-  "shafiLabel": "Shafi",
-  "hanafiLabel": "Hanafi",
-  "manualCorrectionLabel": "Manuaalinen korjaus (minuuttia)",
-  "adjFajr": "Fajr",
-  "adjDhuhr": "Dhuhr",
-  "adjAsr": "Asr",
-  "adjMaghrib": "Maghrib",
-  "adjIsha": "Isha",
-  "cityDoha": "Doha",
-  "cityMecca": "Mekka",
-  "cityMedina": "Medina",
-  "cityCairo": "Kairo",
-  "cityIstanbul": "Istanbul",
-  "cityJakarta": "Jakarta",
-  "cityKarachi": "Karachi",
-  "cityLondon": "Lontoo",
-  "cityNewYork": "New York",
-  "cityCustom": "Mukautettu",
-  "notificationPrayerTimeTitle": "Rukousaika",
-  "notificationPrayerTimeBody": "On aika rukoilla {prayerName}",
-  "@notificationPrayerTimeBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationReminderTitle": "Rukousmuistutus",
-  "notificationReminderBody": "Rukoilitko {prayerName}?",
-  "@notificationReminderBody": {
-    "placeholders": {
-      "prayerName": {"type": "String"}
-    }
-  },
-  "notificationYes": "Kyllä",
-  "notificationNo": "Ei",
-  "weekdayMonShort": "Ma",
-  "weekdayTueShort": "Ti",
-  "weekdayWedShort": "Ke",
-  "weekdayThuShort": "To",
-  "weekdayFriShort": "Pe",
-  "weekdaySatShort": "La",
-  "weekdaySunShort": "Su",
-  "pickAtLeastOneDay": "Valitse vähintään yksi viikonpäivä",
-  "setValueTitle": "Aseta arvo",
-  "setUnitTitle": "Aseta {unit}",
-  "@setUnitTitle": {
-    "placeholders": {
-      "unit": {"type": "String"}
-    }
-  },
-  "metricCurrentStreak": "Nykyinen putki",
-  "metricStreakTarget": "Putkitavoite",
-  "metricMaximumStreak": "Pisin putki",
-  "metricSuccessPercentage": "Onnistumisprosentti",
-  "metricWeeklyAverage": "Viikkokeskiarvo",
-  "metricMonthlyAverage": "Kuukausikeskiarvo",
-  "backupDescription": "Kaikki tapatiedot tallennetaan paikallisesti tähän laitteeseen. Vie varmuuskopiotiedosto säilyttääksesi kopion tai siirtääksesi sen toiselle laitteelle, esimerkiksi jakamalla se pilvipalveluun tai sähköpostiin.",
-  "exportFailed": "Vienti epäonnistui: {error}",
-  "@exportFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "importFailed": "Tuonti epäonnistui: {error}",
-  "@importFailed": {
-    "placeholders": {
-      "error": {"type": "String"}
-    }
-  },
-  "restoredCount": "Palautettiin {count} tapaa",
-  "@restoredCount": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "shareBackupText": "Islamilaiset tavat -varmuuskopio",
-  "valueAddedSuccess": "Uusi arvo lisätty onnistuneesti",
-  "prayerSunrise": "Auringonnousu",
-  "methodMuslimWorldLeague": "Muslim World League",
-  "methodEgyptian": "Egyptiläinen",
-  "methodKarachi": "Karachi",
-  "methodUmmAlQura": "Umm al-Qura",
-  "methodDubai": "Dubai",
-  "methodMoonSightingCommittee": "Kuun havainnointikomitea",
-  "methodNorthAmerica": "Pohjois-Amerikka",
-  "methodKuwait": "Kuwait",
-  "methodQatar": "Qatar",
-  "methodSingapore": "Singapore",
-  "methodTurkey": "Turkki",
-  "methodTehran": "Teheran",
-  "methodOther": "Muu",
-  "streakDays": "{count, plural, one{{count} päivä} other{{count} päivää}}",
-  "@streakDays": {
-    "placeholders": {
-      "count": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownHm": "{hours} t {minutes} min kuluttua",
-  "@nextPrayerCountdownHm": {
-    "placeholders": {
-      "hours": {"type": "int"},
-      "minutes": {"type": "int"}
-    }
-  },
-  "nextPrayerCountdownM": "{minutes} min kuluttua",
-  "@nextPrayerCountdownM": {
-    "placeholders": {
-      "minutes": {"type": "int"}
-    }
-  }
+    "@@locale":  "fi",
+    "appTitle":  "Islamilaiset tavat",
+    "navHome":  "Koti",
+    "navPrayerTimes":  "Rukousajat",
+    "navAllHabits":  "Kaikki tavat",
+    "navFivePrayers":  "Viisi rukousta",
+    "navAddHabit":  "Lisää uusi tapa",
+    "editHabitTitle":  "Muokkaa tapaa",
+    "editHabitAction":  "Muokkaa tapaa",
+    "settingsTitle":  "Asetukset",
+    "settingsDarkMode":  "Tumma tila",
+    "settingsStartOfWeek":  "Viikon alkupäivä",
+    "settingsPrayerTimeSettings":  "Rukousaika-asetukset",
+    "settingsPrayerTimeSettingsSubtitle":  "Sijainti, laskentamenetelmä ja rukousmuistutukset",
+    "settingsBackupRestore":  "Varmuuskopiointi ja palautus",
+    "settingsBackupRestoreSubtitle":  "Vie tai palauta tapatietosi",
+    "settingsLanguage":  "Kieli",
+    "settingsLanguageSystem":  "Puhelimen kieli",
+    "todayHabits":  "Tämän päivän tavat",
+    "todayProgress":  "Tänään: {completed} / {total} tapaa tehty",
+    "@todayProgress":  {
+                           "placeholders":  {
+                                                "completed":  {
+                                                                  "type":  "int"
+                                                              },
+                                                "total":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "longestStreak":  "Pisin putki: {daysText} · {habitName}",
+    "@longestStreak":  {
+                           "placeholders":  {
+                                                "daysText":  {
+                                                                 "type":  "String"
+                                                             },
+                                                "habitName":  {
+                                                                  "type":  "String"
+                                                              }
+                                            }
+                       },
+    "save":  "Tallenna",
+    "cancel":  "Peruuta",
+    "delete":  "Poista",
+    "edit": "Muokkaa",
+    "archive": "Arkistoi",
+    "unarchive": "Palauta",
+    "archivedHabits": "Arkistoidut tavat",
+    "noArchivedHabits": "Ei arkistoituja tapoja",
+    "archivedHabitsHint": "Arkistoidut tavat säilyttävät historiansa, mutta piilotetaan etusivulta ja tilastoista.",
+    "habitIcon": "Kuvake",
+    "chooseIcon": "Valitse kuvake",
+    "removeIcon": "Poista kuvake",
+    "deleteHabitTitle": "Poista tapa?",
+    "deleteHabitMessage": "\"{name}\" ja sen koko historia poistetaan pysyvästi. Tätä ei voi kumota.",
+    "habitDeleted": "Tapa poistettu",
+    "habitArchived": "Tapa arkistoitu",
+    "habitRestored": "Tapa palautettu",
+    "setValue":  "Aseta",
+    "exportBackup":  "Vie varmuuskopio",
+    "restoreFromBackup":  "Palauta varmuuskopiosta",
+    "habitName":  "Tavan nimi",
+    "successMetric":  "Onnistumismittari",
+    "yesNo":  "Kyllä / Ei",
+    "number":  "Numero",
+    "streakTarget":  "Putkitavoite",
+    "targetStreakDays":  "Tavoiteputki (päivää)",
+    "schedule":  "Aikataulu",
+    "everyDay":  "Joka päivä",
+    "certainDaysOfWeek":  "Tietyt viikonpäivät",
+    "timesPerWeek":  "Tietty määrä kertoja viikossa",
+    "color":  "Väri",
+    "saveHabit":  "Tallenna tapa",
+    "habitFajrPrayer":  "Fajr-rukous",
+    "habitDhuhrPrayer":  "Dhuhr-rukous",
+    "habitAsrPrayer":  "Asr-rukous",
+    "habitMaghribPrayer":  "Maghrib-rukous",
+    "habitIshaPrayer":  "Isha-rukous",
+    "habitRecitingQuran":  "Koraanin lukeminen",
+    "todayLabel":  "Tänään",
+    "prayerFajr":  "Fajr",
+    "prayerDhuhr":  "Dhuhr",
+    "prayerAsr":  "Asr",
+    "prayerMaghrib":  "Maghrib",
+    "prayerIsha":  "Isha",
+    "notifyMode":  "Ilmoita",
+    "silentMode":  "Äänetön",
+    "adhanMode":  "Adhan",
+    "weekdayMonday":  "Maanantai",
+    "weekdayTuesday":  "Tiistai",
+    "weekdayWednesday":  "Keskiviikko",
+    "weekdayThursday":  "Torstai",
+    "weekdayFriday":  "Perjantai",
+    "weekdaySaturday":  "Lauantai",
+    "weekdaySunday":  "Sunnuntai",
+    "settingsNumerals":  "Numeromuoto",
+    "numeralsWestern":  "Länsimaiset (0, 1, 2…)",
+    "numeralsEastern":  "Itäarabialaiset (٠, ١, ٢…)",
+    "unitPages":  "sivua",
+    "deleteEntryTitle":  "Poista merkintä",
+    "deleteEntryConfirm":  "Haluatko varmasti poistaa tämän merkinnän pysyvästi?",
+    "targetAmountLabel":  "Tavoitemäärä",
+    "unitLabel":  "Yksikkö",
+    "timesPerWeekLabel":  "Kertaa viikossa",
+    "restoreBackupTitle":  "Palauta varmuuskopio",
+    "restoreBackupConfirm":  "Tämä korvaa kaikki laitteelle tallennetut tavat valitun varmuuskopion tiedoilla. Jatketaanko?",
+    "restoreAction":  "Palauta",
+    "notificationPermissionDenied":  "Ilmoituslupaa ei myönnetty",
+    "prayerRemindersLabel":  "Rukousmuistutukset",
+    "prayerRemindersSubtitle":  "30 minuuttia jokaisen rukouksen jälkeen kysytään, rukoilitko",
+    "sendTestReminder":  "Lähetä testimuistutus nyt",
+    "batteryOptimizationHint":  "Jos muistutukset eivät silti saavu oikeaan aikaan, puhelimesi akun optimointi saattaa viivästyttää tai estää niitä taustalla.",
+    "batteryOptimizationButton":  "Vapauta tämä sovellus akun optimoinnista",
+    "exactAlarmButton":  "Salli tarkat hälytysajat (suositellaan)",
+    "exactAlarmGranted":  "Tarkat hälytykset ovat sallittuja — muistutukset saapuvat ajallaan.",
+    "exactAlarmNotGranted":  "Tarkat hälytykset eivät ole vieläkään sallittuja — kokeile juuri avautunutta järjestelmäasetusnäyttöä.",
+    "adhanTakbeerOnlyLabel":  "Vain takbir",
+    "adhanTakbeerOnlyHint":  "Pysäytä alkutakbirin jälkeen koko tallenteen toistamisen sijaan",
+    "adhanVoiceLabel":  "Adhan-ääni",
+    "adhanVoiceHint":  "Käytetään rukouksille, jotka on asetettu kaiutinkuvakkeeseen (adhan) rukousaikanäytöllä.",
+    "takbeerOnly":  "Vain takbir",
+    "fullAdhan":  "Täysi adhan",
+    "testAdhanVoice":  "Testaa tätä ääntä",
+    "adhanAudioMissing":  "Tälle äänelle ei vielä ole liitetty äänitiedostoa — lisää se kansioon android/app/src/main/res/raw kuullaksesi sen.",
+    "locationLabel":  "Sijainti",
+    "cityLabel":  "Kaupunki",
+    "latitudeLabel":  "Leveysaste",
+    "longitudeLabel":  "Pituusaste",
+    "citySearchHint":  "Hae kaupunkia",
+    "cityNotFoundPrompt":  "Etkö löydä kaupunkiasi?",
+    "pickOnMap":  "Valitse kartalta",
+    "noCitiesFound":  "Kaupunkeja ei löytynyt",
+    "mapPickerTitle":  "Valitse sijainti",
+    "mapPickerInstructions":  "Napauta karttaa mistä tahansa asettaaksesi rukousaikojen sijainnin",
+    "useThisLocation":  "Käytä tätä sijaintia",
+    "customLocationLabel":  "Mukautettu sijainti",
+    "calculationMethodLabel":  "Laskentamenetelmä",
+    "madhabLabel":  "Madhhab (Asr-laskenta)",
+    "shafiLabel":  "Shafi",
+    "hanafiLabel":  "Hanafi",
+    "manualCorrectionLabel":  "Manuaalinen korjaus (minuuttia)",
+    "adjFajr":  "Fajr",
+    "adjDhuhr":  "Dhuhr",
+    "adjAsr":  "Asr",
+    "adjMaghrib":  "Maghrib",
+    "adjIsha":  "Isha",
+    "cityDoha":  "Doha",
+    "cityMecca":  "Mekka",
+    "cityMedina":  "Medina",
+    "cityCairo":  "Kairo",
+    "cityIstanbul":  "Istanbul",
+    "cityJakarta":  "Jakarta",
+    "cityKarachi":  "Karachi",
+    "cityLondon":  "Lontoo",
+    "cityNewYork":  "New York",
+    "cityCustom":  "Mukautettu",
+    "notificationPrayerTimeTitle":  "Rukousaika",
+    "notificationPrayerTimeBody":  "On aika rukoilla {prayerName}",
+    "@notificationPrayerTimeBody":  {
+                                        "placeholders":  {
+                                                             "prayerName":  {
+                                                                                "type":  "String"
+                                                                            }
+                                                         }
+                                    },
+    "notificationReminderTitle":  "Rukousmuistutus",
+    "notificationReminderBody":  "Rukoilitko {prayerName}?",
+    "@notificationReminderBody":  {
+                                      "placeholders":  {
+                                                           "prayerName":  {
+                                                                              "type":  "String"
+                                                                          }
+                                                       }
+                                  },
+    "notificationYes":  "Kyllä",
+    "notificationNo":  "Ei",
+    "weekdayMonShort":  "Ma",
+    "weekdayTueShort":  "Ti",
+    "weekdayWedShort":  "Ke",
+    "weekdayThuShort":  "To",
+    "weekdayFriShort":  "Pe",
+    "weekdaySatShort":  "La",
+    "weekdaySunShort":  "Su",
+    "pickAtLeastOneDay":  "Valitse vähintään yksi viikonpäivä",
+    "setValueTitle":  "Aseta arvo",
+    "setUnitTitle":  "Aseta {unit}",
+    "@setUnitTitle":  {
+                          "placeholders":  {
+                                               "unit":  {
+                                                            "type":  "String"
+                                                        }
+                                           }
+                      },
+    "metricCurrentStreak":  "Nykyinen putki",
+    "metricStreakTarget":  "Putkitavoite",
+    "metricMaximumStreak":  "Pisin putki",
+    "metricSuccessPercentage":  "Onnistumisprosentti",
+    "metricWeeklyAverage":  "Viikkokeskiarvo",
+    "metricMonthlyAverage":  "Kuukausikeskiarvo",
+    "backupDescription":  "Kaikki tapatiedot tallennetaan paikallisesti tähän laitteeseen. Vie varmuuskopiotiedosto säilyttääksesi kopion tai siirtääksesi sen toiselle laitteelle, esimerkiksi jakamalla se pilvipalveluun tai sähköpostiin.",
+    "exportFailed":  "Vienti epäonnistui: {error}",
+    "@exportFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "importFailed":  "Tuonti epäonnistui: {error}",
+    "@importFailed":  {
+                          "placeholders":  {
+                                               "error":  {
+                                                             "type":  "String"
+                                                         }
+                                           }
+                      },
+    "restoredCount":  "Palautettiin {count} tapaa",
+    "@restoredCount":  {
+                           "placeholders":  {
+                                                "count":  {
+                                                              "type":  "int"
+                                                          }
+                                            }
+                       },
+    "shareBackupText":  "Islamilaiset tavat -varmuuskopio",
+    "valueAddedSuccess":  "Uusi arvo lisätty onnistuneesti",
+    "prayerSunrise":  "Auringonnousu",
+    "methodMuslimWorldLeague":  "Muslim World League",
+    "methodEgyptian":  "Egyptiläinen",
+    "methodKarachi":  "Karachi",
+    "methodUmmAlQura":  "Umm al-Qura",
+    "methodDubai":  "Dubai",
+    "methodMoonSightingCommittee":  "Kuun havainnointikomitea",
+    "methodNorthAmerica":  "Pohjois-Amerikka",
+    "methodKuwait":  "Kuwait",
+    "methodQatar":  "Qatar",
+    "methodSingapore":  "Singapore",
+    "methodTurkey":  "Turkki",
+    "methodTehran":  "Teheran",
+    "methodOther":  "Muu",
+    "streakDays":  "{count, plural, one{{count} päivä} other{{count} päivää}}",
+    "@streakDays":  {
+                        "placeholders":  {
+                                             "count":  {
+                                                           "type":  "int"
+                                                       }
+                                         }
+                    },
+    "nextPrayerCountdownHm":  "{hours} t {minutes} min kuluttua",
+    "@nextPrayerCountdownHm":  {
+                                   "placeholders":  {
+                                                        "hours":  {
+                                                                      "type":  "int"
+                                                                  },
+                                                        "minutes":  {
+                                                                        "type":  "int"
+                                                                    }
+                                                    }
+                               },
+    "nextPrayerCountdownM":  "{minutes} min kuluttua",
+    "@nextPrayerCountdownM":  {
+                                  "placeholders":  {
+                                                       "minutes":  {
+                                                                       "type":  "int"
+                                                                   }
+                                                   }
+                              },
+    "customColor":  "Mukautettu väri",
+    "selectColor":  "Valitse",
+    "navStatistics":  "Tilastot",
+    "reminderLabel":  "Muistutus",
+    "reminderEnabledLabel":  "Päivittäinen muistutus",
+    "reminderEnabledSubtitle":  "Saat ilmoituksen valitsemanasi aikana",
+    "reminderTimeLabel":  "Muistutuksen aika",
+    "reminderIndependentHint":  "Tämä muistutus on erillinen rukousmuistutuksista ja toimii myös silloin, kun rukousmuistutukset ovat pois päältä.",
+    "reminderDailyAt":  "Päivittäin klo {time}",
+    "reminderOff":  "Pois",
+    "notificationHabitReminderTitle":  "Tavan muistutus",
+    "notificationHabitReminderBody":  "On aika: {habitName}",
+    "enterName":  "Anna nimi",
+    "enterNumberGreaterThanZero":  "Anna numero, joka on suurempi kuin 0",
+    "enterNumberOneToSeven":  "Anna numero väliltä 1–7",
+    "onboardingSkip":  "Ohita",
+    "onboardingNext":  "Seuraava",
+    "onboardingGetStarted":  "Aloita",
+    "onboardingWelcomeTitle":  "Tervetuloa Islamic Habits -sovellukseen",
+    "onboardingWelcomeBody":  "Rakenna säännöllinen rutiini rukouksen, Koraanin ja sinulle tärkeiden tapojen ympärille.",
+    "onboardingHabitsTitle":  "Yksi napautus päivässä",
+    "onboardingHabitsBody":  "Seuraa kyllä/ei- ja numerotapoja, valitse omat värisi ja näe edistymisesi yhdellä silmäyksellä.",
+    "onboardingPrayerTitle":  "Rukousajat missä tahansa",
+    "onboardingPrayerBody":  "Valitse tuhansista kaupungeista tai valitse tarkka sijaintisi tarkkoja rukousaikoja varten.",
+    "onboardingRemindersTitle":  "Päivääsi sopivat muistutukset",
+    "onboardingRemindersBody":  "Aseta päivittäinen muistutus mille tahansa tavalle ja vastaa kyllä tai ei suoraan ilmoituksesta.",
+    "onboardingStatsTitle":  "Näe edistymisesi",
+    "onboardingStatsBody":  "Kaaviot, putket ja onnistumisprosentit auttavat sinua pysymään motivoituneena ja huomaamaan, mihin kannattaa keskittyä.",
+    "statisticsOverallSuccess":  "Kokonaisonnistuminen",
+    "statisticsOverallSuccessSubtitle":  "Kaikkien kirjattujen tapapäivien osalta",
+    "statisticsBestStreak":  "Paras putki",
+    "statisticsTotalHabits":  "Tavat",
+    "statisticsDailyCompletion":  "Päivittäinen suoritus",
+    "statisticsDailyCompletionSubtitle":  "Tapojesi suoritus viimeisten 30 päivän ajalta",
+    "statisticsWeeklyProgress":  "Viikoittainen edistyminen",
+    "statisticsWeeklyProgressSubtitle":  "Keskimääräinen suoritus viimeisten neljän viikon ajalta",
+    "statisticsMonthlyProgress":  "Kuukausittainen edistyminen",
+    "statisticsMonthlyProgressSubtitle":  "Keskimääräinen suoritus viimeisten kuuden kuukauden ajalta",
+    "statisticsBreakdown":  "Tapojen erittely",
+    "statisticsBreakdownSubtitle":  "Suoritetut, väliin jääneet ja kirjaamattomat tapapäivät viimeisten 30 päivän ajalta",
+    "statisticsSuccess":  "Suoritettu",
+    "statisticsMissed":  "Väliin jäänyt",
+    "statisticsNoData":  "Ei tietoja",
+    "statisticsHabitPerformance":  "Tapojen suorituskyky",
+    "statisticsNoDataTitle":  "Ei vielä tietoja",
+    "statisticsNoDataBody":  "Aloita tapojesi kirjaaminen, niin näet täällä kaaviot, putket ja onnistumisprosentit."
 }

@@ -35,6 +35,25 @@
   "save": "Save",
   "cancel": "Cancel",
   "delete": "Delete",
+  "edit": "Edit",
+  "archive": "Archive",
+  "unarchive": "Restore",
+  "archivedHabits": "Archived habits",
+  "noArchivedHabits": "No archived habits",
+  "archivedHabitsHint": "Archived habits keep their history but are hidden from Home and statistics.",
+  "habitIcon": "Icon",
+  "chooseIcon": "Choose icon",
+  "removeIcon": "Remove icon",
+  "deleteHabitTitle": "Delete habit?",
+  "deleteHabitMessage": "\"{name}\" and all of its history will be permanently deleted. This cannot be undone.",
+  "habitDeleted": "Habit deleted",
+  "habitArchived": "Habit archived",
+  "habitRestored": "Habit restored",
+  "@deleteHabitMessage": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
   "setValue": "Set",
   "exportBackup": "Export backup",
   "restoreFromBackup": "Restore from backup",
@@ -223,5 +242,61 @@
     "placeholders": {
       "minutes": {"type": "int"}
     }
-  }
+  },
+  "customColor": "Custom color",
+  "selectColor": "Select",
+  "navStatistics": "Statistics",
+  "reminderLabel": "Reminder",
+  "reminderEnabledLabel": "Daily reminder",
+  "reminderEnabledSubtitle": "Get a notification at the time you choose",
+  "reminderTimeLabel": "Reminder time",
+  "reminderIndependentHint": "This reminder is separate from prayer reminders and works even when prayer reminders are off.",
+  "reminderDailyAt": "Daily at {time}",
+  "@reminderDailyAt": {
+    "placeholders": {
+      "time": {"type": "String"}
+    }
+  },
+  "reminderOff": "Off",
+  "notificationHabitReminderTitle": "Habit reminder",
+  "notificationHabitReminderBody": "Time for {habitName}",
+  "@notificationHabitReminderBody": {
+    "placeholders": {
+      "habitName": {"type": "String"}
+    }
+  },
+  "enterName": "Enter a name",
+  "enterNumberGreaterThanZero": "Enter a number greater than 0",
+  "enterNumberOneToSeven": "Enter a number from 1 to 7",
+  "onboardingSkip": "Skip",
+  "onboardingNext": "Next",
+  "onboardingGetStarted": "Get started",
+  "onboardingWelcomeTitle": "Welcome to Islamic Habits",
+  "onboardingWelcomeBody": "Build a consistent routine around prayer, Quran, and the habits that matter to you.",
+  "onboardingHabitsTitle": "One tap a day",
+  "onboardingHabitsBody": "Track Yes/No and number habits, choose your own colors, and see your progress at a glance.",
+  "onboardingPrayerTitle": "Prayer times, wherever you are",
+  "onboardingPrayerBody": "Choose from thousands of cities or pick your exact location for accurate prayer times.",
+  "onboardingRemindersTitle": "Reminders that fit your day",
+  "onboardingRemindersBody": "Set a daily reminder for any habit and answer Yes or No right from the notification.",
+  "onboardingStatsTitle": "See your progress",
+  "onboardingStatsBody": "Charts, streaks, and success rates help you stay motivated and spot what needs attention.",
+  "statisticsOverallSuccess": "Overall success",
+  "statisticsOverallSuccessSubtitle": "Across all tracked habit days",
+  "statisticsBestStreak": "Best streak",
+  "statisticsTotalHabits": "Habits",
+  "statisticsDailyCompletion": "Daily completion",
+  "statisticsDailyCompletionSubtitle": "Your habit completion for the last 30 days",
+  "statisticsWeeklyProgress": "Weekly progress",
+  "statisticsWeeklyProgressSubtitle": "Average completion over the last four weeks",
+  "statisticsMonthlyProgress": "Monthly progress",
+  "statisticsMonthlyProgressSubtitle": "Average completion over the last six months",
+  "statisticsBreakdown": "Habit breakdown",
+  "statisticsBreakdownSubtitle": "Completed, missed, and unlogged habit days in the last 30 days",
+  "statisticsSuccess": "Completed",
+  "statisticsMissed": "Missed",
+  "statisticsNoData": "No data",
+  "statisticsHabitPerformance": "Habit performance",
+  "statisticsNoDataTitle": "No data yet",
+  "statisticsNoDataBody": "Start logging your habits to see charts, streaks, and success rates here."
 }

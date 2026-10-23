@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesHelper {
   static final String _kAppTheme = 'Theme';
   static final String _kStartOfWeek = 'StartOfWeek';
+  static final String _kOnboardingCompleted = 'OnboardingCompleted';
 
   static Future<String?> getAppTheme() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -22,5 +23,15 @@ class SharedPreferencesHelper {
   static Future<bool> setStartOfWeek(int weekday) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setInt(_kStartOfWeek, weekday);
+  }
+
+  static Future<bool> getOnboardingCompleted() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_kOnboardingCompleted) ?? false;
+  }
+
+  static Future<bool> setOnboardingCompleted(bool completed) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool(_kOnboardingCompleted, completed);
   }
 }

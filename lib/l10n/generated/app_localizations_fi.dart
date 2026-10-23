@@ -83,6 +83,51 @@ class AppLocalizationsFi extends AppLocalizations {
   String get delete => 'Poista';
 
   @override
+  String get edit => 'Muokkaa';
+
+  @override
+  String get archive => 'Arkistoi';
+
+  @override
+  String get unarchive => 'Palauta';
+
+  @override
+  String get archivedHabits => 'Arkistoidut tavat';
+
+  @override
+  String get noArchivedHabits => 'Ei arkistoituja tapoja';
+
+  @override
+  String get archivedHabitsHint =>
+      'Arkistoidut tavat säilyttävät historiansa, mutta piilotetaan etusivulta ja tilastoista.';
+
+  @override
+  String get habitIcon => 'Kuvake';
+
+  @override
+  String get chooseIcon => 'Valitse kuvake';
+
+  @override
+  String get removeIcon => 'Poista kuvake';
+
+  @override
+  String get deleteHabitTitle => 'Poista tapa?';
+
+  @override
+  String deleteHabitMessage(String name) {
+    return '\"$name\" ja sen koko historia poistetaan pysyvästi. Tätä ei voi kumota.';
+  }
+
+  @override
+  String get habitDeleted => 'Tapa poistettu';
+
+  @override
+  String get habitArchived => 'Tapa arkistoitu';
+
+  @override
+  String get habitRestored => 'Tapa palautettu';
+
+  @override
   String get setValue => 'Aseta';
 
   @override
@@ -546,4 +591,160 @@ class AppLocalizationsFi extends AppLocalizations {
   String nextPrayerCountdownM(int minutes) {
     return '$minutes min kuluttua';
   }
+
+  @override
+  String get customColor => 'Mukautettu väri';
+
+  @override
+  String get selectColor => 'Valitse';
+
+  @override
+  String get navStatistics => 'Tilastot';
+
+  @override
+  String get reminderLabel => 'Muistutus';
+
+  @override
+  String get reminderEnabledLabel => 'Päivittäinen muistutus';
+
+  @override
+  String get reminderEnabledSubtitle => 'Saat ilmoituksen valitsemanasi aikana';
+
+  @override
+  String get reminderTimeLabel => 'Muistutuksen aika';
+
+  @override
+  String get reminderIndependentHint =>
+      'Tämä muistutus on erillinen rukousmuistutuksista ja toimii myös silloin, kun rukousmuistutukset ovat pois päältä.';
+
+  @override
+  String reminderDailyAt(String time) {
+    return 'Päivittäin klo $time';
+  }
+
+  @override
+  String get reminderOff => 'Pois';
+
+  @override
+  String get notificationHabitReminderTitle => 'Tavan muistutus';
+
+  @override
+  String notificationHabitReminderBody(String habitName) {
+    return 'On aika: $habitName';
+  }
+
+  @override
+  String get enterName => 'Anna nimi';
+
+  @override
+  String get enterNumberGreaterThanZero =>
+      'Anna numero, joka on suurempi kuin 0';
+
+  @override
+  String get enterNumberOneToSeven => 'Anna numero väliltä 1–7';
+
+  @override
+  String get onboardingSkip => 'Ohita';
+
+  @override
+  String get onboardingNext => 'Seuraava';
+
+  @override
+  String get onboardingGetStarted => 'Aloita';
+
+  @override
+  String get onboardingWelcomeTitle =>
+      'Tervetuloa Islamic Habits -sovellukseen';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'Rakenna säännöllinen rutiini rukouksen, Koraanin ja sinulle tärkeiden tapojen ympärille.';
+
+  @override
+  String get onboardingHabitsTitle => 'Yksi napautus päivässä';
+
+  @override
+  String get onboardingHabitsBody =>
+      'Seuraa kyllä/ei- ja numerotapoja, valitse omat värisi ja näe edistymisesi yhdellä silmäyksellä.';
+
+  @override
+  String get onboardingPrayerTitle => 'Rukousajat missä tahansa';
+
+  @override
+  String get onboardingPrayerBody =>
+      'Valitse tuhansista kaupungeista tai valitse tarkka sijaintisi tarkkoja rukousaikoja varten.';
+
+  @override
+  String get onboardingRemindersTitle => 'Päivääsi sopivat muistutukset';
+
+  @override
+  String get onboardingRemindersBody =>
+      'Aseta päivittäinen muistutus mille tahansa tavalle ja vastaa kyllä tai ei suoraan ilmoituksesta.';
+
+  @override
+  String get onboardingStatsTitle => 'Näe edistymisesi';
+
+  @override
+  String get onboardingStatsBody =>
+      'Kaaviot, putket ja onnistumisprosentit auttavat sinua pysymään motivoituneena ja huomaamaan, mihin kannattaa keskittyä.';
+
+  @override
+  String get statisticsOverallSuccess => 'Kokonaisonnistuminen';
+
+  @override
+  String get statisticsOverallSuccessSubtitle =>
+      'Kaikkien kirjattujen tapapäivien osalta';
+
+  @override
+  String get statisticsBestStreak => 'Paras putki';
+
+  @override
+  String get statisticsTotalHabits => 'Tavat';
+
+  @override
+  String get statisticsDailyCompletion => 'Päivittäinen suoritus';
+
+  @override
+  String get statisticsDailyCompletionSubtitle =>
+      'Tapojesi suoritus viimeisten 30 päivän ajalta';
+
+  @override
+  String get statisticsWeeklyProgress => 'Viikoittainen edistyminen';
+
+  @override
+  String get statisticsWeeklyProgressSubtitle =>
+      'Keskimääräinen suoritus viimeisten neljän viikon ajalta';
+
+  @override
+  String get statisticsMonthlyProgress => 'Kuukausittainen edistyminen';
+
+  @override
+  String get statisticsMonthlyProgressSubtitle =>
+      'Keskimääräinen suoritus viimeisten kuuden kuukauden ajalta';
+
+  @override
+  String get statisticsBreakdown => 'Tapojen erittely';
+
+  @override
+  String get statisticsBreakdownSubtitle =>
+      'Suoritetut, väliin jääneet ja kirjaamattomat tapapäivät viimeisten 30 päivän ajalta';
+
+  @override
+  String get statisticsSuccess => 'Suoritettu';
+
+  @override
+  String get statisticsMissed => 'Väliin jäänyt';
+
+  @override
+  String get statisticsNoData => 'Ei tietoja';
+
+  @override
+  String get statisticsHabitPerformance => 'Tapojen suorituskyky';
+
+  @override
+  String get statisticsNoDataTitle => 'Ei vielä tietoja';
+
+  @override
+  String get statisticsNoDataBody =>
+      'Aloita tapojesi kirjaaminen, niin näet täällä kaaviot, putket ja onnistumisprosentit.';
 }

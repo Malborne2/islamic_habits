@@ -1,4 +1,5 @@
 import 'package:islamic_habits/screens/main_screen.dart';
+import 'package:islamic_habits/screens/onboarding_screen.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/utility/data_access_object.dart';
@@ -38,14 +39,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
         await dao.addHabit(habit);
       }
     } else {
-      islamicHabits = await dao.getAll();
+      islamicHabits = await dao.getActive();
     }
 
     await PrayerSettings.load();
-
     await NotificationService.initialize();
-    await NotificationService.requestPermission();
-    await NotificationService.scheduleTodayReminders();
 
     final savedStartOfWeek = await SharedPreferencesHelper.getStartOfWeek();
     if (savedStartOfWeek != null) {
@@ -53,16 +51,35 @@ class _LoadingScreenState extends State<LoadingScreen> {
       Habit.startOfWeek = savedStartOfWeek;
     }
 
-    if (mounted) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MainScreen(
-              islamicHabits: islamicHabits,
-            ),
-            settings: const RouteSettings(name: '/MainScreen'),
-          ));
+    // First-run tour, before the system permission prompt so a brand-new
+    // user understands what the app does before being asked to allow
+    // notifications.
+    final onboardingCompleted =
+        await SharedPreferencesHelper.getOnboardingCompleted();
+    if (!onboardingCompleted && mounted) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const OnboardingScreen(),
+          settings: const RouteSettings(name: '/OnboardingScreen'),
+        ),
+      );
+      await SharedPreferencesHelper.setOnboardingCompleted(true);
     }
+
+    await NotificationService.requestPermission();
+    await NotificationService.scheduleTodayReminders();
+    await NotificationService.scheduleHabitReminders();
+
+    if (!mounted) return;
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainScreen(
+            islamicHabits: islamicHabits,
+          ),
+          settings: const RouteSettings(name: '/MainScreen'),
+        ));
     setState(() {
       loading = false;
     });

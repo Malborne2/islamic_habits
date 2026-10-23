@@ -84,6 +84,51 @@ class AppLocalizationsFa extends AppLocalizations {
   String get delete => 'حذف';
 
   @override
+  String get edit => 'ویرایش';
+
+  @override
+  String get archive => 'بایگانی';
+
+  @override
+  String get unarchive => 'بازگردانی';
+
+  @override
+  String get archivedHabits => 'عادت‌های بایگانی‌شده';
+
+  @override
+  String get noArchivedHabits => 'عادت بایگانی‌شده‌ای نیست';
+
+  @override
+  String get archivedHabitsHint =>
+      'عادت‌های بایگانی‌شده سابقه خود را نگه می‌دارند اما از صفحه اصلی و آمار پنهان می‌شوند.';
+
+  @override
+  String get habitIcon => 'نماد';
+
+  @override
+  String get chooseIcon => 'انتخاب نماد';
+
+  @override
+  String get removeIcon => 'حذف نماد';
+
+  @override
+  String get deleteHabitTitle => 'حذف عادت؟';
+
+  @override
+  String deleteHabitMessage(String name) {
+    return '«$name» و تمام سابقه آن برای همیشه حذف می‌شود. این کار قابل بازگشت نیست.';
+  }
+
+  @override
+  String get habitDeleted => 'عادت حذف شد';
+
+  @override
+  String get habitArchived => 'عادت بایگانی شد';
+
+  @override
+  String get habitRestored => 'عادت بازگردانده شد';
+
+  @override
   String get setValue => 'تنظیم';
 
   @override
@@ -547,4 +592,157 @@ class AppLocalizationsFa extends AppLocalizations {
   String nextPrayerCountdownM(int minutes) {
     return '$minutes دقیقه دیگر';
   }
+
+  @override
+  String get customColor => 'رنگ سفارشی';
+
+  @override
+  String get selectColor => 'انتخاب';
+
+  @override
+  String get navStatistics => 'آمار';
+
+  @override
+  String get reminderLabel => 'یادآور';
+
+  @override
+  String get reminderEnabledLabel => 'یادآور روزانه';
+
+  @override
+  String get reminderEnabledSubtitle => 'در زمان انتخابی خود اعلان دریافت کنید';
+
+  @override
+  String get reminderTimeLabel => 'زمان یادآور';
+
+  @override
+  String get reminderIndependentHint =>
+      'این یادآور جدا از یادآورهای نماز است و حتی وقتی یادآورهای نماز خاموش باشند کار می‌کند.';
+
+  @override
+  String reminderDailyAt(String time) {
+    return 'هر روز ساعت $time';
+  }
+
+  @override
+  String get reminderOff => 'خاموش';
+
+  @override
+  String get notificationHabitReminderTitle => 'یادآور عادت';
+
+  @override
+  String notificationHabitReminderBody(String habitName) {
+    return 'وقت $habitName است';
+  }
+
+  @override
+  String get enterName => 'نامی وارد کنید';
+
+  @override
+  String get enterNumberGreaterThanZero => 'عددی بزرگ‌تر از ۰ وارد کنید';
+
+  @override
+  String get enterNumberOneToSeven => 'عددی از ۱ تا ۷ وارد کنید';
+
+  @override
+  String get onboardingSkip => 'رد کردن';
+
+  @override
+  String get onboardingNext => 'بعدی';
+
+  @override
+  String get onboardingGetStarted => 'شروع کنید';
+
+  @override
+  String get onboardingWelcomeTitle => 'به Islamic Habits خوش آمدید';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'روتینی منظم حول نماز، قرآن و عاداتی که برایتان مهم‌اند بسازید.';
+
+  @override
+  String get onboardingHabitsTitle => 'روزی یک لمس';
+
+  @override
+  String get onboardingHabitsBody =>
+      'عادت‌های بله/خیر و عددی را دنبال کنید، رنگ خود را انتخاب کنید و پیشرفتتان را در یک نگاه ببینید.';
+
+  @override
+  String get onboardingPrayerTitle => 'اوقات نماز، هر جا که باشید';
+
+  @override
+  String get onboardingPrayerBody =>
+      'از میان هزاران شهر انتخاب کنید یا مکان دقیق خود را برای اوقات نماز دقیق مشخص کنید.';
+
+  @override
+  String get onboardingRemindersTitle => 'یادآورهایی متناسب با روز شما';
+
+  @override
+  String get onboardingRemindersBody =>
+      'برای هر عادت یادآور روزانه تنظیم کنید و مستقیماً از اعلان بله یا خیر پاسخ دهید.';
+
+  @override
+  String get onboardingStatsTitle => 'پیشرفت خود را ببینید';
+
+  @override
+  String get onboardingStatsBody =>
+      'نمودارها، زنجیره‌ها و نرخ موفقیت به شما کمک می‌کنند انگیزه بمانید و بدانید چه چیزی نیاز به توجه دارد.';
+
+  @override
+  String get statisticsOverallSuccess => 'موفقیت کلی';
+
+  @override
+  String get statisticsOverallSuccessSubtitle => 'در تمام روزهای ثبت‌شده عادت';
+
+  @override
+  String get statisticsBestStreak => 'بهترین زنجیره';
+
+  @override
+  String get statisticsTotalHabits => 'عادت‌ها';
+
+  @override
+  String get statisticsDailyCompletion => 'تکمیل روزانه';
+
+  @override
+  String get statisticsDailyCompletionSubtitle =>
+      'تکمیل عادت‌های شما در ۳۰ روز گذشته';
+
+  @override
+  String get statisticsWeeklyProgress => 'پیشرفت هفتگی';
+
+  @override
+  String get statisticsWeeklyProgressSubtitle =>
+      'میانگین تکمیل در چهار هفته گذشته';
+
+  @override
+  String get statisticsMonthlyProgress => 'پیشرفت ماهانه';
+
+  @override
+  String get statisticsMonthlyProgressSubtitle =>
+      'میانگین تکمیل در شش ماه گذشته';
+
+  @override
+  String get statisticsBreakdown => 'تفکیک عادت‌ها';
+
+  @override
+  String get statisticsBreakdownSubtitle =>
+      'روزهای تکمیل‌شده، ازدست‌رفته و ثبت‌نشده در ۳۰ روز گذشته';
+
+  @override
+  String get statisticsSuccess => 'تکمیل‌شده';
+
+  @override
+  String get statisticsMissed => 'ازدست‌رفته';
+
+  @override
+  String get statisticsNoData => 'بدون داده';
+
+  @override
+  String get statisticsHabitPerformance => 'عملکرد عادت‌ها';
+
+  @override
+  String get statisticsNoDataTitle => 'هنوز داده‌ای نیست';
+
+  @override
+  String get statisticsNoDataBody =>
+      'برای دیدن نمودارها، زنجیره‌ها و نرخ موفقیت، ثبت عادت‌هایتان را شروع کنید.';
 }

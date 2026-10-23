@@ -84,6 +84,51 @@ class AppLocalizationsNb extends AppLocalizations {
   String get delete => 'Slett';
 
   @override
+  String get edit => 'Rediger';
+
+  @override
+  String get archive => 'Arkiver';
+
+  @override
+  String get unarchive => 'Gjenopprett';
+
+  @override
+  String get archivedHabits => 'Arkiverte vaner';
+
+  @override
+  String get noArchivedHabits => 'Ingen arkiverte vaner';
+
+  @override
+  String get archivedHabitsHint =>
+      'Arkiverte vaner beholder historikken, men skjules fra Hjem og statistikk.';
+
+  @override
+  String get habitIcon => 'Ikon';
+
+  @override
+  String get chooseIcon => 'Velg ikon';
+
+  @override
+  String get removeIcon => 'Fjern ikon';
+
+  @override
+  String get deleteHabitTitle => 'Slette vanen?';
+
+  @override
+  String deleteHabitMessage(String name) {
+    return '«$name» og hele historikken slettes permanent. Dette kan ikke angres.';
+  }
+
+  @override
+  String get habitDeleted => 'Vanen er slettet';
+
+  @override
+  String get habitArchived => 'Vanen er arkivert';
+
+  @override
+  String get habitRestored => 'Vanen er gjenopprettet';
+
+  @override
   String get setValue => 'Angi';
 
   @override
@@ -548,4 +593,158 @@ class AppLocalizationsNb extends AppLocalizations {
   String nextPrayerCountdownM(int minutes) {
     return 'om ${minutes}m';
   }
+
+  @override
+  String get customColor => 'Egendefinert farge';
+
+  @override
+  String get selectColor => 'Velg';
+
+  @override
+  String get navStatistics => 'Statistikk';
+
+  @override
+  String get reminderLabel => 'Påminnelse';
+
+  @override
+  String get reminderEnabledLabel => 'Daglig påminnelse';
+
+  @override
+  String get reminderEnabledSubtitle => 'Få et varsel på tidspunktet du velger';
+
+  @override
+  String get reminderTimeLabel => 'Påminnelsestid';
+
+  @override
+  String get reminderIndependentHint =>
+      'Denne påminnelsen er separat fra bønnepåminnelsene og fungerer selv når bønnepåminnelsene er av.';
+
+  @override
+  String reminderDailyAt(String time) {
+    return 'Daglig kl. $time';
+  }
+
+  @override
+  String get reminderOff => 'Av';
+
+  @override
+  String get notificationHabitReminderTitle => 'Vanevarsel';
+
+  @override
+  String notificationHabitReminderBody(String habitName) {
+    return 'Tid for $habitName';
+  }
+
+  @override
+  String get enterName => 'Skriv inn et navn';
+
+  @override
+  String get enterNumberGreaterThanZero => 'Skriv inn et tall større enn 0';
+
+  @override
+  String get enterNumberOneToSeven => 'Skriv inn et tall fra 1 til 7';
+
+  @override
+  String get onboardingSkip => 'Hopp over';
+
+  @override
+  String get onboardingNext => 'Neste';
+
+  @override
+  String get onboardingGetStarted => 'Kom i gang';
+
+  @override
+  String get onboardingWelcomeTitle => 'Velkommen til Islamic Habits';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'Bygg en jevn rutine rundt bønn, Koranen og vanene som betyr noe for deg.';
+
+  @override
+  String get onboardingHabitsTitle => 'Ett trykk om dagen';
+
+  @override
+  String get onboardingHabitsBody =>
+      'Følg ja/nei- og tallvaner, velg dine egne farger og se fremgangen din med et blikk.';
+
+  @override
+  String get onboardingPrayerTitle => 'Bønnetider, uansett hvor du er';
+
+  @override
+  String get onboardingPrayerBody =>
+      'Velg blant tusenvis av byer eller velg din nøyaktige posisjon for korrekte bønnetider.';
+
+  @override
+  String get onboardingRemindersTitle => 'Påminnelser som passer dagen din';
+
+  @override
+  String get onboardingRemindersBody =>
+      'Sett en daglig påminnelse for enhver vane og svar ja eller nei direkte fra varselet.';
+
+  @override
+  String get onboardingStatsTitle => 'Se fremgangen din';
+
+  @override
+  String get onboardingStatsBody =>
+      'Diagrammer, rekker og suksessrater hjelper deg å holde motivasjonen oppe og se hva som trenger oppmerksomhet.';
+
+  @override
+  String get statisticsOverallSuccess => 'Samlet suksess';
+
+  @override
+  String get statisticsOverallSuccessSubtitle =>
+      'På tvers av alle registrerte vanedager';
+
+  @override
+  String get statisticsBestStreak => 'Beste rekke';
+
+  @override
+  String get statisticsTotalHabits => 'Vaner';
+
+  @override
+  String get statisticsDailyCompletion => 'Daglig fullføring';
+
+  @override
+  String get statisticsDailyCompletionSubtitle =>
+      'Fullføringen av vanene dine de siste 30 dagene';
+
+  @override
+  String get statisticsWeeklyProgress => 'Ukentlig fremgang';
+
+  @override
+  String get statisticsWeeklyProgressSubtitle =>
+      'Gjennomsnittlig fullføring de siste fire ukene';
+
+  @override
+  String get statisticsMonthlyProgress => 'Månedlig fremgang';
+
+  @override
+  String get statisticsMonthlyProgressSubtitle =>
+      'Gjennomsnittlig fullføring de siste seks månedene';
+
+  @override
+  String get statisticsBreakdown => 'Vanedetaljer';
+
+  @override
+  String get statisticsBreakdownSubtitle =>
+      'Fullførte, tapte og uregistrerte vanedager de siste 30 dagene';
+
+  @override
+  String get statisticsSuccess => 'Fullført';
+
+  @override
+  String get statisticsMissed => 'Tapt';
+
+  @override
+  String get statisticsNoData => 'Ingen data';
+
+  @override
+  String get statisticsHabitPerformance => 'Vaneresultater';
+
+  @override
+  String get statisticsNoDataTitle => 'Ingen data ennå';
+
+  @override
+  String get statisticsNoDataBody =>
+      'Begynn å registrere vanene dine for å se diagrammer, rekker og suksessrater her.';
 }

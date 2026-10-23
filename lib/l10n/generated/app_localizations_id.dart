@@ -84,6 +84,51 @@ class AppLocalizationsId extends AppLocalizations {
   String get delete => 'Hapus';
 
   @override
+  String get edit => 'Edit';
+
+  @override
+  String get archive => 'Arsipkan';
+
+  @override
+  String get unarchive => 'Pulihkan';
+
+  @override
+  String get archivedHabits => 'Kebiasaan diarsipkan';
+
+  @override
+  String get noArchivedHabits => 'Tidak ada kebiasaan yang diarsipkan';
+
+  @override
+  String get archivedHabitsHint =>
+      'Kebiasaan yang diarsipkan menyimpan riwayatnya tetapi disembunyikan dari Beranda dan statistik.';
+
+  @override
+  String get habitIcon => 'Ikon';
+
+  @override
+  String get chooseIcon => 'Pilih ikon';
+
+  @override
+  String get removeIcon => 'Hapus ikon';
+
+  @override
+  String get deleteHabitTitle => 'Hapus kebiasaan?';
+
+  @override
+  String deleteHabitMessage(String name) {
+    return '\"$name\" dan seluruh riwayatnya akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.';
+  }
+
+  @override
+  String get habitDeleted => 'Kebiasaan dihapus';
+
+  @override
+  String get habitArchived => 'Kebiasaan diarsipkan';
+
+  @override
+  String get habitRestored => 'Kebiasaan dipulihkan';
+
+  @override
   String get setValue => 'Atur';
 
   @override
@@ -546,4 +591,159 @@ class AppLocalizationsId extends AppLocalizations {
   String nextPrayerCountdownM(int minutes) {
     return 'dalam ${minutes}m';
   }
+
+  @override
+  String get customColor => 'Warna khusus';
+
+  @override
+  String get selectColor => 'Pilih';
+
+  @override
+  String get navStatistics => 'Statistik';
+
+  @override
+  String get reminderLabel => 'Pengingat';
+
+  @override
+  String get reminderEnabledLabel => 'Pengingat harian';
+
+  @override
+  String get reminderEnabledSubtitle =>
+      'Dapatkan notifikasi pada waktu yang Anda pilih';
+
+  @override
+  String get reminderTimeLabel => 'Waktu pengingat';
+
+  @override
+  String get reminderIndependentHint =>
+      'Pengingat ini terpisah dari pengingat salat dan tetap berfungsi meskipun pengingat salat dimatikan.';
+
+  @override
+  String reminderDailyAt(String time) {
+    return 'Setiap hari pukul $time';
+  }
+
+  @override
+  String get reminderOff => 'Mati';
+
+  @override
+  String get notificationHabitReminderTitle => 'Pengingat kebiasaan';
+
+  @override
+  String notificationHabitReminderBody(String habitName) {
+    return 'Waktunya $habitName';
+  }
+
+  @override
+  String get enterName => 'Masukkan nama';
+
+  @override
+  String get enterNumberGreaterThanZero => 'Masukkan angka lebih dari 0';
+
+  @override
+  String get enterNumberOneToSeven => 'Masukkan angka 1 sampai 7';
+
+  @override
+  String get onboardingSkip => 'Lewati';
+
+  @override
+  String get onboardingNext => 'Berikutnya';
+
+  @override
+  String get onboardingGetStarted => 'Mulai';
+
+  @override
+  String get onboardingWelcomeTitle => 'Selamat datang di Islamic Habits';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'Bangun rutinitas yang konsisten seputar salat, Al-Qur\'an, dan kebiasaan yang penting bagi Anda.';
+
+  @override
+  String get onboardingHabitsTitle => 'Satu ketukan sehari';
+
+  @override
+  String get onboardingHabitsBody =>
+      'Lacak kebiasaan Ya/Tidak dan angka, pilih warna Anda sendiri, dan lihat kemajuan Anda sekilas.';
+
+  @override
+  String get onboardingPrayerTitle => 'Waktu salat, di mana pun Anda berada';
+
+  @override
+  String get onboardingPrayerBody =>
+      'Pilih dari ribuan kota atau pilih lokasi tepat Anda untuk waktu salat yang akurat.';
+
+  @override
+  String get onboardingRemindersTitle => 'Pengingat yang sesuai harimu';
+
+  @override
+  String get onboardingRemindersBody =>
+      'Atur pengingat harian untuk kebiasaan apa pun dan jawab Ya atau Tidak langsung dari notifikasi.';
+
+  @override
+  String get onboardingStatsTitle => 'Lihat kemajuan Anda';
+
+  @override
+  String get onboardingStatsBody =>
+      'Grafik, rentetan, dan tingkat keberhasilan membantu Anda tetap termotivasi dan mengetahui apa yang perlu diperhatikan.';
+
+  @override
+  String get statisticsOverallSuccess => 'Keberhasilan keseluruhan';
+
+  @override
+  String get statisticsOverallSuccessSubtitle =>
+      'Di semua hari kebiasaan yang tercatat';
+
+  @override
+  String get statisticsBestStreak => 'Rentetan terbaik';
+
+  @override
+  String get statisticsTotalHabits => 'Kebiasaan';
+
+  @override
+  String get statisticsDailyCompletion => 'Penyelesaian harian';
+
+  @override
+  String get statisticsDailyCompletionSubtitle =>
+      'Penyelesaian kebiasaan Anda selama 30 hari terakhir';
+
+  @override
+  String get statisticsWeeklyProgress => 'Kemajuan mingguan';
+
+  @override
+  String get statisticsWeeklyProgressSubtitle =>
+      'Rata-rata penyelesaian selama empat minggu terakhir';
+
+  @override
+  String get statisticsMonthlyProgress => 'Kemajuan bulanan';
+
+  @override
+  String get statisticsMonthlyProgressSubtitle =>
+      'Rata-rata penyelesaian selama enam bulan terakhir';
+
+  @override
+  String get statisticsBreakdown => 'Rincian kebiasaan';
+
+  @override
+  String get statisticsBreakdownSubtitle =>
+      'Hari kebiasaan yang selesai, terlewat, dan belum dicatat dalam 30 hari terakhir';
+
+  @override
+  String get statisticsSuccess => 'Selesai';
+
+  @override
+  String get statisticsMissed => 'Terlewat';
+
+  @override
+  String get statisticsNoData => 'Tidak ada data';
+
+  @override
+  String get statisticsHabitPerformance => 'Performa kebiasaan';
+
+  @override
+  String get statisticsNoDataTitle => 'Belum ada data';
+
+  @override
+  String get statisticsNoDataBody =>
+      'Mulai catat kebiasaan Anda untuk melihat grafik, rentetan, dan tingkat keberhasilan di sini.';
 }

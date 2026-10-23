@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The adhan sounds are referenced by name at runtime through
+  RawResourceAndroidNotificationSound, so the release resource shrinker cannot
+  see them and would otherwise strip res/raw/adhan_* out of the APK. Keeping
+  them here is what makes the adhan notification work in release builds too.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@raw/adhan_*" />

@@ -3,7 +3,9 @@ import 'package:islamic_habits/components/habit_button.dart';
 import 'package:islamic_habits/components/habit_input_dialog.dart';
 import 'package:islamic_habits/components/semiCircle.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
+import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/habit_icons.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
 
 // Home-screen summary: today's completion ring, the longest active
@@ -77,18 +79,32 @@ class _TodayOverviewState extends State<TodayOverview> {
                   height: 64,
                   child: CustomPaint(
                     painter: SemiCircle(
-                      fillColor: Theme.of(context).colorScheme.primary,
-                      lineColor: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withValues(alpha: 0.25),
+                      fillColor: brandAccent(context),
+                      lineColor:
+                          brandAccent(context).withValues(alpha: 0.25),
                       completePercent: percent,
                       width: 8,
                     ),
                     child: Center(
-                      child: Text('${percent.round()}%',
-                          style: const TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
+                      // Keep a card-coloured disc behind the number so the
+                      // label sits on the card colour, not on the filled pie.
+                      // This makes it readable at 0% (empty ring) as well as
+                      // at 100% (fully filled ring) in both themes.
+                      child: Container(
+                        width: 42,
+                        height: 42,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text('${percent.round()}%',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color:
+                                    Theme.of(context).colorScheme.onSurface)),
+                      ),
                     ),
                   ),
                 ),
@@ -128,10 +144,7 @@ class _TodayOverviewState extends State<TodayOverview> {
             child: Column(
               children: todayHabits
                   .map((habit) => ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: habit.color,
-                          radius: 6,
-                        ),
+                        leading: HabitIconBadge(habit: habit),
                         title: Text(localizedHabitName(context, habit.name)),
                         subtitle: habit.type == HabitType.NUMBER
                             ? Text(

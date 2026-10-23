@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Modify this file to customize your launch splash screen -->
+<!-- Branded launch splash: the navy brand background with the app mark
+     centred. Keeping this as a layer-list (rather than a bitmap) means it
+     works with the adaptive icon on Android 8+ and the PNG mipmaps below. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@android:color/white" />
-
-    <!-- You can insert your own image assets here -->
-    <!-- <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@mipmap/launch_image" />
-    </item> -->
+    <item android:drawable="@color/ic_launcher_background" />
+    <item
+        android:gravity="center"
+        android:drawable="@mipmap/ic_launcher" />
 </layer-list>

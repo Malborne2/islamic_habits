@@ -230,7 +230,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
               Expanded(
                 child: DropdownButtonFormField<AdhanVoiceOption>(
                   initialValue: _adhanVoice,
-                  decoration: kTextFieldDecoration,
+                  decoration: habitTextFieldDecoration(context),
                   items: kAdhanVoices
                       .map((voice) => DropdownMenuItem(
                             value: voice,
@@ -286,7 +286,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
               onTap: _openCityPicker,
               child: InputDecorator(
                 decoration:
-                    kTextFieldDecoration.copyWith(labelText: l10n.cityLabel),
+                    habitTextFieldDecoration(context).copyWith(labelText: l10n.cityLabel),
                 child: Row(
                   children: <Widget>[
                     Icon(Icons.location_on,
@@ -322,7 +322,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
           const SizedBox(height: 8),
           DropdownButtonFormField<CalculationMethod>(
             initialValue: _method,
-            decoration: kTextFieldDecoration,
+            decoration: habitTextFieldDecoration(context),
             items: CalculationMethod.values
                 .map((m) => DropdownMenuItem(
                     value: m, child: Text(_calculationMethodLabel(l10n, m))))
@@ -337,7 +337,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
           const SizedBox(height: 8),
           DropdownButtonFormField<Madhab>(
             initialValue: _madhab,
-            decoration: kTextFieldDecoration,
+            decoration: habitTextFieldDecoration(context),
             items: [
               DropdownMenuItem(value: Madhab.shafi, child: Text(l10n.shafiLabel)),
               DropdownMenuItem(
@@ -359,7 +359,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                   keyboardType:
                       const TextInputType.numberWithOptions(signed: true),
                   decoration:
-                      kTextFieldDecoration.copyWith(labelText: l10n.adjFajr),
+                      habitTextFieldDecoration(context).copyWith(labelText: l10n.adjFajr),
                 ),
               ),
               const SizedBox(width: 10),
@@ -369,7 +369,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                   keyboardType:
                       const TextInputType.numberWithOptions(signed: true),
                   decoration:
-                      kTextFieldDecoration.copyWith(labelText: l10n.adjDhuhr),
+                      habitTextFieldDecoration(context).copyWith(labelText: l10n.adjDhuhr),
                 ),
               ),
             ],
@@ -383,7 +383,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                   keyboardType:
                       const TextInputType.numberWithOptions(signed: true),
                   decoration:
-                      kTextFieldDecoration.copyWith(labelText: l10n.adjAsr),
+                      habitTextFieldDecoration(context).copyWith(labelText: l10n.adjAsr),
                 ),
               ),
               const SizedBox(width: 10),
@@ -392,7 +392,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
                   controller: _maghribAdj,
                   keyboardType:
                       const TextInputType.numberWithOptions(signed: true),
-                  decoration: kTextFieldDecoration.copyWith(
+                  decoration: habitTextFieldDecoration(context).copyWith(
                       labelText: l10n.adjMaghrib),
                 ),
               ),
@@ -402,7 +402,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
           TextFormField(
             controller: _ishaAdj,
             keyboardType: const TextInputType.numberWithOptions(signed: true),
-            decoration: kTextFieldDecoration.copyWith(labelText: l10n.adjIsha),
+            decoration: habitTextFieldDecoration(context).copyWith(labelText: l10n.adjIsha),
           ),
           const SizedBox(height: 32),
           ElevatedButton(

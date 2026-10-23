@@ -5,10 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:islamic_habits/components/habit_drawer.dart';
 import 'package:islamic_habits/components/today_overview.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
+import 'package:islamic_habits/screens/statistics_screen.dart';
+import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
+import 'package:islamic_habits/utility/data_access_object.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/route_observer.dart';
 import 'package:hijri/hijri_calendar.dart';
@@ -26,11 +29,17 @@ class _MainScreenState extends State<MainScreen>
   late HijriCalendar hijriToday;
   DateTime today = DateTime.now();
   Timer? _countdownTimer;
+  late List<Habit> _habits;
+  // Guards against an older getAll() finishing after a newer one and
+  // overwriting fresher data.
+  int _reloadGeneration = 0;
 
   @override
   void initState() {
     super.initState();
+    _habits = widget.islamicHabits;
     hijriToday = HijriCalendar.fromDate(today);
+    NotificationService.habitDataRevision.addListener(_onHabitDataChanged);
     // Ticks the next-prayer countdown and lets it roll over to the
     // following prayer on its own once the current one's time passes.
     _countdownTimer =
@@ -48,9 +57,37 @@ class _MainScreenState extends State<MainScreen>
   @override
   void dispose() {
     _countdownTimer?.cancel();
+    NotificationService.habitDataRevision.removeListener(_onHabitDataChanged);
     appRouteObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  void _onHabitDataChanged() {
+    debugPrint('[MainScreen] habit data changed, reloading from database');
+    _reloadHabits();
+  }
+
+  // Replaces the in-memory list with what's actually in the database. The
+  // notification's Yes/No action writes Habit data directly, and this screen
+  // used to keep the list it was first constructed with forever, so the
+  // change only appeared after a full app restart.
+  Future<void> _reloadHabits() async {
+    final generation = ++_reloadGeneration;
+    final habits = await HabitDao().getActive();
+    if (!mounted || generation != _reloadGeneration) return;
+    Habit? fajr;
+    for (final h in habits) {
+      if (h.name == 'Al Fajir Prayer') {
+        fajr = h;
+        break;
+      }
+    }
+    debugPrint('[MainScreen] reloaded ${habits.length} habits; '
+        'Fajir today=${fajr?.getHabitDataValue(DateTime.now())}');
+    setState(() {
+      _habits = habits;
+    });
   }
 
   // scheduleTodayReminders() only schedules the CURRENT day's remaining
@@ -69,7 +106,18 @@ class _MainScreenState extends State<MainScreen>
           hijriToday = HijriCalendar.fromDate(today);
         });
       }
+      _reloadHabits();
+      // A Yes/No handled in the background isolate may still be finishing its
+      // database write when the app is brought back to the foreground, so
+      // check once more shortly afterwards.
+      Future.delayed(const Duration(milliseconds: 600), () {
+        if (mounted) _reloadHabits();
+      });
       NotificationService.scheduleTodayReminders();
+      // Habit reminders repeat daily, but rescheduling on resume keeps them
+      // correct after a timezone change, a language change (the notification
+      // text is localized at schedule time), or a habit edit.
+      NotificationService.scheduleHabitReminders();
     }
   }
 
@@ -79,6 +127,7 @@ class _MainScreenState extends State<MainScreen>
   @override
   void didPopNext() {
     setState(() {});
+    _reloadHabits();
   }
 
   @override
@@ -90,9 +139,24 @@ class _MainScreenState extends State<MainScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appTitle),
+        actions: <Widget>[
+          IconButton(
+            tooltip: l10n.navStatistics,
+            icon: const Icon(Icons.insights_rounded),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => StatisticsScreen(habits: _habits),
+                  settings: const RouteSettings(name: '/StatisticsScreen'),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       drawer: HabitDrawer(
-        habits: widget.islamicHabits,
+        habits: _habits,
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
@@ -196,7 +260,7 @@ class _MainScreenState extends State<MainScreen>
                   ),
                 ),
               ),
-              TodayOverview(habits: widget.islamicHabits),
+              TodayOverview(habits: _habits),
           ],
         ),
       ),
@@ -224,7 +288,7 @@ class _CountdownBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.16),
+        color: brandAccent(context).withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(20),
       ),
       child: AutoSizeText(
@@ -233,7 +297,7 @@ class _CountdownBadge extends StatelessWidget {
         style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: Theme.of(context).colorScheme.primary),
+            color: brandAccent(context)),
       ),
     );
   }
