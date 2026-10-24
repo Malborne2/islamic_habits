@@ -30,8 +30,7 @@ class HabitDetail extends StatefulWidget {
 
 class _HabitDetailState extends State<HabitDetail> {
   late PageController controller;
-  DateTime currentDate =
-      addDays(DateTime.now(), -(DateTime.now().day - 1));
+  DateTime currentDate = addDays(DateTime.now(), -(DateTime.now().day - 1));
 
   List<HabitPage> habitPages = [];
   late HijriCalendar hijriFirstDay;
@@ -40,25 +39,33 @@ class _HabitDetailState extends State<HabitDetail> {
   @override
   void initState() {
     hijriFirstDay = HijriCalendar.fromDate(currentDate);
-    hijriLastDay = HijriCalendar.fromDate(
-        addDays(currentDate, daysOfMonth(currentDate)));
+    hijriLastDay =
+        HijriCalendar.fromDate(addDays(currentDate, daysOfMonth(currentDate)));
     controller = PageController(
         initialPage: (12 * (currentDate.year - 1971) + currentDate.month) - 1);
+    habitPages = _createHabitPages();
+
+    super.initState();
+    NotificationService.habitDataRevision.addListener(_onHabitDataChanged);
+  }
+
+  // PageView keeps the exact widget instances it was given, and Flutter skips
+  // rebuilding identical widgets. Reusing the pages created in initState meant
+  // an edited color, success target, or streak schedule kept drawing its old
+  // circles until a circle was tapped (which setState()d inside ButtonsList).
+  // Recreating the pages on a data change makes the calendars redraw at once.
+  List<HabitPage> _createHabitPages() {
     DateTime date = DateTime(1971, 1);
-    habitPages = List.generate(
+    return List<HabitPage>.generate(
         (12 * (currentDate.year - 1971) + currentDate.month + 1), (i) {
-      HabitPage myPage = HabitPage(
+      final HabitPage page = HabitPage(
         habit: widget.habit,
         currentDate: date,
         onChanged: () => setState(() {}),
       );
-      date = addDays(
-          date, daysOfMonth(DateTime(1971 + (i ~/ 12), 1 + i % 12)));
-      return myPage;
+      date = addDays(date, daysOfMonth(DateTime(1971 + (i ~/ 12), 1 + i % 12)));
+      return page;
     });
-
-    super.initState();
-    NotificationService.habitDataRevision.addListener(_onHabitDataChanged);
   }
 
   // The habit object is shared with the screen that opened this one, so a
@@ -66,7 +73,10 @@ class _HabitDetailState extends State<HabitDetail> {
   // can also edit the habit, and without this listener the app bar kept the
   // old color until the page was reopened.
   void _onHabitDataChanged() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    setState(() {
+      habitPages = _createHabitPages();
+    });
   }
 
   @override
@@ -96,9 +106,8 @@ class _HabitDetailState extends State<HabitDetail> {
     final weeklyAverage = widget.habit.getAverageOverPeriod(7);
     final monthlyAverage = widget.habit.getAverageOverPeriod(30);
     final isNumberHabit = widget.habit.type == HabitType.NUMBER;
-    final target = widget.habit.successTarget > 0
-        ? widget.habit.successTarget
-        : 1;
+    final target =
+        widget.habit.successTarget > 0 ? widget.habit.successTarget : 1;
 
     List<String> metricValues = [
       '$currentStreak/$target',
@@ -126,9 +135,8 @@ class _HabitDetailState extends State<HabitDetail> {
       isNumberHabit ? monthlyAverage / target : monthlyAverage / 100,
     ];
 
-    final isBuiltInPrayerHabit = kPrayersNames
-        .map((name) => '$name Prayer')
-        .contains(widget.habit.name);
+    final isBuiltInPrayerHabit =
+        kPrayersNames.map((name) => '$name Prayer').contains(widget.habit.name);
 
     return Scaffold(
       appBar: AppBar(
@@ -248,8 +256,8 @@ class _HabitDetailState extends State<HabitDetail> {
                       ));
                     }
                   } else {
-                    currentDate = addDays(currentDate,
-                        -daysOfMonth(addDays(currentDate, -1)));
+                    currentDate = addDays(
+                        currentDate, -daysOfMonth(addDays(currentDate, -1)));
                   }
 
                   hijriFirstDay = HijriCalendar.fromDate(currentDate);
@@ -329,7 +337,9 @@ class _HabitDetailState extends State<HabitDetail> {
     const weekdayHeaderHeight = 48.0;
     const rowSpacing = 5.0;
     const maxRows = 6;
-    return weekdayHeaderHeight + maxRows * diameter + (maxRows - 1) * rowSpacing;
+    return weekdayHeaderHeight +
+        maxRows * diameter +
+        (maxRows - 1) * rowSpacing;
   }
 }
 

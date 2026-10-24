@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:islamic_habits/screens/main_screen.dart';
 import 'package:islamic_habits/screens/onboarding_screen.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/utility/data_access_object.dart';
+import 'package:islamic_habits/utility/language_settings.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
 import 'package:islamic_habits/utility/shared_prefrences_helper.dart';
@@ -30,7 +33,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   : 'Reciting the Quran',
               color: kHabitColors[i % kHabitColors.length],
               habitData: {},
-              successValue: i < kPrayersNames.length ? 1 : 20,
+              successValue: i < kPrayersNames.length ? 1 : 5,
               criteria: Criteria.AT_LEAST,
               type: i < kPrayersNames.length
                   ? HabitType.YES_NO
@@ -46,10 +49,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
     await NotificationService.initialize();
 
     final savedStartOfWeek = await SharedPreferencesHelper.getStartOfWeek();
-    if (savedStartOfWeek != null) {
-      kStartOfWeek = savedStartOfWeek;
-      Habit.startOfWeek = savedStartOfWeek;
-    }
+    // No explicit choice saved yet (first run, or never touched in
+    // Settings) — default to Sunday for Arabic, Monday everywhere else,
+    // matching common regional convention. The user can still change it
+    // in Settings at any time, which persists and overrides this default.
+    final languageCode = LanguageSettings.locale?.languageCode ??
+        PlatformDispatcher.instance.locale.languageCode;
+    final defaultStartOfWeek =
+        languageCode == 'ar' ? DateTime.sunday : DateTime.monday;
+    kStartOfWeek = savedStartOfWeek ?? defaultStartOfWeek;
+    Habit.startOfWeek = savedStartOfWeek ?? defaultStartOfWeek;
 
     // First-run tour, before the system permission prompt so a brand-new
     // user understands what the app does before being asked to allow
@@ -72,7 +81,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
     await NotificationService.scheduleHabitReminders();
 
     if (!mounted) return;
-    Navigator.push(
+    // Replace the loading route instead of stacking Home on top of it.
+    // Otherwise pressing back on Home landed on the blank loading scaffold
+    // before the app finally closed.
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => MainScreen(

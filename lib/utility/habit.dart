@@ -87,7 +87,6 @@ class Habit {
       'criteria': criteria.toString(),
       'successValue': successValue,
       'successTarget': successTarget,
-      'startOfWeek': startOfWeek,
       'habitDays': habitDays.toString(),
       'habitPeriod': habitPeriod,
       'numberUnit': numberUnit,
@@ -110,7 +109,12 @@ class Habit {
         };
       }
     }
-    startOfWeek = map['startOfWeek'] as int;
+    // startOfWeek is a global app preference (see SharedPreferencesHelper /
+    // Settings), not per-habit data — it used to be stored on every habit
+    // record and reassigned to this static field on every load, which meant
+    // simply reloading the habit list (e.g. reopening "All habits") could
+    // silently revert the user's current Settings choice back to whatever
+    // value happened to be saved on an old habit record.
 
     return Habit(
       name: map['name'] as String,

@@ -34,6 +34,9 @@
   },
   "save": "Save",
   "cancel": "Cancel",
+  "unsavedChangesTitle": "Unsaved changes",
+  "unsavedChangesMessage": "Your prayer settings have unsaved changes. Do you want to save them before leaving?",
+  "discardChanges": "Discard",
   "delete": "Delete",
   "edit": "Edit",
   "archive": "Archive",
@@ -247,11 +250,11 @@
   "selectColor": "Select",
   "navStatistics": "Statistics",
   "reminderLabel": "Reminder",
-  "reminderEnabledLabel": "Daily reminder",
-  "reminderEnabledSubtitle": "Get a notification at the time you choose",
+  "reminderEnabledLabel": "Habit reminder",
+  "reminderEnabledSubtitle": "Get a notification on this habit's scheduled days at the time you choose",
   "reminderTimeLabel": "Reminder time",
   "reminderIndependentHint": "This reminder is separate from prayer reminders and works even when prayer reminders are off.",
-  "reminderDailyAt": "Daily at {time}",
+  "reminderDailyAt": "At {time}",
   "@reminderDailyAt": {
     "placeholders": {
       "time": {"type": "String"}

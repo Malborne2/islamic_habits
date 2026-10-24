@@ -81,6 +81,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+  String get unsavedChangesTitle => 'Unsaved changes';
+
+  @override
+  String get unsavedChangesMessage =>
+      'Your prayer settings have unsaved changes. Do you want to save them before leaving?';
+
+  @override
+  String get discardChanges => 'Discard';
+
+  @override
   String get delete => 'Delete';
 
   @override
@@ -607,11 +617,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reminderLabel => 'Reminder';
 
   @override
-  String get reminderEnabledLabel => 'Daily reminder';
+  String get reminderEnabledLabel => 'Habit reminder';
 
   @override
   String get reminderEnabledSubtitle =>
-      'Get a notification at the time you choose';
+      'Get a notification on this habit\'s scheduled days at the time you choose';
 
   @override
   String get reminderTimeLabel => 'Reminder time';
@@ -622,7 +632,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String reminderDailyAt(String time) {
-    return 'Daily at $time';
+    return 'At $time';
   }
 
   @override

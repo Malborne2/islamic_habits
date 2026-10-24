@@ -244,6 +244,24 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+  /// No description provided for @unsavedChangesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved changes'**
+  String get unsavedChangesTitle;
+
+  /// No description provided for @unsavedChangesMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your prayer settings have unsaved changes. Do you want to save them before leaving?'**
+  String get unsavedChangesMessage;
+
+  /// No description provided for @discardChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get discardChanges;
+
   /// No description provided for @delete.
   ///
   /// In en, this message translates to:
@@ -1219,13 +1237,13 @@ abstract class AppLocalizations {
   /// No description provided for @reminderEnabledLabel.
   ///
   /// In en, this message translates to:
-  /// **'Daily reminder'**
+  /// **'Habit reminder'**
   String get reminderEnabledLabel;
 
   /// No description provided for @reminderEnabledSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Get a notification at the time you choose'**
+  /// **'Get a notification on this habit\'s scheduled days at the time you choose'**
   String get reminderEnabledSubtitle;
 
   /// No description provided for @reminderTimeLabel.
@@ -1243,7 +1261,7 @@ abstract class AppLocalizations {
   /// No description provided for @reminderDailyAt.
   ///
   /// In en, this message translates to:
-  /// **'Daily at {time}'**
+  /// **'At {time}'**
   String reminderDailyAt(String time);
 
   /// No description provided for @reminderOff.

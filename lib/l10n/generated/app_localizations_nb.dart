@@ -81,6 +81,16 @@ class AppLocalizationsNb extends AppLocalizations {
   String get cancel => 'Avbryt';
 
   @override
+  String get unsavedChangesTitle => 'Ulagrede endringer';
+
+  @override
+  String get unsavedChangesMessage =>
+      'Du har ulagrede endringer i bønneinnstillingene. Vil du lagre dem før du går?';
+
+  @override
+  String get discardChanges => 'Forkast';
+
+  @override
   String get delete => 'Slett';
 
   @override
@@ -607,10 +617,11 @@ class AppLocalizationsNb extends AppLocalizations {
   String get reminderLabel => 'Påminnelse';
 
   @override
-  String get reminderEnabledLabel => 'Daglig påminnelse';
+  String get reminderEnabledLabel => 'Vanepåminnelse';
 
   @override
-  String get reminderEnabledSubtitle => 'Få et varsel på tidspunktet du velger';
+  String get reminderEnabledSubtitle =>
+      'Få et varsel på tidspunktet du velger på dagene vanen er planlagt';
 
   @override
   String get reminderTimeLabel => 'Påminnelsestid';
@@ -621,7 +632,7 @@ class AppLocalizationsNb extends AppLocalizations {
 
   @override
   String reminderDailyAt(String time) {
-    return 'Daglig kl. $time';
+    return 'Kl. $time';
   }
 
   @override

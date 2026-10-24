@@ -9,6 +9,7 @@ import 'package:islamic_habits/utility/functions.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
+import 'package:islamic_habits/utility/route_observer.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -40,13 +41,28 @@ class SeveralHabitsScreen extends StatefulWidget {
   _SeveralHabitsScreenState createState() => _SeveralHabitsScreenState();
 }
 
-class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
+class _SeveralHabitsScreenState extends State<SeveralHabitsScreen>
+    with RouteAware {
   late PageController controller;
-  DateTime currentDate = weekdayDate(Habit.startOfWeek);
-  late DateTime _lowerDate;
-  late DateTime _upperDate;
 
-  late List<DateTime> startingDates;
+  // Each page is tracked as a week offset from "this week" (0), rather than
+  // an absolute DateTime computed once — Habit.startOfWeek can change later
+  // (in Settings) while this screen stays on the navigator stack, and
+  // re-deriving the date from the offset + the *current* startOfWeek on
+  // every build is what keeps the day-circles' dates aligned with the
+  // weekday headers above them (both ultimately read Habit.startOfWeek).
+  // Storing an absolute DateTime instead would freeze every page at
+  // whatever start-of-week convention was active when it was first built.
+  int _currentOffset = 0;
+  late int _lowerOffset;
+  late int _upperOffset;
+  late List<int> _weekOffsets;
+
+  DateTime _dateForOffset(int weekOffset) =>
+      addDays(weekdayDate(Habit.startOfWeek), weekOffset * 7);
+
+  DateTime get currentDate => _dateForOffset(_currentOffset);
+
   late HijriCalendar hijriFirstDay;
   late HijriCalendar hijriLastDay;
 
@@ -58,11 +74,11 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
   List<Habit>? _allHabits;
   int _reloadGeneration = 0;
 
-  Widget _buildPages(DateTime dateTime) {
+  Widget _buildPages(int weekOffset) {
     return SeveralHabitsPage(
       habits: _habits,
       allHabits: _allHabits,
-      currentDate: dateTime,
+      currentDate: _dateForOffset(weekOffset),
       onChanged: () => setState(() {}),
     );
   }
@@ -103,9 +119,9 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
     hijriFirstDay = HijriCalendar.fromDate(currentDate);
     hijriLastDay = HijriCalendar.fromDate(addDays(currentDate, 7));
     controller = PageController(initialPage: 1);
-    _lowerDate = addDays(currentDate, -7);
-    _upperDate = addDays(currentDate, 7);
-    startingDates = [_lowerDate, currentDate, _upperDate];
+    _lowerOffset = _currentOffset - 1;
+    _upperOffset = _currentOffset + 1;
+    _weekOffsets = [_lowerOffset, _currentOffset, _upperOffset];
     _habits = List<Habit>.of(widget.habits);
     _allHabits = widget.allHabits == null
         ? null
@@ -116,10 +132,31 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route != null) appRouteObserver.subscribe(this, route);
+  }
+
+  @override
   void dispose() {
     NotificationService.habitDataRevision.removeListener(_onHabitDataChanged);
+    appRouteObserver.unsubscribe(this);
     controller.dispose();
     super.dispose();
+  }
+
+  // Called when a route pushed on top of this screen (e.g. Settings) is
+  // popped back to it, so a start-of-week change made there is reflected in
+  // the Hijri month range header immediately — the day-circles' own dates
+  // are already derived fresh from Habit.startOfWeek on every build via
+  // _dateForOffset, so they just need this rebuild to pick it up too.
+  @override
+  void didPopNext() {
+    setState(() {
+      hijriFirstDay = HijriCalendar.fromDate(currentDate);
+      hijriLastDay = HijriCalendar.fromDate(addDays(currentDate, 7));
+    });
   }
 
   @override
@@ -235,24 +272,24 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
             child: PageView(
               onPageChanged: (index) {
                 setState(() {
-                  if (index == startingDates.length - 1) {
-                    _upperDate = addDays(_upperDate, 7);
-                    startingDates.add(_upperDate);
+                  if (index == _weekOffsets.length - 1) {
+                    _upperOffset += 1;
+                    _weekOffsets.add(_upperOffset);
                   }
                   if (index == 0) {
-                    _lowerDate = addDays(_lowerDate, -7);
-                    startingDates.insert(0, _lowerDate);
+                    _lowerOffset -= 1;
+                    _weekOffsets.insert(0, _lowerOffset);
                     controller.jumpTo(
                         1.5 * MediaQuery.of(context).size.width);
                     controller.animateToPage(1,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn);
-                    currentDate = addDays(currentDate, 7);
+                    _currentOffset += 1;
                   }
                   if (index > controller.page!.floor()) {
-                    currentDate = addDays(currentDate, 7);
+                    _currentOffset += 1;
                   } else {
-                    currentDate = addDays(currentDate, -7);
+                    _currentOffset -= 1;
                   }
 
                   hijriFirstDay = HijriCalendar.fromDate(currentDate);
@@ -262,8 +299,8 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen> {
               },
               controller: controller,
               children: List<Widget>.generate(
-                startingDates.length,
-                (i) => _buildPages(startingDates[i]),
+                _weekOffsets.length,
+                (i) => _buildPages(_weekOffsets[i]),
               ),
             ),
           ),

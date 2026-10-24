@@ -81,6 +81,16 @@ class AppLocalizationsFa extends AppLocalizations {
   String get cancel => 'لغو';
 
   @override
+  String get unsavedChangesTitle => 'تغییرات ذخیره‌نشده';
+
+  @override
+  String get unsavedChangesMessage =>
+      'تغییرات ذخیره‌نشده‌ای در تنظیمات نماز دارید. آیا می‌خواهید پیش از خروج آن‌ها را ذخیره کنید؟';
+
+  @override
+  String get discardChanges => 'نادیده گرفتن';
+
+  @override
   String get delete => 'حذف';
 
   @override
@@ -606,10 +616,11 @@ class AppLocalizationsFa extends AppLocalizations {
   String get reminderLabel => 'یادآور';
 
   @override
-  String get reminderEnabledLabel => 'یادآور روزانه';
+  String get reminderEnabledLabel => 'یادآور عادت';
 
   @override
-  String get reminderEnabledSubtitle => 'در زمان انتخابی خود اعلان دریافت کنید';
+  String get reminderEnabledSubtitle =>
+      'در زمان انتخابی خود و در روزهای تعیین‌شدهٔ این عادت اعلان دریافت کنید';
 
   @override
   String get reminderTimeLabel => 'زمان یادآور';
@@ -620,7 +631,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String reminderDailyAt(String time) {
-    return 'هر روز ساعت $time';
+    return 'ساعت $time';
   }
 
   @override

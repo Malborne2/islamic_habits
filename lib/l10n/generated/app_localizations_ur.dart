@@ -81,6 +81,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get cancel => 'منسوخ کریں';
 
   @override
+  String get unsavedChangesTitle => 'غیر محفوظ تبدیلیاں';
+
+  @override
+  String get unsavedChangesMessage =>
+      'نماز کی ترتیبات میں غیر محفوظ تبدیلیاں ہیں۔ کیا آپ جانے سے پہلے انہیں محفوظ کرنا چاہتے ہیں؟';
+
+  @override
+  String get discardChanges => 'رد کریں';
+
+  @override
   String get delete => 'حذف کریں';
 
   @override
@@ -606,10 +616,11 @@ class AppLocalizationsUr extends AppLocalizations {
   String get reminderLabel => 'یاد دہانی';
 
   @override
-  String get reminderEnabledLabel => 'روزانہ یاد دہانی';
+  String get reminderEnabledLabel => 'عادت کی یاد دہانی';
 
   @override
-  String get reminderEnabledSubtitle => 'اپنے منتخب وقت پر اطلاع حاصل کریں';
+  String get reminderEnabledSubtitle =>
+      'اپنے منتخب وقت پر اس عادت کے مقررہ دنوں میں اطلاع حاصل کریں';
 
   @override
   String get reminderTimeLabel => 'یاد دہانی کا وقت';
@@ -620,7 +631,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String reminderDailyAt(String time) {
-    return 'روزانہ $time بجے';
+    return '$time بجے';
   }
 
   @override

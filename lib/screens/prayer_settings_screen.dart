@@ -71,12 +71,103 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
   bool _isTestPlaying = false;
   late final StreamSubscription<void> _testCompleteSub;
 
+  // Snapshot of the values that only take effect when "Save" is pressed.
+  // The reminders switch, Adhan voice, and takbeer toggle save immediately,
+  // so they are deliberately not part of this comparison.
+  late final String _initialCityLabel;
+  late final String _initialLatText;
+  late final String _initialLonText;
+  late final CalculationMethod _initialMethod;
+  late final Madhab _initialMadhab;
+  late final int _initialFajr;
+  late final int _initialDhuhr;
+  late final int _initialAsr;
+  late final int _initialMaghrib;
+  late final int _initialIsha;
+
+  // Lets the screen pop without tripping the unsaved-changes guard after the
+  // user has explicitly saved or discarded.
+  bool _allowPop = false;
+  bool _exitDialogVisible = false;
+
   @override
   void initState() {
     super.initState();
+    _initialCityLabel = _cityLabel;
+    _initialLatText = _latController.text;
+    _initialLonText = _lonController.text;
+    _initialMethod = _method;
+    _initialMadhab = _madhab;
+    _initialFajr = _adjustmentValue(_fajrAdj);
+    _initialDhuhr = _adjustmentValue(_dhuhrAdj);
+    _initialAsr = _adjustmentValue(_asrAdj);
+    _initialMaghrib = _adjustmentValue(_maghribAdj);
+    _initialIsha = _adjustmentValue(_ishaAdj);
     _testCompleteSub = NotificationService.onTestAdhanComplete.listen((_) {
       if (mounted) setState(() => _isTestPlaying = false);
     });
+  }
+
+  int _adjustmentValue(TextEditingController controller) =>
+      int.tryParse(controller.text) ?? 0;
+
+  bool get _hasUnsavedChanges =>
+      _cityLabel != _initialCityLabel ||
+      _latController.text != _initialLatText ||
+      _lonController.text != _initialLonText ||
+      _method != _initialMethod ||
+      _madhab != _initialMadhab ||
+      _adjustmentValue(_fajrAdj) != _initialFajr ||
+      _adjustmentValue(_dhuhrAdj) != _initialDhuhr ||
+      _adjustmentValue(_asrAdj) != _initialAsr ||
+      _adjustmentValue(_maghribAdj) != _initialMaghrib ||
+      _adjustmentValue(_ishaAdj) != _initialIsha;
+
+  // Pops after the current frame so PopScope sees canPop == true.
+  void _exitNow() {
+    if (!mounted) return;
+    setState(() => _allowPop = true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) Navigator.of(context).pop();
+    });
+  }
+
+  Future<void> _handleBack() async {
+    if (_exitDialogVisible) return;
+    if (!_hasUnsavedChanges) {
+      _exitNow();
+      return;
+    }
+    final l10n = AppLocalizations.of(context);
+    _exitDialogVisible = true;
+    final String? action = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.unsavedChangesTitle),
+        content: Text(l10n.unsavedChangesMessage),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, 'cancel'),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, 'discard'),
+            child: Text(l10n.discardChanges),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, 'save'),
+            child: Text(l10n.save),
+          ),
+        ],
+      ),
+    );
+    _exitDialogVisible = false;
+    if (!mounted) return;
+    if (action == 'save') {
+      await _save();
+    } else if (action == 'discard') {
+      _exitNow();
+    }
   }
 
   @override
@@ -104,8 +195,8 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
       if (mounted) setState(() => _isTestPlaying = true);
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context).adhanAudioMissing)));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context).adhanAudioMissing)));
       }
     }
   }
@@ -117,8 +208,8 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
         builder: (context) => CityPickerScreen(
           initialLatitude:
               double.tryParse(_latController.text) ?? PrayerSettings.latitude,
-          initialLongitude: double.tryParse(_lonController.text) ??
-              PrayerSettings.longitude,
+          initialLongitude:
+              double.tryParse(_lonController.text) ?? PrayerSettings.longitude,
         ),
       ),
     );
@@ -153,7 +244,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
     );
     await PrayerSettings.save();
     await NotificationService.scheduleTodayReminders();
-    if (mounted) Navigator.pop(context);
+    if (mounted) _exitNow();
   }
 
   Future<void> _onRemindersChanged(bool value) async {
@@ -161,8 +252,8 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
       final granted = await NotificationService.requestPermission();
       if (!granted && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content:
-                Text(AppLocalizations.of(context).notificationPermissionDenied)));
+            content: Text(
+                AppLocalizations.of(context).notificationPermissionDenied)));
       }
       // Prompt for exact-alarm access right away too, so reminders are
       // reliable from the start instead of only after the user notices
@@ -177,242 +268,253 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.settingsPrayerTimeSettings)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: <Widget>[
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text(l10n.prayerRemindersLabel),
-            subtitle: Text(l10n.prayerRemindersSubtitle),
-            value: _remindersEnabled,
-            onChanged: _onRemindersChanged,
-          ),
-          TextButton(
-            onPressed: NotificationService.sendTestNotification,
-            child: Text(l10n.sendTestReminder),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Text(
-              l10n.batteryOptimizationHint,
-              style: const TextStyle(fontSize: 11),
+    return PopScope(
+      // Back with unsaved changes asks whether to save, discard, or cancel.
+      // Everything on this screen (city, method, madhab, corrections) only
+      // takes effect after Save, so silently losing it was surprising.
+      canPop: _allowPop,
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        if (!didPop) _handleBack();
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text(l10n.settingsPrayerTimeSettings)),
+        body: ListView(
+          padding: const EdgeInsets.all(16),
+          children: <Widget>[
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(l10n.prayerRemindersLabel),
+              subtitle: Text(l10n.prayerRemindersSubtitle),
+              value: _remindersEnabled,
+              onChanged: _onRemindersChanged,
             ),
-          ),
-          TextButton(
-            onPressed: NotificationService.requestIgnoreBatteryOptimizations,
-            child: Text(l10n.batteryOptimizationButton),
-          ),
-          TextButton(
-            onPressed: () async {
-              final granted =
-                  await NotificationService.requestExactAlarmPermission();
-              if (!mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(granted
-                      ? l10n.exactAlarmGranted
-                      : l10n.exactAlarmNotGranted)));
-            },
-            child: Text(l10n.exactAlarmButton),
-          ),
-          const SizedBox(height: 8),
-          Text(l10n.adhanVoiceLabel,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          Text(
-            l10n.adhanVoiceHint,
-            style: const TextStyle(fontSize: 12),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: DropdownButtonFormField<AdhanVoiceOption>(
-                  initialValue: _adhanVoice,
-                  decoration: habitTextFieldDecoration(context),
-                  items: kAdhanVoices
-                      .map((voice) => DropdownMenuItem(
-                            value: voice,
-                            child:
-                                Text(localizedAdhanVoiceName(context, voice)),
-                          ))
-                      .toList(),
-                  onChanged: (value) async {
-                    if (value == null) return;
-                    await NotificationService.stopTestAdhan();
-                    setState(() {
-                      _adhanVoice = value;
-                      _isTestPlaying = false;
-                    });
-                    await PrayerSettings.setAdhanVoice(value);
-                    await NotificationService.scheduleTodayReminders();
-                  },
-                ),
-              ),
-              const SizedBox(width: 8),
-              IconButton(
-                tooltip: l10n.testAdhanVoice,
-                icon: Icon(_isTestPlaying
-                    ? Icons.stop_circle_outlined
-                    : Icons.play_circle_outline),
-                onPressed: _toggleTestAdhan,
-              ),
-            ],
-          ),
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text(l10n.adhanTakbeerOnlyLabel),
-            subtitle: Text(l10n.adhanTakbeerOnlyHint),
-            value: _adhanTakbeerOnly,
-            onChanged: (value) async {
-              await NotificationService.stopTestAdhan();
-              setState(() {
-                _adhanTakbeerOnly = value;
-                _isTestPlaying = false;
-              });
-              await PrayerSettings.setAdhanTakbeerOnly(value);
-              await NotificationService.scheduleTodayReminders();
-            },
-          ),
-          const Divider(),
-          Text(l10n.locationLabel,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(14),
-              onTap: _openCityPicker,
-              child: InputDecorator(
-                decoration:
-                    habitTextFieldDecoration(context).copyWith(labelText: l10n.cityLabel),
-                child: Row(
-                  children: <Widget>[
-                    Icon(Icons.location_on,
-                        size: 18,
-                        color: Theme.of(context).colorScheme.primary),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(_cityLabel,
-                          style: const TextStyle(fontSize: 16)),
-                    ),
-                    const Icon(Icons.chevron_right),
-                  ],
-                ),
+            TextButton(
+              onPressed: NotificationService.sendTestNotification,
+              child: Text(l10n.sendTestReminder),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                l10n.batteryOptimizationHint,
+                style: const TextStyle(fontSize: 11),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 4, top: 4),
-            child: Text(
-              '${double.tryParse(_latController.text)?.toStringAsFixed(4) ?? _latController.text}, '
-              '${double.tryParse(_lonController.text)?.toStringAsFixed(4) ?? _lonController.text}',
-              style: TextStyle(
-                  fontSize: 12,
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onSurface
-                      .withValues(alpha: 0.6)),
+            TextButton(
+              onPressed: NotificationService.requestIgnoreBatteryOptimizations,
+              child: Text(l10n.batteryOptimizationButton),
             ),
-          ),
-          const SizedBox(height: 24),
-          Text(l10n.calculationMethodLabel,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          DropdownButtonFormField<CalculationMethod>(
-            initialValue: _method,
-            decoration: habitTextFieldDecoration(context),
-            items: CalculationMethod.values
-                .map((m) => DropdownMenuItem(
-                    value: m, child: Text(_calculationMethodLabel(l10n, m))))
-                .toList(),
-            onChanged: (value) {
-              if (value != null) setState(() => _method = value);
-            },
-          ),
-          const SizedBox(height: 24),
-          Text(l10n.madhabLabel,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          DropdownButtonFormField<Madhab>(
-            initialValue: _madhab,
-            decoration: habitTextFieldDecoration(context),
-            items: [
-              DropdownMenuItem(value: Madhab.shafi, child: Text(l10n.shafiLabel)),
-              DropdownMenuItem(
-                  value: Madhab.hanafi, child: Text(l10n.hanafiLabel)),
-            ],
-            onChanged: (value) {
-              if (value != null) setState(() => _madhab = value);
-            },
-          ),
-          const SizedBox(height: 24),
-          Text(l10n.manualCorrectionLabel,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: TextFormField(
-                  controller: _fajrAdj,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(signed: true),
-                  decoration:
-                      habitTextFieldDecoration(context).copyWith(labelText: l10n.adjFajr),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: TextFormField(
-                  controller: _dhuhrAdj,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(signed: true),
-                  decoration:
-                      habitTextFieldDecoration(context).copyWith(labelText: l10n.adjDhuhr),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: TextFormField(
-                  controller: _asrAdj,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(signed: true),
-                  decoration:
-                      habitTextFieldDecoration(context).copyWith(labelText: l10n.adjAsr),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: TextFormField(
-                  controller: _maghribAdj,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(signed: true),
-                  decoration: habitTextFieldDecoration(context).copyWith(
-                      labelText: l10n.adjMaghrib),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          TextFormField(
-            controller: _ishaAdj,
-            keyboardType: const TextInputType.numberWithOptions(signed: true),
-            decoration: habitTextFieldDecoration(context).copyWith(labelText: l10n.adjIsha),
-          ),
-          const SizedBox(height: 32),
-          ElevatedButton(
-            onPressed: _save,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Text(l10n.save),
+            TextButton(
+              onPressed: () async {
+                final granted =
+                    await NotificationService.requestExactAlarmPermission();
+                if (!mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(granted
+                        ? l10n.exactAlarmGranted
+                        : l10n.exactAlarmNotGranted)));
+              },
+              child: Text(l10n.exactAlarmButton),
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text(l10n.adhanVoiceLabel,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              l10n.adhanVoiceHint,
+              style: const TextStyle(fontSize: 12),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: DropdownButtonFormField<AdhanVoiceOption>(
+                    initialValue: _adhanVoice,
+                    decoration: habitTextFieldDecoration(context),
+                    items: kAdhanVoices
+                        .map((voice) => DropdownMenuItem(
+                              value: voice,
+                              child:
+                                  Text(localizedAdhanVoiceName(context, voice)),
+                            ))
+                        .toList(),
+                    onChanged: (value) async {
+                      if (value == null) return;
+                      await NotificationService.stopTestAdhan();
+                      setState(() {
+                        _adhanVoice = value;
+                        _isTestPlaying = false;
+                      });
+                      await PrayerSettings.setAdhanVoice(value);
+                      await NotificationService.scheduleTodayReminders();
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  tooltip: l10n.testAdhanVoice,
+                  icon: Icon(_isTestPlaying
+                      ? Icons.stop_circle_outlined
+                      : Icons.play_circle_outline),
+                  onPressed: _toggleTestAdhan,
+                ),
+              ],
+            ),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(l10n.adhanTakbeerOnlyLabel),
+              subtitle: Text(l10n.adhanTakbeerOnlyHint),
+              value: _adhanTakbeerOnly,
+              onChanged: (value) async {
+                await NotificationService.stopTestAdhan();
+                setState(() {
+                  _adhanTakbeerOnly = value;
+                  _isTestPlaying = false;
+                });
+                await PrayerSettings.setAdhanTakbeerOnly(value);
+                await NotificationService.scheduleTodayReminders();
+              },
+            ),
+            const Divider(),
+            Text(l10n.locationLabel,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(14),
+                onTap: _openCityPicker,
+                child: InputDecorator(
+                  decoration: habitTextFieldDecoration(context)
+                      .copyWith(labelText: l10n.cityLabel),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.location_on,
+                          size: 18,
+                          color: Theme.of(context).colorScheme.primary),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(_cityLabel,
+                            style: const TextStyle(fontSize: 16)),
+                      ),
+                      const Icon(Icons.chevron_right),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 4, top: 4),
+              child: Text(
+                '${double.tryParse(_latController.text)?.toStringAsFixed(4) ?? _latController.text}, '
+                '${double.tryParse(_lonController.text)?.toStringAsFixed(4) ?? _lonController.text}',
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.6)),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(l10n.calculationMethodLabel,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<CalculationMethod>(
+              initialValue: _method,
+              decoration: habitTextFieldDecoration(context),
+              items: CalculationMethod.values
+                  .map((m) => DropdownMenuItem(
+                      value: m, child: Text(_calculationMethodLabel(l10n, m))))
+                  .toList(),
+              onChanged: (value) {
+                if (value != null) setState(() => _method = value);
+              },
+            ),
+            const SizedBox(height: 24),
+            Text(l10n.madhabLabel,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<Madhab>(
+              initialValue: _madhab,
+              decoration: habitTextFieldDecoration(context),
+              items: [
+                DropdownMenuItem(
+                    value: Madhab.shafi, child: Text(l10n.shafiLabel)),
+                DropdownMenuItem(
+                    value: Madhab.hanafi, child: Text(l10n.hanafiLabel)),
+              ],
+              onChanged: (value) {
+                if (value != null) setState(() => _madhab = value);
+              },
+            ),
+            const SizedBox(height: 24),
+            Text(l10n.manualCorrectionLabel,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextFormField(
+                    controller: _fajrAdj,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(signed: true),
+                    decoration: habitTextFieldDecoration(context)
+                        .copyWith(labelText: l10n.adjFajr),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextFormField(
+                    controller: _dhuhrAdj,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(signed: true),
+                    decoration: habitTextFieldDecoration(context)
+                        .copyWith(labelText: l10n.adjDhuhr),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextFormField(
+                    controller: _asrAdj,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(signed: true),
+                    decoration: habitTextFieldDecoration(context)
+                        .copyWith(labelText: l10n.adjAsr),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextFormField(
+                    controller: _maghribAdj,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(signed: true),
+                    decoration: habitTextFieldDecoration(context)
+                        .copyWith(labelText: l10n.adjMaghrib),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: _ishaAdj,
+              keyboardType: const TextInputType.numberWithOptions(signed: true),
+              decoration: habitTextFieldDecoration(context)
+                  .copyWith(labelText: l10n.adjIsha),
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: _save,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Text(l10n.save),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

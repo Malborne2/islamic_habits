@@ -80,6 +80,16 @@ class AppLocalizationsFi extends AppLocalizations {
   String get cancel => 'Peruuta';
 
   @override
+  String get unsavedChangesTitle => 'Tallentamattomia muutoksia';
+
+  @override
+  String get unsavedChangesMessage =>
+      'Rukousasetuksissasi on tallentamattomia muutoksia. Haluatko tallentaa ne ennen lähtemistä?';
+
+  @override
+  String get discardChanges => 'Hylkää';
+
+  @override
   String get delete => 'Poista';
 
   @override
@@ -605,10 +615,11 @@ class AppLocalizationsFi extends AppLocalizations {
   String get reminderLabel => 'Muistutus';
 
   @override
-  String get reminderEnabledLabel => 'Päivittäinen muistutus';
+  String get reminderEnabledLabel => 'Tapamuistutus';
 
   @override
-  String get reminderEnabledSubtitle => 'Saat ilmoituksen valitsemanasi aikana';
+  String get reminderEnabledSubtitle =>
+      'Saat ilmoituksen tapasi valittuina päivinä valitsemanasi aikana';
 
   @override
   String get reminderTimeLabel => 'Muistutuksen aika';
@@ -619,7 +630,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String reminderDailyAt(String time) {
-    return 'Päivittäin klo $time';
+    return 'Klo $time';
   }
 
   @override

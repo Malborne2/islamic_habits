@@ -33,10 +33,29 @@ const String _kAdhanChannelName = 'Prayer Adhan';
 const String _kHabitReminderChannelId = 'habit_reminders';
 const String _kHabitReminderChannelName = 'Habit reminders';
 const String _kHabitReminderPayloadPrefix = 'habit_reminder:';
-// Reserved ID range for per-habit daily reminders. Prayer reminders use
-// 0-4, adhan 10-14 and the Settings test 99, so this cannot collide.
+// Reserved ID range for per-habit reminders. Prayer reminders use 0-4, adhan
+// 10-14 and the Settings test 99, so this cannot collide. Each habit owns
+// _kHabitReminderIdStride consecutive IDs so it can hold one slot per selected
+// weekday or a rolling window of interval occurrences.
 const int _kHabitReminderIdBase = 1000;
+const int _kHabitReminderIdStride = 64;
+// Android's local-notification scheduler can only repeat daily or weekly, so
+// habits that run every N days get their upcoming occurrences as one-shots.
+// The window is refreshed whenever reminders are rescheduled.
+const int _kRepeatingReminderHorizon = 30;
 const String _kHabitUpdatePortName = 'islamic_habits_habit_updates';
+
+class _HabitReminderOccurrence {
+  final int slot;
+  final tz.TZDateTime date;
+  final DateTimeComponents? repeat;
+
+  const _HabitReminderOccurrence({
+    required this.slot,
+    required this.date,
+    this.repeat,
+  });
+}
 
 // Notification actions that arrive while the app isn't foregrounded are
 // handled on a background isolate. Its statics (including habitDataRevision)
@@ -478,10 +497,12 @@ class NotificationService {
     }
   }
 
-  // Clears the previously scheduled habit reminders and schedules one daily
-  // repeating reminder for every habit whose own reminder switch is on.
-  // Deliberately does not read PrayerSettings.remindersEnabled: habit
-  // reminders are independent of the global prayer-reminder setting.
+  // Clears the previously scheduled habit reminders and schedules them again
+  // according to each habit's own schedule: daily habits repeat every day,
+  // weekday habits repeat on their selected days, and interval habits get a
+  // rolling window of one-shot reminders. Deliberately does not read
+  // PrayerSettings.remindersEnabled: habit reminders are independent of the
+  // global prayer-reminder setting.
   static Future<void> scheduleHabitReminders() async {
     final plugin = _notificationsPlugin;
     try {
@@ -514,25 +535,6 @@ class NotificationService {
       }
       final hour = minutes ~/ 60;
       final minute = minutes % 60;
-      var scheduled = tz.TZDateTime(
-        tz.local,
-        now.year,
-        now.month,
-        now.day,
-        hour,
-        minute,
-      );
-      if (!scheduled.isAfter(now)) {
-        final tomorrow = DateTime(now.year, now.month, now.day + 1);
-        scheduled = tz.TZDateTime(
-          tz.local,
-          tomorrow.year,
-          tomorrow.month,
-          tomorrow.day,
-          hour,
-          minute,
-        );
-      }
       final displayName = localizedHabitNameFromL10n(l10n, habit.name);
       final actions = habit.type == HabitType.YES_NO
           ? <AndroidNotificationAction>[
@@ -542,41 +544,195 @@ class NotificationService {
                   cancelNotification: true),
             ]
           : null;
-      try {
-        await plugin.zonedSchedule(
-          id: _kHabitReminderIdBase + habitId,
-          title: l10n.notificationHabitReminderTitle,
-          body: l10n.notificationHabitReminderBody(displayName),
-          scheduledDate: scheduled,
-          notificationDetails: NotificationDetails(
-            android: AndroidNotificationDetails(
-              _kHabitReminderChannelId,
-              _kHabitReminderChannelName,
-              channelDescription: 'Daily reminders for your custom habits',
-              importance: Importance.high,
-              priority: Priority.high,
-              playSound: false,
-              enableVibration: true,
-              actions: actions,
-            ),
-          ),
-          androidScheduleMode: scheduleMode,
-          // Repeats every day at the same wall-clock time, which also keeps
-          // the time correct across daylight-saving changes.
-          matchDateTimeComponents: DateTimeComponents.time,
-          payload: '$_kHabitReminderPayloadPrefix$habitId',
-        );
-        _log('Habit "$displayName" reminder scheduled daily at '
-            '${scheduled.hour}:${scheduled.minute.toString().padLeft(2, '0')} '
-            '(id=${_kHabitReminderIdBase + habitId})');
-      } catch (e) {
-        _log('Habit "$displayName" reminder schedule FAILED: $e');
+      final details = NotificationDetails(
+        android: AndroidNotificationDetails(
+          _kHabitReminderChannelId,
+          _kHabitReminderChannelName,
+          channelDescription: 'Reminders for your habits',
+          importance: Importance.high,
+          priority: Priority.high,
+          playSound: false,
+          enableVibration: true,
+          actions: actions,
+        ),
+      );
+      final payload = '$_kHabitReminderPayloadPrefix$habitId';
+      final occurrences =
+          _habitReminderOccurrences(habit, now, hour, minute);
+
+      for (final occurrence in occurrences) {
+        try {
+          await plugin.zonedSchedule(
+            id: _habitReminderId(habitId, occurrence.slot),
+            title: l10n.notificationHabitReminderTitle,
+            body: l10n.notificationHabitReminderBody(displayName),
+            scheduledDate: occurrence.date,
+            notificationDetails: details,
+            androidScheduleMode: scheduleMode,
+            matchDateTimeComponents: occurrence.repeat,
+            payload: payload,
+          );
+          _log('Habit "$displayName" reminder scheduled for '
+              '${occurrence.date} (repeat=${occurrence.repeat}, '
+              'id=${_habitReminderId(habitId, occurrence.slot)})');
+        } catch (e) {
+          _log('Habit "$displayName" reminder schedule FAILED: $e');
+        }
       }
     }
   }
 
+  static int _habitReminderId(int habitId, int slot) =>
+      _kHabitReminderIdBase + habitId * _kHabitReminderIdStride + slot;
+
+  // Builds the future reminder slots for one habit. Daily and weekly-count
+  // habits repeat every day; weekday habits repeat weekly on each selected
+  // day; interval habits expose their next occurrences, because Android's
+  // local notifications can only repeat daily or weekly, not every N days.
+  static List<_HabitReminderOccurrence> _habitReminderOccurrences(
+    Habit habit,
+    tz.TZDateTime now,
+    int hour,
+    int minute,
+  ) {
+    if (habit.habitDays == HabitDays.DAYS_OF_WEEK) {
+      final weekdays = (habit.habitPeriod ?? const <int>[])
+          .where((day) => day >= DateTime.monday && day <= DateTime.sunday)
+          .toSet()
+          .toList()
+        ..sort();
+      return <_HabitReminderOccurrence>[
+        for (var slot = 0; slot < weekdays.length; slot++)
+          _HabitReminderOccurrence(
+            slot: slot,
+            date: _nextWeekdayOccurrence(now, weekdays[slot], hour, minute),
+            repeat: DateTimeComponents.dayOfWeekAndTime,
+          ),
+      ];
+    }
+
+    if (habit.habitDays == HabitDays.REPEATING) {
+      final interval = habit.habitPeriod?.first ?? 1;
+      final period = interval > 0 ? interval : 1;
+      final created = DateTime(
+        habit.createdTime.year,
+        habit.createdTime.month,
+        habit.createdTime.day,
+      );
+      final today = DateTime(now.year, now.month, now.day);
+      final elapsed = today.difference(created).inDays;
+      var daysUntilNext = (period - (elapsed % period)) % period;
+      var date = DateTime(today.year, today.month, today.day + daysUntilNext);
+      var scheduled = tz.TZDateTime(
+        tz.local,
+        date.year,
+        date.month,
+        date.day,
+        hour,
+        minute,
+      );
+      if (daysUntilNext == 0 && !scheduled.isAfter(now)) {
+        date = DateTime(date.year, date.month, date.day + period);
+        scheduled = tz.TZDateTime(
+          tz.local,
+          date.year,
+          date.month,
+          date.day,
+          hour,
+          minute,
+        );
+      }
+      return <_HabitReminderOccurrence>[
+        for (var slot = 0; slot < _kRepeatingReminderHorizon; slot++)
+          _HabitReminderOccurrence(
+            slot: slot,
+            date: _datePlusDays(scheduled, date, slot * period, hour, minute),
+          ),
+      ];
+    }
+
+    // EVERYDAY and TIMES_PER_WEEK habits can be logged on any day, so they
+    // keep a single daily repeating reminder.
+    return <_HabitReminderOccurrence>[
+      _HabitReminderOccurrence(
+        slot: 0,
+        date: _nextDailyOccurrence(now, hour, minute),
+        repeat: DateTimeComponents.time,
+      ),
+    ];
+  }
+
+  static tz.TZDateTime _datePlusDays(
+    tz.TZDateTime base,
+    DateTime baseDate,
+    int days,
+    int hour,
+    int minute,
+  ) {
+    if (days == 0) return base;
+    final date = DateTime(baseDate.year, baseDate.month, baseDate.day + days);
+    return tz.TZDateTime(tz.local, date.year, date.month, date.day, hour,
+        minute);
+  }
+
+  static tz.TZDateTime _nextDailyOccurrence(
+    tz.TZDateTime now,
+    int hour,
+    int minute,
+  ) {
+    var scheduled = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minute,
+    );
+    if (!scheduled.isAfter(now)) {
+      scheduled = tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        now.day + 1,
+        hour,
+        minute,
+      );
+    }
+    return scheduled;
+  }
+
+  static tz.TZDateTime _nextWeekdayOccurrence(
+    tz.TZDateTime now,
+    int weekday,
+    int hour,
+    int minute,
+  ) {
+    final daysAhead = (weekday - now.weekday) % 7;
+    var scheduled = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day + daysAhead,
+      hour,
+      minute,
+    );
+    if (!scheduled.isAfter(now)) {
+      scheduled = tz.TZDateTime(
+        tz.local,
+        scheduled.year,
+        scheduled.month,
+        scheduled.day + 7,
+        hour,
+        minute,
+      );
+    }
+    return scheduled;
+  }
+
   static Future<void> cancelHabitReminder(int habitId) async {
-    await _notificationsPlugin.cancel(id: _kHabitReminderIdBase + habitId);
+    for (var slot = 0; slot < _kHabitReminderIdStride; slot++) {
+      await _notificationsPlugin.cancel(id: _habitReminderId(habitId, slot));
+    }
   }
 
   static Future<void> sendTestNotification() async {

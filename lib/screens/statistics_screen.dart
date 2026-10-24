@@ -2,7 +2,12 @@ import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// intl exports its own TextDirection class (LTR/RTL/UNKNOWN, no .rtl
+// getter), which otherwise wins over Flutter's dart:ui TextDirection
+// (re-exported by material.dart) for a bare `TextDirection` reference in
+// this file — hiding it here is what makes `TextDirection.rtl` below
+// resolve to the Flutter one.
+import 'package:intl/intl.dart' hide TextDirection;
 import 'package:islamic_habits/components/habit_button.dart' show Status;
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/constants.dart';
@@ -386,6 +391,27 @@ DateTime _startOfWeek(DateTime day) {
 // stories instead of four shades of the brand colour. The overall card stays
 // gold; the period cards step through blue, orange, and violet. Dark mode uses
 // brighter variants so the lines and bars pop against the black surface.
+// fl_chart always draws its x-axis left-to-right. In RTL locales we keep the
+// underlying data chronological but plot it mirrored, so the oldest value sits
+// on the right and the newest on the left, matching how time reads in those
+// languages. The same mapping is used for labels and tooltips.
+int _chartDataIndex(int axisIndex, int length, bool isRtl) {
+  if (length == 0) return 0;
+  final index = isRtl ? length - 1 - axisIndex : axisIndex;
+  return index.clamp(0, length - 1);
+}
+
+// fl_chart always anchors its value axis (the percentage labels) on the
+// left. In RTL locales it should read from the right instead, to match the
+// x-axis, which _chartDataIndex above already mirrors. Returns
+// (leftTitles, rightTitles) so callers can destructure straight into
+// FlTitlesData.
+(AxisTitles, AxisTitles) _valueAxisTitles(SideTitles sideTitles, bool isRtl) {
+  const hidden = AxisTitles(sideTitles: SideTitles(showTitles: false));
+  final shown = AxisTitles(sideTitles: sideTitles);
+  return isRtl ? (hidden, shown) : (shown, hidden);
+}
+
 class _StatsPalette {
   final Color overall;
   final Color daily;
@@ -599,11 +625,32 @@ class _DailyCompletionCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final locale = Localizations.localeOf(context).toString();
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
     final daily = data.daily;
     final spots = <FlSpot>[
       for (int i = 0; i < daily.length; i++)
-        FlSpot(i.toDouble(), daily[i].percent),
+        FlSpot(
+          i.toDouble(),
+          daily[_chartDataIndex(i, daily.length, isRtl)].percent,
+        ),
     ];
+    final valueTitles = _valueAxisTitles(
+      SideTitles(
+        showTitles: true,
+        interval: 25,
+        reservedSize: 38,
+        getTitlesWidget: (value, meta) => SideTitleWidget(
+          meta: meta,
+          child: Text(
+            localizeDigits(context, '${value.toInt()}%'),
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ),
+      ),
+      isRtl,
+    );
     return _ChartCard(
       title: l10n.statisticsDailyCompletion,
       subtitle: l10n.statisticsDailyCompletionSubtitle,
@@ -627,35 +674,20 @@ class _DailyCompletionCard extends StatelessWidget {
             topTitles: const AxisTitles(
               sideTitles: SideTitles(showTitles: false),
             ),
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                interval: 25,
-                reservedSize: 38,
-                getTitlesWidget: (value, meta) => SideTitleWidget(
-                  meta: meta,
-                  child: Text(
-                    localizeDigits(context, '${value.toInt()}%'),
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            leftTitles: valueTitles.$1,
+            rightTitles: valueTitles.$2,
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
                 interval: 1,
                 reservedSize: 28,
                 getTitlesWidget: (value, meta) {
-                  final index = value.round();
-                  if (index < 0 || index >= daily.length) {
+                  final axisIndex = value.round();
+                  if (axisIndex < 0 || axisIndex >= daily.length) {
                     return const SizedBox.shrink();
                   }
+                  final index =
+                      _chartDataIndex(axisIndex, daily.length, isRtl);
                   // Label every week plus the final day, so the axis stays
                   // readable on a narrow phone. Skip a weekly label when it
                   // would sit right next to the final "today" label.
@@ -687,7 +719,8 @@ class _DailyCompletionCard extends StatelessWidget {
             touchTooltipData: LineTouchTooltipData(
               getTooltipColor: (spot) => kBrandNavy,
               getTooltipItems: (touchedSpots) => touchedSpots.map((spot) {
-                final index = spot.x.round().clamp(0, daily.length - 1);
+                final index =
+                    _chartDataIndex(spot.x.round(), daily.length, isRtl);
                 final day = daily[index];
                 return LineTooltipItem(
                   '${DateFormat('d MMM', locale).format(day.day)}\n'
@@ -744,7 +777,25 @@ class _WeeklyProgressCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final locale = Localizations.localeOf(context).toString();
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
     final weekly = data.weekly;
+    final valueTitles = _valueAxisTitles(
+      SideTitles(
+        showTitles: true,
+        interval: 25,
+        reservedSize: 38,
+        getTitlesWidget: (value, meta) => SideTitleWidget(
+          meta: meta,
+          child: Text(
+            localizeDigits(context, '${value.toInt()}%'),
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ),
+      ),
+      isRtl,
+    );
     return _ChartCard(
       title: l10n.statisticsWeeklyProgress,
       subtitle: l10n.statisticsWeeklyProgressSubtitle,
@@ -767,35 +818,20 @@ class _WeeklyProgressCard extends StatelessWidget {
             topTitles: const AxisTitles(
               sideTitles: SideTitles(showTitles: false),
             ),
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                interval: 25,
-                reservedSize: 38,
-                getTitlesWidget: (value, meta) => SideTitleWidget(
-                  meta: meta,
-                  child: Text(
-                    localizeDigits(context, '${value.toInt()}%'),
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            leftTitles: valueTitles.$1,
+            rightTitles: valueTitles.$2,
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
                 interval: 1,
                 reservedSize: 30,
                 getTitlesWidget: (value, meta) {
-                  final index = value.round();
-                  if (index < 0 || index >= weekly.length) {
+                  final axisIndex = value.round();
+                  if (axisIndex < 0 || axisIndex >= weekly.length) {
                     return const SizedBox.shrink();
                   }
+                  final index =
+                      _chartDataIndex(axisIndex, weekly.length, isRtl);
                   return SideTitleWidget(
                     meta: meta,
                     child: Text(
@@ -818,8 +854,10 @@ class _WeeklyProgressCard extends StatelessWidget {
             touchTooltipData: BarTouchTooltipData(
               getTooltipColor: (group) => kBrandNavy,
               getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                final index =
+                    _chartDataIndex(group.x, weekly.length, isRtl);
                 final label = DateFormat('d MMM', locale)
-                    .format(weekly[group.x].start);
+                    .format(weekly[index].start);
                 return BarTooltipItem(
                   '$label\n'
                   '${localizeDigits(context, '${rod.toY.toStringAsFixed(0)}%')}',
@@ -838,7 +876,8 @@ class _WeeklyProgressCard extends StatelessWidget {
                 x: i,
                 barRods: <BarChartRodData>[
                   BarChartRodData(
-                    toY: weekly[i].percent,
+                    toY: weekly[_chartDataIndex(i, weekly.length, isRtl)]
+                        .percent,
                     width: 26,
                     borderRadius: BorderRadius.circular(7),
                     color: accent,
@@ -867,11 +906,32 @@ class _MonthlyProgressCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final locale = Localizations.localeOf(context).toString();
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
     final monthly = data.monthly;
     final spots = <FlSpot>[
       for (int i = 0; i < monthly.length; i++)
-        FlSpot(i.toDouble(), monthly[i].percent),
+        FlSpot(
+          i.toDouble(),
+          monthly[_chartDataIndex(i, monthly.length, isRtl)].percent,
+        ),
     ];
+    final valueTitles = _valueAxisTitles(
+      SideTitles(
+        showTitles: true,
+        interval: 25,
+        reservedSize: 38,
+        getTitlesWidget: (value, meta) => SideTitleWidget(
+          meta: meta,
+          child: Text(
+            localizeDigits(context, '${value.toInt()}%'),
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ),
+      ),
+      isRtl,
+    );
     return _ChartCard(
       title: l10n.statisticsMonthlyProgress,
       subtitle: l10n.statisticsMonthlyProgressSubtitle,
@@ -895,35 +955,20 @@ class _MonthlyProgressCard extends StatelessWidget {
             topTitles: const AxisTitles(
               sideTitles: SideTitles(showTitles: false),
             ),
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                interval: 25,
-                reservedSize: 38,
-                getTitlesWidget: (value, meta) => SideTitleWidget(
-                  meta: meta,
-                  child: Text(
-                    localizeDigits(context, '${value.toInt()}%'),
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            leftTitles: valueTitles.$1,
+            rightTitles: valueTitles.$2,
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
                 interval: 1,
                 reservedSize: 28,
                 getTitlesWidget: (value, meta) {
-                  final index = value.round();
-                  if (index < 0 || index >= monthly.length) {
+                  final axisIndex = value.round();
+                  if (axisIndex < 0 || axisIndex >= monthly.length) {
                     return const SizedBox.shrink();
                   }
+                  final index =
+                      _chartDataIndex(axisIndex, monthly.length, isRtl);
                   return SideTitleWidget(
                     meta: meta,
                     child: Text(
@@ -946,7 +991,8 @@ class _MonthlyProgressCard extends StatelessWidget {
             touchTooltipData: LineTouchTooltipData(
               getTooltipColor: (spot) => kBrandNavy,
               getTooltipItems: (touchedSpots) => touchedSpots.map((spot) {
-                final index = spot.x.round().clamp(0, monthly.length - 1);
+                final index =
+                    _chartDataIndex(spot.x.round(), monthly.length, isRtl);
                 final period = monthly[index];
                 return LineTooltipItem(
                   '${DateFormat('MMM yyyy', locale).format(period.start)}\n'

@@ -81,6 +81,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get cancel => 'Batal';
 
   @override
+  String get unsavedChangesTitle => 'Perubahan belum disimpan';
+
+  @override
+  String get unsavedChangesMessage =>
+      'Pengaturan salat Anda memiliki perubahan yang belum disimpan. Simpan sebelum keluar?';
+
+  @override
+  String get discardChanges => 'Buang';
+
+  @override
   String get delete => 'Hapus';
 
   @override
@@ -605,11 +615,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get reminderLabel => 'Pengingat';
 
   @override
-  String get reminderEnabledLabel => 'Pengingat harian';
+  String get reminderEnabledLabel => 'Pengingat kebiasaan';
 
   @override
   String get reminderEnabledSubtitle =>
-      'Dapatkan notifikasi pada waktu yang Anda pilih';
+      'Dapatkan notifikasi pada hari-hari terjadwal kebiasaan ini di waktu yang Anda pilih';
 
   @override
   String get reminderTimeLabel => 'Waktu pengingat';
@@ -620,7 +630,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String reminderDailyAt(String time) {
-    return 'Setiap hari pukul $time';
+    return 'Pukul $time';
   }
 
   @override

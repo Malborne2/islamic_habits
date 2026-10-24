@@ -80,6 +80,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cancel => 'إلغاء';
 
   @override
+  String get unsavedChangesTitle => 'تغييرات غير محفوظة';
+
+  @override
+  String get unsavedChangesMessage =>
+      'لديك تغييرات غير محفوظة في إعدادات الصلاة. هل تريد حفظها قبل المغادرة؟';
+
+  @override
+  String get discardChanges => 'تجاهل';
+
+  @override
   String get delete => 'حذف';
 
   @override
@@ -609,10 +619,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reminderLabel => 'التذكير';
 
   @override
-  String get reminderEnabledLabel => 'تذكير يومي';
+  String get reminderEnabledLabel => 'تذكير العادة';
 
   @override
-  String get reminderEnabledSubtitle => 'احصل على إشعار في الوقت الذي تختاره';
+  String get reminderEnabledSubtitle =>
+      'احصل على إشعار في الوقت الذي تختاره في أيام العادة المحددة';
 
   @override
   String get reminderTimeLabel => 'وقت التذكير';
@@ -623,7 +634,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String reminderDailyAt(String time) {
-    return 'يوميًا في $time';
+    return 'في $time';
   }
 
   @override

@@ -79,6 +79,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get cancel => 'キャンセル';
 
   @override
+  String get unsavedChangesTitle => '保存されていない変更';
+
+  @override
+  String get unsavedChangesMessage => '礼拝設定に保存されていない変更があります。終了する前に保存しますか？';
+
+  @override
+  String get discardChanges => '破棄';
+
+  @override
   String get delete => '削除';
 
   @override
@@ -595,10 +604,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get reminderLabel => 'リマインダー';
 
   @override
-  String get reminderEnabledLabel => '毎日のリマインダー';
+  String get reminderEnabledLabel => '習慣のリマインダー';
 
   @override
-  String get reminderEnabledSubtitle => '指定した時刻に通知を受け取ります';
+  String get reminderEnabledSubtitle => 'この習慣の予定された曜日の指定した時刻に通知を受け取ります';
 
   @override
   String get reminderTimeLabel => 'リマインダー時刻';
@@ -609,7 +618,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String reminderDailyAt(String time) {
-    return '毎日 $time';
+    return '$time';
   }
 
   @override
