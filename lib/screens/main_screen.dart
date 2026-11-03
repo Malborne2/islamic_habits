@@ -14,6 +14,7 @@ import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/data_access_object.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/route_observer.dart';
+import 'package:islamic_habits/utility/widget_service.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -45,6 +46,8 @@ class _MainScreenState extends State<MainScreen>
     _countdownTimer =
         Timer.periodic(const Duration(seconds: 30), (_) => setState(() {}));
     WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => WidgetService.update(context));
   }
 
   @override
@@ -118,6 +121,7 @@ class _MainScreenState extends State<MainScreen>
       // correct after a timezone change, a language change (the notification
       // text is localized at schedule time), or a habit edit.
       NotificationService.scheduleHabitReminders();
+      WidgetService.update(context);
     }
   }
 
@@ -127,6 +131,7 @@ class _MainScreenState extends State<MainScreen>
   @override
   void didPopNext() {
     setState(() {});
+    WidgetService.update(context);
     _reloadHabits();
   }
 

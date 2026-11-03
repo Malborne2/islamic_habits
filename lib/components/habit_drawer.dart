@@ -8,6 +8,7 @@ import 'package:islamic_habits/screens/multi-habit_screen.dart';
 import 'package:islamic_habits/screens/prayers_screen.dart';
 import 'package:islamic_habits/screens/settings_screen.dart';
 import 'package:islamic_habits/screens/statistics_screen.dart';
+import 'package:islamic_habits/screens/tasbeeh_screen.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/data_access_object.dart';
 import 'package:islamic_habits/utility/habit.dart';
@@ -291,6 +292,12 @@ class HabitDrawer extends StatelessWidget {
                     showAddButton: false,
                   )),
         ),
+      ListTile(
+        leading: const Icon(FlutterIslamicIcons.solidTasbih),
+        title: Text(l10n.navTasbeeh),
+        onTap: () => _navigateTo(context, '/TasbeehScreen',
+            (context) => TasbeehScreen(habits: habits)),
+      ),
       ListTile(
         leading: const Icon(Icons.list_alt_rounded),
         title: Text(l10n.navAllHabits),

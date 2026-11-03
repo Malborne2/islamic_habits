@@ -9,6 +9,7 @@ import 'package:islamic_habits/utility/language_settings.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
 import 'package:islamic_habits/utility/shared_prefrences_helper.dart';
+import 'package:islamic_habits/utility/widget_settings.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:islamic_habits/utility/habit.dart';
 
@@ -46,6 +47,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     }
 
     await PrayerSettings.load();
+    await WidgetSettings.load();
     await NotificationService.initialize();
 
     final savedStartOfWeek = await SharedPreferencesHelper.getStartOfWeek();

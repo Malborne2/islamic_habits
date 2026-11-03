@@ -42,6 +42,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsStartOfWeek => 'Start of week';
 
   @override
+  String get settingsWidgetTransparency => 'Home screen widget transparency';
+
+  @override
   String get settingsPrayerTimeSettings => 'Prayer time settings';
 
   @override
@@ -758,4 +761,67 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get statisticsNoDataBody =>
       'Start logging your habits to see charts, streaks, and success rates here.';
+
+  @override
+  String get navTasbeeh => 'Tasbeeh';
+
+  @override
+  String get tasbeehHint =>
+      'Swipe any direction — the next bead rises out of the dark';
+
+  @override
+  String get tasbeehReset => 'Reset';
+
+  @override
+  String get tasbeehGoalReached => 'Goal reached — may it be accepted';
+
+  @override
+  String get tasbeehKeepGoing => 'Keep going';
+
+  @override
+  String get tasbeehMix => 'Mix';
+
+  @override
+  String get tasbeehChooseTitle => 'Choose your tasbeeh';
+
+  @override
+  String get tasbeehPresetAfterPrayerTitle => 'After-Prayer Tasbeeh';
+
+  @override
+  String get tasbeehPresetGeneralTitle => 'General Tasbeeh';
+
+  @override
+  String get tasbeehPresetSalawatTitle => 'Salawat ۖ';
+
+  @override
+  String get tasbeehPresetBaqiyatTitle => 'Al-Baqiyat As-Salihat';
+
+  @override
+  String get tasbeehPresetIstighfarTitle => 'Istighfar';
+
+  @override
+  String get tasbeehPresetDuaYunusTitle => 'Dua of Yunus ۖ';
+
+  @override
+  String get tasbeehPresetKalimatanTitle => 'Kalimatan (Two Words)';
+
+  @override
+  String get tasbeehColors => 'Colors';
+
+  @override
+  String get tasbeehPatterns => 'Patterns';
+
+  @override
+  String tasbeehUnlockAtStreak(int days) {
+    return 'Unlock with a $days-day streak';
+  }
+
+  @override
+  String get tasbeehLockedHint =>
+      'Locked items unlock with your longest habit streak so far.';
+
+  @override
+  String tasbeehDaysShort(int days) {
+    return '${days}d';
+  }
 }

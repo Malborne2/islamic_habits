@@ -42,6 +42,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsStartOfWeek => '週の開始日';
 
   @override
+  String get settingsWidgetTransparency => 'ホーム画面ウィジェットの透明度';
+
+  @override
   String get settingsPrayerTimeSettings => '礼拝時間の設定';
 
   @override
@@ -735,4 +738,65 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get statisticsNoDataBody => '習慣の記録を始めると、ここにグラフ、連続記録、成功率が表示されます。';
+
+  @override
+  String get navTasbeeh => 'タスビーフ';
+
+  @override
+  String get tasbeehHint => 'どの方向にもスワイプ — 次のビーズが暗闇から現れます';
+
+  @override
+  String get tasbeehReset => 'リセット';
+
+  @override
+  String get tasbeehGoalReached => '目標達成 — 受け入れられますように';
+
+  @override
+  String get tasbeehKeepGoing => '続ける';
+
+  @override
+  String get tasbeehMix => 'ミックス';
+
+  @override
+  String get tasbeehChooseTitle => 'タスビーフの種類を選択';
+
+  @override
+  String get tasbeehPresetAfterPrayerTitle => '礼拝後のタスビーフ';
+
+  @override
+  String get tasbeehPresetGeneralTitle => '一般タスビーフ';
+
+  @override
+  String get tasbeehPresetSalawatTitle => '預言者への祝福 ﷺ';
+
+  @override
+  String get tasbeehPresetBaqiyatTitle => 'アル=バーキヤート・アッ=サーリハート';
+
+  @override
+  String get tasbeehPresetIstighfarTitle => 'イスティグファール';
+
+  @override
+  String get tasbeehPresetDuaYunusTitle => 'ユーヌスの祈り ﷺ';
+
+  @override
+  String get tasbeehPresetKalimatanTitle => 'カリマターン(二つの言葉)';
+
+  @override
+  String get tasbeehColors => 'カラー';
+
+  @override
+  String get tasbeehPatterns => '模様';
+
+  @override
+  String tasbeehUnlockAtStreak(int days) {
+    return '$days日連続で解除';
+  }
+
+  @override
+  String get tasbeehLockedHint => 'ロックされた項目は、これまでの最長の習慣の継続日数で解除されます。';
+
+  @override
+  String tasbeehDaysShort(int days) {
+    return '$days日';
+  }
 }

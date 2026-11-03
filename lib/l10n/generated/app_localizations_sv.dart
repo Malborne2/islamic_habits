@@ -42,6 +42,9 @@ class AppLocalizationsSv extends AppLocalizations {
   String get settingsStartOfWeek => 'Veckans start';
 
   @override
+  String get settingsWidgetTransparency => 'Transparens för hemskärmswidget';
+
+  @override
   String get settingsPrayerTimeSettings => 'Inställningar för bönetider';
 
   @override
@@ -758,4 +761,67 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get statisticsNoDataBody =>
       'Börja logga dina vanor för att se diagram, sviter och framgångsfrekvens här.';
+
+  @override
+  String get navTasbeeh => 'Tasbih';
+
+  @override
+  String get tasbeehHint =>
+      'Svep åt valfritt håll — nästa pärla stiger upp ur mörkret';
+
+  @override
+  String get tasbeehReset => 'Återställ';
+
+  @override
+  String get tasbeehGoalReached => 'Mål uppnått — må det tas emot';
+
+  @override
+  String get tasbeehKeepGoing => 'Fortsätt';
+
+  @override
+  String get tasbeehMix => 'Mix';
+
+  @override
+  String get tasbeehChooseTitle => 'Välj typ av tasbih';
+
+  @override
+  String get tasbeehPresetAfterPrayerTitle => 'Tasbih efter bönen';
+
+  @override
+  String get tasbeehPresetGeneralTitle => 'Allmän tasbih';
+
+  @override
+  String get tasbeehPresetSalawatTitle => 'Välsignelse över profeten ﷺ';
+
+  @override
+  String get tasbeehPresetBaqiyatTitle => 'Al-Baqiyat As-Salihat';
+
+  @override
+  String get tasbeehPresetIstighfarTitle => 'Istighfar';
+
+  @override
+  String get tasbeehPresetDuaYunusTitle => 'Yunus bön ﷺ';
+
+  @override
+  String get tasbeehPresetKalimatanTitle => 'Kalimatan (två ord)';
+
+  @override
+  String get tasbeehColors => 'Färger';
+
+  @override
+  String get tasbeehPatterns => 'Mönster';
+
+  @override
+  String tasbeehUnlockAtStreak(int days) {
+    return 'Låses upp med en $days-dagars svit';
+  }
+
+  @override
+  String get tasbeehLockedHint =>
+      'Låsta objekt låses upp med din längsta vanesvit hittills.';
+
+  @override
+  String tasbeehDaysShort(int days) {
+    return '$days d';
+  }
 }

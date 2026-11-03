@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rounded panel used as the widget's background. Drawn into a separate
+     ImageView (not android:background on the root) so its alpha can be set
+     per-instance at runtime via RemoteViews.setInt(..., "setImageAlpha", ...)
+     to drive the user's widget-transparency setting; a plain View background
+     cannot have its alpha adjusted that way without affecting its children. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#0E2D52" />
+    <corners android:radius="18dp" />
+</shape>

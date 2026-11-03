@@ -42,6 +42,9 @@ class AppLocalizationsFa extends AppLocalizations {
   String get settingsStartOfWeek => 'آغاز هفته';
 
   @override
+  String get settingsWidgetTransparency => 'شفافیت ابزارک صفحه اصلی';
+
+  @override
   String get settingsPrayerTimeSettings => 'تنظیمات اوقات نماز';
 
   @override
@@ -756,4 +759,67 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get statisticsNoDataBody =>
       'برای دیدن نمودارها، زنجیره‌ها و نرخ موفقیت، ثبت عادت‌هایتان را شروع کنید.';
+
+  @override
+  String get navTasbeeh => 'تسبیح';
+
+  @override
+  String get tasbeehHint =>
+      'به هر جهتی بکشید — دانه بعدی از تاریکی پدیدار می‌شود';
+
+  @override
+  String get tasbeehReset => 'بازنشانی';
+
+  @override
+  String get tasbeehGoalReached => 'هدف محقق شد — پذیرفته باد';
+
+  @override
+  String get tasbeehKeepGoing => 'ادامه بده';
+
+  @override
+  String get tasbeehMix => 'مخلوط';
+
+  @override
+  String get tasbeehChooseTitle => 'نوع تسبیح را انتخاب کنید';
+
+  @override
+  String get tasbeehPresetAfterPrayerTitle => 'تسبیح پس از نماز';
+
+  @override
+  String get tasbeehPresetGeneralTitle => 'تسبیح عمومی';
+
+  @override
+  String get tasbeehPresetSalawatTitle => 'صلوات بر پیامبر ﷺ';
+
+  @override
+  String get tasbeehPresetBaqiyatTitle => 'باقیات الصالحات';
+
+  @override
+  String get tasbeehPresetIstighfarTitle => 'استغفار';
+
+  @override
+  String get tasbeehPresetDuaYunusTitle => 'دعای یونس ﷺ';
+
+  @override
+  String get tasbeehPresetKalimatanTitle => 'کلمتان (دو کلمه)';
+
+  @override
+  String get tasbeehColors => 'رنگ‌ها';
+
+  @override
+  String get tasbeehPatterns => 'الگوها';
+
+  @override
+  String tasbeehUnlockAtStreak(int days) {
+    return 'با رکورد $days روزه باز می‌شود';
+  }
+
+  @override
+  String get tasbeehLockedHint =>
+      'موارد قفل‌شده با طولانی‌ترین رکورد عادت شما باز می‌شوند.';
+
+  @override
+  String tasbeehDaysShort(int days) {
+    return '$days روز';
+  }
 }

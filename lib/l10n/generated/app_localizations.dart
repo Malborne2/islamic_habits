@@ -178,6 +178,12 @@ abstract class AppLocalizations {
   /// **'Start of week'**
   String get settingsStartOfWeek;
 
+  /// No description provided for @settingsWidgetTransparency.
+  ///
+  /// In en, this message translates to:
+  /// **'Home screen widget transparency'**
+  String get settingsWidgetTransparency;
+
   /// No description provided for @settingsPrayerTimeSettings.
   ///
   /// In en, this message translates to:
@@ -1485,6 +1491,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start logging your habits to see charts, streaks, and success rates here.'**
   String get statisticsNoDataBody;
+
+  /// No description provided for @navTasbeeh.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasbeeh'**
+  String get navTasbeeh;
+
+  /// No description provided for @tasbeehHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe any direction — the next bead rises out of the dark'**
+  String get tasbeehHint;
+
+  /// No description provided for @tasbeehReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get tasbeehReset;
+
+  /// No description provided for @tasbeehGoalReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal reached — may it be accepted'**
+  String get tasbeehGoalReached;
+
+  /// No description provided for @tasbeehKeepGoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep going'**
+  String get tasbeehKeepGoing;
+
+  /// No description provided for @tasbeehMix.
+  ///
+  /// In en, this message translates to:
+  /// **'Mix'**
+  String get tasbeehMix;
+
+  /// No description provided for @tasbeehChooseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your tasbeeh'**
+  String get tasbeehChooseTitle;
+
+  /// No description provided for @tasbeehPresetAfterPrayerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'After-Prayer Tasbeeh'**
+  String get tasbeehPresetAfterPrayerTitle;
+
+  /// No description provided for @tasbeehPresetGeneralTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'General Tasbeeh'**
+  String get tasbeehPresetGeneralTitle;
+
+  /// No description provided for @tasbeehPresetSalawatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Salawat ۖ'**
+  String get tasbeehPresetSalawatTitle;
+
+  /// No description provided for @tasbeehPresetBaqiyatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Al-Baqiyat As-Salihat'**
+  String get tasbeehPresetBaqiyatTitle;
+
+  /// No description provided for @tasbeehPresetIstighfarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Istighfar'**
+  String get tasbeehPresetIstighfarTitle;
+
+  /// No description provided for @tasbeehPresetDuaYunusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dua of Yunus ۖ'**
+  String get tasbeehPresetDuaYunusTitle;
+
+  /// No description provided for @tasbeehPresetKalimatanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Kalimatan (Two Words)'**
+  String get tasbeehPresetKalimatanTitle;
+
+  /// No description provided for @tasbeehColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Colors'**
+  String get tasbeehColors;
+
+  /// No description provided for @tasbeehPatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'Patterns'**
+  String get tasbeehPatterns;
+
+  /// No description provided for @tasbeehUnlockAtStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with a {days}-day streak'**
+  String tasbeehUnlockAtStreak(int days);
+
+  /// No description provided for @tasbeehLockedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked items unlock with your longest habit streak so far.'**
+  String get tasbeehLockedHint;
+
+  /// No description provided for @tasbeehDaysShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d'**
+  String tasbeehDaysShort(int days);
 }
 
 class _AppLocalizationsDelegate

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_configure_title">شفافیت ابزارک</string>
+    <string name="widget_configure_preview_label">پیش‌نمایش</string>
+    <string name="widget_configure_done">تمام</string>
+</resources>

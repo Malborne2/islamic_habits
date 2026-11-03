@@ -42,6 +42,10 @@ class AppLocalizationsNb extends AppLocalizations {
   String get settingsStartOfWeek => 'Ukens start';
 
   @override
+  String get settingsWidgetTransparency =>
+      'Gjennomsiktighet for startskjerm-widget';
+
+  @override
   String get settingsPrayerTimeSettings => 'Innstillinger for bønnetider';
 
   @override
@@ -758,4 +762,67 @@ class AppLocalizationsNb extends AppLocalizations {
   @override
   String get statisticsNoDataBody =>
       'Begynn å registrere vanene dine for å se diagrammer, rekker og suksessrater her.';
+
+  @override
+  String get navTasbeeh => 'Tasbih';
+
+  @override
+  String get tasbeehHint =>
+      'Sveip i hvilken som helst retning — neste perle stiger opp fra mørket';
+
+  @override
+  String get tasbeehReset => 'Nullstill';
+
+  @override
+  String get tasbeehGoalReached => 'Mål nådd — måtte det bli godtatt';
+
+  @override
+  String get tasbeehKeepGoing => 'Fortsett';
+
+  @override
+  String get tasbeehMix => 'Miks';
+
+  @override
+  String get tasbeehChooseTitle => 'Velg type tasbih';
+
+  @override
+  String get tasbeehPresetAfterPrayerTitle => 'Tasbih etter bønn';
+
+  @override
+  String get tasbeehPresetGeneralTitle => 'Generell tasbih';
+
+  @override
+  String get tasbeehPresetSalawatTitle => 'Velsignelse over profeten ﷺ';
+
+  @override
+  String get tasbeehPresetBaqiyatTitle => 'Al-Baqiyat As-Salihat';
+
+  @override
+  String get tasbeehPresetIstighfarTitle => 'Istighfar';
+
+  @override
+  String get tasbeehPresetDuaYunusTitle => 'Yunus\' bønn ﷺ';
+
+  @override
+  String get tasbeehPresetKalimatanTitle => 'Kalimatan (to ord)';
+
+  @override
+  String get tasbeehColors => 'Farger';
+
+  @override
+  String get tasbeehPatterns => 'Mønstre';
+
+  @override
+  String tasbeehUnlockAtStreak(int days) {
+    return 'Låses opp med en $days-dagers rekke';
+  }
+
+  @override
+  String get tasbeehLockedHint =>
+      'Låste elementer låses opp med din lengste vanerekke.';
+
+  @override
+  String tasbeehDaysShort(int days) {
+    return '$days d';
+  }
 }

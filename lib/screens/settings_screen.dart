@@ -9,6 +9,8 @@ import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/language_settings.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:islamic_habits/utility/shared_prefrences_helper.dart';
+import 'package:islamic_habits/utility/widget_service.dart';
+import 'package:islamic_habits/utility/widget_settings.dart';
 
 // weekday is an ISO weekday int (1=Monday .. 7=Sunday).
 String _weekdayName(AppLocalizations l10n, int weekday) {
@@ -98,6 +100,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ? null
                       : Locale(value));
                 });
+                WidgetsBinding.instance
+                    .addPostFrameCallback((_) => WidgetService.update(context));
               },
             ),
           ),
@@ -120,6 +124,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
             ),
+          const Divider(),
+          ListTile(
+            title: Text(l10n.settingsWidgetTransparency),
+            subtitle: Slider(
+              value: WidgetSettings.backgroundAlpha.toDouble(),
+              min: 0,
+              max: 255,
+              divisions: 17,
+              label: '${(WidgetSettings.backgroundAlpha / 255 * 100).round()}%',
+              onChanged: (value) {
+                setState(() {
+                  WidgetSettings.backgroundAlpha = value.round();
+                });
+                WidgetSettings.setBackgroundAlpha(value.round());
+                WidgetService.update(context);
+              },
+            ),
+          ),
           const Divider(),
           ListTile(
             title: Text(l10n.settingsPrayerTimeSettings),

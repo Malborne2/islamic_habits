@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for PrayerWidgetConfigureActivity, the system-launched screen
+     that opens when the Prayer times widget is placed or edited from the
+     home screen. Separate from the app's own lib/l10n ARB files because
+     this activity runs outside the Flutter engine and follows the device's
+     system locale rather than the app's in-app language override. -->
+<resources>
+    <string name="widget_configure_title">Widget transparency</string>
+    <string name="widget_configure_preview_label">Preview</string>
+    <string name="widget_configure_done">Done</string>
+</resources>

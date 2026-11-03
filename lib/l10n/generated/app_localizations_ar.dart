@@ -42,6 +42,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsStartOfWeek => 'بداية الأسبوع';
 
   @override
+  String get settingsWidgetTransparency => 'شفافية الودجة على الشاشة الرئيسية';
+
+  @override
   String get settingsPrayerTimeSettings => 'إعدادات مواقيت الصلاة';
 
   @override
@@ -760,4 +763,67 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get statisticsNoDataBody =>
       'ابدأ بتسجيل عاداتك لترى الرسوم البيانية والسلاسل ونسب النجاح هنا.';
+
+  @override
+  String get navTasbeeh => 'تسبيح';
+
+  @override
+  String get tasbeehHint => 'مرّر في أي اتجاه — تظهر الحبة التالية من الخلفية';
+
+  @override
+  String get tasbeehReset => 'إعادة تعيين';
+
+  @override
+  String get tasbeehGoalReached => 'تم بلوغ الهدف — تقبّل الله';
+
+  @override
+  String get tasbeehKeepGoing => 'واصل';
+
+  @override
+  String get tasbeehMix => 'مزيج';
+
+  @override
+  String get tasbeehChooseTitle => 'اختر نوع التسبيح';
+
+  @override
+  String get tasbeehPresetAfterPrayerTitle => 'تسبيح ما بعد الصلاة';
+
+  @override
+  String get tasbeehPresetGeneralTitle => 'تسبيح عام';
+
+  @override
+  String get tasbeehPresetSalawatTitle =>
+      'الصَّلَاةُ عَلَى النَّبِيِّ مُحَمَّد ﷺ';
+
+  @override
+  String get tasbeehPresetBaqiyatTitle => 'الْبَاقِيَاتُ الصَّالِحَات';
+
+  @override
+  String get tasbeehPresetIstighfarTitle => 'الِاسْتِغْفَار';
+
+  @override
+  String get tasbeehPresetDuaYunusTitle => 'دُعَاءُ يُونُس ﷺ';
+
+  @override
+  String get tasbeehPresetKalimatanTitle => 'الْكَلِمَتَان';
+
+  @override
+  String get tasbeehColors => 'الألوان';
+
+  @override
+  String get tasbeehPatterns => 'الأنماط';
+
+  @override
+  String tasbeehUnlockAtStreak(int days) {
+    return 'يُفتح بسلسلة $days يومًا';
+  }
+
+  @override
+  String get tasbeehLockedHint =>
+      'تُفتح العناصر المقفلة بأطول سلسلة عادات وصلتَ إليها.';
+
+  @override
+  String tasbeehDaysShort(int days) {
+    return '$days يومًا';
+  }
 }

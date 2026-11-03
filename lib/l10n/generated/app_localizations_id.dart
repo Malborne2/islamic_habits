@@ -42,6 +42,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingsStartOfWeek => 'Awal minggu';
 
   @override
+  String get settingsWidgetTransparency => 'Transparansi widget layar utama';
+
+  @override
   String get settingsPrayerTimeSettings => 'Pengaturan waktu salat';
 
   @override
@@ -756,4 +759,67 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get statisticsNoDataBody =>
       'Mulai catat kebiasaan Anda untuk melihat grafik, rentetan, dan tingkat keberhasilan di sini.';
+
+  @override
+  String get navTasbeeh => 'Tasbih';
+
+  @override
+  String get tasbeehHint =>
+      'Geser ke arah mana saja — manik berikutnya muncul dari kegelapan';
+
+  @override
+  String get tasbeehReset => 'Atur ulang';
+
+  @override
+  String get tasbeehGoalReached => 'Target tercapai — semoga diterima';
+
+  @override
+  String get tasbeehKeepGoing => 'Lanjutkan';
+
+  @override
+  String get tasbeehMix => 'Campuran';
+
+  @override
+  String get tasbeehChooseTitle => 'Pilih jenis tasbih';
+
+  @override
+  String get tasbeehPresetAfterPrayerTitle => 'Tasbih Setelah Salat';
+
+  @override
+  String get tasbeehPresetGeneralTitle => 'Tasbih Umum';
+
+  @override
+  String get tasbeehPresetSalawatTitle => 'Selawat Nabi ﷺ';
+
+  @override
+  String get tasbeehPresetBaqiyatTitle => 'Al-Baqiyat As-Salihat';
+
+  @override
+  String get tasbeehPresetIstighfarTitle => 'Istighfar';
+
+  @override
+  String get tasbeehPresetDuaYunusTitle => 'Doa Nabi Yunus ﷺ';
+
+  @override
+  String get tasbeehPresetKalimatanTitle => 'Kalimatan (Dua Kalimat)';
+
+  @override
+  String get tasbeehColors => 'Warna';
+
+  @override
+  String get tasbeehPatterns => 'Pola';
+
+  @override
+  String tasbeehUnlockAtStreak(int days) {
+    return 'Terbuka dengan rentetan $days hari';
+  }
+
+  @override
+  String get tasbeehLockedHint =>
+      'Item terkunci terbuka dengan rentetan kebiasaan terpanjang Anda.';
+
+  @override
+  String tasbeehDaysShort(int days) {
+    return '$days hr';
+  }
 }

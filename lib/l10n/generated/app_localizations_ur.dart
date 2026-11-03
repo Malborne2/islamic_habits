@@ -42,6 +42,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsStartOfWeek => 'ہفتے کا آغاز';
 
   @override
+  String get settingsWidgetTransparency => 'ہوم اسکرین ویجٹ کی شفافیت';
+
+  @override
   String get settingsPrayerTimeSettings => 'اوقاتِ نماز کی ترتیبات';
 
   @override
@@ -756,4 +759,67 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get statisticsNoDataBody =>
       'چارٹس، تسلسل اور کامیابی کی شرح دیکھنے کے لیے اپنی عادات ریکارڈ کرنا شروع کریں۔';
+
+  @override
+  String get navTasbeeh => 'تسبیح';
+
+  @override
+  String get tasbeehHint =>
+      'کسی بھی سمت میں سوائپ کریں — اگلا دانہ اندھیرے سے نمودار ہوگا';
+
+  @override
+  String get tasbeehReset => 'دوبارہ ترتیب دیں';
+
+  @override
+  String get tasbeehGoalReached => 'ہدف مکمل ہوگیا — اللہ قبول فرمائے';
+
+  @override
+  String get tasbeehKeepGoing => 'جاری رکھیں';
+
+  @override
+  String get tasbeehMix => 'ملا جلا';
+
+  @override
+  String get tasbeehChooseTitle => 'تسبیح کی قسم منتخب کریں';
+
+  @override
+  String get tasbeehPresetAfterPrayerTitle => 'نماز کے بعد کی تسبیح';
+
+  @override
+  String get tasbeehPresetGeneralTitle => 'عمومی تسبیح';
+
+  @override
+  String get tasbeehPresetSalawatTitle => 'نبی ﷺ پر درود';
+
+  @override
+  String get tasbeehPresetBaqiyatTitle => 'باقیات الصالحات';
+
+  @override
+  String get tasbeehPresetIstighfarTitle => 'استغفار';
+
+  @override
+  String get tasbeehPresetDuaYunusTitle => 'دعائے یونس ﷺ';
+
+  @override
+  String get tasbeehPresetKalimatanTitle => 'کلمتان (دو کلمے)';
+
+  @override
+  String get tasbeehColors => 'رنگ';
+
+  @override
+  String get tasbeehPatterns => 'نقوش';
+
+  @override
+  String tasbeehUnlockAtStreak(int days) {
+    return '$days دن کی لگاتار اسٹریک سے کھلے گا';
+  }
+
+  @override
+  String get tasbeehLockedHint =>
+      'مقفل اشیاء آپ کی سب سے لمبی عادت اسٹریک سے کھلتی ہیں۔';
+
+  @override
+  String tasbeehDaysShort(int days) {
+    return '$days دن';
+  }
 }

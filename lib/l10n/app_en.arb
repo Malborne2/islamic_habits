@@ -11,6 +11,7 @@
   "settingsTitle": "Settings",
   "settingsDarkMode": "Dark mode",
   "settingsStartOfWeek": "Start of week",
+  "settingsWidgetTransparency": "Home screen widget transparency",
   "settingsPrayerTimeSettings": "Prayer time settings",
   "settingsPrayerTimeSettingsSubtitle": "Location, calculation method, and prayer reminders",
   "settingsBackupRestore": "Backup & Restore",
@@ -301,5 +302,34 @@
   "statisticsNoData": "No data",
   "statisticsHabitPerformance": "Habit performance",
   "statisticsNoDataTitle": "No data yet",
-  "statisticsNoDataBody": "Start logging your habits to see charts, streaks, and success rates here."
+  "statisticsNoDataBody": "Start logging your habits to see charts, streaks, and success rates here.",
+  "navTasbeeh": "Tasbeeh",
+  "tasbeehHint": "Swipe any direction — the next bead rises out of the dark",
+  "tasbeehReset": "Reset",
+  "tasbeehGoalReached": "Goal reached — may it be accepted",
+  "tasbeehKeepGoing": "Keep going",
+  "tasbeehMix": "Mix",
+  "tasbeehChooseTitle": "Choose your tasbeeh",
+  "tasbeehPresetAfterPrayerTitle": "After-Prayer Tasbeeh",
+  "tasbeehPresetGeneralTitle": "General Tasbeeh",
+  "tasbeehPresetSalawatTitle": "Salawat ۖ",
+  "tasbeehPresetBaqiyatTitle": "Al-Baqiyat As-Salihat",
+  "tasbeehPresetIstighfarTitle": "Istighfar",
+  "tasbeehPresetDuaYunusTitle": "Dua of Yunus ۖ",
+  "tasbeehPresetKalimatanTitle": "Kalimatan (Two Words)",
+  "tasbeehColors": "Colors",
+  "tasbeehPatterns": "Patterns",
+  "tasbeehUnlockAtStreak": "Unlock with a {days}-day streak",
+  "@tasbeehUnlockAtStreak": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "tasbeehLockedHint": "Locked items unlock with your longest habit streak so far.",
+  "tasbeehDaysShort": "{days}d",
+  "@tasbeehDaysShort": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_configure_title">Transparansi widget</string>
+    <string name="widget_configure_preview_label">Pratinjau</string>
+    <string name="widget_configure_done">Selesai</string>
+</resources>

@@ -42,6 +42,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String get settingsStartOfWeek => 'Viikon alkupäivä';
 
   @override
+  String get settingsWidgetTransparency =>
+      'Aloitusnäytön widgetin läpinäkyvyys';
+
+  @override
   String get settingsPrayerTimeSettings => 'Rukousaika-asetukset';
 
   @override
@@ -758,4 +762,68 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get statisticsNoDataBody =>
       'Aloita tapojesi kirjaaminen, niin näet täällä kaaviot, putket ja onnistumisprosentit.';
+
+  @override
+  String get navTasbeeh => 'Tasbih';
+
+  @override
+  String get tasbeehHint =>
+      'Pyyhkäise mihin suuntaan tahansa — seuraava helmi nousee pimeästä';
+
+  @override
+  String get tasbeehReset => 'Nollaa';
+
+  @override
+  String get tasbeehGoalReached =>
+      'Tavoite saavutettu — kunpa se hyväksyttäisiin';
+
+  @override
+  String get tasbeehKeepGoing => 'Jatka';
+
+  @override
+  String get tasbeehMix => 'Sekoitus';
+
+  @override
+  String get tasbeehChooseTitle => 'Valitse tasbih-tyyppi';
+
+  @override
+  String get tasbeehPresetAfterPrayerTitle => 'Rukouksen jälkeinen tasbih';
+
+  @override
+  String get tasbeehPresetGeneralTitle => 'Yleinen tasbih';
+
+  @override
+  String get tasbeehPresetSalawatTitle => 'Siunaus profeetalle ﷺ';
+
+  @override
+  String get tasbeehPresetBaqiyatTitle => 'Al-Baqiyat As-Salihat';
+
+  @override
+  String get tasbeehPresetIstighfarTitle => 'Istighfar';
+
+  @override
+  String get tasbeehPresetDuaYunusTitle => 'Yunuksen rukous ﷺ';
+
+  @override
+  String get tasbeehPresetKalimatanTitle => 'Kalimatan (kaksi sanaa)';
+
+  @override
+  String get tasbeehColors => 'Värit';
+
+  @override
+  String get tasbeehPatterns => 'Kuviot';
+
+  @override
+  String tasbeehUnlockAtStreak(int days) {
+    return 'Avautuu $days päivän putkella';
+  }
+
+  @override
+  String get tasbeehLockedHint =>
+      'Lukitut kohteet avautuvat pisimmällä tottumusputkellasi.';
+
+  @override
+  String tasbeehDaysShort(int days) {
+    return '$days pv';
+  }
 }

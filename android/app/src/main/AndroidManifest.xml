@@ -64,5 +64,41 @@
                 <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
             </intent-filter>
         </receiver>
+
+        <!-- Opened by the system when the widget below is placed/edited from
+             the home screen, to set its background transparency there as
+             well as from the app's own Settings screen. -->
+        <activity android:name=".PrayerWidgetConfigureActivity"
+            android:exported="true"
+            android:theme="@style/LaunchTheme">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
+        <!-- 4x1 "Prayer times" home screen widget. Content/ticking are driven
+             entirely by home_widget's SharedPreferences + HomeWidgetScheduler
+             (see PrayerWidgetProvider and WidgetService in lib/utility),
+             not by updatePeriodMillis. -->
+        <receiver android:name=".PrayerWidgetProvider"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_prayer_times_info"/>
+        </receiver>
+
+        <!-- Required by home_widget's HomeWidgetScheduler (used for the
+             widget's per-minute countdown ticks): receives its AlarmManager
+             alarms and re-arms them after a reboot/app update. -->
+        <receiver android:name="es.antonborri.home_widget.HomeWidgetScheduledUpdateReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

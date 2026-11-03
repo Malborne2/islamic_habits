@@ -8,6 +8,7 @@ import 'package:islamic_habits/utility/adhan_voice_i18n.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
+import 'package:islamic_habits/utility/widget_service.dart';
 import 'package:islamic_habits/utility/world_cities.dart';
 
 String _calculationMethodLabel(AppLocalizations l10n, CalculationMethod method) {
@@ -244,6 +245,7 @@ class _PrayerSettingsScreenState extends State<PrayerSettingsScreen> {
     );
     await PrayerSettings.save();
     await NotificationService.scheduleTodayReminders();
+    if (mounted) WidgetService.update(context);
     if (mounted) _exitNow();
   }
 

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 4x1 home screen widget: today's date (+ sunrise in the opposite top
+     corner), the 5 daily prayer times, a highlighted cell for the next
+     upcoming prayer, and a countdown to it. Horizontal order follows
+     widget_root's layoutDirection (set from Java based on the app's own
+     language setting), so it mirrors correctly for Arabic/Farsi/Urdu
+     instead of only flipping text — "end" below resolves to the left in
+     RTL and the right in LTR, so the sunrise corner flips too.
+     Sizes/margins here are deliberately tight: some launchers give a
+     placed widget noticeably less height than minHeight requests, and
+     anything taller than that gets clipped at the bottom edge. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/widget_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/widget_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:gravity="center">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/widget_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="#9FC3DE"
+                android:textSize="10sp"
+                android:singleLine="true"
+                android:text="" />
+            <TextView
+                android:id="@+id/widget_sunrise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:includeFontPadding="false"
+                android:textColor="#9FC3DE"
+                android:textSize="10sp"
+                android:singleLine="true"
+                android:text="" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/widget_cell_0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/widget_cell_normal">
+                <TextView
+                    android:id="@+id/widget_name_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#B9D8EE"
+                    android:textSize="10sp"
+                    android:singleLine="true" />
+                <TextView
+                    android:id="@+id/widget_time_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/widget_cell_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/widget_cell_normal">
+                <TextView
+                    android:id="@+id/widget_name_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#B9D8EE"
+                    android:textSize="10sp"
+                    android:singleLine="true" />
+                <TextView
+                    android:id="@+id/widget_time_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/widget_cell_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/widget_cell_normal">
+                <TextView
+                    android:id="@+id/widget_name_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#B9D8EE"
+                    android:textSize="10sp"
+                    android:singleLine="true" />
+                <TextView
+                    android:id="@+id/widget_time_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/widget_cell_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/widget_cell_normal">
+                <TextView
+                    android:id="@+id/widget_name_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#B9D8EE"
+                    android:textSize="10sp"
+                    android:singleLine="true" />
+                <TextView
+                    android:id="@+id/widget_time_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/widget_cell_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/widget_cell_normal">
+                <TextView
+                    android:id="@+id/widget_name_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#B9D8EE"
+                    android:textSize="10sp"
+                    android:singleLine="true" />
+                <TextView
+                    android:id="@+id/widget_time_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:singleLine="true" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/widget_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:includeFontPadding="false"
+            android:textColor="#8FB3E8"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:singleLine="true"
+            android:text="" />
+    </LinearLayout>
+</FrameLayout>
