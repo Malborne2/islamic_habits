@@ -14,7 +14,7 @@
 | Store listing & graphics | ✅ Ready |
 | Privacy policy & declarations | ✅ Drafted and hosted |
 | Play Console setup | 🟡 In progress — account created, waiting for identity verification |
-| Tablet/large-screen layout | ⬜ Not optimized (optional) |
+| Tablet/large-screen layout | ✅ Responsive two-pane layout implemented |
 | Android 15/16 testing | ⬜ Not done |
 | Closed testing (if required) | ⬜ Not started |
 | Production release | ⬜ Not started |
@@ -46,7 +46,7 @@
 - [x] Website / landing page
 - [x] Privacy policy URL
 - [x] Urdu, Persian, and Indonesian listings
-- [ ] Tablet-optimized layout (optional)
+- [x] Tablet-optimized layout (responsive home, stats, habit detail, Tasbeeh picker)
 - [ ] 7-inch and 10-inch tablet screenshots (optional)
 
 ## 3. Privacy and declarations
@@ -108,7 +108,7 @@
 
 - [ ] Play Console account type and creation date (personal vs organization)
 - [ ] Public developer name/address you want shown
-- [ ] Whether to add tablet screenshots and a tablet-optimized layout
+- [ ] Whether to add tablet screenshots for the store
 
 ## Current next action
 

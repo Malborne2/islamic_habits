@@ -6,6 +6,7 @@ import 'dart:ui' as ui show Image;
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/habit.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 import 'package:islamic_habits/utility/shared_prefrences_helper.dart';
 import 'package:vibration/vibration.dart';
 
@@ -39,17 +40,14 @@ class _Dhikr {
   }
 }
 
-const _Dhikr _dSubhanallah = _Dhikr('سُبْحَانَ اللَّه', 'Subḥānallāh',
-    'Glory be to Allah', 'スブハーナッラー');
-const _Dhikr _dAlhamdulillah = _Dhikr('الْحَمْدُ لِلَّه', 'Alhamdulillāh',
-    'Praise be to Allah', 'アルハムドゥリッラー');
-const _Dhikr _dAllahuAkbar = _Dhikr('اللَّهُ أَكْبَر', 'Allāhu Akbar',
-    'Allah is the Greatest', 'アッラーフ・アクバル');
-const _Dhikr _dLaIlahaIllallah = _Dhikr(
-    'لَا إِلَٰهَ إِلَّا اللَّه',
-    'Lā ilāha illallāh',
-    'There is no god but Allah',
-    'ラー・イラーハ・イッラッラー');
+const _Dhikr _dSubhanallah =
+    _Dhikr('سُبْحَانَ اللَّه', 'Subḥānallāh', 'Glory be to Allah', 'スブハーナッラー');
+const _Dhikr _dAlhamdulillah = _Dhikr(
+    'الْحَمْدُ لِلَّه', 'Alhamdulillāh', 'Praise be to Allah', 'アルハムドゥリッラー');
+const _Dhikr _dAllahuAkbar = _Dhikr(
+    'اللَّهُ أَكْبَر', 'Allāhu Akbar', 'Allah is the Greatest', 'アッラーフ・アクバル');
+const _Dhikr _dLaIlahaIllallah = _Dhikr('لَا إِلَٰهَ إِلَّا اللَّه',
+    'Lā ilāha illallāh', 'There is no god but Allah', 'ラー・イラーハ・イッラッラー');
 const _Dhikr _dLaHawla = _Dhikr(
     'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّه',
     'Lā ḥawla wa lā quwwata illā billāh',
@@ -137,13 +135,11 @@ class _TasbeehPreset {
     // Non-breaking spaces inside each "phrase ×count" unit keep it from
     // splitting mid-phrase when the subtitle wraps — only the separators
     // between units are allowed to break.
-    return steps
-        .map((s) {
-          final word = s.dhikr.display(lang);
-          final label = s.count != null ? '$word ×${s.count}' : word;
-          return label.replaceAll(' ', ' ');
-        })
-        .join('  ·  ');
+    return steps.map((s) {
+      final word = s.dhikr.display(lang);
+      final label = s.count != null ? '$word ×${s.count}' : word;
+      return label.replaceAll(' ', ' ');
+    }).join('  ·  ');
   }
 
   bool get _isSequential =>
@@ -463,8 +459,8 @@ class _TasbeehScreenState extends State<TasbeehScreen>
   @override
   void initState() {
     super.initState();
-    _maxStreakDays = widget.habits
-        .fold<int>(0, (m, h) => max(m, h.getMaximumStreak()));
+    _maxStreakDays =
+        widget.habits.fold<int>(0, (m, h) => max(m, h.getMaximumStreak()));
     _queue = List.generate(_kLevels.length, (_) => _nextBead());
     _sparkController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1200));
@@ -626,6 +622,9 @@ class _TasbeehScreenState extends State<TasbeehScreen>
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      // Let the picker use the tablet's width instead of the default narrow
+      // bottom-sheet width; on phones the screen is narrower anyway.
+      constraints: const BoxConstraints(maxWidth: 920),
       builder: (ctx) => _PresetPickerSheet(current: _preset),
     );
     if (selected != null) _setPreset(selected);
@@ -635,8 +634,8 @@ class _TasbeehScreenState extends State<TasbeehScreen>
     final selected = await showModalBottomSheet<_BeadTheme>(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (ctx) =>
-          _ColorPickerSheet(currentId: _theme.id, maxStreakDays: _maxStreakDays),
+      builder: (ctx) => _ColorPickerSheet(
+          currentId: _theme.id, maxStreakDays: _maxStreakDays),
     );
     if (selected != null) {
       setState(() => _theme = selected);
@@ -697,8 +696,8 @@ class _TasbeehScreenState extends State<TasbeehScreen>
                       children: [
                         Positioned.fill(
                           child: LayoutBuilder(
-                            builder: (context, constraints) => _buildStage(
-                                context, constraints.biggest),
+                            builder: (context, constraints) =>
+                                _buildStage(context, constraints.biggest),
                           ),
                         ),
                         Positioned(
@@ -746,141 +745,144 @@ class _TasbeehScreenState extends State<TasbeehScreen>
     final goal = _goal;
     final frac =
         goal == null || goal == 0 ? 0.0 : (_count / goal).clamp(0.0, 1.0);
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 4, 16, 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              Expanded(
-                child: Text(
-                  l10n.navTasbeeh,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-              SizedBox(
-                width: 42,
-                height: 42,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 42,
-                      height: 42,
-                      child: CircularProgressIndicator(
-                        value: goal == null ? 1.0 : frac,
-                        strokeWidth: 3.5,
-                        backgroundColor: const Color(0xFF1C3F61),
-                        valueColor: AlwaysStoppedAnimation(goal == null
-                            ? const Color(0xFF2D5986)
-                            : _theme.accent),
-                      ),
-                    ),
-                    Text('$_count',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            fontFeatures: [FontFeature.tabularFigures()])),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
+    return ContentWidth(
+      maxWidth: 760,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 4, 16, 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
                 Expanded(
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(999),
-                    onTap: _showPresetPicker,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: const Color(0x330A1F3A),
-                        border: Border.all(color: const Color(0xFF2D5986)),
-                        borderRadius: BorderRadius.circular(999),
+                  child: Text(
+                    l10n.navTasbeeh,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                SizedBox(
+                  width: 42,
+                  height: 42,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: 42,
+                        height: 42,
+                        child: CircularProgressIndicator(
+                          value: goal == null ? 1.0 : frac,
+                          strokeWidth: 3.5,
+                          backgroundColor: const Color(0xFF1C3F61),
+                          valueColor: AlwaysStoppedAnimation(goal == null
+                              ? const Color(0xFF2D5986)
+                              : _theme.accent),
+                        ),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.swap_horiz_rounded,
-                              size: 16, color: Color(0xFF9FC3DE)),
-                          const SizedBox(width: 6),
-                          Flexible(
-                            child: Text(
-                              _preset.title(l10n),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600),
+                      Text('$_count',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              fontFeatures: [FontFeature.tabularFigures()])),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(999),
+                      onTap: _showPresetPicker,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: const Color(0x330A1F3A),
+                          border: Border.all(color: const Color(0xFF2D5986)),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.swap_horiz_rounded,
+                                size: 16, color: Color(0xFF9FC3DE)),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                _preset.title(l10n),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                _HeaderIconButton(
-                  icon: Icons.palette_rounded,
-                  color: _theme.accent,
-                  onTap: _showColorPicker,
-                ),
-                const SizedBox(width: 8),
-                _HeaderIconButton(
-                  icon: Icons.texture_rounded,
-                  color: const Color(0xFF9FC3DE),
-                  onTap: _showPatternPicker,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              children: [
-                ...[33, 100, 1000, null].map((g) => Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: _GoalChip(
-                        label: g == null ? '∞' : '$g',
-                        selected: _goal == g,
-                        accent: _theme.accent,
-                        onTap: () => _setGoal(g),
-                      ),
-                    )),
-                const Spacer(),
-                TextButton(
-                  onPressed: _reset,
-                  style: TextButton.styleFrom(
-                    foregroundColor: const Color(0xFF9FC3DE),
-                    side: const BorderSide(color: Color(0xFF2D5986)),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(999)),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 6),
+                  const SizedBox(width: 8),
+                  _HeaderIconButton(
+                    icon: Icons.palette_rounded,
+                    color: _theme.accent,
+                    onTap: _showColorPicker,
                   ),
-                  child: Text(l10n.tasbeehReset,
-                      style: const TextStyle(fontSize: 12)),
-                ),
-              ],
+                  const SizedBox(width: 8),
+                  _HeaderIconButton(
+                    icon: Icons.texture_rounded,
+                    color: const Color(0xFF9FC3DE),
+                    onTap: _showPatternPicker,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                children: [
+                  ...[33, 100, 1000, null].map((g) => Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: _GoalChip(
+                          label: g == null ? '∞' : '$g',
+                          selected: _goal == g,
+                          accent: _theme.accent,
+                          onTap: () => _setGoal(g),
+                        ),
+                      )),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: _reset,
+                    style: TextButton.styleFrom(
+                      foregroundColor: const Color(0xFF9FC3DE),
+                      side: const BorderSide(color: Color(0xFF2D5986)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(999)),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
+                    ),
+                    child: Text(l10n.tasbeehReset,
+                        style: const TextStyle(fontSize: 12)),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1085,7 +1087,8 @@ class _TasbeehScreenState extends State<TasbeehScreen>
                             Shadow(color: Color(0x99F6C453), blurRadius: 24),
                           ]),
                     ),
-                    if (dua != null && dua.display(_languageCode(l10n)) != dua.ar) ...[
+                    if (dua != null &&
+                        dua.display(_languageCode(l10n)) != dua.ar) ...[
                       const SizedBox(height: 8),
                       Text(dua.display(_languageCode(l10n)),
                           textAlign: TextAlign.center,
@@ -1184,16 +1187,16 @@ class _BeadSprite {
         r + 8,
         Paint()
           ..color = theme.glow
-          ..maskFilter =
-              MaskFilter.blur(BlurStyle.normal, Shadow.convertRadiusToSigma(34)));
+          ..maskFilter = MaskFilter.blur(
+              BlurStyle.normal, Shadow.convertRadiusToSigma(34)));
     canvas.drawCircle(center, r + 2, Paint()..color = theme.rim);
     canvas.drawCircle(
         center + const Offset(0, 10),
         r,
         Paint()
           ..color = Colors.black.withValues(alpha: .35)
-          ..maskFilter =
-              MaskFilter.blur(BlurStyle.normal, Shadow.convertRadiusToSigma(18)));
+          ..maskFilter = MaskFilter.blur(
+              BlurStyle.normal, Shadow.convertRadiusToSigma(18)));
 
     // Base gradient — the tighter highlight falloff (vs. an even 0/0.12/
     // 0.38/0.66/1.0 spread) reads as a glossier, more curved surface: the
@@ -1225,8 +1228,7 @@ class _BeadSprite {
 
     // Primary specular highlight — a small, tight hot-spot where a glossy
     // sphere would catch the light source directly.
-    final primaryCenter = center +
-        const Offset(-0.46 * r, -0.64 * r);
+    final primaryCenter = center + const Offset(-0.46 * r, -0.64 * r);
     final primaryRect = Rect.fromCenter(
         center: primaryCenter, width: 0.24 * core, height: 0.16 * core);
     canvas.drawOval(
@@ -1600,12 +1602,8 @@ class _PatternPainter extends CustomPainter {
         final starInnerR = starOuterR * 0.46;
         for (var y = 0.0; y < size.height + sp; y += sp) {
           for (var x = 0.0; x < size.width + sp; x += sp) {
-            _drawPoly(
-                canvas,
-                _starPts(x, y, 8, starOuterR, starInnerR, pi / 8),
-                null,
-                color.withValues(alpha: .85),
-                lw);
+            _drawPoly(canvas, _starPts(x, y, 8, starOuterR, starInnerR, pi / 8),
+                null, color.withValues(alpha: .85), lw);
           }
         }
         for (var y = 0.0; y < size.height + sp; y += sp) {
@@ -1629,8 +1627,8 @@ class _PatternPainter extends CustomPainter {
         for (var y = -rowH; y < size.height + rowH; y += rowH, row++) {
           final off = (row % 2) * (sp / 2);
           for (var x = -sp + off; x < size.width + sp; x += sp) {
-            _drawPoly(canvas, _starPts(x, y, 10, outerR, innerR, pi / 10),
-                null, color.withValues(alpha: .81), lw);
+            _drawPoly(canvas, _starPts(x, y, 10, outerR, innerR, pi / 10), null,
+                color.withValues(alpha: .81), lw);
           }
         }
         break;
@@ -1679,58 +1677,65 @@ class _GlassSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 10, 14, 14),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(26),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(26),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.white.withValues(alpha: .10),
-                    const Color(0xFF13314F).withValues(alpha: .55),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height * 0.85,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(14, 10, 14, 14),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(26),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(26),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.white.withValues(alpha: .10),
+                      const Color(0xFF13314F).withValues(alpha: .55),
+                    ],
+                  ),
+                  border:
+                      Border.all(color: Colors.white.withValues(alpha: .16)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withValues(alpha: .4),
+                        blurRadius: 30,
+                        offset: const Offset(0, 14)),
                   ],
                 ),
-                border:
-                    Border.all(color: Colors.white.withValues(alpha: .16)),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withValues(alpha: .4),
-                      blurRadius: 30,
-                      offset: const Offset(0, 14)),
-                ],
-              ),
-              padding: const EdgeInsets.fromLTRB(18, 16, 18, 22),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Center(
-                    child: Container(
-                      width: 40,
-                      height: 4,
-                      decoration: BoxDecoration(
-                          color: Colors.white24,
-                          borderRadius: BorderRadius.circular(4)),
+                padding: const EdgeInsets.fromLTRB(18, 16, 18, 22),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        decoration: BoxDecoration(
+                            color: Colors.white24,
+                            borderRadius: BorderRadius.circular(4)),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 14),
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 16),
-                  child,
-                ],
+                    const SizedBox(height: 14),
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 16),
+                    Flexible(
+                      child: SingleChildScrollView(child: child),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -1749,20 +1754,27 @@ class _PresetPickerSheet extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return _GlassSheet(
       title: l10n.tasbeehChooseTitle,
-      child: GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-        childAspectRatio: 0.92,
-        children: _kPresets
-            .map((p) => _PresetCard(
-                  preset: p,
-                  selected: p.id == current.id,
-                  onTap: () => Navigator.of(context).pop(p),
-                ))
-            .toList(),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final columns = constraints.maxWidth >= 560 ? 3 : 2;
+          return GridView.count(
+            crossAxisCount: columns,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            // Wide tablets get 3 columns × 2 rows; the slightly wider-than-tall
+            // cards keep both rows inside the sheet without scrolling.
+            childAspectRatio: columns >= 3 ? 1.15 : 0.92,
+            children: _kPresets
+                .map((p) => _PresetCard(
+                      preset: p,
+                      selected: p.id == current.id,
+                      onTap: () => Navigator.of(context).pop(p),
+                    ))
+                .toList(),
+          );
+        },
       ),
     );
   }
@@ -1858,54 +1870,55 @@ class _ColorPickerSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Wrap(
-        spacing: 16,
-        runSpacing: 10,
-        alignment: WrapAlignment.center,
-        children: _kBeadThemes.map((t) {
-          final unlocked = _kDevUnlockAll || maxStreakDays >= t.unlockStreakDays;
-          final selected = t.id == currentId;
-          return GestureDetector(
-            onTap: unlocked ? () => Navigator.of(context).pop(t) : null,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 52,
-                  height: 52,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(colors: t.gradient),
-                    border: Border.all(
-                        color: selected ? Colors.white : Colors.white24,
-                        width: selected ? 3 : 1),
-                    boxShadow: [
-                      BoxShadow(
-                          color: t.glow, blurRadius: 16, spreadRadius: 2),
+            spacing: 16,
+            runSpacing: 10,
+            alignment: WrapAlignment.center,
+            children: _kBeadThemes.map((t) {
+              final unlocked =
+                  _kDevUnlockAll || maxStreakDays >= t.unlockStreakDays;
+              final selected = t.id == currentId;
+              return GestureDetector(
+                onTap: unlocked ? () => Navigator.of(context).pop(t) : null,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 52,
+                      height: 52,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(colors: t.gradient),
+                        border: Border.all(
+                            color: selected ? Colors.white : Colors.white24,
+                            width: selected ? 3 : 1),
+                        boxShadow: [
+                          BoxShadow(
+                              color: t.glow, blurRadius: 16, spreadRadius: 2),
+                        ],
+                      ),
+                      child: !unlocked
+                          ? Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black.withValues(alpha: .5)),
+                              child: const Icon(Icons.lock_rounded,
+                                  color: _kLockIconColor, size: 20),
+                            )
+                          : null,
+                    ),
+                    if (!unlocked) ...[
+                      const SizedBox(height: 4),
+                      Text(l10n.tasbeehDaysShort(t.unlockStreakDays),
+                          style: const TextStyle(
+                              color: _kLockIconColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600)),
                     ],
-                  ),
-                  child: !unlocked
-                      ? Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black.withValues(alpha: .5)),
-                          child: const Icon(Icons.lock_rounded,
-                              color: _kLockIconColor, size: 20),
-                        )
-                      : null,
+                  ],
                 ),
-                if (!unlocked) ...[
-                  const SizedBox(height: 4),
-                  Text(l10n.tasbeehDaysShort(t.unlockStreakDays),
-                      style: const TextStyle(
-                          color: _kLockIconColor,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600)),
-                ],
-              ],
-            ),
-          );
-        }).toList(),
+              );
+            }).toList(),
           ),
           if (hasLocked) ...[
             const SizedBox(height: 14),
@@ -1942,59 +1955,60 @@ class _PatternPickerSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Wrap(
-        spacing: 14,
-        runSpacing: 14,
-        alignment: WrapAlignment.center,
-        children: _kPatterns.map((p) {
-          final unlocked = _kDevUnlockAll || maxStreakDays >= p.unlockStreakDays;
-          final selected = p.id == currentId;
-          return GestureDetector(
-            onTap: unlocked ? () => Navigator.of(context).pop(p) : null,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 72,
-                  height: 72,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: const Color(0xFF0A1F3A),
-                    border: Border.all(
-                        color: selected ? Colors.white : Colors.white24,
-                        width: selected ? 3 : 1),
-                  ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      ClipOval(
-                        child: CustomPaint(
-                          size: const Size.square(72),
-                          painter: _PatternPainter(p.id, theme.accent),
-                        ),
+            spacing: 14,
+            runSpacing: 14,
+            alignment: WrapAlignment.center,
+            children: _kPatterns.map((p) {
+              final unlocked =
+                  _kDevUnlockAll || maxStreakDays >= p.unlockStreakDays;
+              final selected = p.id == currentId;
+              return GestureDetector(
+                onTap: unlocked ? () => Navigator.of(context).pop(p) : null,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 72,
+                      height: 72,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: const Color(0xFF0A1F3A),
+                        border: Border.all(
+                            color: selected ? Colors.white : Colors.white24,
+                            width: selected ? 3 : 1),
                       ),
-                      if (!unlocked)
-                        Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black.withValues(alpha: .55)),
-                          child: const Icon(Icons.lock_rounded,
-                              color: _kLockIconColor, size: 20),
-                        ),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          ClipOval(
+                            child: CustomPaint(
+                              size: const Size.square(72),
+                              painter: _PatternPainter(p.id, theme.accent),
+                            ),
+                          ),
+                          if (!unlocked)
+                            Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black.withValues(alpha: .55)),
+                              child: const Icon(Icons.lock_rounded,
+                                  color: _kLockIconColor, size: 20),
+                            ),
+                        ],
+                      ),
+                    ),
+                    if (!unlocked) ...[
+                      const SizedBox(height: 4),
+                      Text(l10n.tasbeehDaysShort(p.unlockStreakDays),
+                          style: const TextStyle(
+                              color: _kLockIconColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600)),
                     ],
-                  ),
+                  ],
                 ),
-                if (!unlocked) ...[
-                  const SizedBox(height: 4),
-                  Text(l10n.tasbeehDaysShort(p.unlockStreakDays),
-                      style: const TextStyle(
-                          color: _kLockIconColor,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600)),
-                ],
-              ],
-            ),
-          );
-        }).toList(),
+              );
+            }).toList(),
           ),
           if (hasLocked) ...[
             const SizedBox(height: 14),
@@ -2032,7 +2046,8 @@ class _GoalChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         decoration: BoxDecoration(
           color: selected ? accent : const Color(0x330A1F3A),
-          border: Border.all(color: selected ? accent : const Color(0xFF2D5986)),
+          border:
+              Border.all(color: selected ? accent : const Color(0xFF2D5986)),
           borderRadius: BorderRadius.circular(999),
         ),
         child: Text(

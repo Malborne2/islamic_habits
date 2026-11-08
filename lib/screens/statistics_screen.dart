@@ -18,6 +18,7 @@ import 'package:islamic_habits/utility/habit_icons.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 
 /// A professional, scrollable overview of every habit: a headline success
 /// rate, a 30-day completion trend, weekly and monthly averages, a
@@ -78,53 +79,130 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               title: l10n.statisticsNoDataTitle,
               body: l10n.statisticsNoDataBody,
             )
-          : ListView(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
-              children: <Widget>[
-                _OverviewCard(data: data, palette: palette),
-                const SizedBox(height: 14),
-                if (!data.hasData)
-                  _EmptyStateCard(
+          : LayoutBuilder(
+              builder: (context, constraints) {
+                // Two side-by-side cards once there is room for two readable
+                // chart columns (roughly a 7" tablet in portrait).
+                final wide = constraints.maxWidth >= 720;
+                final performanceCards = _habits
+                    .map((habit) => _HabitPerformanceCard(
+                          habit: habit,
+                          accent: accent,
+                        ))
+                    .toList();
+
+                final Widget charts;
+                if (!data.hasData) {
+                  charts = _EmptyStateCard(
                     accent: accent,
                     title: l10n.statisticsNoDataTitle,
                     body: l10n.statisticsNoDataBody,
-                  )
-                else ...<Widget>[
-                  _DailyCompletionCard(
-                    data: data,
-                    accent: palette.daily,
-                    gridColor: theme.dividerColor,
+                  );
+                } else if (wide) {
+                  charts = Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: _DailyCompletionCard(
+                              data: data,
+                              accent: palette.daily,
+                              gridColor: theme.dividerColor,
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: _WeeklyProgressCard(
+                              data: data,
+                              accent: palette.weekly,
+                              gridColor: theme.dividerColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: _MonthlyProgressCard(
+                              data: data,
+                              accent: palette.monthly,
+                              gridColor: theme.dividerColor,
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: _BreakdownCard(data: data, accent: accent),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 22),
+                      Text(
+                        l10n.statisticsHabitPerformance,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      ResponsiveCardGrid(
+                        children: performanceCards,
+                        minItemWidth: 340,
+                        maxWidth: 1300,
+                        maxColumns: 2,
+                      ),
+                    ],
+                  );
+                } else {
+                  charts = Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      _DailyCompletionCard(
+                        data: data,
+                        accent: palette.daily,
+                        gridColor: theme.dividerColor,
+                      ),
+                      const SizedBox(height: 14),
+                      _WeeklyProgressCard(
+                        data: data,
+                        accent: palette.weekly,
+                        gridColor: theme.dividerColor,
+                      ),
+                      const SizedBox(height: 14),
+                      _MonthlyProgressCard(
+                        data: data,
+                        accent: palette.monthly,
+                        gridColor: theme.dividerColor,
+                      ),
+                      const SizedBox(height: 14),
+                      _BreakdownCard(data: data, accent: accent),
+                      const SizedBox(height: 22),
+                      Text(
+                        l10n.statisticsHabitPerformance,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      ...performanceCards,
+                    ],
+                  );
+                }
+
+                return ContentWidth(
+                  maxWidth: wide ? 1400 : 760,
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+                    children: <Widget>[
+                      _OverviewCard(data: data, palette: palette),
+                      const SizedBox(height: 14),
+                      charts,
+                    ],
                   ),
-                  const SizedBox(height: 14),
-                  _WeeklyProgressCard(
-                    data: data,
-                    accent: palette.weekly,
-                    gridColor: theme.dividerColor,
-                  ),
-                  const SizedBox(height: 14),
-                  _MonthlyProgressCard(
-                    data: data,
-                    accent: palette.monthly,
-                    gridColor: theme.dividerColor,
-                  ),
-                  const SizedBox(height: 14),
-                  _BreakdownCard(data: data, accent: accent),
-                  const SizedBox(height: 22),
-                  Text(
-                    l10n.statisticsHabitPerformance,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ..._habits.map(
-                    (habit) => _HabitPerformanceCard(
-                      habit: habit,
-                      accent: accent,
-                    ),
-                  ),
-                ],
-              ],
+                );
+              },
             ),
     );
   }
@@ -500,8 +578,7 @@ class _OverviewCard extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            localizeDigits(
-                                context,
+                            localizeDigits(context,
                                 '${data.overallSuccess.toStringAsFixed(0)}%'),
                             style: theme.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.w800,
@@ -528,8 +605,7 @@ class _OverviewCard extends StatelessWidget {
                   child: _MetricTile(
                     icon: Icons.today_rounded,
                     label: l10n.todayLabel,
-                    value:
-                        '${data.todayCompleted} / ${data.todayTotal}',
+                    value: '${data.todayCompleted} / ${data.todayTotal}',
                     accent: palette.daily,
                   ),
                 ),
@@ -686,8 +762,7 @@ class _DailyCompletionCard extends StatelessWidget {
                   if (axisIndex < 0 || axisIndex >= daily.length) {
                     return const SizedBox.shrink();
                   }
-                  final index =
-                      _chartDataIndex(axisIndex, daily.length, isRtl);
+                  final index = _chartDataIndex(axisIndex, daily.length, isRtl);
                   // Label every week plus the final day, so the axis stays
                   // readable on a narrow phone. Skip a weekly label when it
                   // would sit right next to the final "today" label.
@@ -837,8 +912,7 @@ class _WeeklyProgressCard extends StatelessWidget {
                     child: Text(
                       localizeDigits(
                         context,
-                        DateFormat('d MMM', locale)
-                            .format(weekly[index].start),
+                        DateFormat('d MMM', locale).format(weekly[index].start),
                       ),
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
@@ -854,10 +928,9 @@ class _WeeklyProgressCard extends StatelessWidget {
             touchTooltipData: BarTouchTooltipData(
               getTooltipColor: (group) => kBrandNavy,
               getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                final index =
-                    _chartDataIndex(group.x, weekly.length, isRtl);
-                final label = DateFormat('d MMM', locale)
-                    .format(weekly[index].start);
+                final index = _chartDataIndex(group.x, weekly.length, isRtl);
+                final label =
+                    DateFormat('d MMM', locale).format(weekly[index].start);
                 return BarTooltipItem(
                   '$label\n'
                   '${localizeDigits(context, '${rod.toY.toStringAsFixed(0)}%')}',
@@ -974,8 +1047,7 @@ class _MonthlyProgressCard extends StatelessWidget {
                     child: Text(
                       localizeDigits(
                         context,
-                        DateFormat('MMM', locale)
-                            .format(monthly[index].start),
+                        DateFormat('MMM', locale).format(monthly[index].start),
                       ),
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
@@ -1078,9 +1150,8 @@ class _BreakdownCard extends StatelessWidget {
           radius: 28,
         ),
     ];
-    final total = data.successHabitDays +
-        data.missedHabitDays +
-        data.noDataHabitDays;
+    final total =
+        data.successHabitDays + data.missedHabitDays + data.noDataHabitDays;
 
     return _ChartCard(
       title: l10n.statisticsBreakdown,
@@ -1242,7 +1313,9 @@ class _HabitPerformanceCard extends StatelessWidget {
                   ),
                   child: Icon(
                     habitIconForHabit(habit) ??
-                        (isNumber ? Icons.numbers_rounded : Icons.check_rounded),
+                        (isNumber
+                            ? Icons.numbers_rounded
+                            : Icons.check_rounded),
                     color: habit.color,
                     size: 22,
                   ),

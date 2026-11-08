@@ -8,6 +8,7 @@ import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/language_settings.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 import 'package:islamic_habits/utility/shared_prefrences_helper.dart';
 import 'package:islamic_habits/utility/widget_service.dart';
 import 'package:islamic_habits/utility/widget_settings.dart';
@@ -52,122 +53,127 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final isDark =
-        context.watch<ThemeBloc>().state.themeData.brightness ==
-            Brightness.dark;
+    final isDark = context.watch<ThemeBloc>().state.themeData.brightness ==
+        Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settingsTitle)),
-      body: ListView(
-        children: <Widget>[
-          SwitchListTile(
-            title: Text(l10n.settingsDarkMode),
-            value: isDark,
-            onChanged: (value) {
-              context.read<ThemeBloc>().add(
-                  ThemeChanged(theme: value ? 'PurpleDark' : 'PurpleLight'));
-            },
-          ),
-          ListTile(
-            title: Text(l10n.settingsStartOfWeek),
-            trailing: DropdownButton<int>(
-              value: _startOfWeek,
-              items: List.generate(
-                7,
-                (i) => DropdownMenuItem(
-                  value: i + 1,
-                  child: Text(_weekdayName(l10n, i + 1)),
-                ),
-              ),
-              onChanged: _onStartOfWeekChanged,
-            ),
-          ),
-          ListTile(
-            title: Text(l10n.settingsLanguage),
-            trailing: DropdownButton<String>(
-              value: LanguageSettings.locale?.languageCode ?? 'system',
-              items: [
-                DropdownMenuItem(
-                    value: 'system', child: Text(l10n.settingsLanguageSystem)),
-                ...kSupportedLocales.map((locale) => DropdownMenuItem(
-                      value: locale.languageCode,
-                      child: Text(kLanguageNames[locale.languageCode]!),
-                    )),
-              ],
+      body: ContentWidth(
+        maxWidth: 720,
+        child: ListView(
+          children: <Widget>[
+            SwitchListTile(
+              title: Text(l10n.settingsDarkMode),
+              value: isDark,
               onChanged: (value) {
-                setState(() {
-                  LanguageSettings.setLocale(value == null || value == 'system'
-                      ? null
-                      : Locale(value));
-                });
-                WidgetsBinding.instance
-                    .addPostFrameCallback((_) => WidgetService.update(context));
+                context.read<ThemeBloc>().add(
+                    ThemeChanged(theme: value ? 'PurpleDark' : 'PurpleLight'));
               },
             ),
-          ),
-          if (Localizations.localeOf(context).languageCode == 'ar')
             ListTile(
-              title: Text(l10n.settingsNumerals),
-              trailing: DropdownButton<bool>(
-                value: NumeralSettings.useEasternArabicNumerals,
+              title: Text(l10n.settingsStartOfWeek),
+              trailing: DropdownButton<int>(
+                value: _startOfWeek,
+                items: List.generate(
+                  7,
+                  (i) => DropdownMenuItem(
+                    value: i + 1,
+                    child: Text(_weekdayName(l10n, i + 1)),
+                  ),
+                ),
+                onChanged: _onStartOfWeekChanged,
+              ),
+            ),
+            ListTile(
+              title: Text(l10n.settingsLanguage),
+              trailing: DropdownButton<String>(
+                value: LanguageSettings.locale?.languageCode ?? 'system',
                 items: [
                   DropdownMenuItem(
-                      value: false, child: Text(l10n.numeralsWestern)),
-                  DropdownMenuItem(
-                      value: true, child: Text(l10n.numeralsEastern)),
+                      value: 'system',
+                      child: Text(l10n.settingsLanguageSystem)),
+                  ...kSupportedLocales.map((locale) => DropdownMenuItem(
+                        value: locale.languageCode,
+                        child: Text(kLanguageNames[locale.languageCode]!),
+                      )),
                 ],
                 onChanged: (value) {
-                  if (value == null) return;
                   setState(() {
-                    NumeralSettings.setUseEasternArabicNumerals(value);
+                    LanguageSettings.setLocale(
+                        value == null || value == 'system'
+                            ? null
+                            : Locale(value));
                   });
+                  WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => WidgetService.update(context));
                 },
               ),
             ),
-          const Divider(),
-          ListTile(
-            title: Text(l10n.settingsWidgetTransparency),
-            subtitle: Slider(
-              value: WidgetSettings.backgroundAlpha.toDouble(),
-              min: 0,
-              max: 255,
-              divisions: 17,
-              label: '${(WidgetSettings.backgroundAlpha / 255 * 100).round()}%',
-              onChanged: (value) {
-                setState(() {
-                  WidgetSettings.backgroundAlpha = value.round();
-                });
-                WidgetSettings.setBackgroundAlpha(value.round());
-                WidgetService.update(context);
+            if (Localizations.localeOf(context).languageCode == 'ar')
+              ListTile(
+                title: Text(l10n.settingsNumerals),
+                trailing: DropdownButton<bool>(
+                  value: NumeralSettings.useEasternArabicNumerals,
+                  items: [
+                    DropdownMenuItem(
+                        value: false, child: Text(l10n.numeralsWestern)),
+                    DropdownMenuItem(
+                        value: true, child: Text(l10n.numeralsEastern)),
+                  ],
+                  onChanged: (value) {
+                    if (value == null) return;
+                    setState(() {
+                      NumeralSettings.setUseEasternArabicNumerals(value);
+                    });
+                  },
+                ),
+              ),
+            const Divider(),
+            ListTile(
+              title: Text(l10n.settingsWidgetTransparency),
+              subtitle: Slider(
+                value: WidgetSettings.backgroundAlpha.toDouble(),
+                min: 0,
+                max: 255,
+                divisions: 17,
+                label:
+                    '${(WidgetSettings.backgroundAlpha / 255 * 100).round()}%',
+                onChanged: (value) {
+                  setState(() {
+                    WidgetSettings.backgroundAlpha = value.round();
+                  });
+                  WidgetSettings.setBackgroundAlpha(value.round());
+                  WidgetService.update(context);
+                },
+              ),
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(l10n.settingsPrayerTimeSettings),
+              subtitle: Text(l10n.settingsPrayerTimeSettingsSubtitle),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PrayerSettingsScreen(),
+                        settings: const RouteSettings(
+                            name: '/PrayerSettingsScreen')));
               },
             ),
-          ),
-          const Divider(),
-          ListTile(
-            title: Text(l10n.settingsPrayerTimeSettings),
-            subtitle: Text(l10n.settingsPrayerTimeSettingsSubtitle),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const PrayerSettingsScreen(),
-                      settings: const RouteSettings(
-                          name: '/PrayerSettingsScreen')));
-            },
-          ),
-          const Divider(),
-          ListTile(
-            title: Text(l10n.settingsBackupRestore),
-            subtitle: Text(l10n.settingsBackupRestoreSubtitle),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const BackupScreen(),
-                      settings: const RouteSettings(name: '/BackupScreen')));
-            },
-          ),
-        ],
+            const Divider(),
+            ListTile(
+              title: Text(l10n.settingsBackupRestore),
+              subtitle: Text(l10n.settingsBackupRestoreSubtitle),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const BackupScreen(),
+                        settings: const RouteSettings(name: '/BackupScreen')));
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

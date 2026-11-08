@@ -5,6 +5,7 @@ import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
 import 'package:islamic_habits/utility/prayer_settings.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 import 'package:islamic_habits/utility/route_observer.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
@@ -165,42 +166,45 @@ class _PrayersScreenState extends State<PrayersScreen> with RouteAware {
       drawer: HabitDrawer(
         habits: widget.habits,
       ),
-      body: Column(
-        children: <Widget>[
-          Material(
-            elevation: 5,
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios),
-                onPressed: _goToPreviousDay,
-              ),
-              title: InkWell(
-                onTap: _goToToday,
-                child: ListTile(
-                  title: Center(
-                      child: Text(localizeDigits(context,
-                          hijriDate.toFormat("MMMM dd yyyy")))),
-                  subtitle: Center(
-                    child: Text(
-                      localizeDigits(
-                          context,
-                          _isToday
-                              ? '${l10n.todayLabel} ${DateFormat('MMM d yyyy', locale).format(_selectedDate)}'
-                              : DateFormat('EEE, MMM d yyyy', locale)
-                                  .format(_selectedDate)),
+      body: ContentWidth(
+        maxWidth: 760,
+        child: Column(
+          children: <Widget>[
+            Material(
+              elevation: 5,
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: _goToPreviousDay,
+                ),
+                title: InkWell(
+                  onTap: _goToToday,
+                  child: ListTile(
+                    title: Center(
+                        child: Text(localizeDigits(
+                            context, hijriDate.toFormat("MMMM dd yyyy")))),
+                    subtitle: Center(
+                      child: Text(
+                        localizeDigits(
+                            context,
+                            _isToday
+                                ? '${l10n.todayLabel} ${DateFormat('MMM d yyyy', locale).format(_selectedDate)}'
+                                : DateFormat('EEE, MMM d yyyy', locale)
+                                    .format(_selectedDate)),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              trailing: IconButton(
-                icon: const Icon(Icons.arrow_forward_ios),
-                onPressed: _goToNextDay,
+                trailing: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: _goToNextDay,
+                ),
               ),
             ),
-          ),
-          createPrayersTable(prayerHelper),
-        ],
+            createPrayersTable(prayerHelper),
+          ],
+        ),
       ),
     );
   }

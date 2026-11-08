@@ -6,6 +6,7 @@ import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/habit_icons.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 
 // Archived habits keep every logged day but are hidden from Home, the
 // drawer's habit list, reminders, and statistics. This screen is the only
@@ -106,82 +107,84 @@ class _ArchivedHabitsScreenState extends State<ArchivedHabitsScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.archivedHabits)),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : _archived.isEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Icon(Icons.archive_outlined,
-                            size: 56,
-                            color: theme.colorScheme.onSurfaceVariant),
-                        const SizedBox(height: 16),
-                        Text(
-                          l10n.noArchivedHabits,
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.titleMedium,
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : ListView(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                      child: Text(
-                        l10n.archivedHabitsHint,
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
+      body: ContentWidth(
+        maxWidth: 760,
+        child: _loading
+            ? const Center(child: CircularProgressIndicator())
+            : _archived.isEmpty
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Icon(Icons.archive_outlined,
+                              size: 56,
+                              color: theme.colorScheme.onSurfaceVariant),
+                          const SizedBox(height: 16),
+                          Text(
+                            l10n.noArchivedHabits,
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.titleMedium,
+                          ),
+                        ],
                       ),
                     ),
-                    for (final habit in _archived)
-                      ListTile(
-                        leading: HabitIconBadge(habit: habit),
-                        title:
-                            Text(localizedHabitName(context, habit.name)),
-                        onTap: () => _openDetail(habit),
-                        trailing: PopupMenuButton<String>(
-                          onSelected: (value) {
-                            if (value == 'restore') {
-                              _restore(habit);
-                            } else if (value == 'delete') {
-                              _delete(habit);
-                            }
-                          },
-                          itemBuilder: (context) => <PopupMenuEntry<String>>[
-                            PopupMenuItem<String>(
-                              value: 'restore',
-                              child: ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                leading: const Icon(Icons.unarchive_outlined),
-                                title: Text(l10n.unarchive),
-                              ),
-                            ),
-                            PopupMenuItem<String>(
-                              value: 'delete',
-                              child: ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                leading: Icon(Icons.delete_outline,
-                                    color: theme.colorScheme.error),
-                                title: Text(
-                                  l10n.delete,
-                                  style: TextStyle(
-                                      color: theme.colorScheme.error),
+                  )
+                : ListView(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                        child: Text(
+                          l10n.archivedHabitsHint,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+                      for (final habit in _archived)
+                        ListTile(
+                          leading: HabitIconBadge(habit: habit),
+                          title: Text(localizedHabitName(context, habit.name)),
+                          onTap: () => _openDetail(habit),
+                          trailing: PopupMenuButton<String>(
+                            onSelected: (value) {
+                              if (value == 'restore') {
+                                _restore(habit);
+                              } else if (value == 'delete') {
+                                _delete(habit);
+                              }
+                            },
+                            itemBuilder: (context) => <PopupMenuEntry<String>>[
+                              PopupMenuItem<String>(
+                                value: 'restore',
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: const Icon(Icons.unarchive_outlined),
+                                  title: Text(l10n.unarchive),
                                 ),
                               ),
-                            ),
-                          ],
+                              PopupMenuItem<String>(
+                                value: 'delete',
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: Icon(Icons.delete_outline,
+                                      color: theme.colorScheme.error),
+                                  title: Text(
+                                    l10n.delete,
+                                    style: TextStyle(
+                                        color: theme.colorScheme.error),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                  ],
-                ),
+                    ],
+                  ),
+      ),
     );
   }
 }

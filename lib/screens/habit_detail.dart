@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/components/habit_drawer.dart';
 import 'package:islamic_habits/components/habit_page.dart';
@@ -9,6 +11,7 @@ import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -179,9 +182,14 @@ class _HabitDetailState extends State<HabitDetail> {
       drawer: HabitDrawer(
         habits: widget.habits,
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final wide = constraints.maxWidth >= 900;
+          final calendarWidth = wide
+              ? math.min(560.0, constraints.maxWidth * 0.52)
+              : math.min(constraints.maxWidth, 560.0);
+
+          final header = Container(
             margin: const EdgeInsets.only(bottom: 10),
             child: Material(
               elevation: 5,
@@ -232,13 +240,13 @@ class _HabitDetailState extends State<HabitDetail> {
                 ),
               ),
             ),
-          ),
+          );
+
           // A fixed height derived from the grid's own geometry (7 columns,
-          // up to 6 rows) rather than Expanded, so the calendar never
-          // leaves dead space below a short month, and the stats section
-          // below always starts right where the calendar actually ends.
-          SizedBox(
-            height: _calendarHeight(context),
+          // up to 6 rows) rather than Expanded, so the calendar never leaves
+          // dead space below a short month.
+          final calendar = SizedBox(
+            height: _calendarHeightForWidth(calendarWidth),
             child: PageView(
               controller: controller,
               onPageChanged: (index) {
@@ -267,62 +275,104 @@ class _HabitDetailState extends State<HabitDetail> {
               },
               children: habitPages,
             ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-              child: Column(
-                children: <Widget>[
-                  ...List.generate(
-                    metricNames.length,
-                    (i) => _StatBarRow(
-                      icon: metricIcons[i],
-                      value: metricValues[i],
-                      fraction: metricFractions[i],
-                      label: metricNames[i],
-                      color: widget.habit.color,
+          );
+
+          final stats = SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+            child: Column(
+              children: <Widget>[
+                ...List.generate(
+                  metricNames.length,
+                  (i) => _StatBarRow(
+                    icon: metricIcons[i],
+                    value: metricValues[i],
+                    fraction: metricFractions[i],
+                    label: metricNames[i],
+                    color: widget.habit.color,
+                  ),
+                ),
+                // Habit reminders are edited on the same screen as the habit
+                // itself (opened by the edit button above); this card is a
+                // read-only summary plus a shortcut to that screen.
+                if (!isBuiltInPrayerHabit)
+                  Card(
+                    margin: const EdgeInsets.only(top: 14),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 2),
+                      leading: Icon(
+                        widget.habit.hasReminder
+                            ? Icons.notifications_active_outlined
+                            : Icons.notifications_off_outlined,
+                        color: brandAccent(context),
+                      ),
+                      title: Text(l10n.reminderLabel),
+                      subtitle: Text(
+                        widget.habit.hasReminder
+                            ? l10n.reminderDailyAt(_formatReminderTime(
+                                context, widget.habit.reminderTime!))
+                            : l10n.reminderOff,
+                      ),
+                      trailing: const Icon(Icons.edit_outlined),
+                      onTap: () async {
+                        await Navigator.push<Habit>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                AddHabitScreen(editingHabit: widget.habit),
+                          ),
+                        );
+                        if (mounted) setState(() {});
+                      },
                     ),
                   ),
-                  // Habit reminders are edited on the same screen as the
-                  // habit itself (opened by the edit button above); this card
-                  // is a read-only summary plus a shortcut to that screen.
-                  if (!isBuiltInPrayerHabit)
-                    Card(
-                      margin: const EdgeInsets.only(top: 14),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 14, vertical: 2),
-                        leading: Icon(
-                          widget.habit.hasReminder
-                              ? Icons.notifications_active_outlined
-                              : Icons.notifications_off_outlined,
-                          color: brandAccent(context),
+              ],
+            ),
+          );
+
+          if (wide) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  flex: 6,
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: Center(
+                      child: SizedBox(
+                        width: calendarWidth,
+                        child: Column(
+                          children: <Widget>[header, calendar],
                         ),
-                        title: Text(l10n.reminderLabel),
-                        subtitle: Text(
-                          widget.habit.hasReminder
-                              ? l10n.reminderDailyAt(_formatReminderTime(
-                                  context, widget.habit.reminderTime!))
-                              : l10n.reminderOff,
-                        ),
-                        trailing: const Icon(Icons.edit_outlined),
-                        onTap: () async {
-                          await Navigator.push<Habit>(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  AddHabitScreen(editingHabit: widget.habit),
-                            ),
-                          );
-                          if (mounted) setState(() {});
-                        },
                       ),
                     ),
-                ],
+                  ),
+                ),
+                const VerticalDivider(width: 1),
+                Expanded(
+                  flex: 5,
+                  child: ContentWidth(
+                    maxWidth: 640,
+                    child: stats,
+                  ),
+                ),
+              ],
+            );
+          }
+
+          return Column(
+            children: <Widget>[
+              header,
+              calendar,
+              Expanded(
+                child: ContentWidth(
+                  maxWidth: 760,
+                  child: stats,
+                ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
@@ -331,8 +381,8 @@ class _HabitDetailState extends State<HabitDetail> {
   // width, Wrap's runSpacing of 5) to size the calendar to exactly 6 rows —
   // the most any month needs — so every month renders at the same height
   // with nothing left over beneath it.
-  double _calendarHeight(BuildContext context) {
-    final columnWidth = MediaQuery.of(context).size.width / 7;
+  double _calendarHeightForWidth(double width) {
+    final columnWidth = width / 7;
     final diameter = columnWidth * 0.8;
     const weekdayHeaderHeight = 48.0;
     const rowSpacing = 5.0;

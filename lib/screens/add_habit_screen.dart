@@ -7,6 +7,7 @@ import 'package:islamic_habits/utility/data_access_object.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/habit_icons.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 
 List<String> _weekdayShortNames(AppLocalizations l10n) => [
       l10n.weekdayMonShort,
@@ -55,9 +56,9 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
       text: (widget.editingHabit?.successTarget ?? 40).toString());
   late final _timesPerWeekController = TextEditingController(
       text: (widget.editingHabit?.habitDays == HabitDays.TIMES_PER_WEEK
-              ? widget.editingHabit!.habitPeriod?.first
-              : null)
-          ?.toString() ??
+                  ? widget.editingHabit!.habitPeriod?.first
+                  : null)
+              ?.toString() ??
           '3');
 
   late HabitType _type = widget.editingHabit?.type ?? HabitType.YES_NO;
@@ -210,10 +211,10 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
     final l10n = AppLocalizations.of(context);
     final isValid = _formKey.currentState!.validate();
     setState(() {
-      _scheduleError = _habitDays == HabitDays.DAYS_OF_WEEK &&
-              _selectedWeekdays.isEmpty
-          ? l10n.pickAtLeastOneDay
-          : null;
+      _scheduleError =
+          _habitDays == HabitDays.DAYS_OF_WEEK && _selectedWeekdays.isEmpty
+              ? l10n.pickAtLeastOneDay
+              : null;
     });
     if (!isValid || _scheduleError != null) return;
 
@@ -249,8 +250,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
         ..habitPeriod = habitPeriod
         ..numberUnit = unit
         ..reminderEnabled = _reminderEnabled
-        ..reminderMinutes =
-            _reminderTime.hour * 60 + _reminderTime.minute;
+        ..reminderMinutes = _reminderTime.hour * 60 + _reminderTime.minute;
       await HabitDao().updateHabit(habit);
     } else {
       habit = Habit(
@@ -299,300 +299,303 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-          title:
-              Text(_isEditing ? l10n.editHabitTitle : l10n.navAddHabit)),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: <Widget>[
-            TextFormField(
-              controller: _nameController,
-              decoration: habitTextFieldDecoration(context)
-                  .copyWith(labelText: l10n.habitName),
-              validator: (value) => (value == null || value.trim().isEmpty)
-                  ? l10n.enterName
-                  : null,
-            ),
-            const SizedBox(height: 24),
-            Text(l10n.successMetric,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            SegmentedButton<HabitType>(
-              segments: [
-                ButtonSegment(value: HabitType.YES_NO, label: Text(l10n.yesNo)),
-                ButtonSegment(value: HabitType.NUMBER, label: Text(l10n.number)),
-              ],
-              selected: {_type},
-              onSelectionChanged: (selection) {
-                setState(() => _type = selection.first);
-              },
-            ),
-            if (_type == HabitType.NUMBER) ...[
-              const SizedBox(height: 12),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextFormField(
-                      controller: _targetValueController,
-                      keyboardType: TextInputType.number,
-                      decoration: habitTextFieldDecoration(context)
-                          .copyWith(labelText: l10n.targetAmountLabel),
-                      validator: (value) {
-                        if (_type != HabitType.NUMBER) return null;
-                        final parsed = double.tryParse(value ?? '');
-                        if (parsed == null || parsed <= 0) {
-                          return l10n.enterNumberGreaterThanZero;
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _unitController,
-                      decoration: habitTextFieldDecoration(context)
-                          .copyWith(labelText: l10n.unitLabel),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-            const SizedBox(height: 24),
-            Text(l10n.streakTarget,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            TextFormField(
-              controller: _streakTargetController,
-              keyboardType: TextInputType.number,
-              decoration: habitTextFieldDecoration(context)
-                  .copyWith(labelText: l10n.targetStreakDays),
-              validator: (value) {
-                final parsed = int.tryParse(value ?? '');
-                if (parsed == null || parsed <= 0) {
-                  return l10n.enterNumberGreaterThanZero;
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 24),
-            Text(l10n.schedule,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            RadioListTile<HabitDays>(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.everyDay),
-              value: HabitDays.EVERYDAY,
-              groupValue: _habitDays,
-              onChanged: (value) => setState(() => _habitDays = value!),
-            ),
-            RadioListTile<HabitDays>(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.certainDaysOfWeek),
-              value: HabitDays.DAYS_OF_WEEK,
-              groupValue: _habitDays,
-              onChanged: (value) => setState(() => _habitDays = value!),
-            ),
-            if (_habitDays == HabitDays.DAYS_OF_WEEK) ...[
-              Wrap(
-                spacing: 8,
-                children: List.generate(7, (i) {
-                  final weekday = i + 1;
-                  return FilterChip(
-                    label: Text(_weekdayShortNames(l10n)[i]),
-                    selected: _selectedWeekdays.contains(weekday),
-                    onSelected: (selected) {
-                      setState(() {
-                        if (selected) {
-                          _selectedWeekdays.add(weekday);
-                        } else {
-                          _selectedWeekdays.remove(weekday);
-                        }
-                        _scheduleError = null;
-                      });
-                    },
-                  );
-                }),
-              ),
-              if (_scheduleError != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(_scheduleError!,
-                      style: TextStyle(color: theme.colorScheme.error)),
-                ),
-            ],
-            RadioListTile<HabitDays>(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.timesPerWeek),
-              value: HabitDays.TIMES_PER_WEEK,
-              groupValue: _habitDays,
-              onChanged: (value) => setState(() => _habitDays = value!),
-            ),
-            if (_habitDays == HabitDays.TIMES_PER_WEEK)
+          title: Text(_isEditing ? l10n.editHabitTitle : l10n.navAddHabit)),
+      body: ContentWidth(
+        maxWidth: 720,
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: <Widget>[
               TextFormField(
-                controller: _timesPerWeekController,
+                controller: _nameController,
+                decoration: habitTextFieldDecoration(context)
+                    .copyWith(labelText: l10n.habitName),
+                validator: (value) => (value == null || value.trim().isEmpty)
+                    ? l10n.enterName
+                    : null,
+              ),
+              const SizedBox(height: 24),
+              Text(l10n.successMetric,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              SegmentedButton<HabitType>(
+                segments: [
+                  ButtonSegment(
+                      value: HabitType.YES_NO, label: Text(l10n.yesNo)),
+                  ButtonSegment(
+                      value: HabitType.NUMBER, label: Text(l10n.number)),
+                ],
+                selected: {_type},
+                onSelectionChanged: (selection) {
+                  setState(() => _type = selection.first);
+                },
+              ),
+              if (_type == HabitType.NUMBER) ...[
+                const SizedBox(height: 12),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextFormField(
+                        controller: _targetValueController,
+                        keyboardType: TextInputType.number,
+                        decoration: habitTextFieldDecoration(context)
+                            .copyWith(labelText: l10n.targetAmountLabel),
+                        validator: (value) {
+                          if (_type != HabitType.NUMBER) return null;
+                          final parsed = double.tryParse(value ?? '');
+                          if (parsed == null || parsed <= 0) {
+                            return l10n.enterNumberGreaterThanZero;
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _unitController,
+                        decoration: habitTextFieldDecoration(context)
+                            .copyWith(labelText: l10n.unitLabel),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              const SizedBox(height: 24),
+              Text(l10n.streakTarget,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: _streakTargetController,
                 keyboardType: TextInputType.number,
                 decoration: habitTextFieldDecoration(context)
-                    .copyWith(labelText: l10n.timesPerWeekLabel),
+                    .copyWith(labelText: l10n.targetStreakDays),
                 validator: (value) {
-                  if (_habitDays != HabitDays.TIMES_PER_WEEK) return null;
                   final parsed = int.tryParse(value ?? '');
-                  if (parsed == null || parsed < 1 || parsed > 7) {
-                    return l10n.enterNumberOneToSeven;
+                  if (parsed == null || parsed <= 0) {
+                    return l10n.enterNumberGreaterThanZero;
                   }
                   return null;
                 },
               ),
-            const SizedBox(height: 24),
-            Text(l10n.color,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: <Widget>[
-                ...kHabitColors.map((color) {
-                  return _ColorSwatch(
-                    color: color,
-                    selected: !_customSelected && color == _selectedColor,
-                    label: _colorHex(color),
-                    onTap: () {
-                      setState(() {
-                        _selectedColor = color;
-                        _customSelected = false;
-                      });
-                    },
-                  );
-                }),
-                _ColorSwatch(
-                  color: _customSelected ? _selectedColor : _customColor,
-                  selected: _customSelected,
-                  isCustom: true,
-                  label: l10n.customColor,
-                  onTap: _pickCustomColor,
+              const SizedBox(height: 24),
+              Text(l10n.schedule,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              RadioListTile<HabitDays>(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l10n.everyDay),
+                value: HabitDays.EVERYDAY,
+                groupValue: _habitDays,
+                onChanged: (value) => setState(() => _habitDays = value!),
+              ),
+              RadioListTile<HabitDays>(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l10n.certainDaysOfWeek),
+                value: HabitDays.DAYS_OF_WEEK,
+                groupValue: _habitDays,
+                onChanged: (value) => setState(() => _habitDays = value!),
+              ),
+              if (_habitDays == HabitDays.DAYS_OF_WEEK) ...[
+                Wrap(
+                  spacing: 8,
+                  children: List.generate(7, (i) {
+                    final weekday = i + 1;
+                    return FilterChip(
+                      label: Text(_weekdayShortNames(l10n)[i]),
+                      selected: _selectedWeekdays.contains(weekday),
+                      onSelected: (selected) {
+                        setState(() {
+                          if (selected) {
+                            _selectedWeekdays.add(weekday);
+                          } else {
+                            _selectedWeekdays.remove(weekday);
+                          }
+                          _scheduleError = null;
+                        });
+                      },
+                    );
+                  }),
                 ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            Text(l10n.habitIcon,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 46,
-                  height: 46,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: _selectedColor.withValues(alpha: 0.16),
-                    shape: BoxShape.circle,
-                    border: Border.all(color: theme.dividerColor),
+                if (_scheduleError != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(_scheduleError!,
+                        style: TextStyle(color: theme.colorScheme.error)),
                   ),
-                  child: _selectedIcon == null
-                      ? Center(
-                          child: CircleAvatar(
-                            radius: 6,
-                            backgroundColor: _selectedColor,
-                          ),
-                        )
-                      : Icon(
-                          habitIconOptionForCodePoint(_selectedIcon)?.icon ??
-                              Icons.help_outline,
-                          color: _selectedColor,
-                          size: 26,
-                        ),
+              ],
+              RadioListTile<HabitDays>(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l10n.timesPerWeek),
+                value: HabitDays.TIMES_PER_WEEK,
+                groupValue: _habitDays,
+                onChanged: (value) => setState(() => _habitDays = value!),
+              ),
+              if (_habitDays == HabitDays.TIMES_PER_WEEK)
+                TextFormField(
+                  controller: _timesPerWeekController,
+                  keyboardType: TextInputType.number,
+                  decoration: habitTextFieldDecoration(context)
+                      .copyWith(labelText: l10n.timesPerWeekLabel),
+                  validator: (value) {
+                    if (_habitDays != HabitDays.TIMES_PER_WEEK) return null;
+                    final parsed = int.tryParse(value ?? '');
+                    if (parsed == null || parsed < 1 || parsed > 7) {
+                      return l10n.enterNumberOneToSeven;
+                    }
+                    return null;
+                  },
                 ),
-                const SizedBox(width: 12),
-                OutlinedButton.icon(
-                  onPressed: _pickIcon,
-                  icon: const Icon(Icons.grid_view_rounded),
-                  label: Text(l10n.chooseIcon),
-                ),
-                if (_selectedIcon != null) ...<Widget>[
-                  const SizedBox(width: 4),
-                  IconButton(
-                    tooltip: l10n.removeIcon,
-                    onPressed: () => setState(() => _selectedIcon = null),
-                    icon: const Icon(Icons.close),
+              const SizedBox(height: 24),
+              Text(l10n.color,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  ...kHabitColors.map((color) {
+                    return _ColorSwatch(
+                      color: color,
+                      selected: !_customSelected && color == _selectedColor,
+                      label: _colorHex(color),
+                      onTap: () {
+                        setState(() {
+                          _selectedColor = color;
+                          _customSelected = false;
+                        });
+                      },
+                    );
+                  }),
+                  _ColorSwatch(
+                    color: _customSelected ? _selectedColor : _customColor,
+                    selected: _customSelected,
+                    isCustom: true,
+                    label: l10n.customColor,
+                    onTap: _pickCustomColor,
                   ),
                 ],
-              ],
-            ),
-            const SizedBox(height: 24),
-            Text(l10n.reminderLabel,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              secondary: Icon(
-                Icons.notifications_active_outlined,
-                color: _reminderEnabled
-                    ? brandAccent(context)
-                    : theme.colorScheme.onSurfaceVariant,
               ),
-              title: Text(l10n.reminderEnabledLabel),
-              subtitle: Text(l10n.reminderEnabledSubtitle),
-              value: _reminderEnabled,
-              onChanged: (value) =>
-                  setState(() => _reminderEnabled = value),
-            ),
-            if (_reminderEnabled)
-              ListTile(
+              const SizedBox(height: 24),
+              Text(l10n.habitIcon,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: 46,
+                    height: 46,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: _selectedColor.withValues(alpha: 0.16),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: theme.dividerColor),
+                    ),
+                    child: _selectedIcon == null
+                        ? Center(
+                            child: CircleAvatar(
+                              radius: 6,
+                              backgroundColor: _selectedColor,
+                            ),
+                          )
+                        : Icon(
+                            habitIconOptionForCodePoint(_selectedIcon)?.icon ??
+                                Icons.help_outline,
+                            color: _selectedColor,
+                            size: 26,
+                          ),
+                  ),
+                  const SizedBox(width: 12),
+                  OutlinedButton.icon(
+                    onPressed: _pickIcon,
+                    icon: const Icon(Icons.grid_view_rounded),
+                    label: Text(l10n.chooseIcon),
+                  ),
+                  if (_selectedIcon != null) ...<Widget>[
+                    const SizedBox(width: 4),
+                    IconButton(
+                      tooltip: l10n.removeIcon,
+                      onPressed: () => setState(() => _selectedIcon = null),
+                      icon: const Icon(Icons.close),
+                    ),
+                  ],
+                ],
+              ),
+              const SizedBox(height: 24),
+              Text(l10n.reminderLabel,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(Icons.schedule, color: brandAccent(context)),
-                title: Text(l10n.reminderTimeLabel),
-                subtitle: Text(_formatTimeOfDay(context, _reminderTime)),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: _pickReminderTime,
+                secondary: Icon(
+                  Icons.notifications_active_outlined,
+                  color: _reminderEnabled
+                      ? brandAccent(context)
+                      : theme.colorScheme.onSurfaceVariant,
+                ),
+                title: Text(l10n.reminderEnabledLabel),
+                subtitle: Text(l10n.reminderEnabledSubtitle),
+                value: _reminderEnabled,
+                onChanged: (value) => setState(() => _reminderEnabled = value),
               ),
-            if (_reminderEnabled)
-              Padding(
-                padding: const EdgeInsets.only(top: 4, left: 4),
-                child: Text(
-                  l10n.reminderIndependentHint,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: theme.colorScheme.onSurfaceVariant,
+              if (_reminderEnabled)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(Icons.schedule, color: brandAccent(context)),
+                  title: Text(l10n.reminderTimeLabel),
+                  subtitle: Text(_formatTimeOfDay(context, _reminderTime)),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: _pickReminderTime,
+                ),
+              if (_reminderEnabled)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4, left: 4),
+                  child: Text(
+                    l10n.reminderIndependentHint,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
-              ),
-            const SizedBox(height: 32),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _save,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.brightness == Brightness.dark
-                      ? kBrandNavy
-                      : theme.colorScheme.surface,
-                  foregroundColor: theme.brightness == Brightness.dark
-                      ? Colors.white
-                      : theme.colorScheme.primary,
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  // In dark mode the white outline separates the navy button
-                  // from the near-black background. In light mode the button
-                  // is a surface-coloured outlined button so the primary
-                  // outline is actually visible against the fill.
-                  side: BorderSide(
-                    color: theme.brightness == Brightness.dark
+              const SizedBox(height: 32),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _save,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: theme.brightness == Brightness.dark
+                        ? kBrandNavy
+                        : theme.colorScheme.surface,
+                    foregroundColor: theme.brightness == Brightness.dark
                         ? Colors.white
                         : theme.colorScheme.primary,
-                    width: 1.6,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    // In dark mode the white outline separates the navy button
+                    // from the near-black background. In light mode the button
+                    // is a surface-coloured outlined button so the primary
+                    // outline is actually visible against the fill.
+                    side: BorderSide(
+                      color: theme.brightness == Brightness.dark
+                          ? Colors.white
+                          : theme.colorScheme.primary,
+                      width: 1.6,
+                    ),
                   ),
-                ),
-                child: Text(
-                  l10n.saveHabit,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                  child: Text(
+                    l10n.saveHabit,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -653,9 +656,7 @@ class _ColorSwatch extends StatelessWidget {
               ),
             ),
             child: Icon(
-              selected
-                  ? Icons.check
-                  : (isCustom ? Icons.colorize : null),
+              selected ? Icons.check : (isCustom ? Icons.colorize : null),
               color: selected
                   ? foregroundOn(color)
                   : (isCustom ? Colors.white : null),

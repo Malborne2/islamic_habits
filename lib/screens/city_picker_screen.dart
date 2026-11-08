@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/screens/map_city_picker_screen.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 import 'package:islamic_habits/utility/world_cities.dart';
 
 // Returns either a WorldCity or a CustomLocation via Navigator.pop, or null
@@ -10,7 +11,9 @@ class CityPickerScreen extends StatefulWidget {
   final double initialLatitude;
   final double initialLongitude;
   const CityPickerScreen(
-      {super.key, required this.initialLatitude, required this.initialLongitude});
+      {super.key,
+      required this.initialLatitude,
+      required this.initialLongitude});
   @override
   _CityPickerScreenState createState() => _CityPickerScreenState();
 }
@@ -33,9 +36,7 @@ class _CityPickerScreenState extends State<CityPickerScreen> {
             c.name.toLowerCase().contains(q) ||
             c.country.toLowerCase().contains(q) ||
             localizedCityName(context, c).toLowerCase().contains(q) ||
-            localizedCountryName(context, c.country)
-                .toLowerCase()
-                .contains(q))
+            localizedCountryName(context, c.country).toLowerCase().contains(q))
         .toList();
   }
 
@@ -92,69 +93,76 @@ class _CityPickerScreenState extends State<CityPickerScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          InkWell(
-            onTap: _pickOnMap,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 18,
-                    backgroundColor:
-                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
-                    child: Icon(Icons.map,
-                        color: Theme.of(context).colorScheme.primary, size: 20),
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(l10n.cityNotFoundPrompt,
-                            style: const TextStyle(fontSize: 12)),
-                        Text(l10n.pickOnMap,
-                            style: const TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w600)),
-                      ],
+      body: ContentWidth(
+        maxWidth: 720,
+        child: Column(
+          children: <Widget>[
+            InkWell(
+              onTap: _pickOnMap,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                child: Row(
+                  children: <Widget>[
+                    CircleAvatar(
+                      radius: 18,
+                      backgroundColor: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.15),
+                      child: Icon(Icons.map,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 20),
                     ),
-                  ),
-                  const Icon(Icons.chevron_right),
-                ],
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(l10n.cityNotFoundPrompt,
+                              style: const TextStyle(fontSize: 12)),
+                          Text(l10n.pickOnMap,
+                              style: const TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600)),
+                        ],
+                      ),
+                    ),
+                    const Icon(Icons.chevron_right),
+                  ],
+                ),
               ),
             ),
-          ),
-          const Divider(height: 1),
-          Expanded(
-            child: results.isEmpty
-                ? Center(
-                    child: Text(l10n.noCitiesFound,
-                        style: const TextStyle(fontSize: 14)))
-                : ListView.builder(
-                    itemCount: results.length,
-                    itemBuilder: (context, i) {
-                      final city = results[i];
-                      return ListTile(
-                        leading: CircleAvatar(
-                          radius: 18,
-                          backgroundColor: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withValues(alpha: 0.15),
-                          child: const Icon(Icons.location_city, size: 20),
-                        ),
-                        title: Text(localizedCityName(context, city),
-                            style:
-                                const TextStyle(fontWeight: FontWeight.w600)),
-                        subtitle:
-                            Text(localizedCountryName(context, city.country)),
-                        onTap: () => Navigator.pop(context, city),
-                      );
-                    },
-                  ),
-          ),
-        ],
+            const Divider(height: 1),
+            Expanded(
+              child: results.isEmpty
+                  ? Center(
+                      child: Text(l10n.noCitiesFound,
+                          style: const TextStyle(fontSize: 14)))
+                  : ListView.builder(
+                      itemCount: results.length,
+                      itemBuilder: (context, i) {
+                        final city = results[i];
+                        return ListTile(
+                          leading: CircleAvatar(
+                            radius: 18,
+                            backgroundColor: Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withValues(alpha: 0.15),
+                            child: const Icon(Icons.location_city, size: 20),
+                          ),
+                          title: Text(localizedCityName(context, city),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w600)),
+                          subtitle:
+                              Text(localizedCountryName(context, city.country)),
+                          onTap: () => Navigator.pop(context, city),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }

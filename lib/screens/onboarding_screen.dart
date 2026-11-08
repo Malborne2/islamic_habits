@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/utility/constants.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 
 /// First-run welcome tour. Shown once from LoadingScreen, gated by a
 /// SharedPreferences flag, and dismissed with Skip or the final button.
@@ -95,101 +96,105 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ),
         child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
-                child: Row(
-                  children: <Widget>[
-                    if (_page == 0)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Text(
-                          l10n.appTitle,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            letterSpacing: 0.2,
+          child: ContentWidth(
+            maxWidth: 900,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+                  child: Row(
+                    children: <Widget>[
+                      if (_page == 0)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Text(
+                            l10n.appTitle,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              letterSpacing: 0.2,
+                            ),
                           ),
                         ),
-                      ),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: _finish,
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white70,
-                      ),
-                      child: Text(l10n.onboardingSkip),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: PageView.builder(
-                  controller: _controller,
-                  itemCount: slides.length,
-                  onPageChanged: (index) => setState(() => _page = index),
-                  itemBuilder: (context, index) =>
-                      _SlidePage(slide: slides[index]),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 4, 24, 20),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List<Widget>.generate(slides.length, (i) {
-                        final active = i == _page;
-                        return AnimatedContainer(
-                          duration: const Duration(milliseconds: 220),
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          height: 8,
-                          width: active ? 24 : 8,
-                          decoration: BoxDecoration(
-                            color: active ? Colors.white : Colors.white38,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        );
-                      }),
-                    ),
-                    const SizedBox(height: 18),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        onPressed: () => _next(slides.length - 1),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: kBrandNavy,
-                          minimumSize: const Size.fromHeight(54),
-                          side: BorderSide.none,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: _finish,
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white70,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(isLast
-                                ? l10n.onboardingGetStarted
-                                : l10n.onboardingNext),
-                            if (!isLast) ...[
-                              const SizedBox(width: 8),
-                              const Icon(Icons.arrow_forward_rounded, size: 20),
+                        child: Text(l10n.onboardingSkip),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: PageView.builder(
+                    controller: _controller,
+                    itemCount: slides.length,
+                    onPageChanged: (index) => setState(() => _page = index),
+                    itemBuilder: (context, index) =>
+                        _SlidePage(slide: slides[index]),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 4, 24, 20),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List<Widget>.generate(slides.length, (i) {
+                          final active = i == _page;
+                          return AnimatedContainer(
+                            duration: const Duration(milliseconds: 220),
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            height: 8,
+                            width: active ? 24 : 8,
+                            decoration: BoxDecoration(
+                              color: active ? Colors.white : Colors.white38,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          );
+                        }),
+                      ),
+                      const SizedBox(height: 18),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          onPressed: () => _next(slides.length - 1),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: kBrandNavy,
+                            minimumSize: const Size.fromHeight(54),
+                            side: BorderSide.none,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(isLast
+                                  ? l10n.onboardingGetStarted
+                                  : l10n.onboardingNext),
+                              if (!isLast) ...[
+                                const SizedBox(width: 8),
+                                const Icon(Icons.arrow_forward_rounded,
+                                    size: 20),
+                              ],
                             ],
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

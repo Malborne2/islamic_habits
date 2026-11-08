@@ -38,6 +38,7 @@ To update the policy, edit `docs/privacy.html`, commit, and push to `master`. Pa
 - [ ] Android 12 — exact-alarm permission flow.
 - [ ] Android 13 — notification permission prompt.
 - [ ] Android 14 — exact alarm denied by default; fallback still fires.
+- [x] Tablet emulator (Pixel Tablet, API 34) — responsive home, statistics, habit detail, and Tasbeeh picker verified in landscape and portrait.
 - [ ] Android 15/16 — edge-to-edge layout after the targetSdk bump; check status bar, navigation bar, and widget.
 - [ ] Place the widget, close the app, and confirm the countdown changes after a minute and the highlighted prayer moves at the prayer boundary.
 - [ ] Test in English, Arabic (RTL), and at least one more locale.

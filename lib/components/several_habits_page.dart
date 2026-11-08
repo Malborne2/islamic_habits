@@ -4,6 +4,7 @@ import 'package:islamic_habits/screens/habit_detail.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/constants.dart';
 import 'package:islamic_habits/utility/habit_name_localizer.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 import 'package:islamic_habits/utility/weekday_localizer.dart';
 
 class SeveralHabitsPage extends StatefulWidget {
@@ -50,15 +51,13 @@ class _SeveralHabitsPageState extends State<SeveralHabitsPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => HabitDetail(
-                      habit: habit,
-                      habits: widget.allHabits ?? widget.habits),
+                      habit: habit, habits: widget.allHabits ?? widget.habits),
                   settings: RouteSettings(name: '/${habit.name}'),
                 ));
           },
           child: Container(
               alignment: Alignment.centerLeft,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Text(
                 localizedHabitName(context, habit.name),
                 style: TextStyle(color: habit.color),
@@ -82,15 +81,18 @@ class _SeveralHabitsPageState extends State<SeveralHabitsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double itemWidth = constraints.maxWidth / 7;
-        return SingleChildScrollView(
-          child: Column(
-            children: generateHabitsList(itemWidth),
-          ),
-        );
-      },
+    return ContentWidth(
+      maxWidth: 640,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final double itemWidth = constraints.maxWidth / 7;
+          return SingleChildScrollView(
+            child: Column(
+              children: generateHabitsList(itemWidth),
+            ),
+          );
+        },
+      ),
     );
   }
 }

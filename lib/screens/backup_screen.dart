@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:islamic_habits/l10n/generated/app_localizations.dart';
 import 'package:islamic_habits/screens/loading_screen.dart';
 import 'package:islamic_habits/utility/backup_service.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 
 class BackupScreen extends StatefulWidget {
   const BackupScreen({super.key});
@@ -71,8 +72,8 @@ class _BackupScreenState extends State<BackupScreen> {
 
     setState(() => _busy = true);
     try {
-      final count = await _backupService
-          .importFromFile(File(result.files.single.path!));
+      final count =
+          await _backupService.importFromFile(File(result.files.single.path!));
       if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => LoadingScreen()),
@@ -91,29 +92,33 @@ class _BackupScreenState extends State<BackupScreen> {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settingsBackupRestore)),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(l10n.backupDescription),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: _busy ? null : _exportBackup,
-              icon: const Icon(Icons.upload_file),
-              label: Text(l10n.exportBackup),
-            ),
-            const SizedBox(height: 12),
-            ElevatedButton.icon(
-              onPressed: _busy ? null : _importBackup,
-              icon: const Icon(Icons.download_outlined),
-              label: Text(l10n.restoreFromBackup),
-            ),
-            if (_busy) const Padding(
-              padding: EdgeInsets.only(top: 20),
-              child: Center(child: CircularProgressIndicator()),
-            ),
-          ],
+      body: ContentWidth(
+        maxWidth: 720,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(l10n.backupDescription),
+              const SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: _busy ? null : _exportBackup,
+                icon: const Icon(Icons.upload_file),
+                label: Text(l10n.exportBackup),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton.icon(
+                onPressed: _busy ? null : _importBackup,
+                icon: const Icon(Icons.download_outlined),
+                label: Text(l10n.restoreFromBackup),
+              ),
+              if (_busy)
+                const Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+            ],
+          ),
         ),
       ),
     );

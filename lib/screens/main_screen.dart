@@ -11,6 +11,7 @@ import 'package:islamic_habits/utility/habit_name_localizer.dart';
 import 'package:islamic_habits/utility/notification_service.dart';
 import 'package:islamic_habits/utility/numeral_settings.dart';
 import 'package:islamic_habits/utility/prayer_helper.dart';
+import 'package:islamic_habits/utility/responsive.dart';
 import 'package:islamic_habits/utility/data_access_object.dart';
 import 'package:islamic_habits/utility/habit.dart';
 import 'package:islamic_habits/utility/route_observer.dart';
@@ -141,6 +142,7 @@ class _MainScreenState extends State<MainScreen>
     final locale = Localizations.localeOf(context).toString();
     HijriCalendar.setLocal(locale == 'ar' ? 'ar' : 'en');
     final prayerHelper = PrayerHelper.fromSettings();
+    final wide = MediaQuery.sizeOf(context).width >= AppBreakpoints.medium;
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appTitle),
@@ -163,109 +165,110 @@ class _MainScreenState extends State<MainScreen>
       drawer: HabitDrawer(
         habits: _habits,
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-        child: ListView(
+      body: ContentWidth(
+        maxWidth: wide ? 1280 : 720,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+          child: TodayOverview(
+            habits: _habits,
+            leading: _buildPrayerCard(context, locale, prayerHelper),
+            wide: wide,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPrayerCard(
+    BuildContext context,
+    String locale,
+    PrayerHelper prayerHelper,
+  ) {
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+        child: Row(
           children: <Widget>[
-              Card(
-                margin: EdgeInsets.zero,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 2,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 15),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                child: Center(
-                                  child: AutoSizeText(
-                                    localizeDigits(context,
-                                        hijriToday.toFormat("DDDD, d MMMM yyyy")),
-                                    maxLines: 1,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              Center(
-                                child: AutoSizeText(
-                                  localizeDigits(
-                                      context,
-                                      DateFormat('MMMM d yyyy', locale)
-                                          .format(today)),
-                                  maxLines: 1,
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Center(
+                        child: AutoSizeText(
+                          localizeDigits(context,
+                              hijriToday.toFormat("DDDD, d MMMM yyyy")),
+                          maxLines: 1,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      const SizedBox(
-                        height: 60,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child: VerticalDivider(
-                            thickness: 1,
-                            width: 2,
-                            indent: 2,
-                          ),
-                        ),
+                    ),
+                    Center(
+                      child: AutoSizeText(
+                        localizeDigits(context,
+                            DateFormat('MMMM d yyyy', locale).format(today)),
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
                       ),
-                      Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4),
-                                child: AutoSizeText(
-                                  localizedPrayerDisplayName(
-                                      context, prayerHelper.getNextPrayerName()),
-                                  maxLines: 1,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              AutoSizeText(
-                                localizeDigits(
-                                    context,
-                                    DateFormat.jm(locale).format(
-                                        prayerHelper.getNextPrayerTime())),
-                                maxLines: 1,
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 6),
-                              _CountdownBadge(
-                                remaining: prayerHelper
-                                    .getNextPrayerTime()
-                                    .difference(DateTime.now()),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              TodayOverview(habits: _habits),
+            ),
+            const SizedBox(
+              height: 60,
+              child: Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: VerticalDivider(
+                  thickness: 1,
+                  width: 2,
+                  indent: 2,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: AutoSizeText(
+                        localizedPrayerDisplayName(
+                            context, prayerHelper.getNextPrayerName()),
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    AutoSizeText(
+                      localizeDigits(
+                          context,
+                          DateFormat.jm(locale)
+                              .format(prayerHelper.getNextPrayerTime())),
+                      maxLines: 1,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 6),
+                    _CountdownBadge(
+                      remaining: prayerHelper
+                          .getNextPrayerTime()
+                          .difference(DateTime.now()),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
