@@ -18,7 +18,7 @@ Everything needed to publish Islamic Habits on Google Play.
 
 ## Before uploading
 
-1. Resolve the hard blockers in `release_checklist.md` — most importantly release signing and an Android 15/16 edge-to-edge pass.
+1. Resolve the remaining hard blockers in `release_checklist.md` — Android 15/16 edge-to-edge testing, the privacy policy URL, and the Play Console setup.
 2. Host `privacy_policy.md` and replace every `TODO` in the docs with real contact details.
 3. Build the bundle with `flutter build appbundle --release`.
 4. Complete App content (privacy policy, ads, app access, content rating, target audience, data safety).

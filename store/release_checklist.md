@@ -5,7 +5,7 @@
 | # | Item | Current state | Action |
 | --- | --- | --- | --- |
 | 1 | **Target API level 36** | Done — `targetSdk 36`, `compileSdk 36`; debug build verified | Still test on an Android 15/16 device or emulator: targetSdk 35+ enforces edge-to-edge, so check the status bar, gesture bar, dialogs, and the home-screen widget. |
-| 2 | **Release signing** | Gradle now reads `android/key.properties`. The file exists (alias `key`, `E:\GitHub\key.jks`) but that keystore is missing, so `bundleRelease` fails. | Create the keystore at that path using the passwords already in `key.properties`, or point the file at a new keystore. See `signing_guide.md`. Then enable Play App Signing. Never commit the keystore. |
+| 2 | **Release signing** | Done — `android/key.properties` points at `C:/GitHub/key.jks` (alias `key`), and `flutter build appbundle --release` succeeds. | Enable Play App Signing when creating the app, and back up `C:/GitHub/key.jks` and its passwords somewhere safe. Never commit the keystore. |
 | 3 | **App bundle** | Only debug APKs built so far | Build with `flutter build appbundle --release`. Play does not accept APKs for new apps. |
 | 4 | **Privacy policy URL** | `store/privacy_policy.md` is written but not hosted | Publish it at a public HTTPS URL (GitHub Pages is fine) and paste that URL into Play Console. |
 | 5 | **Contact email** | Not set | Use an address you monitor; it is shown on the listing. |
