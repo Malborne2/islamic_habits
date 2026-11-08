@@ -695,7 +695,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onboardingRemindersBody =>
-      'اضبط تذكيرًا يوميًا لأي عادة وأجب بنعم أو لا مباشرة من الإشعار.';
+      'اضبط تذكيرًا لأي عادة وأجب بنعم أو لا مباشرة من الإشعار.';
 
   @override
   String get onboardingStatsTitle => 'شاهد تقدمك';
@@ -703,6 +703,13 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get onboardingStatsBody =>
       'تساعدك الرسوم البيانية والسلاسل ونسب النجاح على البقاء متحفزًا ومعرفة ما يحتاج إلى انتباه.';
+
+  @override
+  String get onboardingTasbeehTitle => 'عداد التسبيح';
+
+  @override
+  String get onboardingTasbeehBody =>
+      'اسحب اللؤلؤة لعدّ ذكرك، واختر ذكرًا جاهزًا، وخصّص خرزتك بالألوان والأنماط.';
 
   @override
   String get statisticsOverallSuccess => 'النجاح الإجمالي';

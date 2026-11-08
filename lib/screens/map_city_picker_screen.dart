@@ -27,7 +27,8 @@ class _MapCityPickerScreenState extends State<MapCityPickerScreen> {
         children: <Widget>[
           Container(
             width: double.infinity,
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.12),
+            color:
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.12),
             padding: const EdgeInsets.all(12),
             child: Text(
               l10n.mapPickerInstructions,
@@ -65,6 +66,25 @@ class _MapCityPickerScreenState extends State<MapCityPickerScreen> {
                     ]),
                   ],
                 ),
+                // Required by the OpenStreetMap tile usage policy whenever
+                // their tiles are shown.
+                Positioned(
+                  left: 8,
+                  bottom: 62,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                      child: Text(
+                        '© OpenStreetMap contributors',
+                        style: TextStyle(fontSize: 10, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
                 Positioned(
                   left: 0,
                   right: 0,
@@ -97,8 +117,7 @@ class _MapCityPickerScreenState extends State<MapCityPickerScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: FilledButton(
-                  onPressed: () => Navigator.pop(
-                      context,
+                  onPressed: () => Navigator.pop(context,
                       CustomLocation(_picked.latitude, _picked.longitude)),
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),

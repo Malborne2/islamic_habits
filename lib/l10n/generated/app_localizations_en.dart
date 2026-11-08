@@ -693,7 +693,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingRemindersBody =>
-      'Set a daily reminder for any habit and answer Yes or No right from the notification.';
+      'Set a reminder for any habit and answer Yes or No right from the notification.';
 
   @override
   String get onboardingStatsTitle => 'See your progress';
@@ -701,6 +701,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingStatsBody =>
       'Charts, streaks, and success rates help you stay motivated and spot what needs attention.';
+
+  @override
+  String get onboardingTasbeehTitle => 'Tasbeeh Counter';
+
+  @override
+  String get onboardingTasbeehBody =>
+      'Swipe the pearl to count your dhikr, choose a preset, and personalize your bead with colors and patterns.';
 
   @override
   String get statisticsOverallSuccess => 'Overall success';

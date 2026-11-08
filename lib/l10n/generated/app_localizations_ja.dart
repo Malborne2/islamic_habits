@@ -677,13 +677,20 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get onboardingRemindersBody =>
-      'どの習慣にも毎日のリマインダーを設定し、通知から直接「はい」または「いいえ」で回答できます。';
+      'どの習慣にもリマインダーを設定し、通知から直接「はい」または「いいえ」で回答できます。';
 
   @override
   String get onboardingStatsTitle => '進捗を確認';
 
   @override
   String get onboardingStatsBody => 'グラフ、連続記録、成功率でモチベーションを保ち、注意すべき点がわかります。';
+
+  @override
+  String get onboardingTasbeehTitle => 'タスビーカウンター';
+
+  @override
+  String get onboardingTasbeehBody =>
+      '真珠をスワイプしてズィクルを数え、プリセットを選び、色と模様でビーズをカスタマイズできます。';
 
   @override
   String get statisticsOverallSuccess => '全体の成功率';

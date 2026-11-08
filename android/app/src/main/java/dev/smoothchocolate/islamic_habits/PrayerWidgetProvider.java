@@ -12,7 +12,11 @@ import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 
-import java.util.Collections;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import es.antonborri.home_widget.HomeWidgetProvider;
 import es.antonborri.home_widget.HomeWidgetScheduler;
@@ -32,8 +36,9 @@ import es.antonborri.home_widget.HomeWidgetScheduler;
  *
  * The minute-by-minute countdown ticks without Flutter running: every time
  * this is invoked (initial placement, or a HomeWidgetScheduler alarm) it
- * re-arms a single HomeWidgetScheduler update one minute ahead, so the chain
- * keeps going on its own as long as a widget instance exists.
+ * re-arms a rolling window of the next 60 minute boundaries, so the chain
+ * keeps going on its own as long as a widget instance exists — and a delayed
+ * tick still has a backlog to advance through.
  *
  * Tapping anywhere on the widget opens the app. Transparency can be
  * re-adjusted after placement too: widget_prayer_times_info.xml declares
@@ -56,6 +61,19 @@ public class PrayerWidgetProvider extends HomeWidgetProvider {
             R.id.widget_time_0, R.id.widget_time_1, R.id.widget_time_2,
             R.id.widget_time_3, R.id.widget_time_4,
     };
+    private static final String[] PRAYER_KEYS = {
+            "fajr", "dhuhr", "asr", "maghrib", "isha",
+    };
+
+    private static final class NextPrayer {
+        final int index;
+        final long epoch;
+
+        NextPrayer(int index, long epoch) {
+            this.index = index;
+            this.epoch = epoch;
+        }
+    }
 
     // Below this width the widget keeps its normal 4-cell layout; at or
     // above it, there's room for the 5-cell layout's extra breathing room.
@@ -73,12 +91,27 @@ public class PrayerWidgetProvider extends HomeWidgetProvider {
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
 
-        // Keep the countdown/highlight fresh without the app running: chain
-        // one more minute-ahead update every time this fires.
+        // Keep the countdown/highlight fresh without the app running. The
+        // data pushed by Dart includes epoch timestamps and a week of prayer
+        // times, so each tick recomputes the remaining time natively instead
+        // of redrawing a stale string.
+        scheduleMinuteUpdates(context);
+    }
+
+    // Arms the next 60 minute boundaries. HomeWidgetScheduler stores the
+    // list and only arms one alarm at a time, so a delayed/missed tick still
+    // has a backlog to advance through; every onUpdate refreshes the window.
+    private static void scheduleMinuteUpdates(Context context) {
+        long now = System.currentTimeMillis();
+        long first = now - (now % 60_000L) + 60_000L;
+        List<Long> times = new ArrayList<>(60);
+        for (int i = 0; i < 60; i++) {
+            times.add(first + i * 60_000L);
+        }
         HomeWidgetScheduler.INSTANCE.schedule(
                 context,
                 PrayerWidgetProvider.class.getName(),
-                Collections.singletonList(System.currentTimeMillis() + 60_000L));
+                times);
     }
 
     // Fires when the widget is resized (dragging its handles), separately
@@ -118,25 +151,112 @@ public class PrayerWidgetProvider extends HomeWidgetProvider {
         int alpha = data.getInt("widget_bg_alpha", 230);
         views.setInt(R.id.widget_bg, "setImageAlpha", clampAlpha(alpha));
 
-        views.setTextViewText(R.id.widget_date, nullToEmpty(data.getString("widget_date_label", "")));
-        views.setTextViewText(R.id.widget_countdown, nullToEmpty(data.getString("widget_countdown", "")));
-        views.setTextViewText(R.id.widget_sunrise, nullToEmpty(data.getString("widget_sunrise", "")));
-        views.setContentDescription(R.id.widget_sunrise,
-                nullToEmpty(data.getString("widget_sunrise_cd", "")));
+        long now = System.currentTimeMillis();
+        int dayCount = data.getInt("widget_day_count", 0);
+        int todayOffset = findTodayOffset(data, dayCount, now);
 
-        int nextIndex = data.getInt("widget_next_index", -1);
-        String[] keys = {"fajr", "dhuhr", "asr", "maghrib", "isha"};
-        for (int i = 0; i < keys.length; i++) {
-            String name = nullToEmpty(data.getString("widget_name_" + keys[i], ""));
-            String time = nullToEmpty(data.getString("widget_time_" + keys[i], ""));
-            views.setTextViewText(NAME_IDS[i], name);
-            views.setTextViewText(TIME_IDS[i], time);
-            views.setInt(CELL_IDS[i], "setBackgroundResource",
-                    i == nextIndex ? R.drawable.widget_cell_highlight : R.drawable.widget_cell_normal);
+        String dateLabel;
+        String sunrise;
+        String sunriseCd;
+        NextPrayer next;
+
+        if (dayCount > 0) {
+            dateLabel = data.getString("widget_day_" + todayOffset + "_label", "");
+            sunrise = data.getString("widget_day_" + todayOffset + "_sunrise", "");
+            sunriseCd = data.getString("widget_day_" + todayOffset + "_sunrise_cd", "");
+            next = findNextPrayer(data, todayOffset, dayCount, now);
+        } else {
+            // Data written by an older app version (single-day keys only).
+            dateLabel = data.getString("widget_date_label", "");
+            sunrise = data.getString("widget_sunrise", "");
+            sunriseCd = data.getString("widget_sunrise_cd", "");
+            next = new NextPrayer(
+                    data.getInt("widget_next_index", -1),
+                    data.getLong("widget_next_epoch", 0L));
         }
 
+        views.setTextViewText(R.id.widget_date, nullToEmpty(dateLabel));
+        views.setTextViewText(R.id.widget_sunrise, nullToEmpty(sunrise));
+        views.setContentDescription(R.id.widget_sunrise, nullToEmpty(sunriseCd));
+
+        for (int i = 0; i < PRAYER_KEYS.length; i++) {
+            String name = nullToEmpty(data.getString("widget_name_" + PRAYER_KEYS[i], ""));
+            String time = dayCount > 0
+                    ? data.getString("widget_day_" + todayOffset + "_"
+                            + PRAYER_KEYS[i] + "_time", "")
+                    : data.getString("widget_time_" + PRAYER_KEYS[i], "");
+            views.setTextViewText(NAME_IDS[i], name);
+            views.setTextViewText(TIME_IDS[i], nullToEmpty(time));
+            views.setInt(CELL_IDS[i], "setBackgroundResource",
+                    i == next.index ? R.drawable.widget_cell_highlight : R.drawable.widget_cell_normal);
+        }
+
+        views.setTextViewText(R.id.widget_countdown,
+                buildCountdown(data, next.epoch, now));
         views.setOnClickPendingIntent(R.id.widget_root, buildLaunchAppIntent(context));
         return views;
+    }
+
+    private static int findTodayOffset(SharedPreferences data, int dayCount, long now) {
+        if (dayCount <= 0) return 0;
+        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date(now));
+        for (int i = 0; i < dayCount; i++) {
+            if (today.equals(data.getString("widget_day_" + i + "_date", ""))) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    // Scans the stored days in order and returns the first prayer whose epoch
+    // is still in the future. Sunrise is intentionally not in this list: when
+    // it's next, the widget highlights the prayer after it, matching the app's
+    // own countdown badge.
+    private static NextPrayer findNextPrayer(
+            SharedPreferences data, int todayOffset, int dayCount, long now) {
+        for (int day = todayOffset; day < dayCount; day++) {
+            for (int i = 0; i < PRAYER_KEYS.length; i++) {
+                long epoch = data.getLong(
+                        "widget_day_" + day + "_" + PRAYER_KEYS[i] + "_epoch", 0L);
+                if (epoch > now) return new NextPrayer(i, epoch);
+            }
+        }
+        return new NextPrayer(-1, 0L);
+    }
+
+    private static String buildCountdown(SharedPreferences data, long nextEpoch, long now) {
+        if (nextEpoch <= 0L) {
+            return nullToEmpty(data.getString("widget_countdown", ""));
+        }
+        long remaining = Math.max(0L, nextEpoch - now);
+        long totalMinutes = remaining / 60_000L;
+        long hours = totalMinutes / 60L;
+        long minutes = totalMinutes % 60L;
+        String template = hours > 0
+                ? data.getString("widget_countdown_hm_template", "in {hours}h {minutes}m")
+                : data.getString("widget_countdown_m_template", "in {minutes}m");
+        String countdown = nullToEmpty(template)
+                .replace("{hours}", String.valueOf(hours))
+                .replace("{minutes}", String.valueOf(minutes));
+        if (data.getBoolean("widget_eastern_digits", false)) {
+            countdown = toEasternArabicDigits(countdown);
+        }
+        return countdown;
+    }
+
+    // Matches NumeralSettings in Dart: Arabic locales default to Western
+    // digits, with Eastern Arabic-Indic digits only when the user opted in.
+    private static String toEasternArabicDigits(String text) {
+        StringBuilder builder = new StringBuilder(text.length());
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c >= '0' && c <= '9') {
+                builder.append((char) ('\u0660' + (c - '0')));
+            } else {
+                builder.append(c);
+            }
+        }
+        return builder.toString();
     }
 
     private static PendingIntent buildLaunchAppIntent(Context context) {

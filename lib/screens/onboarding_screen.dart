@@ -48,6 +48,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           image: 'assets/onboarding/add_habit.png',
         ),
         _OnboardingSlide(
+          title: l10n.onboardingTasbeehTitle,
+          body: l10n.onboardingTasbeehBody,
+          icon: Icons.spa_outlined,
+          image: 'assets/onboarding/tasbeeh.png',
+        ),
+        _OnboardingSlide(
           title: l10n.onboardingStatsTitle,
           body: l10n.onboardingStatsBody,
           icon: Icons.insights_rounded,
@@ -258,10 +264,8 @@ class _SlidePage extends StatelessWidget {
                   );
                 }
 
-                final double badgeSize = math
-                    .min(maxWidth, maxHeight)
-                    .clamp(96.0, 180.0)
-                    .toDouble();
+                final double badgeSize =
+                    math.min(maxWidth, maxHeight).clamp(96.0, 180.0).toDouble();
                 return Center(
                   child: _IconBadge(icon: slide.icon, size: badgeSize),
                 );

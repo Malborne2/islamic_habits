@@ -8,6 +8,8 @@ A Flutter app for building consistent Islamic habits — the five daily prayers,
 - **Prayer times** — calculated on-device from your location (manual entry, city search, or a map picker), with a choice of calculation methods and madhabs, plus per-prayer manual adjustments.
 - **Adhan playback** — 8 bundled reciter voices, each with a full recording and a pre-trimmed "Takbeer only" cut; choose per prayer whether it plays a full notification, Adhan audio, a silent vibration, or nothing at all.
 - **Prayer reminders** — an optional Yes/No notification 30 minutes after each prayer, answerable right from the notification.
+- **Tasbeeh counter** — a swipe-to-count pearl with after-prayer and general dhikr presets, goals, bead colours, and streak-unlocked geometric patterns.
+- **Home screen widget** — today's prayer times with a live countdown to the next prayer that updates without opening the app.
 - **Statistics dashboard** — overall success rate, daily/weekly/monthly completion trends, and per-habit breakdowns, charted with full RTL support.
 - **Localization** — 9 languages (English, Arabic, Persian, Urdu, Indonesian, Japanese, Norwegian, Swedish, Finnish), with right-to-left layout for Arabic/Persian/Urdu, Hijri calendar dates, and Eastern Arabic numeral support.
 - **Backup & restore** — export your habit data to a file and restore it later or on another device.

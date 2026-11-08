@@ -439,8 +439,10 @@ class _TasbeehScreenState extends State<TasbeehScreen>
   // null goal means "continuous" — count with no target and no celebration.
   int? _goal = 100;
   _TasbeehPreset _preset = _kPresets.last;
-  _BeadTheme _theme = _kBeadThemes.first;
-  String _patternId = _kPatterns.first.id;
+  // White pearl is the default look, with the always-unlocked rosette
+  // medallion engraved on it. Saved preferences still win for returning users.
+  _BeadTheme _theme = _kBeadThemes[1];
+  String _patternId = 'rosette';
   int _maxStreakDays = 0;
   int _idSeq = 0;
   int _phraseSeq = 0;

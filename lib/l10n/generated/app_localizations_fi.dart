@@ -694,7 +694,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get onboardingRemindersBody =>
-      'Aseta päivittäinen muistutus mille tahansa tavalle ja vastaa kyllä tai ei suoraan ilmoituksesta.';
+      'Aseta muistutus mille tahansa tavalle ja vastaa kyllä tai ei suoraan ilmoituksesta.';
 
   @override
   String get onboardingStatsTitle => 'Näe edistymisesi';
@@ -702,6 +702,13 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get onboardingStatsBody =>
       'Kaaviot, putket ja onnistumisprosentit auttavat sinua pysymään motivoituneena ja huomaamaan, mihin kannattaa keskittyä.';
+
+  @override
+  String get onboardingTasbeehTitle => 'Tasbeeh-laskuri';
+
+  @override
+  String get onboardingTasbeehBody =>
+      'Pyyhkäise helmeä laskeaksesi dhikr-lauseesi, valitse valmis sarja ja mukauta helmeä väreillä ja kuvioilla.';
 
   @override
   String get statisticsOverallSuccess => 'Kokonaisonnistuminen';

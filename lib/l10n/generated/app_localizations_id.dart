@@ -691,7 +691,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get onboardingRemindersBody =>
-      'Atur pengingat harian untuk kebiasaan apa pun dan jawab Ya atau Tidak langsung dari notifikasi.';
+      'Atur pengingat untuk kebiasaan apa pun dan jawab Ya atau Tidak langsung dari notifikasi.';
 
   @override
   String get onboardingStatsTitle => 'Lihat kemajuan Anda';
@@ -699,6 +699,13 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get onboardingStatsBody =>
       'Grafik, rentetan, dan tingkat keberhasilan membantu Anda tetap termotivasi dan mengetahui apa yang perlu diperhatikan.';
+
+  @override
+  String get onboardingTasbeehTitle => 'Penghitung Tasbih';
+
+  @override
+  String get onboardingTasbeehBody =>
+      'Geser mutiara untuk menghitung zikir Anda, pilih rangkaian zikir, dan sesuaikan mutiara dengan warna serta pola.';
 
   @override
   String get statisticsOverallSuccess => 'Keberhasilan keseluruhan';

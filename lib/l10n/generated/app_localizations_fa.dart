@@ -692,7 +692,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get onboardingRemindersBody =>
-      'برای هر عادت یادآور روزانه تنظیم کنید و مستقیماً از اعلان بله یا خیر پاسخ دهید.';
+      'برای هر عادت یادآور تنظیم کنید و مستقیماً از اعلان بله یا خیر پاسخ دهید.';
 
   @override
   String get onboardingStatsTitle => 'پیشرفت خود را ببینید';
@@ -700,6 +700,13 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get onboardingStatsBody =>
       'نمودارها، زنجیره‌ها و نرخ موفقیت به شما کمک می‌کنند انگیزه بمانید و بدانید چه چیزی نیاز به توجه دارد.';
+
+  @override
+  String get onboardingTasbeehTitle => 'شمارنده تسبیح';
+
+  @override
+  String get onboardingTasbeehBody =>
+      'مهره را بکشید تا ذکرتان را بشمارید، یک ذکر آماده انتخاب کنید و مهره را با رنگ‌ها و نقش‌ها شخصی‌سازی کنید.';
 
   @override
   String get statisticsOverallSuccess => 'موفقیت کلی';

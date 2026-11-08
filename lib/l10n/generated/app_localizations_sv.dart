@@ -693,7 +693,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get onboardingRemindersBody =>
-      'Ställ in en daglig påminnelse för vilken vana som helst och svara ja eller nej direkt från aviseringen.';
+      'Ställ in en påminnelse för vilken vana som helst och svara ja eller nej direkt från aviseringen.';
 
   @override
   String get onboardingStatsTitle => 'Se dina framsteg';
@@ -701,6 +701,13 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get onboardingStatsBody =>
       'Diagram, sviter och framgångsfrekvens hjälper dig att hålla motivationen uppe och se vad som behöver uppmärksamhet.';
+
+  @override
+  String get onboardingTasbeehTitle => 'Tasbeeh-räknare';
+
+  @override
+  String get onboardingTasbeehBody =>
+      'Svep pärlan för att räkna din dhikr, välj en färdig uppsättning och anpassa pärlan med färger och mönster.';
 
   @override
   String get statisticsOverallSuccess => 'Total framgång';

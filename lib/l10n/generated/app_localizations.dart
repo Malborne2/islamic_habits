@@ -1369,7 +1369,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingRemindersBody.
   ///
   /// In en, this message translates to:
-  /// **'Set a daily reminder for any habit and answer Yes or No right from the notification.'**
+  /// **'Set a reminder for any habit and answer Yes or No right from the notification.'**
   String get onboardingRemindersBody;
 
   /// No description provided for @onboardingStatsTitle.
@@ -1383,6 +1383,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Charts, streaks, and success rates help you stay motivated and spot what needs attention.'**
   String get onboardingStatsBody;
+
+  /// No description provided for @onboardingTasbeehTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasbeeh Counter'**
+  String get onboardingTasbeehTitle;
+
+  /// No description provided for @onboardingTasbeehBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe the pearl to count your dhikr, choose a preset, and personalize your bead with colors and patterns.'**
+  String get onboardingTasbeehBody;
 
   /// No description provided for @statisticsOverallSuccess.
   ///

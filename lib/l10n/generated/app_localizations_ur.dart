@@ -692,7 +692,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get onboardingRemindersBody =>
-      'کسی بھی عادت کے لیے روزانہ یاد دہانی مقرر کریں اور اطلاع سے ہی ہاں یا نہیں کا جواب دیں۔';
+      'کسی بھی عادت کے لیے یاد دہانی مقرر کریں اور اطلاع سے ہی ہاں یا نہیں کا جواب دیں۔';
 
   @override
   String get onboardingStatsTitle => 'اپنی پیش رفت دیکھیں';
@@ -700,6 +700,13 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get onboardingStatsBody =>
       'چارٹس، تسلسل اور کامیابی کی شرح آپ کو متحرک رہنے اور توجہ طلب چیزوں کی نشاندہی میں مدد دیتے ہیں۔';
+
+  @override
+  String get onboardingTasbeehTitle => 'تسبیح کاؤنٹر';
+
+  @override
+  String get onboardingTasbeehBody =>
+      'ذکر شمار کرنے کے لیے موتی کو سوائپ کریں، کوئی تیار ذکر منتخب کریں، اور موتی کو رنگوں اور نقشوں سے اپنی پسند کے مطابق بنائیں۔';
 
   @override
   String get statisticsOverallSuccess => 'مجموعی کامیابی';
