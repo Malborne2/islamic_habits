@@ -5,6 +5,7 @@ Everything needed to publish Islamic Habits on Google Play.
 | File | Use |
 | --- | --- |
 | `play_store_listing.md` | App name, short/full description, What's new, screenshot order |
+| `play_store_listing_ar.md` | Arabic listing: name, short description, and full description |
 | `privacy_policy.md` | Host at a public URL and paste that URL into Play Console |
 | `data_safety.md` | Answer key for the Data safety form |
 | `content_rating.md` | Answer key for the IARC content-rating questionnaire |
