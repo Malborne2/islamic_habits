@@ -11,7 +11,21 @@
 | 5 | **Contact email** | Not set | Use an address you monitor; it is shown on the listing. |
 | 6 | **Adhan audio rights** | 8 reciters bundled in `assets/adhan/` | Confirm you have distribution rights for every recording before publishing. If any voice is not cleared, remove it. |
 | 7 | **OpenStreetMap attribution** | Added to the map picker | Verify it is visible in light and dark themes. |
-| 8 | **Play Console account** | — | $25 registration, identity verification, and (for new personal accounts) a closed test with at least 12 testers for 14 continuous days before production access. |
+| 8 | **Play Console account** | — | $25 registration, identity verification, and — for **personal** accounts created after 13 Nov 2023 — a closed test with at least 12 testers opted in continuously for 14 days before you can apply for production. Organization accounts and older personal accounts are exempt. Google also checks genuine tester usage. |
+
+## Hosting the privacy policy on GitHub Pages
+
+The policy and a small landing page are in `docs/`. The repository is public, so GitHub Pages is free.
+
+1. Replace `YOUR_EMAIL@example.com` in `docs/privacy.html` with your real support email.
+2. Commit and push the `docs/` folder to GitHub.
+3. Open **Settings → Pages** in the repository.
+4. Under **Build and deployment**, choose **Deploy from a branch**.
+5. Select branch **master** and folder **/docs**, then **Save**.
+6. Wait 1–2 minutes and open `https://malborne2.github.io/islamic_habits/privacy.html` in a private window.
+7. Paste that URL into Play Console → App content → Privacy policy.
+
+No custom domain is required. If you later rename the repository, the URL changes, so update it in Play Console.
 
 ## Build and versioning
 
