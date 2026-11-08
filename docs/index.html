@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Islamic Habits</title>
+  <meta name="description" content="Prayer times, Adhan, Qur'an, Tasbeeh, and daily habit tracking — private by design.">
+  <style>
+    :root {
+      --navy: #0f2347;
+      --ink: #1b2433;
+      --muted: #5d6b82;
+      --line: #e4e9f2;
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --accent: #2f5fa8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ink: #e9eef7;
+        --muted: #a7b3c8;
+        --line: #243147;
+        --bg: #0a1220;
+        --card: #101b2e;
+        --accent: #8fb3e8;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    main { max-width: 720px; padding: 40px 22px; text-align: center; }
+    img { width: 140px; height: 140px; margin-bottom: 20px; }
+    h1 { font-size: 2.2rem; line-height: 1.15; margin: 0 0 10px; letter-spacing: -.02em; }
+    .tag { color: var(--muted); font-size: 1.05rem; margin: 0 auto 28px; max-width: 520px; }
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 0 0 32px;
+    }
+    .features span {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: .9rem;
+      color: var(--muted);
+    }
+    .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    a.button {
+      display: inline-block;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      background: var(--navy);
+      color: #fff;
+      border: 1px solid var(--navy);
+    }
+    a.button.secondary {
+      background: transparent;
+      color: var(--accent);
+      border-color: var(--line);
+    }
+    footer { margin-top: 42px; color: var(--muted); font-size: .85rem; }
+    footer a { color: var(--accent); }
+    @media (max-width: 520px) {
+      h1 { font-size: 1.7rem; }
+      img { width: 110px; height: 110px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="./assets/logo.png" alt="Islamic Habits logo">
+    <h1>Islamic Habits</h1>
+    <p class="tag">Prayer times, Adhan, Qur'an, Tasbeeh, and daily habit tracking — private by design.</p>
+
+    <div class="features">
+      <span>Prayer times</span>
+      <span>Adhan &amp; reminders</span>
+      <span>Habit tracking</span>
+      <span>Tasbeeh counter</span>
+      <span>Statistics</span>
+      <span>Home screen widget</span>
+    </div>
+
+    <div class="actions">
+      <a class="button" href="./privacy.html">Privacy policy</a>
+      <a class="button secondary" href="https://github.com/Malborne2/islamic_habits" rel="noopener">Source code</a>
+    </div>
+
+    <footer>
+      <p>No account, no ads, no analytics. Habit data stays on your device.</p>
+      <p>Coming soon to Google Play.</p>
+    </footer>
+  </main>
+</body>
+</html>
