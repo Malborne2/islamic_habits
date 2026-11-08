@@ -11,8 +11,8 @@ Everything in this file goes into **Play Console → Grow → Store presence →
 | Full description | See below |
 | App category | Lifestyle |
 | Tags | Habit tracker, Prayer times, Quran, Ramadan, Muslim |
-| Contact email | `TODO: your Play Console contact email` |
-| Website | `TODO: optional project/website URL` |
+| Contact email | `grapplinghook73@proton.me` |
+| Website | `https://malborne2.github.io/islamic_habits/` |
 | Privacy policy URL | `https://malborne2.github.io/islamic_habits/privacy.html` (enable GitHub Pages first) |
 | Default language | English (United States) |
 | Ads | No |

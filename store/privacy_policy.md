@@ -2,7 +2,7 @@
 
 **Effective date:** 8 November 2026
 **App:** Islamic Habits (`dev.smoothchocolate.islamic_habits`)
-**Developer:** TODO: legal developer/company name
+**Developer:** Islamic Habits
 
 ## The short version
 
@@ -64,4 +64,4 @@ If this policy changes, the effective date above will be updated and the new ver
 
 ## Contact
 
-Questions about this policy: TODO: privacy contact email
+Questions about this policy: grapplinghook73@proton.me

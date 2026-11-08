@@ -2,6 +2,8 @@
 
 Everything needed to publish Islamic Habits on Google Play.
 
+> The live progress tracker is [`../PUBLISHING_CHECKLIST.md`](../PUBLISHING_CHECKLIST.md). Update it as each item is completed.
+
 | File | Use |
 | --- | --- |
 | `play_store_listing.md` | App name, short/full description, What's new, screenshot order |
