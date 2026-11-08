@@ -5,7 +5,7 @@
 | # | Item | Current state | Action |
 | --- | --- | --- | --- |
 | 1 | **Target API level 36** | `targetSdk 34` in `android/app/build.gradle` | Required for new apps and updates since 31 Aug 2026. `compileSdk` is already 36, so bump `targetSdk` to 36, then test on an Android 15/16 emulator. Expect edge-to-edge changes on Android 15+. |
-| 2 | **Release signing** | `android/key.properties` is git-ignored and not present | Create an upload keystore, add `key.properties`, and enable Play App Signing. Never commit the keystore. |
+| 2 | **Release signing** | `release` still uses `signingConfig signingConfigs.debug`, and `android/key.properties` is absent | Create an upload keystore, add `key.properties`, switch the release build type to it, and enable Play App Signing. Never commit the keystore. |
 | 3 | **App bundle** | Only debug APKs built so far | Build with `flutter build appbundle --release`. Play does not accept APKs for new apps. |
 | 4 | **Privacy policy URL** | `store/privacy_policy.md` is written but not hosted | Publish it at a public HTTPS URL (GitHub Pages is fine) and paste that URL into Play Console. |
 | 5 | **Contact email** | Not set | Use an address you monitor; it is shown on the listing. |
