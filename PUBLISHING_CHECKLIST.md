@@ -13,7 +13,7 @@
 | Build & signing | ✅ Ready |
 | Store listing & graphics | ✅ Ready |
 | Privacy policy & declarations | ✅ Drafted and hosted |
-| Play Console setup | ⬜ Not started |
+| Play Console setup | 🟡 In progress — account created, waiting for identity verification |
 | Android 15/16 testing | ⬜ Not done |
 | Closed testing (if required) | ⬜ Not started |
 | Production release | ⬜ Not started |
@@ -37,6 +37,7 @@
 - [x] Short description
 - [x] Full description
 - [x] Arabic listing copy
+- [x] Urdu, Persian, and Indonesian listing copy
 - [x] 512×512 icon
 - [x] 1024×500 feature graphic
 - [x] 5 phone screenshots (1080×1920)
@@ -44,7 +45,7 @@
 - [x] Website / landing page
 - [x] Privacy policy URL
 - [ ] 7-inch and 10-inch tablet screenshots (optional)
-- [ ] Urdu, Persian, and Indonesian listings (optional)
+- [x] Urdu, Persian, and Indonesian listings
 
 ## 3. Privacy and declarations
 
@@ -60,8 +61,8 @@
 
 ## 4. Play Console setup
 
-- [ ] Create Google Play Developer account ($25 one-time)
-- [ ] Complete identity verification
+- [x] Create Google Play Developer account ($25 one-time)
+- [ ] Complete identity verification — **in progress, waiting on Google**
 - [ ] Create the app entry: name, package, default language, free
 - [ ] Enable Play App Signing
 - [ ] Upload the AAB to **Internal testing**
@@ -88,7 +89,7 @@
 
 ## 6. Legal and rights
 
-- [ ] Confirm distribution rights for all 8 Adhan recordings
+- [x] Confirm distribution rights for all 8 Adhan recordings
 - [ ] GPLv3 compliance (source code is public)
 - [ ] Decide what developer name/address will be public on Play
 - [ ] EU DSA trader/non-trader declaration (if distributing in the EU)
@@ -104,10 +105,9 @@
 ## Needs your input
 
 - [ ] Play Console account type and creation date (personal vs organization)
-- [ ] Adhan audio distribution rights
 - [ ] Public developer name/address you want shown
-- [ ] Whether to add tablet screenshots
+- [ ] Whether to add tablet screenshots and a tablet-optimized layout
 
 ## Current next action
 
-**Create the Play Console account and app entry**, then upload the AAB to Internal testing. In parallel, test on an Android 15/16 device for edge-to-edge layout.
+**Wait for identity verification.** Meanwhile, decide the public developer name/address and confirm whether the account type requires the 12-tester closed test. Once verified, create the app entry and upload the AAB to Internal testing.

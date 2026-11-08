@@ -6,12 +6,12 @@
 | --- | --- | --- | --- |
 | 1 | **Target API level 36** | Done — `targetSdk 36`, `compileSdk 36`; debug build verified | Still test on an Android 15/16 device or emulator: targetSdk 35+ enforces edge-to-edge, so check the status bar, gesture bar, dialogs, and the home-screen widget. |
 | 2 | **Release signing** | Done — `android/key.properties` points at `C:/GitHub/key.jks` (alias `key`), and `flutter build appbundle --release` succeeds. | Enable Play App Signing when creating the app, and back up `C:/GitHub/key.jks` and its passwords somewhere safe. Never commit the keystore. |
-| 3 | **App bundle** | Only debug APKs built so far | Build with `flutter build appbundle --release`. Play does not accept APKs for new apps. |
+| 3 | **App bundle** | Done — `build/app/outputs/bundle/release/app-release.aab` builds successfully (98.4 MB) | Rebuild after any final code change. Play does not accept APKs for new apps. |
 | 4 | **Privacy policy URL** | Done — `https://malborne2.github.io/islamic_habits/privacy.html` is live | Paste that URL into Play Console → App content → Privacy policy. |
 | 5 | **Contact email** | Done — `grapplinghook73@proton.me` | Shown on the listing and in the policy. |
-| 6 | **Adhan audio rights** | 8 reciters bundled in `assets/adhan/` | Confirm you have distribution rights for every recording before publishing. If any voice is not cleared, remove it. |
-| 7 | **OpenStreetMap attribution** | Added to the map picker | Verify it is visible in light and dark themes. |
-| 8 | **Play Console account** | — | $25 registration, identity verification, and — for **personal** accounts created after 13 Nov 2023 — a closed test with at least 12 testers opted in continuously for 14 days before you can apply for production. Organization accounts and older personal accounts are exempt. Google also checks genuine tester usage. |
+| 6 | **Adhan audio rights** | Done — distribution rights confirmed | Keep the confirmation on file. |
+| 7 | **OpenStreetMap attribution** | Done — visible in the map picker | Keep it visible in future UI changes. |
+| 8 | **Play Console account** | In progress — account created; **waiting for identity verification** | Once verified, create the app entry and upload the AAB. If the account is personal and was created after 13 Nov 2023, plan the 12-tester / 14-day closed test. |
 
 ## Hosting the privacy policy on GitHub Pages
 
