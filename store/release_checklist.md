@@ -34,6 +34,8 @@ To update the policy, edit `docs/privacy.html`, commit, and push to `master`. Pa
 
 ## Device testing
 
+> `targetSdk 36` does not raise the minimum OS. `minSdk 24` means Android 7.0+ can install and test the app. The Android 15/16 item is an edge-to-edge compatibility check, not a requirement for every tester.
+
 - [ ] Android 8/9 (minimum supported) — launch, reminders, widget.
 - [ ] Android 12 — exact-alarm permission flow.
 - [ ] Android 13 — notification permission prompt.

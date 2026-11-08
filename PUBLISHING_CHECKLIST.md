@@ -15,7 +15,7 @@
 | Privacy policy & declarations | ✅ Drafted and hosted |
 | Play Console setup | 🟡 In progress — account created, waiting for identity verification |
 | Tablet/large-screen layout | ✅ Responsive two-pane layout implemented |
-| Android 15/16 testing | ⬜ Not done |
+| Android 15/16 edge-to-edge check | ⬜ Not done — one device is enough |
 | Closed testing (if required) | ⬜ Not started |
 | Production release | ⬜ Not started |
 
@@ -79,11 +79,13 @@
 
 ## 5. Device testing
 
+> `targetSdk 36` is a behavior target, not a minimum OS. `minSdk 24` means the app installs on **Android 7.0 and newer**, so testers on older phones are fine. The Android 15/16 check is only about new OS behavior (mainly edge-to-edge), and one device or emulator covers it.
+
 - [ ] Android 8/9 (minimum supported)
 - [ ] Android 12 exact-alarm permission
 - [ ] Android 13 notification permission
 - [ ] Android 14 exact alarm denied by default
-- [ ] Android 15/16 edge-to-edge layout
+- [ ] Android 15/16 edge-to-edge layout — **one device is enough; other testers can use older versions**
 - [ ] Widget countdown and next-prayer change with the app closed
 - [ ] Arabic RTL layout
 - [ ] Backup export and restore
