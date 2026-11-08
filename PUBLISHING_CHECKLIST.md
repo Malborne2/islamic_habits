@@ -14,6 +14,7 @@
 | Store listing & graphics | ✅ Ready |
 | Privacy policy & declarations | ✅ Drafted and hosted |
 | Play Console setup | 🟡 In progress — account created, waiting for identity verification |
+| Tablet/large-screen layout | ⬜ Not optimized (optional) |
 | Android 15/16 testing | ⬜ Not done |
 | Closed testing (if required) | ⬜ Not started |
 | Production release | ⬜ Not started |
@@ -44,8 +45,9 @@
 - [x] Contact email
 - [x] Website / landing page
 - [x] Privacy policy URL
-- [ ] 7-inch and 10-inch tablet screenshots (optional)
 - [x] Urdu, Persian, and Indonesian listings
+- [ ] Tablet-optimized layout (optional)
+- [ ] 7-inch and 10-inch tablet screenshots (optional)
 
 ## 3. Privacy and declarations
 
