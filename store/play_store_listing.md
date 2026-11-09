@@ -104,14 +104,23 @@ Play shows the first 4–5 screenshots in search results, so lead with the stron
 
 ## Localized listings
 
-The app itself is translated into 9 languages, but Play listings are separate per language. Prioritize these translations before launch:
+The app itself is translated into 9 languages. **Play release notes can only use languages that are added to the store listing**, so add every language below under **Main store listing → Manage translations** (or the language switcher) before writing release notes.
 
-1. Arabic (`ar`)
-2. Urdu (`ur`)
-3. Persian (`fa`)
-4. Indonesian (`id`)
+| Play tag | Language | File |
+| --- | --- | --- |
+| `en-US` | English (United States) | `play_store_listing.md` |
+| `ar` | Arabic | `play_store_listing_ar.md` |
+| `fa` | Persian | `play_store_listing_fa.md` |
+| `fi` | Finnish | `play_store_listing_fi.md` |
+| `id` | Indonesian | `play_store_listing_id.md` |
+| `ja` | Japanese | `play_store_listing_ja.md` |
+| `nb` | Norwegian Bokmål | `play_store_listing_nb.md` |
+| `sv` | Swedish | `play_store_listing_sv.md` |
+| `ur` | Urdu | `play_store_listing_ur.md` |
 
-The English listing can be reused as the fallback for the remaining locales.
+Adding a language to the store listing makes it selectable in the release notes
+editor. If a language still shows as unsupported, it has not been added to the
+store listing yet.
 
 ## Character limits
 

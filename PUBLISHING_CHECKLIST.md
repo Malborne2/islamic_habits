@@ -42,6 +42,8 @@
 - [x] Full description
 - [x] Arabic listing copy
 - [x] Urdu, Persian, and Indonesian listing copy
+- [x] Finnish, Japanese, Norwegian, and Swedish listing copy
+- [ ] Add all 9 languages to the Play store listing (required before release notes accept them)
 - [x] 512×512 icon
 - [x] 1024×500 feature graphic
 - [x] 5 phone screenshots (1080×1920)
