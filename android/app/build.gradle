@@ -33,7 +33,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace 'dev.smoothchocolate.islamic_habits'
+    namespace 'com.islamic.habits'
     compileSdk 36
     ndkVersion "28.2.13676358"
 
@@ -48,7 +48,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "dev.smoothchocolate.islamic_habits"
+        applicationId "com.islamic.habits"
         minSdk flutter.minSdkVersion
         targetSdk 36
         versionCode flutterVersionCode.toInteger()

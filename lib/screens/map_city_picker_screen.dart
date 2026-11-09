@@ -51,7 +51,7 @@ class _MapCityPickerScreenState extends State<MapCityPickerScreen> {
                       urlTemplate:
                           'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName:
-                          'dev.smoothchocolate.islamic_habits',
+                          'com.islamic.habits',
                     ),
                     MarkerLayer(markers: <Marker>[
                       Marker(

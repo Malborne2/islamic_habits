@@ -17,7 +17,7 @@
     android:targetCellHeight="1"
     android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/widget_prayer_times"
-    android:configure="dev.smoothchocolate.islamic_habits.PrayerWidgetConfigureActivity"
+    android:configure="com.islamic.habits.PrayerWidgetConfigureActivity"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"
     android:widgetFeatures="reconfigurable" />

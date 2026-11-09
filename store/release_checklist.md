@@ -25,7 +25,7 @@ To update the policy, edit `docs/privacy.html`, commit, and push to `master`. Pa
 ## Build and versioning
 
 - [ ] Set `version: 1.0.0+1` (or the intended release number) in `pubspec.yaml`; the `+N` build number must increase for every upload.
-- [ ] Confirm `applicationId` is `dev.smoothchocolate.islamic_habits` and will never change after the first release.
+- [ ] Confirm `applicationId` is `com.islamic.habits` and will never change after the first release.
 - [ ] Run `flutter analyze` and fix anything new.
 - [ ] Run `flutter test` if tests exist.
 - [ ] Build: `flutter build appbundle --release`.

@@ -324,7 +324,7 @@ class NotificationService {
   static Future<void> requestIgnoreBatteryOptimizations() async {
     const intent = AndroidIntent(
       action: 'android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS',
-      data: 'package:dev.smoothchocolate.islamic_habits',
+      data: 'package:com.islamic.habits',
     );
     await intent.launch();
   }

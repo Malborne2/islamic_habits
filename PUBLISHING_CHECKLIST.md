@@ -2,7 +2,7 @@
 
 **Last updated:** 9 November 2026
 **Store:** Google Play
-**Package:** `dev.smoothchocolate.islamic_habits`
+**Package:** `com.islamic.habits`
 **Privacy policy:** https://malborne2.github.io/islamic_habits/privacy.html
 **Support email:** grapplinghook73@proton.me
 
@@ -33,6 +33,7 @@
 - [x] Release AAB builds (98.4 MB)
 - [x] Back up the keystore and passwords somewhere safe
 - [x] Build the final AAB with `versionCode 2` (`1.0.0+2`, adds habit reordering)
+- [x] Package renamed to `com.islamic.habits` to match the Play Console app entry (AAB verified)
 
 ## 2. Store listing
 

@@ -1,4 +1,4 @@
-package dev.smoothchocolate.islamic_habits;
+package com.islamic.habits;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;

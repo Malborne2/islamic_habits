@@ -1,7 +1,7 @@
 # Privacy Policy — Islamic Habits
 
 **Effective date:** 8 November 2026
-**App:** Islamic Habits (`dev.smoothchocolate.islamic_habits`)
+**App:** Islamic Habits (`com.islamic.habits`)
 **Developer:** Islamic Habits
 
 ## The short version
