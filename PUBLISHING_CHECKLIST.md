@@ -11,12 +11,13 @@
 | Area | Status |
 | --- | --- |
 | Build & signing | ✅ Ready |
-| Store listing & graphics | ✅ Ready |
+| Store listing & graphics | ✅ Ready — 9 languages + screenshot/icon assets |
 | Privacy policy & declarations | ✅ Drafted and hosted |
-| Play Console setup | 🟡 In progress — account created, waiting for identity verification |
+| Play Console setup | 🟡 Identity verified — create the app entry and upload |
 | Tablet/large-screen layout | ✅ Responsive two-pane layout implemented |
 | Habit reordering | ✅ Drag handle + arrow buttons in All habits |
 | Release notes (9 languages) | ✅ Ready in `store/release_notes/` |
+| Promo video | ✅ Recorded from the emulator with seeded demo data |
 | Android 15/16 edge-to-edge check | ⬜ Not done — one device is enough |
 | Closed testing (if required) | ⬜ Not started |
 | Production release | ⬜ Not started |
@@ -53,6 +54,9 @@
 - [x] Urdu, Persian, and Indonesian listings
 - [x] Tablet-optimized layout (responsive home, stats, habit detail, Tasbeeh picker)
 - [x] Release notes for all 9 languages (`store/release_notes/`, named by Play tag, plus `all_languages.txt`)
+- [x] All-language copy-paste sheet (`store/play_console_copy_paste.md`): app name, short and full description for all 9 languages
+- [x] Promo video recorded from the emulator with seeded demo data (`store/promo_video_720x1600.mp4`, 67 s, captioned)
+- [ ] Upload the promo video to YouTube (public or unlisted) and paste the URL into the listing
 - [ ] 7-inch and 10-inch tablet screenshots (optional)
 
 ## 3. Privacy and declarations
@@ -120,4 +124,4 @@
 
 ## Current next action
 
-**Wait for identity verification.** Meanwhile, decide the public developer name/address and confirm whether the account type requires the 12-tester closed test. Once verified, create the app entry and upload the AAB to Internal testing.
+**Create the app entry in Play Console** (`com.islamic.habits`), upload `build/app/outputs/bundle/release/app-release.aab` to Internal testing, then paste the nine listings from `store/play_console_copy_paste.md`. Upload `store/promo_video_720x1600.mp4` to YouTube first so the video URL is ready when you fill the main store listing.
