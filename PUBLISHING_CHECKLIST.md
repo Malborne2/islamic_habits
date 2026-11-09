@@ -16,6 +16,7 @@
 | Play Console setup | 🟡 In progress — account created, waiting for identity verification |
 | Tablet/large-screen layout | ✅ Responsive two-pane layout implemented |
 | Habit reordering | ✅ Drag handle + arrow buttons in All habits |
+| Release notes (9 languages) | ✅ Ready in `store/release_notes/` |
 | Android 15/16 edge-to-edge check | ⬜ Not done — one device is enough |
 | Closed testing (if required) | ⬜ Not started |
 | Production release | ⬜ Not started |
@@ -48,6 +49,7 @@
 - [x] Privacy policy URL
 - [x] Urdu, Persian, and Indonesian listings
 - [x] Tablet-optimized layout (responsive home, stats, habit detail, Tasbeeh picker)
+- [x] Release notes for all 9 languages (`store/release_notes/`, named by Play tag)
 - [ ] 7-inch and 10-inch tablet screenshots (optional)
 
 ## 3. Privacy and declarations
