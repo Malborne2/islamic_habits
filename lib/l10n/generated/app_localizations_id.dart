@@ -829,4 +829,20 @@ class AppLocalizationsId extends AppLocalizations {
   String tasbeehDaysShort(int days) {
     return '$days hr';
   }
+
+  @override
+  String get reorderHabitsAction => 'Ubah urutan kebiasaan';
+
+  @override
+  String get reorderHabitsHint =>
+      'Seret kebiasaan dari gagangnya atau gunakan panah untuk mengubah urutannya.';
+
+  @override
+  String get reorderDoneAction => 'Selesai';
+
+  @override
+  String get moveHabitUp => 'Pindah ke atas';
+
+  @override
+  String get moveHabitDown => 'Pindah ke bawah';
 }

@@ -833,4 +833,20 @@ class AppLocalizationsFi extends AppLocalizations {
   String tasbeehDaysShort(int days) {
     return '$days pv';
   }
+
+  @override
+  String get reorderHabitsAction => 'Järjestä tavat uudelleen';
+
+  @override
+  String get reorderHabitsHint =>
+      'Muuta järjestystä vetämällä tapaa kahvasta tai käyttämällä nuolia.';
+
+  @override
+  String get reorderDoneAction => 'Valmis';
+
+  @override
+  String get moveHabitUp => 'Siirrä ylös';
+
+  @override
+  String get moveHabitDown => 'Siirrä alas';
 }

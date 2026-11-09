@@ -336,5 +336,10 @@
     "tasbeehPatterns": "Mønstre",
     "tasbeehUnlockAtStreak": "Låses opp med en {days}-dagers rekke",
     "tasbeehLockedHint": "Låste elementer låses opp med din lengste vanerekke.",
-    "tasbeehDaysShort": "{days} d"
+    "tasbeehDaysShort": "{days} d",
+  "reorderHabitsAction": "Endre rekkefølge på vaner",
+  "reorderHabitsHint": "Dra en vane i håndtaket eller bruk pilene for å endre rekkefølgen.",
+  "reorderDoneAction": "Ferdig",
+  "moveHabitUp": "Flytt opp",
+  "moveHabitDown": "Flytt ned"
 }

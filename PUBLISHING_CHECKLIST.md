@@ -1,6 +1,6 @@
 # Publishing checklist — Islamic Habits
 
-**Last updated:** 8 November 2026
+**Last updated:** 9 November 2026
 **Store:** Google Play
 **Package:** `dev.smoothchocolate.islamic_habits`
 **Privacy policy:** https://malborne2.github.io/islamic_habits/privacy.html
@@ -15,6 +15,7 @@
 | Privacy policy & declarations | ✅ Drafted and hosted |
 | Play Console setup | 🟡 In progress — account created, waiting for identity verification |
 | Tablet/large-screen layout | ✅ Responsive two-pane layout implemented |
+| Habit reordering | ✅ Drag handle + arrow buttons in All habits |
 | Android 15/16 edge-to-edge check | ⬜ Not done — one device is enough |
 | Closed testing (if required) | ⬜ Not started |
 | Production release | ⬜ Not started |
@@ -29,8 +30,8 @@
 - [x] `flutter build appbundle --release` succeeds
 - [x] 16 KB page-size alignment verified
 - [x] Release AAB builds (98.4 MB)
-- [ ] Back up the keystore and passwords somewhere safe
-- [ ] Build the final AAB with the final `versionCode` (currently `1.0.0+1`)
+- [x] Back up the keystore and passwords somewhere safe
+- [x] Build the final AAB with `versionCode 2` (`1.0.0+2`, adds habit reordering)
 
 ## 2. Store listing
 

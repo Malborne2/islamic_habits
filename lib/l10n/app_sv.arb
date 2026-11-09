@@ -336,5 +336,10 @@
     "tasbeehPatterns": "Mönster",
     "tasbeehUnlockAtStreak": "Låses upp med en {days}-dagars svit",
     "tasbeehLockedHint": "Låsta objekt låses upp med din längsta vanesvit hittills.",
-    "tasbeehDaysShort": "{days} d"
+    "tasbeehDaysShort": "{days} d",
+  "reorderHabitsAction": "Ändra ordning på vanor",
+  "reorderHabitsHint": "Dra en vana i handtaget eller använd pilarna för att ändra ordningen.",
+  "reorderDoneAction": "Klar",
+  "moveHabitUp": "Flytta upp",
+  "moveHabitDown": "Flytta ner"
 }

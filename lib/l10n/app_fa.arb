@@ -336,5 +336,10 @@
     "tasbeehPatterns": "الگوها",
     "tasbeehUnlockAtStreak": "با رکورد {days} روزه باز می‌شود",
     "tasbeehLockedHint": "موارد قفل‌شده با طولانی‌ترین رکورد عادت شما باز می‌شوند.",
-    "tasbeehDaysShort": "{days} روز"
+    "tasbeehDaysShort": "{days} روز",
+  "reorderHabitsAction": "تغییر ترتیب عادت‌ها",
+  "reorderHabitsHint": "برای تغییر ترتیب، عادت را از دستگیره بکشید یا از فلش‌ها استفاده کنید.",
+  "reorderDoneAction": "انجام شد",
+  "moveHabitUp": "انتقال به بالا",
+  "moveHabitDown": "انتقال به پایین"
 }

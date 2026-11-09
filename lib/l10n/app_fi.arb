@@ -336,5 +336,10 @@
     "tasbeehPatterns": "Kuviot",
     "tasbeehUnlockAtStreak": "Avautuu {days} päivän putkella",
     "tasbeehLockedHint": "Lukitut kohteet avautuvat pisimmällä tottumusputkellasi.",
-    "tasbeehDaysShort": "{days} pv"
+    "tasbeehDaysShort": "{days} pv",
+  "reorderHabitsAction": "Järjestä tavat uudelleen",
+  "reorderHabitsHint": "Muuta järjestystä vetämällä tapaa kahvasta tai käyttämällä nuolia.",
+  "reorderDoneAction": "Valmis",
+  "moveHabitUp": "Siirrä ylös",
+  "moveHabitDown": "Siirrä alas"
 }

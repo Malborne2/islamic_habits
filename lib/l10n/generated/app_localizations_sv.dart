@@ -831,4 +831,20 @@ class AppLocalizationsSv extends AppLocalizations {
   String tasbeehDaysShort(int days) {
     return '$days d';
   }
+
+  @override
+  String get reorderHabitsAction => 'Ändra ordning på vanor';
+
+  @override
+  String get reorderHabitsHint =>
+      'Dra en vana i handtaget eller använd pilarna för att ändra ordningen.';
+
+  @override
+  String get reorderDoneAction => 'Klar';
+
+  @override
+  String get moveHabitUp => 'Flytta upp';
+
+  @override
+  String get moveHabitDown => 'Flytta ner';
 }

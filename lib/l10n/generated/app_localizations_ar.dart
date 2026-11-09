@@ -833,4 +833,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String tasbeehDaysShort(int days) {
     return '$days يومًا';
   }
+
+  @override
+  String get reorderHabitsAction => 'إعادة ترتيب العادات';
+
+  @override
+  String get reorderHabitsHint =>
+      'اسحب العادة من المقبض أو استخدم الأسهم لتغيير ترتيبها.';
+
+  @override
+  String get reorderDoneAction => 'تم';
+
+  @override
+  String get moveHabitUp => 'تحريك لأعلى';
+
+  @override
+  String get moveHabitDown => 'تحريك لأسفل';
 }

@@ -1617,6 +1617,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{days}d'**
   String tasbeehDaysShort(int days);
+
+  /// No description provided for @reorderHabitsAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder habits'**
+  String get reorderHabitsAction;
+
+  /// No description provided for @reorderHabitsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag a habit by its handle, or use the arrows, to change its order.'**
+  String get reorderHabitsHint;
+
+  /// No description provided for @reorderDoneAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get reorderDoneAction;
+
+  /// No description provided for @moveHabitUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get moveHabitUp;
+
+  /// No description provided for @moveHabitDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get moveHabitDown;
 }
 
 class _AppLocalizationsDelegate

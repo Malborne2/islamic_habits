@@ -336,5 +336,10 @@
     "tasbeehPatterns": "Pola",
     "tasbeehUnlockAtStreak": "Terbuka dengan rentetan {days} hari",
     "tasbeehLockedHint": "Item terkunci terbuka dengan rentetan kebiasaan terpanjang Anda.",
-    "tasbeehDaysShort": "{days} hr"
+    "tasbeehDaysShort": "{days} hr",
+  "reorderHabitsAction": "Ubah urutan kebiasaan",
+  "reorderHabitsHint": "Seret kebiasaan dari gagangnya atau gunakan panah untuk mengubah urutannya.",
+  "reorderDoneAction": "Selesai",
+  "moveHabitUp": "Pindah ke atas",
+  "moveHabitDown": "Pindah ke bawah"
 }

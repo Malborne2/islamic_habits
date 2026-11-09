@@ -806,4 +806,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String tasbeehDaysShort(int days) {
     return '$days日';
   }
+
+  @override
+  String get reorderHabitsAction => '習慣の並べ替え';
+
+  @override
+  String get reorderHabitsHint => 'ハンドルをドラッグするか矢印を使って順序を変更します。';
+
+  @override
+  String get reorderDoneAction => '完了';
+
+  @override
+  String get moveHabitUp => '上へ移動';
+
+  @override
+  String get moveHabitDown => '下へ移動';
 }

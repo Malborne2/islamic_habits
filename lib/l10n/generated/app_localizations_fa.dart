@@ -829,4 +829,20 @@ class AppLocalizationsFa extends AppLocalizations {
   String tasbeehDaysShort(int days) {
     return '$days روز';
   }
+
+  @override
+  String get reorderHabitsAction => 'تغییر ترتیب عادت‌ها';
+
+  @override
+  String get reorderHabitsHint =>
+      'برای تغییر ترتیب، عادت را از دستگیره بکشید یا از فلش‌ها استفاده کنید.';
+
+  @override
+  String get reorderDoneAction => 'انجام شد';
+
+  @override
+  String get moveHabitUp => 'انتقال به بالا';
+
+  @override
+  String get moveHabitDown => 'انتقال به پایین';
 }

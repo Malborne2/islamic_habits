@@ -74,13 +74,44 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen>
   List<Habit>? _allHabits;
   int _reloadGeneration = 0;
 
+  // "Reorder habits" mode (All habits only). The order is persisted with
+  // Habit.sortOrder as the user moves rows, so leaving the screen mid-edit
+  // still keeps whatever order was on screen.
+  bool _reordering = false;
+  Future<void> _persistChain = Future<void>.value();
+
   Widget _buildPages(int weekOffset) {
     return SeveralHabitsPage(
       habits: _habits,
       allHabits: _allHabits,
       currentDate: _dateForOffset(weekOffset),
       onChanged: () => setState(() {}),
+      reordering: _reordering,
+      onMoveHabit: _moveHabit,
     );
+  }
+
+  void _moveHabit(int from, int to) {
+    if (from < 0 || to < 0 || from >= _habits.length || to >= _habits.length) {
+      return;
+    }
+    setState(() {
+      final habit = _habits.removeAt(from);
+      _habits.insert(to, habit);
+    });
+    _persistOrder();
+  }
+
+  void _persistOrder() {
+    final ids = _habits.map((habit) => habit.id).whereType<int>().toList();
+    _persistChain = _persistChain.then((_) => HabitDao().reorderActive(ids));
+  }
+
+  Future<void> _finishReordering() async {
+    await _persistChain;
+    await _reloadHabits();
+    if (!mounted) return;
+    setState(() => _reordering = false);
   }
 
   Future<void> _addHabit() async {
@@ -107,9 +138,7 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen>
       // five prayers), but use the fresh objects so colors, icons and names
       // update without reopening the screen.
       final visibleIds = _habits.map((habit) => habit.id).toSet();
-      _habits = active
-          .where((habit) => visibleIds.contains(habit.id))
-          .toList();
+      _habits = active.where((habit) => visibleIds.contains(habit.id)).toList();
       _allHabits = widget.allHabits == null ? null : active;
     });
   }
@@ -123,9 +152,8 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen>
     _upperOffset = _currentOffset + 1;
     _weekOffsets = [_lowerOffset, _currentOffset, _upperOffset];
     _habits = List<Habit>.of(widget.habits);
-    _allHabits = widget.allHabits == null
-        ? null
-        : List<Habit>.of(widget.allHabits!);
+    _allHabits =
+        widget.allHabits == null ? null : List<Habit>.of(widget.allHabits!);
     NotificationService.habitDataRevision.addListener(_onHabitDataChanged);
 
     super.initState();
@@ -173,139 +201,167 @@ class _SeveralHabitsScreenState extends State<SeveralHabitsScreen>
         ? 0
         : (100 * completedToday / habitsToday.length).round();
 
+    final l10n = AppLocalizations.of(context);
+    final bool canReorder =
+        widget.titleKind == SeveralHabitsTitle.allHabits && _habits.length > 1;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.titleKind == SeveralHabitsTitle.fivePrayers
-            ? AppLocalizations.of(context).navFivePrayers
-            : AppLocalizations.of(context).navAllHabits),
+        title: Text(_reordering
+            ? l10n.reorderHabitsAction
+            : widget.titleKind == SeveralHabitsTitle.fivePrayers
+                ? l10n.navFivePrayers
+                : l10n.navAllHabits),
         backgroundColor: widget.color,
         actions: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                completedToday.toString(),
-                style: Theme.of(context).textTheme.titleLarge,
+          if (_reordering)
+            IconButton(
+              tooltip: l10n.reorderDoneAction,
+              icon: const Icon(Icons.check),
+              onPressed: _finishReordering,
+            )
+          else ...<Widget>[
+            if (canReorder)
+              IconButton(
+                tooltip: l10n.reorderHabitsAction,
+                icon: const Icon(Icons.swap_vert),
+                onPressed: () => setState(() => _reordering = true),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 15, left: 30),
-                child: Text(
-                  '$todayPercentage%',
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  completedToday.toString(),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-              ),
-            ],
-          ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15, left: 30),
+                  child: Text(
+                    '$todayPercentage%',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
       drawer: HabitDrawer(
         habits: _allHabits ?? _habits,
       ),
-      floatingActionButton: widget.showAddButton
+      floatingActionButton: widget.showAddButton && !_reordering
           ? FloatingActionButton(
               onPressed: _addHabit,
               child: const Icon(Icons.add),
             )
           : null,
-      body: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 10),
-            child: Material(
-              elevation: 5,
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    setState(() {
-                      controller.previousPage(
-                          duration: const Duration(seconds: 1),
-                          curve: Curves.ease);
-                    });
-                  },
-                ),
-                title: ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Center(
-                        child: Text(
-                      localizeDigits(
-                          context,
-                          DateFormat('MMMM yyyy', locale)
-                                      .format(currentDate) ==
-                                  DateFormat('MMMM yyyy', locale)
-                                      .format(addDays(currentDate, 6))
-                              ? DateFormat('MMMM yyyy', locale)
-                                  .format(currentDate)
-                              : '${DateFormat('MMMM', locale).format(currentDate)} - ${DateFormat('MMMM yyyy', locale).format(addDays(currentDate, 6))}'),
-                      style: const TextStyle(fontSize: 20),
-                    )),
-                  ),
-                  subtitle: Center(
-                    child: AutoSizeText(
-                      localizeDigits(
-                          context,
-                          hijriFirstDay.toFormat("MMMM yyyy") ==
-                                  hijriLastDay.toFormat("MMMM yyyy")
-                              ? hijriFirstDay.toFormat("MMMM yyyy")
-                              : '${hijriFirstDay.toFormat("MMMM")} - ${hijriLastDay.toFormat("MMMM yyyy")}'),
-                      style: const TextStyle(fontSize: 18.0),
-                      maxLines: 1,
+      body: _reordering
+          ? SeveralHabitsPage(
+              habits: _habits,
+              allHabits: _allHabits,
+              currentDate: currentDate,
+              reordering: true,
+              onMoveHabit: _moveHabit,
+            )
+          : Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: Material(
+                    elevation: 5,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: IconButton(
+                        icon: const Icon(Icons.arrow_back_ios),
+                        onPressed: () {
+                          setState(() {
+                            controller.previousPage(
+                                duration: const Duration(seconds: 1),
+                                curve: Curves.ease);
+                          });
+                        },
+                      ),
+                      title: ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: Center(
+                              child: Text(
+                            localizeDigits(
+                                context,
+                                DateFormat('MMMM yyyy', locale)
+                                            .format(currentDate) ==
+                                        DateFormat('MMMM yyyy', locale)
+                                            .format(addDays(currentDate, 6))
+                                    ? DateFormat('MMMM yyyy', locale)
+                                        .format(currentDate)
+                                    : '${DateFormat('MMMM', locale).format(currentDate)} - ${DateFormat('MMMM yyyy', locale).format(addDays(currentDate, 6))}'),
+                            style: const TextStyle(fontSize: 20),
+                          )),
+                        ),
+                        subtitle: Center(
+                          child: AutoSizeText(
+                            localizeDigits(
+                                context,
+                                hijriFirstDay.toFormat("MMMM yyyy") ==
+                                        hijriLastDay.toFormat("MMMM yyyy")
+                                    ? hijriFirstDay.toFormat("MMMM yyyy")
+                                    : '${hijriFirstDay.toFormat("MMMM")} - ${hijriLastDay.toFormat("MMMM yyyy")}'),
+                            style: const TextStyle(fontSize: 18.0),
+                            maxLines: 1,
+                          ),
+                        ),
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.arrow_forward_ios),
+                        onPressed: () {
+                          setState(() {
+                            controller.nextPage(
+                                duration: const Duration(seconds: 1),
+                                curve: Curves.ease);
+                          });
+                        },
+                      ),
                     ),
                   ),
                 ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.arrow_forward_ios),
-                  onPressed: () {
-                    setState(() {
-                      controller.nextPage(
-                          duration: const Duration(seconds: 1),
-                          curve: Curves.ease);
-                    });
-                  },
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: PageView(
-              onPageChanged: (index) {
-                setState(() {
-                  if (index == _weekOffsets.length - 1) {
-                    _upperOffset += 1;
-                    _weekOffsets.add(_upperOffset);
-                  }
-                  if (index == 0) {
-                    _lowerOffset -= 1;
-                    _weekOffsets.insert(0, _lowerOffset);
-                    controller.jumpTo(
-                        1.5 * MediaQuery.of(context).size.width);
-                    controller.animateToPage(1,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeIn);
-                    _currentOffset += 1;
-                  }
-                  if (index > controller.page!.floor()) {
-                    _currentOffset += 1;
-                  } else {
-                    _currentOffset -= 1;
-                  }
+                Expanded(
+                  child: PageView(
+                    onPageChanged: (index) {
+                      setState(() {
+                        if (index == _weekOffsets.length - 1) {
+                          _upperOffset += 1;
+                          _weekOffsets.add(_upperOffset);
+                        }
+                        if (index == 0) {
+                          _lowerOffset -= 1;
+                          _weekOffsets.insert(0, _lowerOffset);
+                          controller
+                              .jumpTo(1.5 * MediaQuery.of(context).size.width);
+                          controller.animateToPage(1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeIn);
+                          _currentOffset += 1;
+                        }
+                        if (index > controller.page!.floor()) {
+                          _currentOffset += 1;
+                        } else {
+                          _currentOffset -= 1;
+                        }
 
-                  hijriFirstDay = HijriCalendar.fromDate(currentDate);
-                  hijriLastDay =
-                      HijriCalendar.fromDate(addDays(currentDate, 7));
-                });
-              },
-              controller: controller,
-              children: List<Widget>.generate(
-                _weekOffsets.length,
-                (i) => _buildPages(_weekOffsets[i]),
-              ),
+                        hijriFirstDay = HijriCalendar.fromDate(currentDate);
+                        hijriLastDay =
+                            HijriCalendar.fromDate(addDays(currentDate, 7));
+                      });
+                    },
+                    controller: controller,
+                    children: List<Widget>.generate(
+                      _weekOffsets.length,
+                      (i) => _buildPages(_weekOffsets[i]),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

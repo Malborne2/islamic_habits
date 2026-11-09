@@ -336,5 +336,10 @@
     "tasbeehPatterns": "模様",
     "tasbeehUnlockAtStreak": "{days}日連続で解除",
     "tasbeehLockedHint": "ロックされた項目は、これまでの最長の習慣の継続日数で解除されます。",
-    "tasbeehDaysShort": "{days}日"
+    "tasbeehDaysShort": "{days}日",
+  "reorderHabitsAction": "習慣の並べ替え",
+  "reorderHabitsHint": "ハンドルをドラッグするか矢印を使って順序を変更します。",
+  "reorderDoneAction": "完了",
+  "moveHabitUp": "上へ移動",
+  "moveHabitDown": "下へ移動"
 }

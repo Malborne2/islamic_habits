@@ -336,5 +336,10 @@
     "tasbeehPatterns": "نقوش",
     "tasbeehUnlockAtStreak": "{days} دن کی لگاتار اسٹریک سے کھلے گا",
     "tasbeehLockedHint": "مقفل اشیاء آپ کی سب سے لمبی عادت اسٹریک سے کھلتی ہیں۔",
-    "tasbeehDaysShort": "{days} دن"
+    "tasbeehDaysShort": "{days} دن",
+  "reorderHabitsAction": "عادات کی ترتیب تبدیل کریں",
+  "reorderHabitsHint": "ترتیب تبدیل کرنے کے لیے عادت کو ہینڈل سے گھسیٹیں یا تیر کے نشانات استعمال کریں۔",
+  "reorderDoneAction": "ہو گیا",
+  "moveHabitUp": "اوپر منتقل کریں",
+  "moveHabitDown": "نیچے منتقل کریں"
 }

@@ -336,5 +336,10 @@
     "tasbeehPatterns": "الأنماط",
     "tasbeehUnlockAtStreak": "يُفتح بسلسلة {days} يومًا",
     "tasbeehLockedHint": "تُفتح العناصر المقفلة بأطول سلسلة عادات وصلتَ إليها.",
-    "tasbeehDaysShort": "{days} يومًا"
+    "tasbeehDaysShort": "{days} يومًا",
+  "reorderHabitsAction": "إعادة ترتيب العادات",
+  "reorderHabitsHint": "اسحب العادة من المقبض أو استخدم الأسهم لتغيير ترتيبها.",
+  "reorderDoneAction": "تم",
+  "moveHabitUp": "تحريك لأعلى",
+  "moveHabitDown": "تحريك لأسفل"
 }

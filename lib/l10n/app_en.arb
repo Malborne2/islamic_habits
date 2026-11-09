@@ -333,5 +333,10 @@
     "placeholders": {
       "days": {"type": "int"}
     }
-  }
+  },
+  "reorderHabitsAction": "Reorder habits",
+  "reorderHabitsHint": "Drag a habit by its handle, or use the arrows, to change its order.",
+  "reorderDoneAction": "Done",
+  "moveHabitUp": "Move up",
+  "moveHabitDown": "Move down"
 }

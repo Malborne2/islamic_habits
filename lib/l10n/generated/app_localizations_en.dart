@@ -831,4 +831,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String tasbeehDaysShort(int days) {
     return '${days}d';
   }
+
+  @override
+  String get reorderHabitsAction => 'Reorder habits';
+
+  @override
+  String get reorderHabitsHint =>
+      'Drag a habit by its handle, or use the arrows, to change its order.';
+
+  @override
+  String get reorderDoneAction => 'Done';
+
+  @override
+  String get moveHabitUp => 'Move up';
+
+  @override
+  String get moveHabitDown => 'Move down';
 }

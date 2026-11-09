@@ -832,4 +832,20 @@ class AppLocalizationsNb extends AppLocalizations {
   String tasbeehDaysShort(int days) {
     return '$days d';
   }
+
+  @override
+  String get reorderHabitsAction => 'Endre rekkefølge på vaner';
+
+  @override
+  String get reorderHabitsHint =>
+      'Dra en vane i håndtaket eller bruk pilene for å endre rekkefølgen.';
+
+  @override
+  String get reorderDoneAction => 'Ferdig';
+
+  @override
+  String get moveHabitUp => 'Flytt opp';
+
+  @override
+  String get moveHabitDown => 'Flytt ned';
 }

@@ -36,6 +36,11 @@ class Habit {
   bool reminderEnabled;
   int? reminderMinutes;
 
+  // Manual display order, set by "Reorder habits" on the All habits screen.
+  // Null means "never reordered", in which case the habit keeps its original
+  // creation (database key) order and sorts after explicitly ordered habits.
+  int? sortOrder;
+
   Habit({
     required this.name,
     required this.color,
@@ -51,6 +56,7 @@ class Habit {
     this.archived = false,
     this.reminderEnabled = false,
     this.reminderMinutes,
+    this.sortOrder,
     DateTime? createdTime,
     Map<String, Map<String, double>>? habitData,
   })  : createdTime = createdTime ?? DateTime.now(),
@@ -94,6 +100,7 @@ class Habit {
       'archived': archived,
       'reminderEnabled': reminderEnabled,
       'reminderMinutes': reminderMinutes,
+      'sortOrder': sortOrder,
     };
   }
 
@@ -121,12 +128,15 @@ class Habit {
       description: map['description'] as String,
       color: Color(map['color'] as int),
       type: HabitType.values.firstWhere((e) => e.toString() == map['type']),
-      createdTime: DateTime.fromMillisecondsSinceEpoch(map['createdTime'] as int),
+      createdTime:
+          DateTime.fromMillisecondsSinceEpoch(map['createdTime'] as int),
       habitData: habitData,
-      criteria: Criteria.values.firstWhere((e) => e.toString() == map['criteria']),
+      criteria:
+          Criteria.values.firstWhere((e) => e.toString() == map['criteria']),
       successValue: (map['successValue'] as num).toDouble(),
       successTarget: map['successTarget'] as int,
-      habitDays: HabitDays.values.firstWhere((e) => e.toString() == map['habitDays']),
+      habitDays:
+          HabitDays.values.firstWhere((e) => e.toString() == map['habitDays']),
       habitPeriod: (map['habitPeriod'] as List?)?.cast<int>(),
       numberUnit: map['numberUnit'] as String? ?? 'pages',
       iconCodePoint: map['iconCodePoint'] as int?,
@@ -134,6 +144,7 @@ class Habit {
       reminderEnabled: (map['reminderEnabled'] as bool? ?? false) &&
           map['reminderMinutes'] != null,
       reminderMinutes: map['reminderMinutes'] as int?,
+      sortOrder: map['sortOrder'] as int?,
     );
   }
 
