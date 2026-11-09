@@ -49,7 +49,7 @@
 - [x] Privacy policy URL
 - [x] Urdu, Persian, and Indonesian listings
 - [x] Tablet-optimized layout (responsive home, stats, habit detail, Tasbeeh picker)
-- [x] Release notes for all 9 languages (`store/release_notes/`, named by Play tag)
+- [x] Release notes for all 9 languages (`store/release_notes/`, named by Play tag, plus `all_languages.txt`)
 - [ ] 7-inch and 10-inch tablet screenshots (optional)
 
 ## 3. Privacy and declarations

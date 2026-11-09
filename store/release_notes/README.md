@@ -7,6 +7,10 @@ default and is required.
 Play limits release notes to **500 characters per language**; every file here
 is under that limit.
 
+**All languages in one file:** `all_languages.txt` contains the same text
+wrapped in tags (`<en-US>…</en-US>`, `<ar>…</ar>`, and so on) if you prefer to
+copy from a single document.
+
 | Play tag | Language | File | Characters |
 | --- | --- | --- | --- |
 | `en-US` | English (United States) | `en-US.txt` | 436 |

@@ -1,0 +1,134 @@
+<en-US>
+First closed beta release.
+
+• Track daily habits with streaks and a monthly calendar
+• The five daily prayers with times, reminders, and a home screen widget
+• Tasbeeh counter with presets, colors, and patterns
+• Statistics and progress charts
+• Backup and restore your data
+• Available in 9 languages
+
+No account, no ads, no tracking. Your data stays on your device.
+
+Thank you for testing — send feedback to grapplinghook73@proton.me.
+</en-US>
+
+<ar>
+أول إصدار تجريبي مغلق.
+
+• تتبّع العادات اليومية مع السلاسل والتقويم الشهري
+• الصلوات الخمس مع المواقيت والتذكيرات وأداة على الشاشة الرئيسية
+• مسبحة إلكترونية مع أذكار وألوان وأنماط
+• إحصائيات ومخططات للتقدّم
+• نسخ احتياطي واستعادة للبيانات
+• متوفر بتسع لغات
+
+بدون حساب أو إعلانات أو تتبّع. تبقى بياناتك على جهازك.
+
+شكرًا لاختبارك — أرسل ملاحظاتك إلى grapplinghook73@proton.me.
+</ar>
+
+<fa>
+نخستین نسخه آزمایشی بسته.
+
+• پیگیری عادت‌های روزانه با زنجیره و تقویم ماهانه
+• پنج نماز روزانه با اوقات، یادآورها و ویجت صفحه اصلی
+• تسبیح دیجیتال با ذکرها، رنگ‌ها و الگوها
+• آمار و نمودارهای پیشرفت
+• پشتیبان‌گیری و بازیابی داده‌ها
+• در ۹ زبان
+
+بدون حساب کاربری، تبلیغات یا ردیابی. داده‌های شما روی دستگاهتان می‌ماند.
+
+از آزمایش شما سپاسگزاریم — بازخورد را به grapplinghook73@proton.me بفرستید.
+</fa>
+
+<fi>
+Ensimmäinen suljetun betan julkaisu.
+
+• Seuraa päivittäisiä tapoja putkilla ja kuukausikalenterilla
+• Viisi päivittäistä rukousta aikoineen, muistutuksineen ja aloitusnäytön widgetineen
+• Tasbih-laskuri esiasetuksilla, väreillä ja kuvioilla
+• Tilastot ja edistymiskaaviot
+• Varmuuskopioi ja palauta tietosi
+• Saatavilla 9 kielellä
+
+Ei tiliä, mainoksia tai seurantaa. Tietosi pysyvät laitteellasi.
+
+Kiitos testaamisesta — lähetä palautetta osoitteeseen grapplinghook73@proton.me.
+</fi>
+
+<id>
+Rilis beta tertutup pertama.
+
+• Lacak kebiasaan harian dengan rentetan dan kalender bulanan
+• Lima salat harian dengan waktu, pengingat, dan widget layar utama
+• Tasbih digital dengan preset, warna, dan pola
+• Statistik dan grafik kemajuan
+• Cadangkan dan pulihkan data Anda
+• Tersedia dalam 9 bahasa
+
+Tanpa akun, iklan, atau pelacakan. Data Anda tetap di perangkat Anda.
+
+Terima kasih telah menguji — kirim masukan ke grapplinghook73@proton.me.
+</id>
+
+<ja>
+初回クローズドベータ版です。
+
+• 連続記録と月間カレンダーで毎日の習慣を管理
+• 礼拝時刻、リマインダー、ホーム画面ウィジェット付きの五つの礼拝
+• プリセット、色、模様を備えたデジタル念珠（タスビー）
+• 統計と進捗グラフ
+• データのバックアップと復元
+• 9言語に対応
+
+アカウント、広告、トラッキングはありません。データは端末内に保存されます。
+
+テストにご協力いただきありがとうございます — ご意見は grapplinghook73@proton.me まで。
+</ja>
+
+<nb>
+Første lukkede betaversjon.
+
+• Følg daglige vaner med rekker og månedskalender
+• De fem daglige bønnene med tider, påminnelser og startskjermwidget
+• Digital tasbih med forvalg, farger og mønstre
+• Statistikk og fremdriftsgrafer
+• Sikkerhetskopier og gjenopprett dataene dine
+• Tilgjengelig på 9 språk
+
+Ingen konto, annonser eller sporing. Dataene dine blir på enheten din.
+
+Takk for at du tester — send tilbakemelding til grapplinghook73@proton.me.
+</nb>
+
+<sv>
+Första stängda betaversionen.
+
+• Följ dagliga vanor med sviter och månadskalender
+• De fem dagliga bönerna med tider, påminnelser och widget på startskärmen
+• Digital tasbih med förval, färger och mönster
+• Statistik och förloppsdiagram
+• Säkerhetskopiera och återställ dina data
+• Tillgängligt på 9 språk
+
+Inget konto, inga annonser, ingen spårning. Dina data stannar på din enhet.
+
+Tack för att du testar — skicka feedback till grapplinghook73@proton.me.
+</sv>
+
+<ur>
+پہلا بند بیٹا ریلیز۔
+
+• روزانہ عادات کو تسلسل اور ماہانہ کیلنڈر کے ساتھ ٹریک کریں
+• پانچ روزانہ نمازیں اوقات، یاد دہانیوں اور ہوم اسکرین ویجٹ کے ساتھ
+• پریسیٹس، رنگوں اور نمونوں کے ساتھ ڈیجیٹل تسبیح
+• اعداد و شمار اور پیش رفت کے چارٹ
+• اپنے ڈیٹا کا بیک اپ اور بحالی
+• 9 زبانوں میں دستیاب
+
+کوئی اکاؤنٹ، اشتہارات یا ٹریکنگ نہیں۔ آپ کا ڈیٹا آپ کے ڈیوائس پر رہتا ہے۔
+
+آپ کی جانچ کا شکریہ — رائے بھیجیں: grapplinghook73@proton.me
+</ur>
