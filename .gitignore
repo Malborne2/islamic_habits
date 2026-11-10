@@ -66,3 +66,6 @@ app.*.map.json
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+# Intermediate raw emulator captures (regenerate with store/tools/capture_screenshots.py)
+store/screenshots/raw/

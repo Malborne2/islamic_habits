@@ -1,6 +1,6 @@
 # Publishing checklist — Islamic Habits
 
-**Last updated:** 9 November 2026
+**Last updated:** 10 November 2026
 **Store:** Google Play
 **Package:** `com.islamic.habits`
 **Privacy policy:** https://malborne2.github.io/islamic_habits/privacy.html
@@ -46,8 +46,8 @@
 - [x] Finnish, Japanese, Norwegian, and Swedish listing copy
 - [ ] Add all 9 languages to the Play store listing (required before release notes accept them)
 - [x] 512×512 icon
-- [x] 1024×500 feature graphic
-- [x] 5 phone screenshots (1080×1920)
+- [x] 1024×500 feature graphic, translated into all 9 languages (`store/feature_graphics/`)
+- [x] 5 phone screenshots (1080×1920) in all 9 languages (`store/screenshots/<lang>/`)
 - [x] Contact email
 - [x] Website / landing page
 - [x] Privacy policy URL

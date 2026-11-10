@@ -18,8 +18,11 @@ Everything needed to publish Islamic Habits on Google Play.
 | `release_checklist.md` | Build, signing, testing, declarations, and rollout steps |
 | `signing_guide.md` | Step-by-step keystore creation, `key.properties`, and Play App Signing |
 | `icon_512.png` | 512×512 Play Store icon |
-| `feature_graphic_1024x500.png` | 1024×500 feature graphic |
-| `screenshots/` | Five 1080×1920 phone screenshots |
+| `feature_graphic_1024x500.png` | 1024×500 feature graphic (English) |
+| `feature_graphics/` | Feature graphic in all 9 languages |
+| `screenshots/` | Five 1080×1920 phone screenshots (English) |
+| `screenshots/<lang>/` | Same five shots per language (`en, ar, nb, ja, sv, fi, ur, fa, id`) |
+| `tools/` | Scripts that seed the demo data, capture and frame the screenshots, and render the localized graphics |
 
 ## Before uploading
 

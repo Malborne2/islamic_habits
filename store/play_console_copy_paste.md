@@ -696,8 +696,8 @@ Islamic Habits ایک ہی پرسکون اور نجی ایپ میں اوقاتِ
 | Play Console field | File | Spec |
 | --- | --- | --- |
 | App icon | `store/icon_512.png` | PNG, 512 × 512, ≤ 1 MB |
-| Feature graphic | `store/feature_graphic_1024x500.png` | PNG, 1024 × 500, ≤ 15 MB |
-| Phone screenshots (5) | `store/screenshots/*_1080x1920.png` | PNG, 1080 × 1920 (9:16), ≤ 8 MB each |
+| Feature graphic | `store/feature_graphics/feature_graphic_<lang>_1024x500.png` (English also at `store/feature_graphic_1024x500.png`) | PNG, 1024 × 500, ≤ 15 MB |
+| Phone screenshots (5 per language) | `store/screenshots/<lang>/*_1080x1920.png` | PNG, 1080 × 1920 (9:16), ≤ 8 MB each |
 | Promo video | `store/promo_video_720x1600.mp4` (67 s, 720 x 1600, 4 MB) | Upload to YouTube, then paste the URL — public or unlisted, ads off, not age-restricted |
 | Release notes | `store/release_notes/all_languages.txt` | ≤ 500 characters per language |
 
